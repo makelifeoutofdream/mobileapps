@@ -16,5 +16,9 @@
   "Address": {
     "dataSource": "watercandb",
     "public": true
+  },
+  "user": {
+    "dataSource": "watercandb",
+    "public": true
   }
 }
