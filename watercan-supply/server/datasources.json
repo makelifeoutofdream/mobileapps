@@ -1,0 +1,12 @@
+{
+  "watercandb": {
+    "host": "127.0.0.0.1",
+    "port": 27017,
+    "url": "",
+    "database": "watercan",
+    "password": "admin123",
+    "name": "watercandb",
+    "user": "admin",
+    "connector": "mongodb"
+  }
+}
