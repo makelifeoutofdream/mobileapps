@@ -1,6 +1,6 @@
 {
-  "name": "Address",
-  "plural": "address",
+  "name": "AgencyAddress",
+  "plural": "agencyAddress",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -34,7 +34,7 @@
       "type": "string",
       "required": true
     },
-    "userId": {
+    "agencyId": {
       "type": "string",
       "required": true
     }

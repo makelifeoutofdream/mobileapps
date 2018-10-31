@@ -1,42 +1,40 @@
 {
-  "name": "Address",
-  "plural": "address",
+  "name": "Order",
+  "plural": "order",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "address1": {
+    "id": {
       "type": "string",
       "required": true
     },
-    "address2": {
+    "quantity": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "agencyId": {
+      "type": "string",
+      "required": true
+    },
+    "brand": {
       "type": "string"
     },
-    "street": {
+    "type": {
       "type": "string",
       "required": true
     },
-    "pincode": {
-      "type": "string",
+    "amount": {
+      "type": "number",
       "required": true
     },
-    "city": {
+    "status": {
       "type": "string",
-      "required": true
-    },
-    "district": {
-      "type": "string",
-      "required": true
-    },
-    "state": {
-      "type": "string",
-      "required": true
-    },
-    "userId": {
-      "type": "string",
-      "required": true
+      "required": true,
+      "default": "Active"
     }
   },
   "validations": [],

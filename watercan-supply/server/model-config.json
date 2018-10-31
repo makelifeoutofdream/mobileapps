@@ -17,7 +17,19 @@
     "dataSource": "watercandb",
     "public": true
   },
-  "user": {
+  "User": {
+    "dataSource": "watercandb",
+    "public": true
+  },
+  "Order": {
+    "dataSource": "watercandb",
+    "public": true
+  },
+  "Agency": {
+    "dataSource": "watercandb",
+    "public": true
+  },
+  "AgencyAddress": {
     "dataSource": "watercandb",
     "public": true
   }

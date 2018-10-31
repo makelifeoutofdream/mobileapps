@@ -1,6 +1,6 @@
 {
   "name": "user",
-  "plural": "usercollection",
+  "plural": "user",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -30,7 +30,7 @@
     "userid": {
       "type": "hasMany",
       "model": "Address",
-      "foreignKey": "userid"
+      "foreignKey": "userId"
     }
   },
   "acls": [],
