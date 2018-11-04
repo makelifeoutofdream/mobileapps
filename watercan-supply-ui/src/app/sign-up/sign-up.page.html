@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar> 
+    <ion-title >SignUp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col><ion-input required type="text" [(ngModel)]="user.name" placeholder="Name"></ion-input> </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col><ion-input required type="text" [(ngModel)]="user.mobileNo" placeholder="Mobile No"></ion-input> </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col><ion-input required type="password" [(ngModel)]="user.password" placeholder="Password"></ion-input> </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col><ion-input required type="password" [(ngModel)]="user.confirmPassword"  placeholder="Confirm password"></ion-input> </ion-col>
+  </ion-row>
+  
+    <ion-button  expand="block" (click)="submit()" >Submit</ion-button> 
+    <ion-button  expand="block">Cancel</ion-button>
+</ion-content>
