@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "user": {
+    "dataSource": "watercan",
+    "public": true
+  },
+  "address": {
+    "dataSource": "watercan",
+    "public": true
+  },
+  "order": {
+    "dataSource": "watercan",
+    "public": true
+  },
+  "agency": {
+    "dataSource": "watercan",
+    "public": true
+  },
+  "agencyAddress": {
+    "dataSource": "watercan",
+    "public": true
+  }
+}
