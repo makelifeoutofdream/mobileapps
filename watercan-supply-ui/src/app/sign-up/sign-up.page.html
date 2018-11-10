@@ -10,7 +10,8 @@
     <ion-col><ion-input formControlName="name" [(ngModel)]="user.name"    type="text"  placeholder="Name"></ion-input> </ion-col>    
   </ion-row>
   <ion-row>
-      <ion-col><ion-input  formControlName="mobileNo" [(ngModel)]="user.mobileNo"  type="number"  placeholder="Mobile No"></ion-input> </ion-col>
+      <ion-col><ion-input  formControlName="mobileNo" knifeOnlyNumbers  [(ngModel)]="user.mobileNo" 
+         type="text"  placeholder="Mobile No"></ion-input> </ion-col>
   </ion-row>
   <ion-row>
       <ion-col><ion-input formControlName="password" [(ngModel)]="user.password"  type="password"  placeholder="Password"></ion-input> </ion-col>
