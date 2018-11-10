@@ -11,13 +11,6 @@ export class SignUpPage implements OnInit {
 
   
   constructor(public toastController:ToastController,private formBuilder:FormBuilder) { 
-    //  this.signupForm=this.formBuilder.group({
-    //    name : ['',[Validators.required,Validators.pattern("^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$")]],
-    //    mobileNo : ['',[Validators.required,Validators.pattern(" /^\d+$/"),Validators.maxLength(10),Validators.minLength(10)]],
-    //    password : ['',Validators.required],
-    //    confirmPassword : ['',Validators.required]
-    //  });
-
     this.signupForm=this.formBuilder.group({
       name : ['',[Validators.required,Validators.pattern("^[a-zA-Z ]+$")]],
       mobileNo : ['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
@@ -45,24 +38,23 @@ export class SignUpPage implements OnInit {
       password : "",
       confirmPassword : ""
     }
-
-    //  this.signupForm=new FormGroup({
-    //     name : new FormControl(this.user.name,
-    //      [Validators.required,Validators.pattern("^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$")]),
-    //     mobileNo : new FormControl(this.user.mobileNo,
-    //        [Validators.required,Validators.pattern(" /^\d+$/"),Validators.maxLength(10),Validators.minLength(10)]),
-    //     password : new FormControl(this.user.password,
-    //      Validators.required),
-    //      confirmPassword : new FormControl(this.user.confirmPassword,
-    //        Validators.required)
-    //  });
-
   }
 
   submit(){
     console.log("submit called"+this.user.name);
     if(this.user.password===this.user.confirmPassword==false){
       this.errorToast("Password should match with confirm password");
+    }
+  }
+
+
+
+  clear(){
+    this.user={
+      name : "",
+      mobileNo : "",
+      password : "",
+      confirmPassword : ""
     }
   }
 

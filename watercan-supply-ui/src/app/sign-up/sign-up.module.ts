@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
+import {NgKnifeModule} from 'ng-knife'
 import { IonicModule } from '@ionic/angular';
 
 import { SignUpPage } from './sign-up.page';
@@ -20,6 +20,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    NgKnifeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SignUpPage]
