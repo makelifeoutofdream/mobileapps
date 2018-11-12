@@ -1,7 +1,9 @@
+import { jsonIgnore } from "json-ignore";
+
 export class User{
 
     name : string;
-    mobileNo : string ;
+    mobileNumber : string ;
     password : string;
-    confirmPassword : string;
+    @jsonIgnore() confirmPassword : string;
 }

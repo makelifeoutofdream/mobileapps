@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { User } from  '../model/User'
 import { ToastController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { SignupService } from '../signup.service';
+import { tap, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from '../message.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
@@ -10,7 +14,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class SignUpPage implements OnInit {
 
   
-  constructor(public toastController:ToastController,private formBuilder:FormBuilder) { 
+  constructor(private formBuilder:FormBuilder,
+    private service:SignupService,private messageService:MessageService) { 
     this.signupForm=this.formBuilder.group({
       name : ['',[Validators.required,Validators.pattern("^[a-zA-Z ]+$")]],
       mobileNo : ['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
@@ -21,20 +26,14 @@ export class SignUpPage implements OnInit {
 
   
 
-  async errorToast(message:string){
-    const toast=await this.toastController.create({
-      message : message,
-      duration : 2000
-    });
-    toast.present();
-  }
+  
 
   user : User;
   signupForm : FormGroup;
   ngOnInit() {
     this.user={
       name : "",
-      mobileNo : "",
+      mobileNumber : "",
       password : "",
       confirmPassword : ""
     }
@@ -43,16 +42,17 @@ export class SignUpPage implements OnInit {
   submit(){
     console.log("submit called"+this.user.name);
     if(this.user.password===this.user.confirmPassword==false){
-      this.errorToast("Password should match with confirm password");
+      this.messageService.errorToast("Password should match with confirm password");
+      return ;
     }
+    this.service.saveUser(this.user).subscribe(res=>{this.messageService.successToast("Success!")},
+    (err)=>{this.messageService.handleError(err)});
   }
-
-
 
   clear(){
     this.user={
       name : "",
-      mobileNo : "",
+      mobileNumber : "",
       password : "",
       confirmPassword : ""
     }
