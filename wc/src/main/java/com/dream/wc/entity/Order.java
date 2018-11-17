@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name = "water_can_order")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = -1327904164763460890L;
@@ -21,9 +21,6 @@ public class Order implements Serializable {
 	private Long id;
 	@Column(name = "quantity")
 	private Long quantity;
-	@ManyToOne
-	@JoinColumn(name = "agency_id")
-	private Agency agency;
 	@Column(name = "brand")
 	private String brand;
 	@Column(name = "can_type")
@@ -32,6 +29,11 @@ public class Order implements Serializable {
 	private Double amount;
 	@Column(name = "status")
 	private String status;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "agency_id")
+	private Agency agency;
 
 	public Long getId() {
 		return id;

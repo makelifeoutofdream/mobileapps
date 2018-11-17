@@ -26,18 +26,21 @@ public class Agency implements Serializable {
 	private String name;
 	@Column(name = "mobile_number")
 	private BigInteger mobileNumber;
+	
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Order> orders;
 
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<AgencyAddress> agencyOrders;
+	private List<AgencyAddress> agencyaAddress;
 
-	public List<AgencyAddress> getAgencyOrders() {
-		return agencyOrders;
+
+
+	public List<AgencyAddress> getAgencyaAddress() {
+		return agencyaAddress;
 	}
 
-	public void setAgencyOrders(List<AgencyAddress> agencyOrders) {
-		this.agencyOrders = agencyOrders;
+	public void setAgencyaAddress(List<AgencyAddress> agencyaAddress) {
+		this.agencyaAddress = agencyaAddress;
 	}
 
 	public Long getId() {
