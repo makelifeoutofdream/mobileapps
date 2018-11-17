@@ -14,31 +14,30 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "agency")
+public class Agency implements Serializable {
 
-	private static final long serialVersionUID = -4927762321410128614L;
+	private static final long serialVersionUID = -4299105636010971796L;
 	@Column(name = "id")
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(name = "name", nullable = true)
+	@Column(name = "name")
 	private String name;
-	@Column(name = "mobile_number", nullable = true, unique = true, length = 10)
+	@Column(name = "mobile_number")
 	private BigInteger mobileNumber;
-	@Column(name = "password", nullable = true)
-	private String password;
-	@Column(name = "status", columnDefinition = "tinyint(1) default 1")
-	private boolean status;
-	@OneToMany(mappedBy = "user",fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Address> address;
+	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Order> orders;
 
-	public List<Address> getAddress() {
-		return address;
+	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<AgencyAddress> agencyOrders;
+
+	public List<AgencyAddress> getAgencyOrders() {
+		return agencyOrders;
 	}
 
-	public void setAddress(List<Address> address) {
-		this.address = address;
+	public void setAgencyOrders(List<AgencyAddress> agencyOrders) {
+		this.agencyOrders = agencyOrders;
 	}
 
 	public Long getId() {
@@ -65,20 +64,12 @@ public class User implements Serializable {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public String getPassword() {
-		return password;
+	public List<Order> getOrders() {
+		return orders;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 }
