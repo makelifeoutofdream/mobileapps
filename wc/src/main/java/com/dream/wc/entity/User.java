@@ -12,9 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user")
+@Table(name="User",
+uniqueConstraints=@UniqueConstraint(columnNames= {"name","password"}))
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -4927762321410128614L;
