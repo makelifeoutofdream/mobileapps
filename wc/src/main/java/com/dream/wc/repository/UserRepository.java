@@ -8,5 +8,5 @@ import com.dream.wc.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	public User findUserByNameAndPassword(String name,String password);
+	public User findUserByMobileNumberAndPassword(Long mobileNumber,String password);
 }

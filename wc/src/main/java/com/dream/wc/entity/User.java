@@ -16,7 +16,11 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="User",
-uniqueConstraints=@UniqueConstraint(columnNames= {"name","password"}))
+uniqueConstraints= { 
+		@UniqueConstraint(name="UC_USER_MOBILE_NUMBER",columnNames= {"mobile_number"})
+
+}
+		)
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -4927762321410128614L;
@@ -26,8 +30,8 @@ public class User implements Serializable {
 	private Long id;
 	@Column(name = "name", nullable = true)
 	private String name;
-	@Column(name = "mobile_number", nullable = true, unique = true, length = 10)
-	private BigInteger mobileNumber;
+	@Column(name = "mobile_number", nullable = true, length = 10)
+	private Long mobileNumber;
 	@Column(name = "password", nullable = true)
 	private String password;
 	@Column(name = "status", columnDefinition = "tinyint(1) default 1")
@@ -59,11 +63,11 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public BigInteger getMobileNumber() {
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(BigInteger mobileNumber) {
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

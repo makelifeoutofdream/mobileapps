@@ -1,5 +1,11 @@
 package com.dream.wc.exception;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,6 +16,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ApplicationExceptionHandler {
 
+	private List<ExceptionMessage> exceptionCodeList;
+	
+	public ApplicationExceptionHandler() {
+		exceptionCodeList=Arrays.asList(ExceptionMessage.values());
+	}
+	
 	@ExceptionHandler
 	public ResponseEntity handleException(BusinessException exception ) {
 		HttpHeaders headers=new HttpHeaders();
@@ -18,11 +30,20 @@ public class ApplicationExceptionHandler {
 	}
 	
 	
-
+ 
 	@ExceptionHandler
 	public ResponseEntity handleException(DataIntegrityViolationException exception ) {
+		String errorText="Already Exists";
+		for(ExceptionMessage exp:exceptionCodeList){
+			
+			if(exception.getMostSpecificCause().getMessage().contains(exp.name())) {
+				errorText=ExceptionMessage.valueOf(exp.name()).message;
+			}
+		}
 		HttpHeaders headers=new HttpHeaders();
-		headers.add("errorText", "Already Exists");
+		headers.add("errorText", errorText);
 		return new ResponseEntity<>(headers, HttpStatus.CONFLICT);
 	}
+	
+
 }

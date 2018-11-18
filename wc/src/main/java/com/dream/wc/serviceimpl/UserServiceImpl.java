@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto getUserByNameAndPassword(String name, String password) {
-		return UserConverter.UserToUserDto(userRepository.findUserByNameAndPassword(name, password));
+	public UserDto getUserByMobileNumberAndPassword(Long number, String password) {
+		return UserConverter.UserToUserDto(userRepository.findUserByMobileNumberAndPassword(number, password));
 	}
 
 }

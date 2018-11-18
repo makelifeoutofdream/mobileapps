@@ -15,7 +15,7 @@ public class UserDto implements Serializable {
 	
 	private String name;
 	
-	private BigInteger mobileNumber;
+	private Long mobileNumber;
 	
 	private String password;
 	
@@ -37,11 +37,11 @@ public class UserDto implements Serializable {
 		this.name = name;
 	}
 
-	public BigInteger getMobileNumber() {
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(BigInteger mobileNumber) {
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

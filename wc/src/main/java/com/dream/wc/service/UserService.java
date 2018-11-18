@@ -13,5 +13,5 @@ public interface UserService {
 	
 	public UserDto getUserById(Long id);
 	
-	public UserDto getUserByNameAndPassword(String name,String password);
+	public UserDto getUserByMobileNumberAndPassword(Long number,String password);
 }

@@ -30,9 +30,9 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,path="/name/password")
-	public UserDto getUserByNameAndPassword(@PathVariable(name="name") String name, 
+	public UserDto getUserByMobileNumberAndPassword(@PathVariable(name="mobileNumber") Long mobileNumber, 
 		@PathVariable(name="password")	String password) {
-		return userService.getUserByNameAndPassword(name, password);
+		return userService.getUserByMobileNumberAndPassword(mobileNumber, password);
 	}
 	
 	
