@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaderResponse } from '@angular/common/http';
+import { ErrorResponse } from './model/ErrorResponse';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-
+  response : ErrorResponse;
   constructor(public toastController:ToastController) { }
 
 
@@ -30,8 +32,10 @@ export class MessageService {
     });
     toast.present();
   }
-  handleError(error: any){
-    console.log("error while calling service");
-    this.errorToast("There is a problem with the service.Please try again later");
+  handleError(error: HttpErrorResponse){
+    
+    console.log("error while calling service"+error.headers.get('errorText'));
+
+    this.errorToast(error.headers.get('errorText'));
   }
 }

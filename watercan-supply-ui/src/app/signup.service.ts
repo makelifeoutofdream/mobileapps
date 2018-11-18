@@ -14,7 +14,7 @@ export class SignupService {
 
   constructor(private httpClient : HttpClient) { }
   
-  userUrl = 'user'
+  userUrl = 'user/'
 
   saveUser(user : User):Observable<any>{
      return this.httpClient.post(environment.apiBaseUrl+this.userUrl,user);

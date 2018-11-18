@@ -28,6 +28,7 @@
     "json-ignore": "^0.4.0",
     "ng-knife": "^0.2.5",
     "rxjs": "6.2.2",
+    "typedjson-npm": "^0.1.7",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
