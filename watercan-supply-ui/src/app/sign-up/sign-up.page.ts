@@ -6,11 +6,18 @@ import { SignupService } from '../signup.service';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from '../message.service';
+import { Observable } from 'rxjs';
+
+interface UserData{
+  obj : Object
+}
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
 })
+
+
 export class SignUpPage implements OnInit {
 
   
@@ -45,8 +52,10 @@ export class SignUpPage implements OnInit {
       this.messageService.errorToast("Password should match with confirm password");
       return ;
     }
-    this.service.saveUser(this.user).subscribe(res=>{this.messageService.successToast("Success!")},
-    err=>this.messageService.handleError(err));
+    this.service.saveUser(this.user).subscribe(
+      data=>this.messageService.successToast("Success!"),
+      err=>this.messageService.handleError(err));
+    
    //catchError(this.messageService.handleError(err)));
     //(err)=>{this.messageService.handleError(err)});//toPromise().then(()=>this.messageService.successToast("Success!")).
    //  //

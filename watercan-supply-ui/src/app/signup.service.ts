@@ -3,7 +3,7 @@ import { User } from './model/User';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { map, catchError, tap } from 'rxjs/operators';
+
 
 
 
@@ -16,8 +16,9 @@ export class SignupService {
   
   userUrl = 'user/'
 
-  saveUser(user : User):Observable<any>{
-     return this.httpClient.post(environment.apiBaseUrl+this.userUrl,user);
+  saveUser(user : User) :Observable<any> {
+      
+    return this.httpClient.post(environment.apiBaseUrl+this.userUrl,user);
   }
   private extractData(res: Response) {
     let body = res;
@@ -25,7 +26,7 @@ export class SignupService {
   }
 
   getUsers():Observable<any>{
-    return this.httpClient.get(environment.apiBaseUrl+this.userUrl).pipe(map(this.extractData));
+    return this.httpClient.get(environment.apiBaseUrl+this.userUrl);
  }
 
   

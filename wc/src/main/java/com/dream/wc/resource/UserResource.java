@@ -3,6 +3,8 @@ package com.dream.wc.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +27,14 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,path="/")
-	public UserDto saveUSer(@RequestBody UserDto dto) {
-		return userService.saveUser(dto);
+	public ResponseEntity<UserDto> saveUSer(@RequestBody UserDto dto) {
+		return new ResponseEntity<UserDto>(userService.saveUser(dto),HttpStatus.ACCEPTED);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,path="/name/password")
-	public UserDto getUserByMobileNumberAndPassword(@PathVariable(name="mobileNumber") Long mobileNumber, 
+	public  ResponseEntity<UserDto> getUserByMobileNumberAndPassword(@PathVariable(name="mobileNumber") Long mobileNumber, 
 		@PathVariable(name="password")	String password) {
-		return userService.getUserByMobileNumberAndPassword(mobileNumber, password);
+		return  new ResponseEntity<UserDto>(userService.getUserByMobileNumberAndPassword(mobileNumber, password), HttpStatus.ACCEPTED) ;
 	}
 	
 	
