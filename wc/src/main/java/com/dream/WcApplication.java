@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(scanBasePackages="com.dream.wc")
 @EntityScan("com.dream.wc")
-@AutoConfigureRestDocs
 public class WcApplication {
 
 	public static void main(String[] args) {

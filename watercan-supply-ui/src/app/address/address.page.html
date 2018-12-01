@@ -1,0 +1,54 @@
+<ion-header >
+  <ion-toolbar> 
+    <ion-title >Address</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="addressForm" (ngSubmit)="submit()" class="form-body">
+  
+    <ion-row>
+      <ion-col>
+        <ion-list *ngFor="let details  of stateList" [(ngModel)]="address.state">
+          <ion-list-header>
+            State
+          </ion-list-header>
+            {{details.name}}
+        </ion-list>
+      </ion-col>    
+    </ion-row>
+
+    <ion-row>
+        <ion-col>
+          <ion-list *ngFor="let details  of stateList" [(ngModel)]="address.state">
+              {{details.name}}
+          </ion-list>
+        </ion-col>    
+      </ion-row>
+
+  <ion-row>
+    <ion-col><ion-input formControlName="address1" [(ngModel)]="address.address1"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+  </ion-row>
+  <ion-row>
+    <ion-col><ion-input formControlName="address2" [(ngModel)]="address.address2"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+  </ion-row>
+  <ion-row>
+    <ion-col><ion-input formControlName="street" [(ngModel)]="address.street"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+  </ion-row>
+  <ion-row>
+    <ion-col><ion-input formControlName="pincode" [(ngModel)]="address.pincode"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+  </ion-row>
+  <ion-row>
+    <ion-col><ion-input formControlName="city" [(ngModel)]="address.city"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+  </ion-row>
+ 
+  <ion-row>
+    <ion-col><ion-input formControlName="state" [(ngModel)]="address.state"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+  </ion-row>
+    <ion-button  expand="block" type="submit"  [disabled]="!signupForm.valid">Submit</ion-button> 
+    <ion-button  expand="block">Cancel</ion-button>
+  
+  </form> 
+</ion-content>
+
