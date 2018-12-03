@@ -6,6 +6,7 @@ import { SignupService } from '../signup.service';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from '../message.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 @Component({
@@ -16,19 +17,19 @@ import { MessageService } from '../message.service';
 export class LoginPage implements OnInit {
 
   constructor(public toastController:ToastController,private formBuilder:FormBuilder,
-    private service:SignupService,private messageService:MessageService) { 
+    private service:SignupService,private messageService:MessageService,private router: Router) { 
     this.loginForm=this.formBuilder.group({
-      name : ['',[Validators.required,Validators.pattern("^[a-zA-Z ]+$")]],
+      mobileNo : ['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
       password : ['',Validators.required]
       });
   }
-  users :any =[];
+ 
   user :User;
+  userResponse :User;
   loginForm : FormGroup;
 
   ngOnInit() {
-    this.getUsers();
-    this.user={
+      this.user={
       name : "",
       mobileNumber : "",
       password : "",
@@ -38,17 +39,23 @@ export class LoginPage implements OnInit {
   }
 
   getUsers() {
-    this.users =[];
-      this.service.getUsers().subscribe((data: {}) => {
-      this.users = data;
-    });
-  }
+    
+      this.service.getUsers(this.user.mobileNumber,this.user.password).subscribe(data=>{
+        this.userResponse=data;
+        console.log(this.userResponse);
+        if(this.userResponse!=null&&this.userResponse.mobileNumber==this.user.mobileNumber){
+          this.router.navigate(['/home']);
+        }else{
+          this.messageService.errorToast("INVALID MOBILENUMBER OR PASSWORD!");
+        }
+      });
+      
+    }
 
 
 
   submit(){
-    console.log(this.users)
-    console.log(this.user)
+    this.getUsers();
     }
   }
 

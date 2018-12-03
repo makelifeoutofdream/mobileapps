@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dream.wc.dto.UserDto;
@@ -31,9 +32,9 @@ public class UserResource {
 		return new ResponseEntity<UserDto>(userService.saveUser(dto),HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,path="/name/password")
-	public  ResponseEntity<UserDto> getUserByMobileNumberAndPassword(@PathVariable(name="mobileNumber") Long mobileNumber, 
-		@PathVariable(name="password")	String password) {
+	@RequestMapping(method=RequestMethod.GET,path="/getUserByMobileNumberAndPassword")
+	public  ResponseEntity<UserDto> getUserByMobileNumberAndPassword(@RequestParam(name="mobileNumber") Long mobileNumber, 
+			@RequestParam(name="password")	String password) {
 		return  new ResponseEntity<UserDto>(userService.getUserByMobileNumberAndPassword(mobileNumber, password), HttpStatus.ACCEPTED) ;
 	}
 	

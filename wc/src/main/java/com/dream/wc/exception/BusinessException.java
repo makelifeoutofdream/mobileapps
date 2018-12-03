@@ -2,6 +2,11 @@ package com.dream.wc.exception;
 
 public class BusinessException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	int code;
 	
 	String message;

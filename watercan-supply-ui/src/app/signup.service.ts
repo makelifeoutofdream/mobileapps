@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from './model/User';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
 
@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class SignupService {
-
+  user: User;
   constructor(private httpClient : HttpClient) { }
   
   userUrl = 'user/'
@@ -24,9 +24,14 @@ export class SignupService {
     let body = res;
     return body || { };
   }
+  
 
-  getUsers():Observable<any>{
-    return this.httpClient.get(environment.apiBaseUrl+this.userUrl);
+  getUsers(mobileNumber:string,password:string):Observable<any>{
+ 
+     let params = new HttpParams()
+                .set('mobileNumber', mobileNumber)
+                .set('password', password);
+    return this.httpClient.get(environment.apiBaseUrl+this.userUrl+'getUserByMobileNumberAndPassword',{params: params});
  }
 
   
