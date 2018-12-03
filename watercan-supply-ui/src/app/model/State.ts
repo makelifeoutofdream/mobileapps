@@ -4,5 +4,5 @@ export class State{
 
     name : any;
     
-    cities : City [];
+    cityList : City [];
 }

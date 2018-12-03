@@ -17,6 +17,7 @@ export class AddressPage implements OnInit {
   address : Address;
   stateList : State [] ;
   cityList : City [] ;
+  selectedState : State;
   constructor(private formBuilder: FormBuilder,private locationService:LocationService,
   private messageService : MessageService) { 
     this.addressForm=this.formBuilder.group({
@@ -28,7 +29,7 @@ export class AddressPage implements OnInit {
       state : ['',[Validators.required]],
     });
 
-    this.locationService.fetchStates().subscribe(data=>{
+    this.locationService.fetchStates('IN').subscribe(data=>{
       this.stateList=data
     },err=>this.messageService.handleError(err));
 
@@ -39,8 +40,9 @@ export class AddressPage implements OnInit {
   }
 
 
-  selectState(state : State){
-    this.cityList=state.cities;
+  populateCities(){
+    
+    this.cityList=this.selectedState.cityList;
   }
 
   clear (){
@@ -54,5 +56,9 @@ export class AddressPage implements OnInit {
       street : "",
       userId : 0
     };
+    this.selectedState={
+      name : "",
+      cityList : []
+    }
   }
 }

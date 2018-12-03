@@ -6,26 +6,28 @@
 
 
 <ion-content padding>
-  <form [formGroup]="addressForm" (ngSubmit)="submit()" class="form-body">
-  
+  <form [formGroup]="addressForm" >
+
+    
     <ion-row>
       <ion-col>
-        <ion-list *ngFor="let details  of stateList" [(ngModel)]="address.state">
-          <ion-list-header>
-            State
-          </ion-list-header>
-            {{details.name}}
-        </ion-list>
+        
+          <ion-item>
+              <ion-label>State</ion-label>
+             <ion-select formControlName="state" [(ngModel)]="selectedState" (ngModelChange)="populateCities()">
+                <ion-select-option *ngFor="let details of stateList" value="details" >
+                  {{details.name}}
+               </ion-select-option>
+             </ion-select>
+           </ion-item>
       </ion-col>    
     </ion-row>
 
-    <ion-row>
-        <ion-col>
-          <ion-list *ngFor="let details  of stateList" [(ngModel)]="address.state">
-              {{details.name}}
-          </ion-list>
-        </ion-col>    
-      </ion-row>
+    
+
+   
+
+
 
   <ion-row>
     <ion-col><ion-input formControlName="address1" [(ngModel)]="address.address1"    type="text"  placeholder="Name"></ion-input> </ion-col>    
@@ -46,7 +48,7 @@
   <ion-row>
     <ion-col><ion-input formControlName="state" [(ngModel)]="address.state"    type="text"  placeholder="Name"></ion-input> </ion-col>    
   </ion-row>
-    <ion-button  expand="block" type="submit"  [disabled]="!signupForm.valid">Submit</ion-button> 
+    <ion-button  expand="block" type="submit"  [disabled]="!addressForm.valid">Submit</ion-button> 
     <ion-button  expand="block">Cancel</ion-button>
   
   </form> 
