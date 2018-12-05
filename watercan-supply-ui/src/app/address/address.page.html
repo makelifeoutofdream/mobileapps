@@ -6,7 +6,7 @@
 
 
 <ion-content padding>
-  <form [formGroup]="addressForm" >
+  <form [formGroup]="addressForm" (ngSubmit)="submit()" class="form-body">
 
     
     <ion-row>
@@ -14,39 +14,47 @@
         
           <ion-item>
               <ion-label>State</ion-label>
-             <ion-select formControlName="state" [(ngModel)]="selectedState" (ngModelChange)="populateCities()">
-                <ion-select-option *ngFor="let details of stateList" value="details" >
-                  {{details.name}}
+             <ion-select formControlName="state" [(ngModel)]="sState" (ionChange)="populateCities(sState)">
+                <ion-select-option *ngFor="let state of stateList" [value]="state" >
+                  {{state.name}}
                </ion-select-option>
              </ion-select>
            </ion-item>
       </ion-col>    
     </ion-row>
 
+    <ion-row>
+      <ion-col>
+        
+          <ion-item>
+              <ion-label>City</ion-label>
+             <ion-select formControlName="city" [(ngModel)]="address.city" >
+                <ion-select-option *ngFor="let city of cityList" [value]="city.name" >
+                  {{city.name}}
+               </ion-select-option>
+             </ion-select>
+           </ion-item>
+      </ion-col>    
+    </ion-row>
     
 
    
 
-
-
   <ion-row>
-    <ion-col><ion-input formControlName="address1" [(ngModel)]="address.address1"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+    <ion-col><ion-input formControlName="address1" [(ngModel)]="address.address1"    
+      type="text"  placeholder="Addres1"></ion-input> </ion-col>    
   </ion-row>
   <ion-row>
-    <ion-col><ion-input formControlName="address2" [(ngModel)]="address.address2"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+    <ion-col><ion-input formControlName="address2" [(ngModel)]="address.address2"    
+      type="text"  placeholder="Addres2"></ion-input> </ion-col>    
   </ion-row>
   <ion-row>
-    <ion-col><ion-input formControlName="street" [(ngModel)]="address.street"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+    <ion-col><ion-input formControlName="street" [(ngModel)]="address.street"    
+      type="text"  placeholder="Street"></ion-input> </ion-col>    
   </ion-row>
   <ion-row>
-    <ion-col><ion-input formControlName="pincode" [(ngModel)]="address.pincode"    type="text"  placeholder="Name"></ion-input> </ion-col>    
-  </ion-row>
-  <ion-row>
-    <ion-col><ion-input formControlName="city" [(ngModel)]="address.city"    type="text"  placeholder="Name"></ion-input> </ion-col>    
-  </ion-row>
- 
-  <ion-row>
-    <ion-col><ion-input formControlName="state" [(ngModel)]="address.state"    type="text"  placeholder="Name"></ion-input> </ion-col>    
+    <ion-col><ion-input formControlName="pincode" [(ngModel)]="address.pincode"    
+      type="text"  placeholder="Pincode"></ion-input> </ion-col>    
   </ion-row>
     <ion-button  expand="block" type="submit"  [disabled]="!addressForm.valid">Submit</ion-button> 
     <ion-button  expand="block">Cancel</ion-button>

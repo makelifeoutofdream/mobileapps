@@ -33,9 +33,13 @@ export class MessageService {
     toast.present();
   }
   handleError(error: HttpErrorResponse){
-    
-    console.log("error while calling service"+error.headers.get('errorText'));
+    let errorMessage="There was an issue with service.Please try again later";
+    if(error.headers!=null && error.headers!=undefined){
+      if(error.headers.get('errorText')!=null && error.headers.get('errorText')!=undefined)
+      errorMessage=error.headers.get('errorText');
+    }
+    console.log("error while calling service"+errorMessage);
 
-    this.errorToast(error.headers.get('errorText'));
+    this.errorToast(errorMessage);
   }
 }

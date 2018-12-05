@@ -38,12 +38,7 @@ export class SignUpPage implements OnInit {
   user : User;
   signupForm : FormGroup;
   ngOnInit() {
-    this.user={
-      name : "",
-      mobileNumber : "",
-      password : "",
-      confirmPassword : ""
-    }
+    this.clear();
   }
 
   submit(){
@@ -63,10 +58,12 @@ export class SignUpPage implements OnInit {
 
   clear(){
     this.user={
+      id : "",
       name : "",
       mobileNumber : "",
       password : "",
-      confirmPassword : ""
+      confirmPassword : "",
+      address : []
     }
   }
 

@@ -5,6 +5,7 @@ import { State } from '../model/State';
 import { City } from '../model/City';
 import { LocationService } from '../location.service';
 import { MessageService } from '../message.service';
+import { AddressService } from '../address.service';
 
 @Component({
   selector: 'app-address',
@@ -17,9 +18,9 @@ export class AddressPage implements OnInit {
   address : Address;
   stateList : State [] ;
   cityList : City [] ;
-  selectedState : State;
+  public sState : any;
   constructor(private formBuilder: FormBuilder,private locationService:LocationService,
-  private messageService : MessageService) { 
+  private messageService : MessageService,private addressService : AddressService) { 
     this.addressForm=this.formBuilder.group({
       address1 : ['',[Validators.required]],
       address2 : [''],
@@ -39,10 +40,19 @@ export class AddressPage implements OnInit {
     this.clear ();
   }
 
+  // populateCities((this.selectedState)=>{
 
-  populateCities(){
+  // }); 
+  populateCities (sState){
+    if(sState!=null && sState!=undefined){
+      this.address.state=sState.name;
+      if(sState.cityList!=null && sState.cityList!=undefined){
+        this.cityList=sState.cityList;
+        console.log("cities"+this.cityList[0].name);
+      }  
+    }
     
-    this.cityList=this.selectedState.cityList;
+    
   }
 
   clear (){
@@ -56,9 +66,13 @@ export class AddressPage implements OnInit {
       street : "",
       userId : 0
     };
-    this.selectedState={
-      name : "",
-      cityList : []
-    }
+  }
+
+
+  submit(){
+    console.log("save address called");
+    this.addressService.saveAddress(localStorage.getItem('userId'),this.address).subscribe(
+      data=>{this.messageService.successToast("Address updated successfully")},err=>this.messageService.handleError(err)
+    );
   }
 }

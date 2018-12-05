@@ -15,7 +15,9 @@ public class AppConfig implements WebMvcConfigurer{
 	
 	 @Override
 	    public void addCorsMappings(CorsRegistry registry) {
-	        registry.addMapping("/**").exposedHeaders("errorText").allowedHeaders("errorText");
+		 registry.addMapping("/**").allowedOrigins("*").
+		 allowedMethods("GET", "POST","PUT","DELETE","OPTIONS").
+		 exposedHeaders("errorText,Access-Control-Allow-Origin").allowedHeaders("errorText,Access-Control-Allow-Origin");
 	        
 	    }
 	 

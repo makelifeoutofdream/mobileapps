@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dream.wc.dto.AddressDto;
 import com.dream.wc.dto.UserDto;
 import com.dream.wc.service.UserService;
 
 @RestController
 @RequestMapping("/user")
-public class UserResource {
+public class UserResource{
 
 	@Autowired
 	private UserService userService;
@@ -37,6 +38,9 @@ public class UserResource {
 			@RequestParam(name="password")	String password) {
 		return  new ResponseEntity<UserDto>(userService.getUserByMobileNumberAndPassword(mobileNumber, password), HttpStatus.ACCEPTED) ;
 	}
+	
+	
+	
 	
 	
 	

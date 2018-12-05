@@ -14,7 +14,7 @@ export class SignupService {
   user: User;
   constructor(private httpClient : HttpClient) { }
   
-  userUrl = 'user/'
+  userUrl = '/user/'
 
   saveUser(user : User) :Observable<any> {
       

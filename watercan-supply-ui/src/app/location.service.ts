@@ -21,4 +21,6 @@ export class LocationService {
       return this.httpClient.get(environment.apiBaseUrl+this.locationUrl+this.stateUrl,
         {params:params});
    }
+
+   
 }

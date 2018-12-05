@@ -30,10 +30,12 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
       this.user={
+      id : "",  
       name : "",
       mobileNumber : "",
       password : "",
-      confirmPassword : ""
+      confirmPassword : "",
+      address : []
     }
 
   }
@@ -44,7 +46,11 @@ export class LoginPage implements OnInit {
         this.userResponse=data;
         console.log(this.userResponse);
         if(this.userResponse!=null&&this.userResponse.mobileNumber==this.user.mobileNumber){
+          localStorage.setItem('userId',this.userResponse.id);
+          if(this.userResponse.address!=null && this.userResponse.address!=undefined && this.userResponse.address.length>0)
           this.router.navigate(['/home']);
+          else
+          this.router.navigate(['/address'])
         }else{
           this.messageService.errorToast("INVALID MOBILENUMBER OR PASSWORD!");
         }

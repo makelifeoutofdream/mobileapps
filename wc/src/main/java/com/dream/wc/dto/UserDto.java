@@ -2,6 +2,7 @@ package com.dream.wc.dto;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 public class UserDto implements Serializable {
 
@@ -20,6 +21,20 @@ public class UserDto implements Serializable {
 	private String password;
 	
 	private boolean status;
+	
+	List<AddressDto> address;
+	
+	
+
+	
+
+	public List<AddressDto> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<AddressDto> address) {
+		this.address = address;
+	}
 
 	public Long getId() {
 		return id;

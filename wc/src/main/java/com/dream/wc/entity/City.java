@@ -9,9 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="city")
+@Table(name="City")
 public class City implements Serializable{
 
 	/**
@@ -28,9 +29,9 @@ public class City implements Serializable{
 	@Column(name = "name")
 	private String name;
 	
-	@ManyToOne
-	@JoinColumn(name = "state_id")
-	private State state;
+
+	@Column(name = "state_id")
+	private Long stateId;
 
 	public Long getId() {
 		return id;
@@ -48,13 +49,15 @@ public class City implements Serializable{
 		this.name = name;
 	}
 
-	public State getState() {
-		return state;
+	public Long getStateId() {
+		return stateId;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public void setStateId(Long stateId) {
+		this.stateId = stateId;
 	}
+
+	
 	
 	
 

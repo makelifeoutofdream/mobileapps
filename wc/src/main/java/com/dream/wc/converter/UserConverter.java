@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
+import com.dream.wc.dto.AddressDto;
 import com.dream.wc.dto.UserDto;
 import com.dream.wc.entity.User;
 
@@ -20,6 +21,10 @@ public class UserConverter {
 		dto.setName(user.getName());
 		dto.setPassword(user.getPassword());
 		dto.setStatus(user.isStatus());
+		List<AddressDto> addressList=new ArrayList<>();
+		if(CollectionUtils.isEmpty(dto.getAddress())==false)
+		user.getAddress().forEach(addr->addressList.add(AddressConverter.addressToAddressDto(addr)));
+		dto.setAddress(addressList);
 		return dto;
 	}
 	
