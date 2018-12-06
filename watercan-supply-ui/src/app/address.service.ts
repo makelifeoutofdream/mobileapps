@@ -20,6 +20,6 @@ export class AddressService {
    saveAddress(userId : string,address : Address): Observable<any>{
     let params = new HttpParams().set('userId', userId);
     console.log("url"+this.addressUrl);
-    return  this.httpClient.post(environment.apiBaseUrl+this.addressUrl,{params:params});
+    return  this.httpClient.post(environment.apiBaseUrl+this.addressUrl,address,{params:params});
    }
 }
