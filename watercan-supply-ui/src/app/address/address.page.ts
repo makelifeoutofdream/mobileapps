@@ -6,6 +6,7 @@ import { City } from '../model/City';
 import { LocationService } from '../location.service';
 import { MessageService } from '../message.service';
 import { AddressService } from '../address.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-address',
@@ -20,7 +21,7 @@ export class AddressPage implements OnInit {
   cityList : City [] ;
   public sState : any;
   constructor(private formBuilder: FormBuilder,private locationService:LocationService,
-  private messageService : MessageService,private addressService : AddressService) { 
+  private messageService : MessageService,private addressService : AddressService,private router: Router) { 
     this.addressForm=this.formBuilder.group({
       address1 : ['',[Validators.required]],
       address2 : [''],
@@ -72,7 +73,10 @@ export class AddressPage implements OnInit {
   submit(){
     console.log("save address called");
     this.addressService.saveAddress(localStorage.getItem('userId'),this.address).subscribe(
-      data=>{this.messageService.successToast("Address updated successfully")},err=>this.messageService.handleError(err)
+      data=>{this.messageService.successToast("Address updated successfully");
+      this.router.navigate(['/home']);
+
+    },err=>this.messageService.handleError(err)
     );
   }
 }
