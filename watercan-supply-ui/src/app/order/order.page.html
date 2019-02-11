@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Order
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <!-- <form [formGroup]="orderForm" (ngSubmit)="submit()" class="form-body"> -->
+<form class="form-body">
+    
+    <ion-row>
+      <ion-col>
+        
+          <ion-item>
+             <ion-img src="../assets/img/bubble-top-water-can-250x250.jpg"></ion-img>
+           </ion-item>
+      </ion-col>    
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+          <ion-item>
+            <ion-label>Brand</ion-label>
+            <ion-select formControlName="brand">
+              <ion-select-option *ngFor="let bd of brandList" [value]="order.brand" >
+                {{bd}}
+             </ion-select-option>
+           </ion-select>
+           </ion-item>
+      </ion-col>    
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+          <ion-item>
+            <ion-label>Quantity</ion-label>
+            <ion-select formControlName="type_of_can">
+              <ion-select-option *ngFor="let qty of quantityList" [value]="order.type_of_can" >
+                {{qty}}
+             </ion-select-option>
+           </ion-select>
+           </ion-item>
+      </ion-col>    
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col><ion-input formControlName="quantity" knifeOnlyNumbers [(ngModel)]="order.quantity"    
+        type="number"  placeholder="No of can"></ion-input> 
+      </ion-col>    
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        
+          <ion-item>
+              <ion-label>Agency</ion-label>
+             <ion-select formControlName="agency" [(ngModel)]="order.agency_id" >
+                <ion-select-option *ngFor="let agency of agencyList" [value]="agency.id" >
+                  {{agency.name}}
+               </ion-select-option>
+             </ion-select>
+           </ion-item>
+       </ion-col>    
+    </ion-row>
+    
+    <ion-row>
+      <ion-col><ion-input [readonly]="true" formControlName="amount" knifeOnlyNumbers [(ngModel)]="order.amount"    
+        type="number"  placeholder="Amount to be paid"></ion-input> 
+      </ion-col>    
+    </ion-row>
+   
+
+ 
+  
+  </form> 
+</ion-content>

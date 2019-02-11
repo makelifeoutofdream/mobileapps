@@ -50,10 +50,6 @@ export class SignUpPage implements OnInit {
     this.service.saveUser(this.user).subscribe(
       data=>this.messageService.successToast("Success!"),
       err=>this.messageService.handleError(err));
-    
-   //catchError(this.messageService.handleError(err)));
-    //(err)=>{this.messageService.handleError(err)});//toPromise().then(()=>this.messageService.successToast("Success!")).
-   //  //
   }
 
   clear(){
