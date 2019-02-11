@@ -22,7 +22,7 @@ public class UserConverter {
 		dto.setPassword(user.getPassword());
 		dto.setStatus(user.isStatus());
 		List<AddressDto> addressList=new ArrayList<>();
-		if(CollectionUtils.isEmpty(dto.getAddress())==false)
+		if(CollectionUtils.isEmpty(user.getAddress())==false)
 		user.getAddress().forEach(addr->addressList.add(AddressConverter.addressToAddressDto(addr)));
 		dto.setAddress(addressList);
 		return dto;

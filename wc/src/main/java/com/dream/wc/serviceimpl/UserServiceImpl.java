@@ -2,6 +2,9 @@ package com.dream.wc.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,18 +58,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public UserDto saveUserAddress(Long userId, AddressDto addressDto) {
-		User user=userRepository.getOne(userId);
-		if(user==null) {
+		
+		Optional<User> user=userRepository.findById(userId);
+		if(user.isPresent()==false) {
 			throw new BusinessException(ErrorStatus.USER_NOT_FOUND.getCode(),
 					ErrorStatus.USER_NOT_FOUND.getMessage());
 		}
 		Address address=AddressConverter.addressDtoToAddress(addressDto);
-		if(CollectionUtils.isEmpty(user.getAddress())) {
-			user.setAddress(new ArrayList<>());
+		if(CollectionUtils.isEmpty(user.get().getAddress())) {
+			user.get().setAddress(new ArrayList<>());
 		}
-		user.getAddress().add(address);
-		return UserConverter.UserToUserDto(userRepository.save(user));
+		address.setUser(user.get());
+		user.get().getAddress().add(address);
+		return UserConverter.UserToUserDto(userRepository.save(user.get()));
 	}
 	
 	

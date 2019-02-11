@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>AddressList</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+      <ion-list *ngFor="let adr of addressList">
+        <ion-item>
+          <ion-label>
+            {{adr.address1}},{{adr.address2}},{{adr.state}},{{adr.city}},{{adr.district}},{{adr.pincode}}  
+          </ion-label>
+          </ion-item>
+    </ion-list>
+</ion-content>

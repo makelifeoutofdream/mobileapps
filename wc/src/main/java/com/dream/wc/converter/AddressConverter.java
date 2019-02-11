@@ -46,6 +46,7 @@ public class AddressConverter {
 		}
 		
 		AddressDto dto=new AddressDto();
+		dto.setId(address.getId());
 		dto.setAddress1(address.getAddress1());
 		dto.setAddress2(address.getAddress2());
 		dto.setCity(address.getCity());
