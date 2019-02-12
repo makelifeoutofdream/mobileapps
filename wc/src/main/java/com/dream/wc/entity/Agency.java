@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,7 +26,10 @@ public class Agency implements Serializable {
 	@Column(name = "name")
 	private String name;
 	@Column(name = "mobile_number")
-	private BigInteger mobileNumber;
+	private Long mobileNumber;
+	@Column(name = "password")
+	private String password;
+	
 	
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Order> orders;
@@ -33,7 +37,8 @@ public class Agency implements Serializable {
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<AgencyAddress> agencyaAddress;
 
-
+	@OneToOne
+	private RatePlan ratePlan;
 
 	public List<AgencyAddress> getAgencyaAddress() {
 		return agencyaAddress;
@@ -59,14 +64,6 @@ public class Agency implements Serializable {
 		this.name = name;
 	}
 
-	public BigInteger getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(BigInteger mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -75,4 +72,29 @@ public class Agency implements Serializable {
 		this.orders = orders;
 	}
 
+	public Long getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(Long mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public RatePlan getRatePlan() {
+		return ratePlan;
+	}
+
+	public void setRatePlan(RatePlan ratePlan) {
+		this.ratePlan = ratePlan;
+	}
+
+	
 }
