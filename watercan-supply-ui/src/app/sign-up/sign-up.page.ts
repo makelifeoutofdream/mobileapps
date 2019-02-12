@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from  '../model/User'
-import { ToastController } from '@ionic/angular';
+import { ToastController, MenuController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { SignupService } from '../signup.service';
 import { tap, catchError } from 'rxjs/operators';
@@ -22,7 +22,8 @@ export class SignUpPage implements OnInit {
 
   
   constructor(private formBuilder:FormBuilder,
-    private service:SignupService,private messageService:MessageService) { 
+    private service:SignupService,private messageService:MessageService,
+    private menu:MenuController) { 
     this.signupForm=this.formBuilder.group({
       name : ['',[Validators.required,Validators.pattern("^[a-zA-Z ]+$")]],
       mobileNo : ['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
@@ -38,6 +39,8 @@ export class SignUpPage implements OnInit {
   user : User;
   signupForm : FormGroup;
   ngOnInit() {
+    this.menu.swipeEnable(false);
+    this.menu.enable(false);
     this.clear();
   }
 

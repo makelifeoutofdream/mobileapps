@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from  '../model/User';
-import { ToastController } from '@ionic/angular';
+import { ToastController, MenuController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { SignupService } from '../signup.service';
 import { tap, catchError } from 'rxjs/operators';
@@ -17,7 +17,9 @@ import { Router, NavigationEnd } from '@angular/router';
 export class LoginPage implements OnInit {
 
   constructor(public toastController:ToastController,private formBuilder:FormBuilder,
-    private service:SignupService,private messageService:MessageService,private router: Router) { 
+    private service:SignupService,private messageService:MessageService,private router: Router,
+  private menu:MenuController) {
+   
     this.loginForm=this.formBuilder.group({
       mobileNo : ['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
       password : ['',Validators.required]
@@ -29,6 +31,8 @@ export class LoginPage implements OnInit {
   loginForm : FormGroup;
 
   ngOnInit() {
+    this.menu.swipeEnable(false);
+    this.menu.enable(false);
       this.user={
       id : "",  
       name : "",
