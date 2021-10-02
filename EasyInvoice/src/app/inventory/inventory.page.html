@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inventory</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Name</ion-label>
+      <ion-label>Quantity</ion-label>
+      <ion-label>Unit Price</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor= "let inv of inventories">
+      <ion-label>{{inv.name}}</ion-label>
+      <ion-label>{{inv.quantity}}</ion-label>
+      <ion-label>{{inv.unitPrice}}</ion-label>
+    </ion-item>
+  </ion-list>    
+  
+</ion-content>
+<ion-footer>
+  
+    
+      <ion-row style="float:right">
+        <ion-col >
+        <ion-button  color="primary" (click)="addNewInventory()">
+          <ion-icon name="add-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
+        
+    
+  
+  
+</ion-footer>

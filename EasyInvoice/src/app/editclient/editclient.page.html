@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Client</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item >
+          <ion-label position="floating">Name</ion-label>
+          <ion-input name="name" type="text" [(ngModel)]="customer.name" required></ion-input>
+        </ion-item>
+        </ion-col>
+        <ion-col size="6">
+        <ion-item >
+          <ion-label position="floating">Location</ion-label>
+          <ion-input name="location" type="text" [(ngModel)]="customer.location" required></ion-input>
+        </ion-item> 
+       </ion-col>
+      
+      
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size="12">
+        <ion-item >
+          <ion-label position="floating">Contact Person Name</ion-label>
+          <ion-input name="contactpersonname" type="text" [(ngModel)]="customer.contactPersonName" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size="12">
+        <ion-item >
+          <ion-label position="floating">Vat</ion-label>
+          <ion-input name="val" type="text" [(ngModel)]="customer.val" required></ion-input>
+        </ion-item>
+        </ion-col>
+        
+    </ion-row>
+  </ion-grid>
+  <ion-item-divider></ion-item-divider>
+  <ion-list>
+    <ion-item  *ngFor= "let item of customer.itemList">
+      <ion-grid>
+        <ion-row style="color : white ; background-color: blueviolet;">
+          <ion-col size=6>Item</ion-col>
+          <ion-col size=2>Price</ion-col>
+        </ion-row>
+      <ion-row style="background-color: aliceblue;">
+        <ion-col size=6>
+          <ion-input [(ngModel)]="item.name" disabled></ion-input>
+        </ion-col>
+        <ion-col size="2">
+          <ion-input [(ngModel)]="item.unitPrice"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>
+<ion-footer>
+  <ion-row style="float:right">
+    <ion-col>
+      <ion-button color="Primary" (click)="updateClient()">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

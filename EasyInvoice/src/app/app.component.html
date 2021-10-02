@@ -1,0 +1,42 @@
+
+<ion-app >
+  
+  <ion-tabs id="tabs"  >
+    <ion-tab-bar slot="bottom" *ngIf="showTabs">
+      
+       <ion-tab-button tab="printersettings" >
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label>Printer Settings</ion-label>
+
+      </ion-tab-button> 
+      
+      <ion-tab-button tab="client">
+        <ion-icon name="people"></ion-icon>
+        <ion-label>Customer</ion-label>
+        
+      </ion-tab-button>
+
+  
+      <ion-tab-button tab="invoice">
+        <ion-icon name="calculator"></ion-icon>
+        <ion-label>Invoice</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="inventory">
+        <ion-icon name="bag"></ion-icon>
+        <ion-label>Inventory</ion-label>
+      </ion-tab-button>
+  
+     <!-- <ion-tab-button tab="project">
+        <ion-icon name="business"></ion-icon>
+        <ion-label>Project</ion-label>
+      </ion-tab-button>
+
+
+      <ion-tab-button tab="myteam">
+        <ion-icon name="people-circle"></ion-icon>
+        <ion-label>My Team</ion-label>
+      </ion-tab-button>
+      -->
+    </ion-tab-bar>
+  </ion-tabs></ion-app>
