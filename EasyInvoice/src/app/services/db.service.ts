@@ -9,6 +9,8 @@ import { ToastserviceService } from './toastservice.service';
 import { Storage } from '@ionic/storage-angular';
 import { Inventory } from './inventory';
 import { Invoice } from './invoice';
+import { v4 as uuidv4 } from 'uuid';
+import { Profile } from './profile';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +21,7 @@ export class DbService {
   private inventoryKey="inventories";
   private invoiceKey="invoices";
   private invoiceNumberKey="invoiceNumber";
+  private profileKey="profile";
   private invoices : Invoice[] ;
   private inventory : Inventory;
   private inventories : Inventory[];
@@ -47,6 +50,7 @@ export class DbService {
       if(this.users==undefined || this.users==null){
         this.users=[];
       }
+      user.id=uuidv4();
       this.users.push(user);
       const result =await this.storage.set(this.usersKey,JSON.stringify(this.users));
       console.log('user signed up successfully'+user);
@@ -79,6 +83,7 @@ export class DbService {
       if(this.customers==null || this.customers==undefined){
         this.customers=[];
       }
+      customer.id=uuidv4();
       this.customers.push(customer);
       this.storage.set(this.customersKey,JSON.stringify(this.customers) );
       return true;
@@ -94,8 +99,7 @@ export class DbService {
     try{
       const value=await this.storage.get(this.customersKey);
       this.customers=JSON.parse(value);
-      let cust=this.customers.find(this.findIndexToUpdate,customer.name);
-      let index=this.customers.indexOf(cust);
+      var index = this.customers.findIndex(i => i.id == customer.id);
       this.customers[index]=customer;
       this.storage.set(this.customersKey,JSON.stringify(this.customers) );
       return true;
@@ -115,6 +119,16 @@ export class DbService {
     }
   }
 
+  async saveAllInventories(list : Inventory[]) : Promise<any>{
+    try{
+      const value=await this.storage.get(this.inventoryKey);
+      this.storage.set(this.inventoryKey,JSON.stringify(list) );
+      return true;
+    }catch(reason){
+      console.log(reason);
+      return false;
+    }
+  }
   async createOrUpdateInventory(inventory :Inventory) : Promise<any>{
     try{
       const value=await this.storage.get(this.inventoryKey);
@@ -122,7 +136,13 @@ export class DbService {
       if(this.inventories==null || this.inventories==undefined){
         this.inventories=[];
       }
-      this.inventories.push(inventory);
+      if(inventory.id==null  || inventory.id==undefined){
+        inventory.id=uuidv4();
+        this.inventories.push(inventory);
+      }else{
+        var index = this.inventories.findIndex(i => i.id == inventory.id);
+        this.inventories[index]=inventory;
+      }
       this.storage.set(this.inventoryKey,JSON.stringify(this.inventories) );
       return true;
     }catch(reason){
@@ -161,6 +181,7 @@ export class DbService {
       if(this.invoices==null || this.invoices==undefined){
         this.invoices=[];
       }
+      invoice.id=uuidv4();
       this.invoices.push(invoice);
       this.storage.set(this.invoiceKey,JSON.stringify(this.invoices) );
       return true;
@@ -171,7 +192,7 @@ export class DbService {
   }
 
   async incrementInvoiceNumber():Promise<any>{
-    let invoiceNumber; 
+    let invoiceNumber : number; 
     invoiceNumber =await this.storage.get(this.invoiceNumberKey);
     if(invoiceNumber ==null || invoiceNumber==undefined){
       invoiceNumber=0;
@@ -188,5 +209,32 @@ export class DbService {
     return invoiceNumber;
     
   }
+
+
+async createOrUpdateProfile(userProfile : Profile) : Promise<Profile>{
+  try{
+   
+    if(userProfile.id==null || userProfile.id==undefined){
+      userProfile.id=uuidv4();
+    }
+    this.storage.set(this.profileKey,JSON.stringify(userProfile) );
+    return userProfile;
+  }catch(reason){
+    console.log(reason);
+    return null;
+  }
+}
+
+async getProfile() : Promise<Profile>{
+  try{
+    let value=await this.storage.get(this.profileKey );
+    let profile=JSON.parse(value);
+    return profile;
+  }catch(reason){
+    console.log(reason);
+    new Object();
+  }
+}
+
 }
 

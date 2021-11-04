@@ -250,7 +250,7 @@
                 _this.loginUser = data;
                 _this.app.showTabs = true;
 
-                _this.navCtrl.navigateRoot('client');
+                _this.navCtrl.navigateRoot('inventory');
               } else {
                 _this.tostService.presentToast("Incorrect username or password");
               }

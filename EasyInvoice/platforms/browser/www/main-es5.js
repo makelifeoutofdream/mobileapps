@@ -421,31 +421,31 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/platform-browser */
       39075);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -469,7 +469,7 @@
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! @angular/common/http */
       91841);
       /* harmony import */
@@ -481,7 +481,7 @@
       /* harmony import */
 
 
-      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! @ionic/storage-angular */
       54925);
       /* harmony import */
@@ -496,24 +496,37 @@
       var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic-native/bluetooth-serial/ngx */
       28078);
+      /* harmony import */
+
+
+      var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @ionic-native/file/ngx */
+      20138);
+      /* harmony import */
+
+
+      var _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! @ionic-native/social-sharing/ngx */
+      24276); //import { Papa } from 'ngx-papaparse';
+
 
       var _AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
       };
 
-      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.NgModule)({
+      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_9__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpClientModule, _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_11__.IonicStorageModule.forRoot({
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClientModule, _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_13__.IonicStorageModule.forRoot({
           name: '_myDb',
           driverOrder: [_ionic_storage__WEBPACK_IMPORTED_MODULE_4__.Drivers.IndexedDB, _ionic_storage__WEBPACK_IMPORTED_MODULE_4__.Drivers.LocalStorage]
         })],
         providers: [{
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
-        }, _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_2__.SQLite, _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_5__.BluetoothSerial, _ionic_native_sqlite_porter_ngx__WEBPACK_IMPORTED_MODULE_3__.SQLitePorter, {
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_14__.RouteReuseStrategy,
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicRouteStrategy
+        }, _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_2__.SQLite, _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_5__.BluetoothSerial, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_6__.File, _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_7__.SocialSharing, _ionic_native_sqlite_porter_ngx__WEBPACK_IMPORTED_MODULE_3__.SQLitePorter, {
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_14__.RouteReuseStrategy,
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicRouteStrategy
         }],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent]
       })], _AppModule);

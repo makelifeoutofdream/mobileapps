@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { NewinvoicePageRoutingModule } from './newinvoice-routing.module';
 
 import { NewinvoicePage } from './newinvoice.page';
-
+import { IonicSelectableModule } from 'ionic-selectable';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NewinvoicePageRoutingModule
+    NewinvoicePageRoutingModule,
+    IonicSelectableModule
   ],
   declarations: [NewinvoicePage]
 })

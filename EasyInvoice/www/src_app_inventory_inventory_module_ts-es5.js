@@ -265,6 +265,17 @@
           value: function ionViewWillEnter() {
             this.getAllInventories();
           }
+        }, {
+          key: "editInventory",
+          value: function editInventory(inv) {
+            var navigationExtras = {
+              queryParams: {
+                inventory: inv
+              }
+            };
+            console.log("selected inventory" + inv);
+            this.navCtrl.navigateRoot('newinventory', navigationExtras);
+          }
         }]);
 
         return InventoryPage;
@@ -320,7 +331,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Inventory</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>\n      <ion-label>Name</ion-label>\n      <ion-label>Quantity</ion-label>\n      <ion-label>Unit Price</ion-label>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of inventories\">\n      <ion-label>{{inv.name}}</ion-label>\n      <ion-label>{{inv.quantity}}</ion-label>\n      <ion-label>{{inv.unitPrice}}</ion-label>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Inventory</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>\n      <ion-label>Name</ion-label>\n      <ion-label>Quantity</ion-label>\n      <ion-label>Unit Price</ion-label>\n      <ion-label>Purchase Price</ion-label>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of inventories\" (click)=\"editInventory(inv)\">\n      <ion-label>{{inv.name}}</ion-label>\n      <ion-label>{{inv.quantity}}</ion-label>\n      <ion-label>{{inv.unitPrice}}</ion-label>\n      <ion-label>{{inv.purchasePrice}}</ion-label>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
       /***/
     }
   }]);

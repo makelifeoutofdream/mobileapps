@@ -37,35 +37,19 @@ export class InvoicePage implements OnInit {
   }
 
   download(){
-    this.prepareDataForDownload().then(data=>{
-      this.dataService.exportToExcel(data,'Invoices');
-    })
-  }
-
-  async prepareDataForDownload() : Promise<any>{
-      let downloadList =new Array();
-    
+    let invoiceDataList=new Array();
     for(let inv of this.invoiceList){
-        for(let item of inv.invoiceItems){
-          let invoiceDownload : any={
-            Date : Date,Invoice_Number : String,Item_Name : String,
-            Unit_Price : Number,Quantity : Number,Customer : String,
-            Tax : Number,Total : Number
-          };
-          invoiceDownload.Date=inv.invoiceDate;
-          invoiceDownload.Invoice_Number=inv.invoiceNumber;
-          invoiceDownload.Item_Name=item.name;
-          invoiceDownload.Unit_Price=item.unitPrice;
-          invoiceDownload.Quantity=item.quantity;
-          invoiceDownload.Customer=inv.customer.name;
-          invoiceDownload.Tax=inv.tax;
-          invoiceDownload.Total=inv.total;
-          downloadList.push(invoiceDownload);
-        }
+      for(let itm of inv.invoiceItems){
+        let invoiceData ={InvoiceNumber : inv.invoiceNumber,InvoiceDate:inv.invoiceDate,Customer:inv.customer.name,Item:itm.name,UnitPrice:itm.unitPrice,Quantity:itm.quantity,Tax:inv.tax,Total:inv.total};
+        invoiceDataList.push(invoiceData);
+      }
       
-
-    }
-    return downloadList;
+    } 
+     // this.dataService.downloadCcSV(this.invoiceList,'invoices.csv');
+     this.dataService.exportToExcel(invoiceDataList,'invoices.xlsx');
+     
+    
   }
+
   
 }

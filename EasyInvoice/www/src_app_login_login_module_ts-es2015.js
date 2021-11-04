@@ -123,7 +123,7 @@ let LoginPage = class LoginPage {
             if (data != null) {
                 this.loginUser = data;
                 this.app.showTabs = true;
-                this.navCtrl.navigateRoot('client');
+                this.navCtrl.navigateRoot('inventory');
             }
             else {
                 this.tostService.presentToast("Incorrect username or password");

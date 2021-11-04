@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Report</ion-title>
+    <ion-buttons slot="start">
+        <ion-menu-button menu="mainmenu"> 
+
+        </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col size="4">
+      <ion-item>
+      <ion-select style="margin-top: 2%;height: 30px;margin-right: 4%;"  [(ngModel)]="selectedCustomer" placeholder="Customer">
+        <ion-select-option *ngFor="let cus of customerList" [value]="cus">{{cus.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item>
+        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate" placeholder="Start Date"></ion-datetime>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="4">
+      <ion-item>
+        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" placeholder="End Date"></ion-datetime>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row style="float:right">
+    <ion-button style="padding-right: 4px;" (click)="filterInvoices()">Search</ion-button>
+  </ion-row>
+  <ion-item-divider></ion-item-divider>
+  
+  <ion-list>
+    <ion-row>
+      <ion-col size="3">Inv No</ion-col>
+      <ion-col size="5">Customer</ion-col>
+      <ion-col size="4">Total</ion-col>
+    </ion-row>
+    <ion-item *ngFor= "let inv of filterInvoiceList" (click)="viewInvoice(inv)">
+      
+        
+        
+          <ion-col size="3">{{inv.invoiceNumber}}</ion-col>
+          <ion-col size="5">{{inv.customer.name}}</ion-col>
+          <ion-col size="4">{{inv.total}}</ion-col>
+       
+     
+    </ion-item>
+  </ion-list>    
+
+</ion-content>
+<ion-footer>
+  
+    
+      <ion-row style="float:right">
+        <ion-col >
+          <ion-button ion-button  color="primary" (click)="download()">
+            <ion-icon name="mail"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+        
+    
+  
+  
+</ion-footer>

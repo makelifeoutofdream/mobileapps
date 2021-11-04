@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { DbService } from '../services/db.service';
 import { Inventory } from '../services/inventory';
@@ -32,5 +33,13 @@ export class InventoryPage implements OnInit {
 
   ionViewWillEnter(){
     this.getAllInventories();
+  }
+
+  editInventory(inv){
+    let navigationExtras : NavigationExtras ={
+      queryParams : {inventory : inv}
+    };
+  console.log("selected inventory"+inv);
+  this.navCtrl.navigateRoot('newinventory',navigationExtras);    
   }
 }

@@ -17,23 +17,23 @@ export class EditclientPage implements OnInit {
     public navCtrl:NavController , private route : ActivatedRoute) { }
 
   ngOnInit() {
+    this.customer={id:null,name:"",location:"",contactPersonName:"",vat:null,itemList:[]}
   }
   ionViewWillEnter(){
     
     this.route.queryParams.subscribe(params=>{
       this.customer=params['customer'];
     })
-    console.log('selected customer'+this.customer);
-    
-    
-    
-
-
+    console.log('selected customer'+this.customer.name);
   }
 
   updateClient(){
     
-    this.dbService.UpdateCustomer(this.customer).then(data=>this.toastService.presentToast("Customer updated successfully"))
+    this.dbService.UpdateCustomer(this.customer).then(res=>
+      {
+        this.toastService.presentToast("Customer updated successfully");
+        this.navCtrl.navigateRoot('client');
+  })
     .catch(reason=>{
       this.toastService.presentToast("Customer update failed");
       console.log(reason);

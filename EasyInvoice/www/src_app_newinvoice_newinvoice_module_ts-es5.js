@@ -145,13 +145,19 @@
       var _newinvoice_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! ./newinvoice.page */
       65349);
+      /* harmony import */
+
+
+      var ionic_selectable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! ionic-selectable */
+      93319);
 
       var _NewinvoicePageModule = function NewinvoicePageModule() {
         _classCallCheck(this, NewinvoicePageModule);
       };
 
       _NewinvoicePageModule = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.NgModule)({
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule, _newinvoice_routing_module__WEBPACK_IMPORTED_MODULE_0__.NewinvoicePageRoutingModule],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule, _newinvoice_routing_module__WEBPACK_IMPORTED_MODULE_0__.NewinvoicePageRoutingModule, ionic_selectable__WEBPACK_IMPORTED_MODULE_7__.IonicSelectableModule],
         declarations: [_newinvoice_page__WEBPACK_IMPORTED_MODULE_1__.NewinvoicePage]
       })], _NewinvoicePageModule);
       /***/
@@ -203,13 +209,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -236,24 +242,34 @@
       var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ../services/toastservice.service */
       48236);
+      /* harmony import */
+
+
+      var _validation_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ../validation.service */
+      62813);
 
       var _NewinvoicePage = /*#__PURE__*/function () {
-        function NewinvoicePage(dbService, tostService, navCtrl, printService) {
+        function NewinvoicePage(dbService, tostService, navCtrl, printService, validationService) {
           _classCallCheck(this, NewinvoicePage);
 
           this.dbService = dbService;
           this.tostService = tostService;
           this.navCtrl = navCtrl;
           this.printService = printService;
+          this.validationService = validationService;
         }
 
         _createClass(NewinvoicePage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
             this.invoice = {
+              id: null,
               invoiceNumber: "",
               invoiceDate: new Date(),
+              invoiceDateString: "",
               customer: {
+                id: null,
                 contactPersonName: "",
                 location: "",
                 name: "",
@@ -268,65 +284,126 @@
         }, {
           key: "ionViewWillEnter",
           value: function ionViewWillEnter() {
+            var _this = this;
+
+            this.applyVat = true;
+            this.dbService.getProfile().then(function (data) {
+              _this.profile = data;
+            });
             this.resetInvoiceForm();
+          }
+        }, {
+          key: "filterProducts",
+          value: function filterProducts(evt) {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var searchTerm;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      this.product = {
+                        id: null,
+                        name: "",
+                        unitPrice: null,
+                        billingUnitPrice: null,
+                        quantity: null,
+                        selected: null,
+                        purchaseUnitPrice: null
+                      };
+                      this.products = this.productsBackup;
+                      searchTerm = evt.srcElement.value;
+
+                      if (searchTerm) {
+                        _context.next = 5;
+                        break;
+                      }
+
+                      return _context.abrupt("return");
+
+                    case 5:
+                      this.products = this.products.filter(function (currentProduct) {
+                        if (currentProduct.name && searchTerm) {
+                          return currentProduct.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+                        }
+                      });
+
+                    case 6:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
+        }, {
+          key: "productSelected",
+          value: function productSelected(evt) {
+            this.selectedProducts = evt.value;
+            this.invoice.invoiceItems = this.selectedProducts;
           }
         }, {
           key: "resetInvoiceForm",
           value: function resetInvoiceForm() {
-            var _this = this;
+            var _this2 = this;
 
-            var inventory;
+            this.productsBackup = new Array();
+            this.products = new Array();
             this.invoice = new _services_invoice__WEBPACK_IMPORTED_MODULE_3__.Invoice();
+            this.dbService.incrementInvoiceNumber().then(function (data) {
+              _this2.invoice.invoiceNumber = data;
+            });
             this.invoice.invoiceDate = new Date();
             this.invoice.invoiceItems = new Array();
-            this.dbService.getInvoiceNumber().then(function (data) {
-              _this.invoice.invoiceNumber = data;
+            this.selectedProducts = new Array(); //this.dbService.getInvoiceNumber().then(data=>{
+            //this.invoice.invoiceNumber=data;
+            //});
+
+            this.dbService.getAllCustomers().then(function (data) {
+              return _this2.customerList = data;
             });
-            this.dbService.getAllInventories().then(function (data) {
-              var _iterator = _createForOfIteratorHelper(data),
+          }
+        }, {
+          key: "populateCustomerProducts",
+          value: function populateCustomerProducts() {
+            if (this.invoice.customer != null && this.invoice.customer != undefined && this.invoice.customer.itemList != null && this.invoice.customer.itemList != undefined) {
+              console.log("populateCustomerProducts");
+              var inventory;
+
+              var _iterator = _createForOfIteratorHelper(this.invoice.customer.itemList),
                   _step;
 
               try {
                 for (_iterator.s(); !(_step = _iterator.n()).done;) {
                   var inv = _step.value;
                   inventory = {
+                    id: inv.id,
                     name: inv.name,
                     unitPrice: inv.unitPrice,
                     billingUnitPrice: null,
                     quantity: null,
-                    InvoiceItem: []
+                    InvoiceItem: [],
+                    purchasePrice: inv.purchasePrice
                   };
-
-                  _this.invoice.invoiceItems.push(inventory);
+                  this.products.push(inventory);
+                  this.productsBackup.push(inventory);
                 }
               } catch (err) {
                 _iterator.e(err);
               } finally {
                 _iterator.f();
               }
-
-              _this.dbService.getAllCustomers().then(function (data) {
-                return _this.customerList = data;
-              });
-            })["catch"](function (reason) {
-              console.log(reason);
-
-              _this.tostService.presentToast("Failed to fetch the inventory items");
-            });
+            }
           }
         }, {
           key: "calculateInvoiceTotal",
-          value: function calculateInvoiceTotal() {
+          value: function calculateInvoiceTotal(evt) {
             this.invoice.total = 0;
-            var selectedItems = this.invoice.invoiceItems.filter(function (l) {
-              return l.selected;
-            });
 
             if (undefined == this.invoice.total || null == this.invoice.total) {
               this.invoice.total = 0;
             }
 
-            var _iterator2 = _createForOfIteratorHelper(selectedItems),
+            var _iterator2 = _createForOfIteratorHelper(this.invoice.invoiceItems),
                 _step2;
 
             try {
@@ -341,22 +418,54 @@
               _iterator2.f();
             }
 
-            this.invoice.tax = this.invoice.customer.vat * this.invoice.total / 100;
-            this.invoice.total = this.invoice.total + this.invoice.tax;
+            if (this.applyVat) {
+              if (this.profile != null && this.profile != undefined && this.profile.vat != null && this.profile.vat != undefined) {
+                this.invoice.tax = this.profile.vat * this.invoice.total / 100;
+                this.invoice.total = this.invoice.total + this.invoice.tax;
+              }
+            }
           }
         }, {
           key: "submitBill",
           value: function submitBill() {
-            var _this2 = this;
+            var _this3 = this;
 
+            this.invoice.invoiceDate.setHours(0, 0, 0, 0);
             this.dbService.createOrUpdateInvoice(this.invoice).then(function (data) {
-              _this2.tostService.presentToast("Bill submitted successfully");
+              _this3.dbService.getAllInventories().then(function (stocks) {
+                var stockList = stocks;
 
-              _this2.dbService.incrementInvoiceNumber().then(function (data) {
-                _this2.invoice.invoiceNumber = data;
+                var _iterator3 = _createForOfIteratorHelper(_this3.invoice.invoiceItems),
+                    _step3;
+
+                try {
+                  var _loop = function _loop() {
+                    var itm = _step3.value;
+                    index = stockList.findIndex(function (i) {
+                      return i.id == itm.id;
+                    });
+                    stockList[index].quantity = stockList[index].quantity - itm.quantity;
+                  };
+
+                  for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                    var index;
+
+                    _loop();
+                  }
+                } catch (err) {
+                  _iterator3.e(err);
+                } finally {
+                  _iterator3.f();
+                }
+
+                _this3.dbService.saveAllInventories(stockList).then(function (res) {
+                  _this3.tostService.presentToast("Bill submitted successfully");
+
+                  _this3.navCtrl.navigateRoot('invoice');
+                });
               });
             })["catch"](function (reason) {
-              _this2.tostService.presentToast("Failed to submit bill");
+              _this3.tostService.presentToast("Failed to submit bill");
 
               console.log(reason);
             });
@@ -366,24 +475,29 @@
           value: function printBill() {
             var data = '---------------------RECEIPT-----------------------\n\n\nDate :' + this.invoice.invoiceDate + '\nInvoice Number :' + this.invoice.invoiceNumber + '\nCustomer:' + this.invoice.customer + '/n/n';
 
-            var _iterator3 = _createForOfIteratorHelper(this.invoice.invoiceItems),
-                _step3;
+            var _iterator4 = _createForOfIteratorHelper(this.invoice.invoiceItems),
+                _step4;
 
             try {
-              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                var itm = _step3.value;
+              for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                var itm = _step4.value;
                 data = data + 'Item Name :' + itm.name + '  Price :' + itm.unitPrice + '  Quantity :' + itm.quantity;
               }
             } catch (err) {
-              _iterator3.e(err);
+              _iterator4.e(err);
             } finally {
-              _iterator3.f();
+              _iterator4.f();
             }
 
             data = data + '-----------------------------------------------------------------------';
             data = data + '\n Vat Applied :' + this.invoice.customer.vat;
             data = data + '\n Total :' + this.invoice.total;
             this.printService.sendToBluetoothPrinter(this.printService.selectedPrinter, data);
+          }
+        }, {
+          key: "numericOnly",
+          value: function numericOnly(evt) {
+            return this.validationService.numericOnly(evt);
           }
         }]);
 
@@ -396,13 +510,15 @@
         }, {
           type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_5__.ToastserviceService
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.NavController
         }, {
           type: _services_print_service__WEBPACK_IMPORTED_MODULE_4__.PrintService
+        }, {
+          type: _validation_service__WEBPACK_IMPORTED_MODULE_6__.ValidationService
         }];
       };
 
-      _NewinvoicePage = (0, tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
+      _NewinvoicePage = (0, tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
         selector: 'app-newinvoice',
         template: _raw_loader_newinvoice_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_newinvoice_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -444,6 +560,71 @@
     },
 
     /***/
+    62813:
+    /*!***************************************!*\
+      !*** ./src/app/validation.service.ts ***!
+      \***************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "ValidationService": function ValidationService() {
+          return (
+            /* binding */
+            _ValidationService
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+
+      var _ValidationService = /*#__PURE__*/function () {
+        function ValidationService() {
+          _classCallCheck(this, ValidationService);
+        }
+
+        _createClass(ValidationService, [{
+          key: "numericOnly",
+          value: function numericOnly(event) {
+            var pattern = /^([0-9])$/;
+            var result = pattern.test(event.key);
+            return result;
+          }
+        }]);
+
+        return ValidationService;
+      }();
+
+      _ValidationService.ctorParameters = function () {
+        return [];
+      };
+
+      _ValidationService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
+        providedIn: 'root'
+      })], _ValidationService);
+      /***/
+    },
+
+    /***/
     89851:
     /*!*************************************************!*\
       !*** ./src/app/newinvoice/newinvoice.page.scss ***!
@@ -475,7 +656,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>New Invoice</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"row\"></div>\n    <ion-grid class=\"ion-margin-top\">\n\n      <ion-row>\n        <ion-col size=\"6\" >  \n              <ion-row >\n                <ion-label style=\"margin-left: 18px;\" color=\"primary\" >Invoice Number</ion-label>\n              </ion-row>\n              <ion-row >\n                <ion-label position=\"floating\" style=\"margin-left: 18px;\" >{{invoice.invoiceNumber}}</ion-label>\n              </ion-row>\n\n            \n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-row>\n                <ion-label color=\"primary\"  >Date Of Issue</ion-label>\n              </ion-row>\n              <ion-row>\n                <ion-label position=\"floating\">{{invoice.invoiceDate|date : 'yyyy-MM-dd'}}</ion-label>\n              </ion-row>\n\n            \n          \n          \n        </ion-col>\n      </ion-row>\n      <ion-row style=\"margin-top: 7px;\">\n        <ion-col>\n          \n            <ion-select [(ngModel)]=\"invoice.customer\" placeholder=\"Select Customer\">\n              <ion-select-option *ngFor=\"let cus of customerList\" [value]=\"cus\">{{cus.name}}</ion-select-option>\n          </ion-select>\n          \n        \n      </ion-col>\n      </ion-row>\n</ion-grid>\n<ion-item-divider></ion-item-divider>\n <ion-list >\n  <ion-item  *ngFor= \"let item of invoice.invoiceItems\">\n    <ion-grid>\n      <ion-row style=\"color : white ; background-color: blueviolet;\">\n        <ion-col size=\"3\">Select</ion-col>\n        <ion-col size=4>Item</ion-col>\n        <ion-col size=2>Price</ion-col>\n        <ion-col size=\"2\">Qty</ion-col>\n      </ion-row>\n    <ion-row style=\"background-color: aliceblue;\">\n        <ion-col size=\"3\">\n          <ion-checkbox [(ngModel)]=\"item.selected\"> </ion-checkbox>\n        </ion-col>\n      <ion-col size=4>\n        <ion-input [(ngModel)]=\"item.name\" disabled></ion-input>\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-input [(ngModel)]=\"item.unitPrice\" ></ion-input>\n      </ion-col>\n      <!-- <ion-col>\n        <ion-input placeholder=\"Billing Price\">{{item.billingUnitPrice}}</ion-input>        \n      </ion-col> -->\n      <ion-col size=\"2\">\n        <ion-input [(ngModel)]=\"item.quantity\"></ion-input>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n  </ion-item>  \n </ion-list>\n\n<ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Amount To Be Paid</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-row>  </ion-grid>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <ion-button color=\"primary\" (click)=\"calculateInvoiceTotal()\">Calculate Total</ion-button>\n        </ion-col>\n        \n        <ion-col>\n          <ion-button color=\"primary\" (click)=\"submitBill()\">Submit</ion-button>\n        </ion-col>\n        \n        <ion-col>\n          <ion-button color=\"primary\" (click)=\"printBill()\">Print</ion-button>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>New Invoice</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"row\"></div>\n   \n<ion-select style=\"margin-top: 2%;height: 30px;margin-right: 4%;\" (ionChange)=\"populateCustomerProducts()\" [(ngModel)]=\"invoice.customer\" placeholder=\"Select Customer\">\n  <ion-select-option *ngFor=\"let cus of customerList\" [value]=\"cus\">{{cus.name}}</ion-select-option>\n</ion-select>\n<ion-item>\n  <ion-label>Product</ion-label>\n  <ionic-selectable style=\"height: 30px;\"\n    \n    [(ngModel)]=\"product\"\n    [items]=\"products\"\n    itemValueField=\"name\"\n    itemTextField=\"name\"\n    [canSearch]=\"true\"\n    (onChange)=\"productSelected($event)\"\n    [isMultiple]=\"true\">\n  </ionic-selectable>\n</ion-item> \n<table border=\"5\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;\">\n  <tr>\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Purchase Price\n    </td>\n    <td>\n      Quantity\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" >\n    <td><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input (ionChange)=\"calculateInvoiceTotal()\" type=\"number\" [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input (ionChange)=\"calculateInvoiceTotal()\" type=\"number\" [(ngModel)]=\"item.purchasePrice\" ></ion-input></td>\n    <td><ion-input (ionChange)=\"calculateInvoiceTotal()\" type=\"number\" [(ngModel)]=\"item.quantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Amount To Be Paid</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col size=\"3\">\n        <ion-label color=\"primary\">Apply VAT</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-checkbox color=\"primary\" [(ngModel)]=\"applyVat\" (ionChange)=\"calculateInvoiceTotal()\" ></ion-checkbox>\n      </ion-col>\n      \n    </ion-row>  \n    <!-- <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Invoice Number</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.invoiceNumber}}</ion-label>\n      </ion-col>\n    </ion-row>   -->\n  \n  </ion-grid>\n    <ion-grid>\n      <ion-row> \n        <ion-col size=\"3\">\n          <ion-button color=\"primary\" (click)=\"submitBill()\">Submit</ion-button>\n        </ion-col>\n        \n        <ion-col size=\"3\">\n          <ion-button color=\"primary\" (click)=\"printBill()\">Print</ion-button>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n</ion-content>\n";
       /***/
     }
   }]);

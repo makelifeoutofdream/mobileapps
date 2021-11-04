@@ -87,7 +87,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_login_login_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_login_login_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./login/login.module */
           80107)).then(function (m) {
             return m.LoginPageModule;
@@ -98,7 +98,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_client_client_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_client_client_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./client/client.module */
           27808)).then(function (m) {
             return m.ClientPageModule;
@@ -109,7 +109,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_invoice_invoice_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("default-src_app_data_service_ts"), __webpack_require__.e("src_app_invoice_invoice_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./invoice/invoice.module */
           63277)).then(function (m) {
             return m.InvoicePageModule;
@@ -153,7 +153,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_newclient_newclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_newclient_newclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./newclient/newclient.module */
           9490)).then(function (m) {
             return m.NewclientPageModule;
@@ -164,7 +164,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_newinvoice_newinvoice_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_newinvoice_newinvoice_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./newinvoice/newinvoice.module */
           43747)).then(function (m) {
             return m.NewinvoicePageModule;
@@ -197,7 +197,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_register_register_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_register_register_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./register/register.module */
           18723)).then(function (m) {
             return m.RegisterPageModule;
@@ -208,7 +208,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_inventory_inventory_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_inventory_inventory_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./inventory/inventory.module */
           41564)).then(function (m) {
             return m.InventoryPageModule;
@@ -219,7 +219,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_newinventory_newinventory_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_newinventory_newinventory_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./newinventory/newinventory.module */
           68815)).then(function (m) {
             return m.NewinventoryPageModule;
@@ -228,23 +228,12 @@
       }, {
         path: 'settings',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_settings_settings_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_settings_settings_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./settings/settings.module */
           27075)).then(function (m) {
             return m.SettingsPageModule;
-          });
-        }
-      }, {
-        path: 'printersettings',
-        loadChildren: function loadChildren() {
-          return Promise.all(
-          /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_printersettings_printersettings_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
-          /*! ./printersettings/printersettings.module */
-          5525)).then(function (m) {
-            return m.PrintersettingsPageModule;
           });
         }
       }, {
@@ -252,10 +241,32 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_editclient_editclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_editclient_editclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./editclient/editclient.module */
           99024)).then(function (m) {
             return m.EditclientPageModule;
+          });
+        }
+      }, {
+        path: 'report',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("default-src_app_data_service_ts"), __webpack_require__.e("src_app_report_report_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./report/report.module */
+          54107)).then(function (m) {
+            return m.ReportPageModule;
+          });
+        }
+      }, {
+        path: 'viewinvoice',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_viewinvoice_viewinvoice_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./viewinvoice/viewinvoice.module */
+          62924)).then(function (m) {
+            return m.ViewinvoicePageModule;
           });
         }
       }];
@@ -301,7 +312,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -319,13 +330,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
@@ -337,35 +348,72 @@
       /* harmony import */
 
 
-      var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! rxjs/operators */
       45435);
       /* harmony import */
 
 
-      var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! rxjs/operators */
       46782);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! @ionic/angular */
+      80476);
 
       var _AppComponent = /*#__PURE__*/function () {
-        function AppComponent(router) {
+        function AppComponent(router, platform, navCtrl) {
           _classCallCheck(this, AppComponent);
 
           this.router = router;
+          this.platform = platform;
+          this.navCtrl = navCtrl;
           this.closed$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__.Subject();
           this.showTabs = true;
+          this.backButtonEvent();
         }
 
         _createClass(AppComponent, [{
-          key: "ngOnInit",
-          value: function ngOnInit() {
+          key: "backButtonEvent",
+          value: function backButtonEvent() {
             var _this = this;
 
-            this.router.events.pipe((0, rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.filter)(function (e) {
-              return e instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__.NavigationEnd;
-            }), (0, rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.takeUntil)(this.closed$)).subscribe(function (event) {
+            this.platform.backButton.subscribe(function () {
+              return (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        this.routerOutlets.forEach(function (outlet) {
+                          if (outlet && outlet.canGoBack()) {
+                            outlet.pop();
+                          } else {
+                            navigator['app'].exitApp();
+                          }
+                        });
+
+                      case 1:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee, this);
+              }));
+            });
+          }
+        }, {
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            var _this2 = this;
+
+            this.router.events.pipe((0, rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.filter)(function (e) {
+              return e instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__.NavigationEnd;
+            }), (0, rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.takeUntil)(this.closed$)).subscribe(function (event) {
               if (event['url'] === '/login' || event['url'] == '') {
-                _this.showTabs = false; // <-- hide tabs on specific pages
+                _this2.showTabs = false; // <-- hide tabs on specific pages
               }
             });
           }
@@ -381,11 +429,21 @@
 
       _AppComponent.ctorParameters = function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.Platform
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.NavController
         }];
       };
 
-      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+      _AppComponent.propDecorators = {
+        routerOutlets: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_8__.ViewChildren,
+          args: [_ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonRouterOutlet]
+        }]
+      };
+      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -421,31 +479,31 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/platform-browser */
       39075);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -469,7 +527,7 @@
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! @angular/common/http */
       91841);
       /* harmony import */
@@ -481,7 +539,7 @@
       /* harmony import */
 
 
-      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
       /*! @ionic/storage-angular */
       54925);
       /* harmony import */
@@ -496,24 +554,54 @@
       var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic-native/bluetooth-serial/ngx */
       28078);
+      /* harmony import */
+
+
+      var _ionic_native_email_composer_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @ionic-native/email-composer/ngx */
+      51535);
+      /* harmony import */
+
+
+      var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! @ionic-native/file/ngx */
+      20138);
+      /* harmony import */
+
+
+      var _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! @ionic-native/social-sharing/ngx */
+      24276);
+      /* harmony import */
+
+
+      var ionic_selectable__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+      /*! ionic-selectable */
+      93319);
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+      /*! @angular/common */
+      38583);
 
       var _AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
       };
 
-      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.NgModule)({
+      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_10__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpClientModule, _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_11__.IonicStorageModule.forRoot({
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClientModule, ionic_selectable__WEBPACK_IMPORTED_MODULE_14__.IonicSelectableModule, _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_15__.IonicStorageModule.forRoot({
           name: '_myDb',
           driverOrder: [_ionic_storage__WEBPACK_IMPORTED_MODULE_4__.Drivers.IndexedDB, _ionic_storage__WEBPACK_IMPORTED_MODULE_4__.Drivers.LocalStorage]
         })],
         providers: [{
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
-        }, _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_2__.SQLite, _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_5__.BluetoothSerial, _ionic_native_sqlite_porter_ngx__WEBPACK_IMPORTED_MODULE_3__.SQLitePorter, {
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_16__.RouteReuseStrategy,
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicRouteStrategy
+        }, _angular_common__WEBPACK_IMPORTED_MODULE_17__.DatePipe, _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_2__.SQLite, _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_5__.BluetoothSerial, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_7__.File, _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_8__.SocialSharing, _ionic_native_email_composer_ngx__WEBPACK_IMPORTED_MODULE_6__.EmailComposer, _ionic_native_sqlite_porter_ngx__WEBPACK_IMPORTED_MODULE_3__.SQLitePorter, {
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_16__.RouteReuseStrategy,
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicRouteStrategy
         }],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent]
       })], _AppModule);
@@ -721,7 +809,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n<ion-app >\n  \n  <ion-tabs id=\"tabs\"  >\n    <ion-tab-bar slot=\"bottom\" *ngIf=\"showTabs\">\n      \n       <ion-tab-button tab=\"printersettings\" >\n        <ion-icon name=\"settings-outline\"></ion-icon>\n        <ion-label>Printer Settings</ion-label>\n\n      </ion-tab-button> \n      \n      <ion-tab-button tab=\"client\">\n        <ion-icon name=\"people\"></ion-icon>\n        <ion-label>Customer</ion-label>\n        \n      </ion-tab-button>\n\n  \n      <ion-tab-button tab=\"invoice\">\n        <ion-icon name=\"calculator\"></ion-icon>\n        <ion-label>Invoice</ion-label>\n      </ion-tab-button>\n  \n      <ion-tab-button tab=\"inventory\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Inventory</ion-label>\n      </ion-tab-button>\n  \n     <!-- <ion-tab-button tab=\"project\">\n        <ion-icon name=\"business\"></ion-icon>\n        <ion-label>Project</ion-label>\n      </ion-tab-button>\n\n\n      <ion-tab-button tab=\"myteam\">\n        <ion-icon name=\"people-circle\"></ion-icon>\n        <ion-label>My Team</ion-label>\n      </ion-tab-button>\n      -->\n    </ion-tab-bar>\n  </ion-tabs></ion-app>\n";
+      __webpack_exports__["default"] = "\n<ion-app >\n  \n  <ion-tabs id=\"tabs\"  >\n    <ion-tab-bar slot=\"bottom\" *ngIf=\"showTabs\">\n      <ion-tab-button tab=\"inventory\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Inventory</ion-label>\n      </ion-tab-button>\n\n        \n      <ion-tab-button tab=\"client\">\n        <ion-icon name=\"people\"></ion-icon>\n        <ion-label>Customer</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"newinvoice\">\n        <ion-icon name=\"receipt\"></ion-icon>\n        <ion-label>Invoice</ion-label>\n      </ion-tab-button>\n      \n      <ion-tab-button tab=\"report\">\n        <ion-icon name=\"podium\"></ion-icon>\n        <ion-label>Report</ion-label>\n      </ion-tab-button>\n      \n    \n    \n      \n      <ion-tab-button tab=\"settings\" >\n        <ion-icon name=\"settings-outline\"></ion-icon>\n        <ion-label>Settings</ion-label>\n\n      </ion-tab-button> \n      \n     <!-- <ion-tab-button tab=\"project\">\n        <ion-icon name=\"business\"></ion-icon>\n        <ion-label>Project</ion-label>\n      </ion-tab-button>\n\n\n      <ion-tab-button tab=\"myteam\">\n        <ion-icon name=\"people-circle\"></ion-icon>\n        <ion-label>My Team</ion-label>\n      </ion-tab-button>\n      -->\n    </ion-tab-bar>\n  </ion-tabs></ion-app>\n";
       /***/
     }
   },

@@ -54,8 +54,13 @@ export class ClientPage implements OnInit {
   async setItemsToCustomer() : Promise<Customer>{
     for(let inv of this.inventoryList){
      
-        if(this.customer.itemList.find(it=>it.name==inv.name)==null || this.customer.itemList.find(it=>it.name==inv.name)==null){
+        if(this.customer.itemList.find(it=>it.id==inv.id)==null || this.customer.itemList.find(it=>it.id==inv.id)==null){
           this.customer.itemList.push(inv);
+        }else{
+          var index = this.customer.itemList.findIndex(i => i.id == inv.id);
+          this.customer.itemList[index].name=inv.name;
+          this.customer.itemList[index].description=inv.description;
+          this.customer.itemList[index].purchasePrice=inv.purchasePrice;
         }
     }
     return this.customer;
@@ -65,6 +70,7 @@ export class ClientPage implements OnInit {
     let navigationExtras : NavigationExtras ={
           queryParams : {customer : this.customer}
     };
+    console.log("selected customer"+this.customer);
   this.navCtrl.navigateRoot('editclient',navigationExtras);    
   }
 }

@@ -1,20 +1,28 @@
+
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Inventory</ion-title>
+    <ion-buttons slot="start">
+        <ion-menu-button menu="mainmenu"> 
+
+        </ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-list>
     <ion-list-header>
       <ion-label>Name</ion-label>
       <ion-label>Quantity</ion-label>
       <ion-label>Unit Price</ion-label>
+      <ion-label>Purchase Price</ion-label>
     </ion-list-header>
-    <ion-item *ngFor= "let inv of inventories">
+    <ion-item *ngFor= "let inv of inventories" (click)="editInventory(inv)">
       <ion-label>{{inv.name}}</ion-label>
       <ion-label>{{inv.quantity}}</ion-label>
       <ion-label>{{inv.unitPrice}}</ion-label>
+      <ion-label>{{inv.purchasePrice}}</ion-label>
     </ion-item>
   </ion-list>    
   

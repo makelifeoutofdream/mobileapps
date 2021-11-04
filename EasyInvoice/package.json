@@ -35,17 +35,24 @@
     "@ionic-native/core": "^5.34.0",
     "@ionic-native/email-composer": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
+    "@ionic-native/social-sharing": "^5.36.0",
     "@ionic-native/sqlite": "^5.34.0",
     "@ionic-native/sqlite-porter": "^5.34.0",
     "@ionic/angular": "^5.5.2",
     "@ionic/storage": "^3.0.6",
     "@ionic/storage-angular": "^3.0.6",
+    "@types/papaparse": "^5.2.6",
     "chart.js": "^3.4.1",
     "cordova-sqlite-storage": "^6.0.0",
     "file-saver": "^2.0.5",
+    "ionic": "^5.4.16",
+    "ionic-selectable": "^4.8.0",
+    "ngx-papaparse": "^5.0.0",
+    "papaparse": "^5.3.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "^1.1.1",
+    "uuid": "^8.3.2",
     "xlsx": "^0.17.1",
     "zone.js": "~0.11.4"
   },
@@ -72,6 +79,7 @@
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-email-composer": "^0.9.2",
+    "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -108,9 +116,8 @@
       "uk.co.workingedge.cordova.plugin.sqliteporter": {},
       "cordova-plugin-bluetooth-serial": {},
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-email-composer": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      "cordova-plugin-email-composer": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "android",

@@ -66,12 +66,20 @@ const routes: Routes = [
     loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   },
   {
-    path: 'printersettings',
-    loadChildren: () => import('./printersettings/printersettings.module').then( m => m.PrintersettingsPageModule)
-  },
-  {
     path: 'editclient',
     loadChildren: () => import('./editclient/editclient.module').then( m => m.EditclientPageModule)
+  },
+  {
+    path: 'report',
+    loadChildren: () => import('./report/report.module').then( m => m.ReportPageModule)
+  },
+  {
+    path: 'viewinvoice',
+    loadChildren: () => import('./viewinvoice/viewinvoice.module').then( m => m.ViewinvoicePageModule)
+  },
+  {
+    path: 'purchase',
+    loadChildren: () => import('./purchase/purchase.module').then( m => m.PurchasePageModule)
   }
 ];
 

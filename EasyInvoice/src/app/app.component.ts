@@ -3,6 +3,9 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
+import {  QueryList, ViewChildren } from '@angular/core';
+
+import { Platform, NavController, IonRouterOutlet } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +17,24 @@ export class AppComponent {
 
   closed$ = new Subject<any>();
   showTabs=true;
-  constructor(public router :Router) {
-    
+  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
+  constructor(public router :Router, private platform: Platform,
+    private navCtrl: NavController) {
+      this.backButtonEvent();
   }
+
+  backButtonEvent() {
+    this.platform.backButton.subscribe(async () => {
+
+        this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
+            if (outlet && outlet.canGoBack()) {
+                outlet.pop();
+            } else  {
+                 navigator['app'].exitApp();
+            }
+        });
+    });
+}
 
   ngOnInit(){
     this.router.events.pipe(

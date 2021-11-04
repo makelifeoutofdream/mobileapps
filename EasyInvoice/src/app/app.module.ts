@@ -13,14 +13,22 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
 import {BluetoothSerial} from '@ionic-native/bluetooth-serial/ngx';
+import {EmailComposer} from '@ionic-native/email-composer/ngx';
+import {File} from '@ionic-native/file/ngx';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx'
+import { IonicSelectableModule } from 'ionic-selectable';
+import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,IonicStorageModule.forRoot({name: '_myDb',
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,IonicSelectableModule,IonicStorageModule.forRoot({name: '_myDb',
   driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]})],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },DatePipe,
     SQLite,
     BluetoothSerial,
+    File,
+    SocialSharing,
+    EmailComposer,
     SQLitePorter,
     { 
       provide: RouteReuseStrategy, 

@@ -116,15 +116,19 @@ let EditclientPage = class EditclientPage {
         this.route = route;
     }
     ngOnInit() {
+        this.customer = { id: null, name: "", location: "", contactPersonName: "", vat: null, itemList: [] };
     }
     ionViewWillEnter() {
         this.route.queryParams.subscribe(params => {
             this.customer = params['customer'];
         });
-        console.log('selected customer' + this.customer);
+        console.log('selected customer' + this.customer.name);
     }
     updateClient() {
-        this.dbService.UpdateCustomer(this.customer).then(data => this.toastService.presentToast("Customer updated successfully"))
+        this.dbService.UpdateCustomer(this.customer).then(res => {
+            this.toastService.presentToast("Customer updated successfully");
+            this.navCtrl.navigateRoot('client');
+        })
             .catch(reason => {
             this.toastService.presentToast("Customer update failed");
             console.log(reason);
@@ -169,7 +173,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Edit Client</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-item >\n          <ion-label position=\"floating\">Name</ion-label>\n          <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"customer.name\" required></ion-input>\n        </ion-item>\n        </ion-col>\n        <ion-col size=\"6\">\n        <ion-item >\n          <ion-label position=\"floating\">Location</ion-label>\n          <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"customer.location\" required></ion-input>\n        </ion-item> \n       </ion-col>\n      \n      \n    </ion-row>\n    \n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item >\n          <ion-label position=\"floating\">Contact Person Name</ion-label>\n          <ion-input name=\"contactpersonname\" type=\"text\" [(ngModel)]=\"customer.contactPersonName\" required></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    \n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item >\n          <ion-label position=\"floating\">Vat</ion-label>\n          <ion-input name=\"val\" type=\"text\" [(ngModel)]=\"customer.val\" required></ion-input>\n        </ion-item>\n        </ion-col>\n        \n    </ion-row>\n  </ion-grid>\n  <ion-item-divider></ion-item-divider>\n  <ion-list>\n    <ion-item  *ngFor= \"let item of customer.itemList\">\n      <ion-grid>\n        <ion-row style=\"color : white ; background-color: blueviolet;\">\n          <ion-col size=6>Item</ion-col>\n          <ion-col size=2>Price</ion-col>\n        </ion-row>\n      <ion-row style=\"background-color: aliceblue;\">\n        <ion-col size=6>\n          <ion-input [(ngModel)]=\"item.name\" disabled></ion-input>\n        </ion-col>\n        <ion-col size=\"2\">\n          <ion-input [(ngModel)]=\"item.unitPrice\"></ion-input>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    </ion-item>\n  </ion-list>\n  \n</ion-content>\n<ion-footer>\n  <ion-row style=\"float:right\">\n    <ion-col>\n      <ion-button color=\"Primary\" (click)=\"updateClient()\">\n        <ion-icon name=\"checkmark\"></ion-icon>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Edit Customer</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-item >\n          <ion-label position=\"floating\">Name</ion-label>\n          <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"customer.name\" required></ion-input>\n        </ion-item>\n        </ion-col>\n        <ion-col size=\"6\">\n        <ion-item >\n          <ion-label position=\"floating\">Location</ion-label>\n          <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"customer.location\" required></ion-input>\n        </ion-item> \n       </ion-col>\n      \n      \n    </ion-row>\n    \n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item >\n          <ion-label position=\"floating\">Contact Person Name</ion-label>\n          <ion-input name=\"contactpersonname\" type=\"text\" [(ngModel)]=\"customer.contactPersonName\" required></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    \n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item >\n          <ion-label position=\"floating\">Vat Number</ion-label>\n          <ion-input name=\"val\" type=\"text\" [(ngModel)]=\"customer.vat\" required></ion-input>\n        </ion-item>\n        </ion-col>\n        \n    </ion-row>\n  </ion-grid>\n  <ion-item-divider></ion-item-divider>\n  <table border=\"5\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;\">\n    <tr>\n      <td>\n        Item\n      </td>\n      <td>\n        Price\n      </td>\n    </tr>\n    <tr *ngFor= \"let item of customer.itemList\">\n      <td><ion-input disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n      <td><ion-input [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    </tr>\n  </table>\n  \n  <ion-row style=\"float:right\">\n    <ion-col>\n      <ion-button color=\"primary\" (click)=\"updateClient()\">\n        <ion-icon name=\"checkmark\"></ion-icon>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n<ion-footer>\n  \n</ion-footer>");
 
 /***/ })
 

@@ -232,6 +232,7 @@
           key: "ngOnInit",
           value: function ngOnInit() {
             this.customer = {
+              id: null,
               name: "",
               location: "",
               contactPersonName: "",
@@ -240,21 +241,32 @@
             };
           }
         }, {
+          key: "ionViewWillEnter",
+          value: function ionViewWillEnter() {
+            var _this = this;
+
+            this.dbService.getAllInventories().then(function (data) {
+              _this.inventoryList = data;
+            });
+          }
+        }, {
           key: "addNewClient",
           value: function addNewClient() {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var _this = this;
+              var _this2 = this;
 
               return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
+                      this.customer.itemList = this.inventoryList;
                       this.dbService.createCustomer(this.customer).then(function (data) {
-                        _this.tostService.presentToast("Customer added successfully");
+                        _this2.tostService.presentToast("Customer added successfully");
                       })["catch"](function (reason) {
                         console.log(reason);
                       })["finally"](function () {
-                        _this.customer = {
+                        _this2.customer = {
+                          id: null,
                           name: "",
                           location: "",
                           contactPersonName: "",
@@ -262,10 +274,10 @@
                           itemList: null
                         };
 
-                        _this.navCtrl.navigateRoot('client');
+                        _this2.navCtrl.navigateRoot('client');
                       });
 
-                    case 1:
+                    case 2:
                     case "end":
                       return _context.stop();
                   }
@@ -328,7 +340,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>New Customer</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Name</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"customer.name\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Location</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"customer.location\" required></ion-input>\n    </ion-item> \n   </ion-col>\n  \n  \n</ion-row>\n\n<ion-row>\n  <ion-col size=\"12\">\n    <ion-item >\n      <ion-label position=\"floating\">Contact Person Name</ion-label>\n      <ion-input name=\"contactpersonname\" type=\"text\" [(ngModel)]=\"customer.contactPersonName\" required></ion-input>\n    </ion-item>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"12\">\n    <ion-item >\n      <ion-label position=\"floating\">Vat</ion-label>\n      <ion-input name=\"val\" type=\"text\" [(ngModel)]=\"customer.val\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    \n</ion-row>\n\n</ion-grid>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n  \n    \n    \n\n\n\n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>New Customer</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Name</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"customer.name\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Location</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"customer.location\" required></ion-input>\n    </ion-item> \n   </ion-col>\n  \n  \n</ion-row>\n\n<ion-row>\n  <ion-col size=\"12\">\n    <ion-item >\n      <ion-label position=\"floating\">Contact Person Name</ion-label>\n      <ion-input name=\"contactpersonname\" type=\"text\" [(ngModel)]=\"customer.contactPersonName\" required></ion-input>\n    </ion-item>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"12\">\n    <ion-item >\n      <ion-label position=\"floating\">Vat</ion-label>\n      <ion-input name=\"val\" type=\"text\" [(ngModel)]=\"customer.vat\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    \n</ion-row>\n\n</ion-grid>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n  \n    \n    \n\n\n\n</ion-footer>";
       /***/
     }
   }]);

@@ -92,22 +92,132 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SettingsPage": function() { return /* binding */ SettingsPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_settings_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./settings.page.html */ 14718);
 /* harmony import */ var _settings_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings.page.scss */ 69519);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/db.service */ 73773);
+/* harmony import */ var _services_print_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/print.service */ 39534);
+/* harmony import */ var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/toastservice.service */ 48236);
+
+
+
+
+
 
 
 
 
 let SettingsPage = class SettingsPage {
-    constructor() { }
+    constructor(navCtrl, print, toastService, dbService, ref, plt) {
+        this.navCtrl = navCtrl;
+        this.print = print;
+        this.toastService = toastService;
+        this.dbService = dbService;
+        this.ref = ref;
+        this.plt = plt;
+        this.user = {};
+        this.bluetoothList = [];
+        this.showProfileSegment = true;
+        this.showTaxSegment = false;
+        this.showPrinterSegment = false;
+        this.userProfile = { id: null, toEmail: "", ccEmail: "", vat: null };
+        this.type = "profile";
+        this.userProfile = { id: null, toEmail: "", ccEmail: "", vat: null };
+        this.user.userProfile = this.userProfile;
+    }
     ngOnInit() {
+        this.type = "profile";
+        this.showHideSegment();
+        this.listPrinter();
+        this.userProfile = { id: null, toEmail: "", ccEmail: "", vat: null };
+        this.user.userProfile = this.userProfile;
+    }
+    showHideSegment() {
+        if (this.type == 'profile') {
+            this.showPrinterSegment = false;
+            this.showProfileSegment = true;
+            this.showTaxSegment = false;
+        }
+        else if (this.type == 'tax') {
+            this.showPrinterSegment = false;
+            this.showProfileSegment = false;
+            this.showTaxSegment = true;
+        }
+        else if (this.type == 'printer') {
+            this.showPrinterSegment = true;
+            this.showProfileSegment = false;
+            this.showTaxSegment = false;
+        }
+        //this.ref.tick();
+    }
+    ionViewWillEnter() {
+        this.listPrinter();
+        this.type = "profile";
+        this.showHideSegment();
+        this.dbService.getProfile().then(data => this.userProfile = data);
+        if (this.userProfile == null || this.userProfile == undefined) {
+            this.userProfile = { id: null, toEmail: "", ccEmail: "", vat: null };
+            this.user.userProfile = this.userProfile;
+        }
+        console.log("profile" + this.user.userProfile);
+    }
+    listPrinter() {
+        if (this.plt.is('cordova')) {
+            this.print.searchBluetoothPrinter().then(resp => {
+                this.bluetoothList = resp;
+            });
+        }
+    }
+    selectPrinter(macAddress) {
+        this.print.selectedPrinter = macAddress;
+        this.selectedPrinter = this.print.selectedPrinter;
+    }
+    updateProfile() {
+        console.log("profile" + this.user.userProfile);
+        this.dbService.createOrUpdateProfile(this.user.userProfile).then(data => {
+            if (data == null || data == undefined) {
+                this.toastService.presentToast("Failed to update settings");
+            }
+            else {
+                this.toastService.presentToast("Settings updated successfully");
+            }
+        }).catch(reason => {
+            this.toastService.presentToast("Failed to update settings");
+        });
+    }
+    segmentChanged(evt) {
+        if (evt.detail.value == 'profile') {
+            this.type = "profile";
+        }
+        else if (evt.detail.value == 'tax') {
+            this.type = "tax";
+        }
+        else if (evt.detail.value == 'printer') {
+            this.type = "printer";
+        }
+        this.dbService.getProfile().then(data => this.userProfile = data);
+        if (this.userProfile == null || this.userProfile == undefined) {
+            this.userProfile = { id: null, toEmail: "", ccEmail: "", vat: null };
+            this.user.userProfile = this.userProfile;
+        }
+        this.showHideSegment();
+    }
+    updatePrinter() {
+        this.toastService.presentToast("Printer configured successfully");
     }
 };
-SettingsPage.ctorParameters = () => [];
-SettingsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+SettingsPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController },
+    { type: _services_print_service__WEBPACK_IMPORTED_MODULE_3__.PrintService },
+    { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_4__.ToastserviceService },
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_2__.DbService },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ApplicationRef },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.Platform }
+];
+SettingsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-settings',
         template: _raw_loader_settings_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_settings_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -138,7 +248,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>settings</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Settings</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-segment color=\"secondary\" (ionChange)=\"segmentChanged($event)\" [(ngModel)]=\"type\"> \n    <ion-segment-button checked value=\"profile\">\n      <ion-label>Profile</ion-label>\n      <ion-icon name=\"person-circle\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"tax\">\n      <ion-label>Tax</ion-label>\n       <ion-icon name=\"clipboard\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"printer\">\n      <ion-label>Printer</ion-label>\n      <ion-icon name=\"print\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n\n\n  <div [ngSwitch]=\"type\">\n    <div *ngSwitchCase=\"'profile'\"> \n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Email to send\" [(ngModel)]=\"user.toEmail\"></ion-textarea>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"CC Emails\" [(ngModel)]=\"user.ccEmail\"></ion-textarea>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n      \n    </div>\n    <div *ngSwitchCase=\"'tax'\"> \n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-input type=\"number\" placeholder=\"Vat(%)\" [(ngModel)]=\"user.vat\"></ion-input>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n      \n    </div>\n    <div *ngSwitchCase=\"'printer'\">\n      <ion-list>\n        <ion-item *ngFor=\"let item of bluetoothList\" (click)=\"selectPrinter(item.id)\">\n          {{item.name}} {{item.id}}\n        </ion-item>\n      </ion-list>\n      <ion-item *ngIf=\"bluetoothList!=null && bluetoothList!=undefined\">\n        Selected Printer: {{selectedPrinter}}\n      </ion-item>\n      <ion-item *ngIf=\"bluetoothList==null || bluetoothList==undefined\">\n        No Printer Connected..\n      </ion-item>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updatePrinter()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n    </div>\n  </div>\n</ion-content>\n");
 
 /***/ })
 

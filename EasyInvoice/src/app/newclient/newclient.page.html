@@ -1,9 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>New Customer</ion-title>
+    <ion-buttons slot="start">
+        <ion-menu-button menu="mainmenu"> 
+
+        </ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-grid>
 <ion-row>
@@ -36,7 +40,7 @@
   <ion-col size="12">
     <ion-item >
       <ion-label position="floating">Vat</ion-label>
-      <ion-input name="val" type="text" [(ngModel)]="customer.val" required></ion-input>
+      <ion-input name="val" type="text" [(ngModel)]="customer.vat" required></ion-input>
     </ion-item>
     </ion-col>
     
