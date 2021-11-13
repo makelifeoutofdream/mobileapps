@@ -440,6 +440,55 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ 38932:
+/*!***************************************************************!*\
+  !*** ./src/app/components/expandable/expandable.component.ts ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ExpandableComponent": function() { return /* binding */ ExpandableComponent; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./expandable.component.html */ 93032);
+/* harmony import */ var _expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./expandable.component.scss */ 63680);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
+
+
+
+
+let ExpandableComponent = class ExpandableComponent {
+    constructor(renderer) {
+        this.renderer = renderer;
+        this.expanded = false;
+        this.expandHeight = "150px";
+    }
+    ngAfterViewInit() {
+        this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", this.expandHeight);
+    }
+};
+ExpandableComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Renderer2 }
+];
+ExpandableComponent.propDecorators = {
+    expandWrapper: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild, args: ["expandWrapper", { read: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef },] }],
+    expanded: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input, args: ["expanded",] }],
+    expandHeight: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input, args: ["expandHeight",] }]
+};
+ExpandableComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+        selector: "app-expandable",
+        template: _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
+        styles: [_expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__.default]
+    })
+], ExpandableComponent);
+
+
+
+/***/ }),
+
 /***/ 39534:
 /*!*******************************************!*\
   !*** ./src/app/services/print.service.ts ***!
@@ -488,6 +537,30 @@ PrintService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 ], PrintService);
 
 
+
+/***/ }),
+
+/***/ 63680:
+/*!*****************************************************************!*\
+  !*** ./src/app/components/expandable/expandable.component.scss ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (".expand-wrapper {\n  transition: max-height 0.4s ease-in-out;\n  overflow: hidden;\n  height: auto;\n}\n\n.collapsed {\n  max-height: 0 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV4cGFuZGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx1Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNFO0VBQ0Usd0JBQUE7QUFFSiIsImZpbGUiOiJleHBhbmRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC13cmFwcGVyIHtcbiAgICB0cmFuc2l0aW9uOiBtYXgtaGVpZ2h0IDAuNHMgZWFzZS1pbi1vdXQ7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBoZWlnaHQ6IGF1dG87XG4gIH1cbiAgLmNvbGxhcHNlZCB7XG4gICAgbWF4LWhlaWdodDogMCAhaW1wb3J0YW50O1xuICB9Il19 */");
+
+/***/ }),
+
+/***/ 93032:
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/expandable/expandable.component.html ***!
+  \*******************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div #expandWrapper class=\"expand-wrapper\" [class.collapsed]=\"!expanded\">\n  <ng-content></ng-content>\n</div>");
 
 /***/ })
 

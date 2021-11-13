@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NewclientPageRoutingModule } from './newclient-routing.module';
 
 import { NewclientPage } from './newclient.page';
+import { ExpandableComponent } from '../components/expandable/expandable.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { NewclientPage } from './newclient.page';
     IonicModule,
     NewclientPageRoutingModule
   ],
-  declarations: [NewclientPage]
+  declarations: [NewclientPage,ExpandableComponent]
 })
 export class NewclientPageModule {}

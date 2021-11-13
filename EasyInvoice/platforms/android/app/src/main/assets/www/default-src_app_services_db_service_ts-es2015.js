@@ -177,6 +177,7 @@ let DbService = class DbService {
         this.invoiceKey = "invoices";
         this.invoiceNumberKey = "invoiceNumber";
         this.profileKey = "profile";
+        this.customerCodeKey = "customerCode";
         this.init();
     }
     init() {
@@ -365,6 +366,30 @@ let DbService = class DbService {
             invoiceNumber = invoiceNumber + 1;
             yield this.storage.set(this.invoiceNumberKey, invoiceNumber);
             return invoiceNumber;
+        });
+    }
+    getCustomerCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let customerCode;
+            customerCode = yield this.storage.get(this.customerCodeKey);
+            if (customerCode == null || customerCode == undefined) {
+                this.incrementCustomerCode().then(data => {
+                    customerCode = data;
+                });
+            }
+            return customerCode;
+        });
+    }
+    incrementCustomerCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let customerCode;
+            customerCode = yield this.storage.get(this.customerCodeKey);
+            if (customerCode == null || customerCode == undefined) {
+                customerCode = 0;
+            }
+            customerCode = customerCode + 1;
+            yield this.storage.set(this.customerCodeKey, customerCode);
+            return customerCode;
         });
     }
     getInvoiceNumber() {

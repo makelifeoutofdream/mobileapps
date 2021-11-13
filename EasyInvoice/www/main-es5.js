@@ -153,7 +153,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_newclient_newclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_newclient_newclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./newclient/newclient.module */
           9490)).then(function (m) {
             return m.NewclientPageModule;
@@ -241,7 +241,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("src_app_editclient_editclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-src_app_services_db_service_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_editclient_editclient_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./editclient/editclient.module */
           99024)).then(function (m) {
             return m.EditclientPageModule;
@@ -267,6 +267,17 @@
           /*! ./viewinvoice/viewinvoice.module */
           62924)).then(function (m) {
             return m.ViewinvoicePageModule;
+          });
+        }
+      }, {
+        path: 'purchase',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_purchase_purchase_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./purchase/purchase.module */
+          10930)).then(function (m) {
+            return m.PurchasePageModule;
           });
         }
       }];
@@ -809,7 +820,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n<ion-app >\n  \n  <ion-tabs id=\"tabs\"  >\n    <ion-tab-bar slot=\"bottom\" *ngIf=\"showTabs\">\n      <ion-tab-button tab=\"inventory\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Inventory</ion-label>\n      </ion-tab-button>\n\n        \n      <ion-tab-button tab=\"client\">\n        <ion-icon name=\"people\"></ion-icon>\n        <ion-label>Customer</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"newinvoice\">\n        <ion-icon name=\"receipt\"></ion-icon>\n        <ion-label>Invoice</ion-label>\n      </ion-tab-button>\n      \n      <ion-tab-button tab=\"report\">\n        <ion-icon name=\"podium\"></ion-icon>\n        <ion-label>Report</ion-label>\n      </ion-tab-button>\n      \n    \n    \n      \n      <ion-tab-button tab=\"settings\" >\n        <ion-icon name=\"settings-outline\"></ion-icon>\n        <ion-label>Settings</ion-label>\n\n      </ion-tab-button> \n      \n     <!-- <ion-tab-button tab=\"project\">\n        <ion-icon name=\"business\"></ion-icon>\n        <ion-label>Project</ion-label>\n      </ion-tab-button>\n\n\n      <ion-tab-button tab=\"myteam\">\n        <ion-icon name=\"people-circle\"></ion-icon>\n        <ion-label>My Team</ion-label>\n      </ion-tab-button>\n      -->\n    </ion-tab-bar>\n  </ion-tabs></ion-app>\n";
+      __webpack_exports__["default"] = "\n<ion-app >\n  <ion-menu side=\"start\" menuId=\"mainmenu\" contentId=\"maincontent\">\n    <ion-header>\n      <ion-toolbar color=\"primary\">\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle>\n        <ion-item routerLink=\"/inventory\">\n          <ion-icon name=\"bag\" slot=\"start\"></ion-icon>\n          <ion-label>Inventory</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"purchase\">\n          <ion-icon name=\"bag\" slot=\"start\"></ion-icon>\n          <ion-label>Purchase</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"client\">\n          <ion-icon name=\"people\" slot=\"start\"></ion-icon>\n          <ion-label>Customer</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"newinvoice\">\n          <ion-icon name=\"receipt\" slot=\"start\"></ion-icon>\n          <ion-label>Invoice</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n    <ion-menu-toggle>\n        <ion-item routerLink=\"report\">\n          <ion-icon name=\"podium\" slot=\"start\"></ion-icon>\n        <ion-label>Report</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"settings\">\n          <ion-icon name=\"settings-outline\" slot=\"start\"></ion-icon>\n          <ion-label>Settings</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n  <ion-router-outlet id=\"maincontent\"></ion-router-outlet>\n  <!-- <ion-tabs id=\"tabs\"  >\n    <ion-tab-bar slot=\"bottom\" *ngIf=\"showTabs\">\n      <ion-tab-button tab=\"inventory\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Inventory</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"purchase\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Purchase</ion-label>\n      </ion-tab-button>\n\n        \n      <ion-tab-button tab=\"client\">\n        <ion-icon name=\"people\"></ion-icon>\n        <ion-label>Customer</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"newinvoice\">\n        <ion-icon name=\"receipt\"></ion-icon>\n        <ion-label>Invoice</ion-label>\n      </ion-tab-button>\n      \n      <ion-tab-button tab=\"report\">\n        <ion-icon name=\"podium\"></ion-icon>\n        <ion-label>Report</ion-label>\n      </ion-tab-button>\n      \n    \n    \n      \n      <ion-tab-button tab=\"settings\" >\n        <ion-icon name=\"settings-outline\"></ion-icon>\n        <ion-label>Settings</ion-label>\n\n      </ion-tab-button> \n  \n    </ion-tab-bar>\n  </ion-tabs> -->\n\n</ion-app>\n";
       /***/
     }
   },

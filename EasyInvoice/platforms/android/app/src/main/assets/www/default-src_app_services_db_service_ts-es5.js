@@ -281,6 +281,7 @@
           this.invoiceKey = "invoices";
           this.invoiceNumberKey = "invoiceNumber";
           this.profileKey = "profile";
+          this.customerCodeKey = "customerCode";
           this.init();
         }
 
@@ -723,22 +724,29 @@
             }));
           }
         }, {
-          key: "getInvoiceNumber",
-          value: function getInvoiceNumber() {
+          key: "getCustomerCode",
+          value: function getCustomerCode() {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
-              var invoiceNumber;
+              var customerCode;
               return regeneratorRuntime.wrap(function _callee13$(_context13) {
                 while (1) {
                   switch (_context13.prev = _context13.next) {
                     case 0:
                       _context13.next = 2;
-                      return this.storage.get(this.invoiceNumberKey);
+                      return this.storage.get(this.customerCodeKey);
 
                     case 2:
-                      invoiceNumber = _context13.sent;
-                      return _context13.abrupt("return", invoiceNumber);
+                      customerCode = _context13.sent;
 
-                    case 4:
+                      if (customerCode == null || customerCode == undefined) {
+                        this.incrementCustomerCode().then(function (data) {
+                          customerCode = data;
+                        });
+                      }
+
+                      return _context13.abrupt("return", customerCode);
+
+                    case 5:
                     case "end":
                       return _context13.stop();
                   }
@@ -747,66 +755,124 @@
             }));
           }
         }, {
-          key: "createOrUpdateProfile",
-          value: function createOrUpdateProfile(userProfile) {
+          key: "incrementCustomerCode",
+          value: function incrementCustomerCode() {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
+              var customerCode;
               return regeneratorRuntime.wrap(function _callee14$(_context14) {
                 while (1) {
                   switch (_context14.prev = _context14.next) {
                     case 0:
-                      _context14.prev = 0;
+                      _context14.next = 2;
+                      return this.storage.get(this.customerCodeKey);
+
+                    case 2:
+                      customerCode = _context14.sent;
+
+                      if (customerCode == null || customerCode == undefined) {
+                        customerCode = 0;
+                      }
+
+                      customerCode = customerCode + 1;
+                      _context14.next = 7;
+                      return this.storage.set(this.customerCodeKey, customerCode);
+
+                    case 7:
+                      return _context14.abrupt("return", customerCode);
+
+                    case 8:
+                    case "end":
+                      return _context14.stop();
+                  }
+                }
+              }, _callee14, this);
+            }));
+          }
+        }, {
+          key: "getInvoiceNumber",
+          value: function getInvoiceNumber() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
+              var invoiceNumber;
+              return regeneratorRuntime.wrap(function _callee15$(_context15) {
+                while (1) {
+                  switch (_context15.prev = _context15.next) {
+                    case 0:
+                      _context15.next = 2;
+                      return this.storage.get(this.invoiceNumberKey);
+
+                    case 2:
+                      invoiceNumber = _context15.sent;
+                      return _context15.abrupt("return", invoiceNumber);
+
+                    case 4:
+                    case "end":
+                      return _context15.stop();
+                  }
+                }
+              }, _callee15, this);
+            }));
+          }
+        }, {
+          key: "createOrUpdateProfile",
+          value: function createOrUpdateProfile(userProfile) {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
+              return regeneratorRuntime.wrap(function _callee16$(_context16) {
+                while (1) {
+                  switch (_context16.prev = _context16.next) {
+                    case 0:
+                      _context16.prev = 0;
 
                       if (userProfile.id == null || userProfile.id == undefined) {
                         userProfile.id = (0, uuid__WEBPACK_IMPORTED_MODULE_2__["default"])();
                       }
 
                       this.storage.set(this.profileKey, JSON.stringify(userProfile));
-                      return _context14.abrupt("return", userProfile);
+                      return _context16.abrupt("return", userProfile);
 
                     case 6:
-                      _context14.prev = 6;
-                      _context14.t0 = _context14["catch"](0);
-                      console.log(_context14.t0);
-                      return _context14.abrupt("return", null);
+                      _context16.prev = 6;
+                      _context16.t0 = _context16["catch"](0);
+                      console.log(_context16.t0);
+                      return _context16.abrupt("return", null);
 
                     case 10:
                     case "end":
-                      return _context14.stop();
+                      return _context16.stop();
                   }
                 }
-              }, _callee14, this, [[0, 6]]);
+              }, _callee16, this, [[0, 6]]);
             }));
           }
         }, {
           key: "getProfile",
           value: function getProfile() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
               var value, profile;
-              return regeneratorRuntime.wrap(function _callee15$(_context15) {
+              return regeneratorRuntime.wrap(function _callee17$(_context17) {
                 while (1) {
-                  switch (_context15.prev = _context15.next) {
+                  switch (_context17.prev = _context17.next) {
                     case 0:
-                      _context15.prev = 0;
-                      _context15.next = 3;
+                      _context17.prev = 0;
+                      _context17.next = 3;
                       return this.storage.get(this.profileKey);
 
                     case 3:
-                      value = _context15.sent;
+                      value = _context17.sent;
                       profile = JSON.parse(value);
-                      return _context15.abrupt("return", profile);
+                      return _context17.abrupt("return", profile);
 
                     case 8:
-                      _context15.prev = 8;
-                      _context15.t0 = _context15["catch"](0);
-                      console.log(_context15.t0);
+                      _context17.prev = 8;
+                      _context17.t0 = _context17["catch"](0);
+                      console.log(_context17.t0);
                       new Object();
 
                     case 12:
                     case "end":
-                      return _context15.stop();
+                      return _context17.stop();
                   }
                 }
-              }, _callee15, this, [[0, 8]]);
+              }, _callee17, this, [[0, 8]]);
             }));
           }
         }]);
@@ -884,28 +950,28 @@
         _createClass(ToastserviceService, [{
           key: "presentToast",
           value: function presentToast(message) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
               var toast;
-              return regeneratorRuntime.wrap(function _callee16$(_context16) {
+              return regeneratorRuntime.wrap(function _callee18$(_context18) {
                 while (1) {
-                  switch (_context16.prev = _context16.next) {
+                  switch (_context18.prev = _context18.next) {
                     case 0:
-                      _context16.next = 2;
+                      _context18.next = 2;
                       return this.toastController.create({
                         message: message,
                         duration: 2000
                       });
 
                     case 2:
-                      toast = _context16.sent;
+                      toast = _context18.sent;
                       toast.present();
 
                     case 4:
                     case "end":
-                      return _context16.stop();
+                      return _context18.stop();
                   }
                 }
-              }, _callee16, this);
+              }, _callee18, this);
             }));
           }
         }]);

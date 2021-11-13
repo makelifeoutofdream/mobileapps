@@ -11,6 +11,7 @@ import { Inventory } from './inventory';
 import { Invoice } from './invoice';
 import { v4 as uuidv4 } from 'uuid';
 import { Profile } from './profile';
+import { Supplier } from './supplier';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,11 +23,15 @@ export class DbService {
   private invoiceKey="invoices";
   private invoiceNumberKey="invoiceNumber";
   private profileKey="profile";
+  private customerCodeKey="customerCode";
+  private supplierCodeKey="supplierCode";
+  private supplierKey ="supplier";
   private invoices : Invoice[] ;
   private inventory : Inventory;
   private inventories : Inventory[];
   private customer : Customer;
   private customers : Customer[];
+  private suppliers : Supplier [];
   private user : User;
   private  users:User[]
   constructor(
@@ -119,6 +124,17 @@ export class DbService {
     }
   }
 
+  async getAllSuppliers():Promise<any>{
+    try{
+      const result =await this.storage.get(this.supplierKey);
+      let suppliers= JSON.parse(result)
+      return suppliers;
+    }catch(reason){
+      console.log(reason);
+      this.toastService.presentToast("Failed to load the suppliers");
+    }
+  }
+
   async saveAllInventories(list : Inventory[]) : Promise<any>{
     try{
       const value=await this.storage.get(this.inventoryKey);
@@ -203,6 +219,52 @@ export class DbService {
     
   }
 
+  async getCustomerCode():Promise<any>{
+    let customerCode : number; 
+    customerCode =await this.storage.get(this.customerCodeKey);
+    if(customerCode==null || customerCode==undefined){
+      this.incrementCustomerCode().then(data=>{
+        customerCode=data;
+      })
+    }
+    return customerCode;
+  }
+
+  async incrementCustomerCode():Promise<any>{
+    let customerCode : number; 
+    customerCode =await this.storage.get(this.customerCodeKey);
+    if(customerCode ==null || customerCode==undefined){
+      customerCode=0;
+    }
+    customerCode=customerCode+1;
+    await this.storage.set(this.customerCodeKey,customerCode);
+    return customerCode;
+    
+  }
+
+
+  async getSupplierCode():Promise<any>{
+    let supplierCode : number; 
+    supplierCode =await this.storage.get(this.supplierCodeKey);
+    if(supplierCode==null || supplierCode==undefined){
+      this.incrementSupplierCode().then(data=>{
+        supplierCode=data;
+      })
+    }
+    return supplierCode;
+  }
+  async incrementSupplierCode():Promise<any>{
+    let supplierCode : number; 
+    supplierCode =await this.storage.get(this.supplierCodeKey);
+    if(supplierCode ==null || supplierCode==undefined){
+      supplierCode=0;
+    }
+    supplierCode=supplierCode+1;
+    await this.storage.set(this.supplierCodeKey,supplierCode);
+    return supplierCode;
+    
+  }
+
   async getInvoiceNumber():Promise<any>{
     let invoiceNumber; 
     invoiceNumber =await this.storage.get(this.invoiceNumberKey);
@@ -236,5 +298,36 @@ async getProfile() : Promise<Profile>{
   }
 }
 
+
+async createSupplier(supplier :Supplier) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.supplierKey);
+    this.suppliers=JSON.parse(value);
+    if(this.suppliers==null || this.suppliers==undefined){
+      this.suppliers=[];
+    }
+    supplier.id=uuidv4();
+    this.suppliers.push(supplier);
+    this.storage.set(this.supplierKey,JSON.stringify(this.suppliers) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
+async UpdateSupplier(supplier :Supplier) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.supplierKey);
+    this.suppliers=JSON.parse(value);
+    var index = this.suppliers.findIndex(i => i.id == supplier.id);
+    this.suppliers[index]=supplier;
+    this.storage.set(this.supplierKey,JSON.stringify(this.suppliers) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
 }
 

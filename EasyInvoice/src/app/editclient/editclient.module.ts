@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditclientPageRoutingModule } from './editclient-routing.module';
 
 import { EditclientPage } from './editclient.page';
+import { ExpandableComponent } from '../components/expandable/expandable.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { EditclientPage } from './editclient.page';
     IonicModule,
     EditclientPageRoutingModule
   ],
-  declarations: [EditclientPage]
+  declarations: [EditclientPage,ExpandableComponent]
 })
 export class EditclientPageModule {}

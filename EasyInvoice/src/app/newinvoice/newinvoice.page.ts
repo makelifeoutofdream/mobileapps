@@ -31,7 +31,10 @@ export class NewinvoicePage implements OnInit {
 
   ngOnInit() {
     this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",
-    customer : {id: null, contactPersonName : "",location  : "",name : "",vat:null,itemList : null},invoiceItems : [],
+    customer :  {id:null,code:null,name : "" ,itemList : null,nameInArabic : "",contactPersonName: "",contactPersonNameInArabic:"",
+    buildingNumber:"",street:"",streetInArabic:"",city:"",cityInArabic:"",district:"",districtInArabic:"",country:"",countryInArabic:"",
+    pobox:"",postalCode:"",phoneNumber:"",mobile:"",email:"",vatNumber:"",crNumber:"",creditLimit:null,balance:null},
+    invoiceItems : [],
   total:null,tax:null} 
 }
 
@@ -143,7 +146,7 @@ printBill(){
     data=data+'Item Name :'+itm.name+'  Price :'+itm.unitPrice+'  Quantity :'+itm.quantity;
   }
   data=data+'-----------------------------------------------------------------------';
-  data=data+'\n Vat Applied :'+this.invoice.customer.vat;
+  data=data+'\n Vat Applied :'+this.invoice.customer.vatNumber;
   data=data+'\n Total :'+this.invoice.total;
   this.printService.sendToBluetoothPrinter(this.printService.selectedPrinter,data);
 }

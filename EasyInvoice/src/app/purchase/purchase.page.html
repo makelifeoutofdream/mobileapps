@@ -9,5 +9,75 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">PO No</ion-label>
+            <ion-input name="poNumber" type="text" [(ngModel)]="purchase.poNumber" required></ion-input>
+          </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Date</ion-label>
+          <ion-input name="purchaseDate" type="text" [(ngModel)]="purchase.purchaseDate" required></ion-input>
+        </ion-item>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-select style="margin-top: 2%;height: 30px;margin-right: 4%;" (ionChange)="populateSupplier()" [(ngModel)]="purchase.supplier" placeholder="Select Supplier">
+          <ion-select-option *ngFor="let sup of supplierList" [value]="sup">{{sup.name}}</ion-select-option>
+        </ion-select>
+        
+        </ion-col>
+        <ion-col size="6">
+        <ion-item >
+          <ion-label position="floating">Delivery Date</ion-label>
+          <ion-input name="deliveryDate" type="text" [(ngModel)]="purchase.deliveryDate" required></ion-input>
+        </ion-item> 
+       </ion-col>
+    </ion-row>
+    
+    <ion-item>
+      <ion-label>Product</ion-label>
+      <ionic-selectable style="height: 30px;"
+        
+        [(ngModel)]="product"
+        [items]="products"
+        itemValueField="name"
+        itemTextField="name"
+        [canSearch]="true"
+        (onChange)="productSelected($event)"
+        [isMultiple]="true">
+      </ionic-selectable>
+    </ion-item> 
+    
+<table border="5" style="width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;">
+  <tr>
+    <td>
+      Item Code
+    </td>
+    <td>
+      Item Name
+    </td>
+    <td>
+      Order Quantity
+    </td>
+    <td>
+      Received Quantity
+    </td>
+    <td>
+      Price
+    </td>
+  </tr>
+  <tr *ngFor= "let item of purchase.purchaseItems" >
+    <td><ion-input  disabled [(ngModel)]="item.code" ></ion-input></td>
+    <td><ion-input  disabled [(ngModel)]="item.name" ></ion-input></td>
+    <td><ion-input  type="number" [(ngModel)]="item.orderQuantity" (keypress)="numericOnly($event)"></ion-input></td>
+    <td><ion-input  type="number" [(ngModel)]="item.receivedQuantity" (keypress)="numericOnly($event)"></ion-input></td>
+    <td><ion-input ( type="number" [(ngModel)]="item.unitPrice"  ></ion-input></td>
+  </tr>
+</table>
+    </ion-grid>
 </ion-content>

@@ -232,11 +232,30 @@
               tax: null,
               customer: {
                 id: null,
+                code: null,
                 name: "",
+                itemList: null,
+                nameInArabic: "",
                 contactPersonName: "",
-                location: "",
-                vat: null,
-                itemList: []
+                contactPersonNameInArabic: "",
+                buildingNumber: "",
+                street: "",
+                streetInArabic: "",
+                city: "",
+                cityInArabic: "",
+                district: "",
+                districtInArabic: "",
+                country: "",
+                countryInArabic: "",
+                pobox: "",
+                postalCode: "",
+                phoneNumber: "",
+                mobile: "",
+                email: "",
+                vatNumber: "",
+                crNumber: "",
+                creditLimit: null,
+                balance: null
               },
               invoiceItems: [],
               invoiceDateString: ""
@@ -307,7 +326,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice Details</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Customer</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.customer.name}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Invoice Number</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.invoiceNumber}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Invoice Date</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.invoiceDateString}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n</ion-grid>\n<table border=\"5\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;\">\n  <tr>\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Purchase Price\n    </td>\n    <td>\n      Quantity\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" >\n    <td><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input disabled  [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input disabled  [(ngModel)]=\"item.purchasePrice\" ></ion-input></td>\n    <td><ion-input disabled [(ngModel)]=\"item.quantity\"  ></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Amount</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice Details</ion-title>\n    <ion-buttons slot=\"start\">\n    \n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n       \n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Customer</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.customer.name}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Invoice Number</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.invoiceNumber}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Invoice Date</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.invoiceDateString}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n</ion-grid>\n<table border=\"5\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;\">\n  <tr>\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Purchase Price\n    </td>\n    <td>\n      Quantity\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" >\n    <td><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input disabled  [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input disabled  [(ngModel)]=\"item.purchasePrice\" ></ion-input></td>\n    <td><ion-input disabled [(ngModel)]=\"item.quantity\"  ></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Amount</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n\n";
       /***/
     }
   }]);

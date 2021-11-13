@@ -80,6 +80,18 @@ const routes: Routes = [
   {
     path: 'purchase',
     loadChildren: () => import('./purchase/purchase.module').then( m => m.PurchasePageModule)
+  },
+  {
+    path: 'supplier',
+    loadChildren: () => import('./supplier/supplier.module').then( m => m.SupplierPageModule)
+  },
+  {
+    path: 'newsupplier',
+    loadChildren: () => import('./newsupplier/newsupplier.module').then( m => m.NewsupplierPageModule)
+  },
+  {
+    path: 'editsupplier',
+    loadChildren: () => import('./editsupplier/editsupplier.module').then( m => m.EditsupplierPageModule)
   }
 ];
 

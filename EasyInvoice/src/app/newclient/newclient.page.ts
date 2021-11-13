@@ -14,26 +14,60 @@ import { ToastserviceService } from '../services/toastservice.service';
 export class NewclientPage implements OnInit {
   private customer : Customer ;
   private inventoryList : Inventory[];
+  private personalDetails: boolean ;
+  private address : boolean ;
+  private contactDetails : boolean;
+  private payment : boolean;
   constructor(public dbService:DbService,public tostService:ToastserviceService,public navCtrl:NavController) { }
 
   ngOnInit() {
-    this.customer={id:null,name : "" ,location : "",contactPersonName : "",vat : null,itemList:null};
+    this.resetCustomer();
+    this.dbService.getCustomerCode().then(data=>{
+      this.customer.code=data;
+    })
+   
   }
   ionViewWillEnter(){
+    this.personalDetails=false;
+    this.address=false;;
+    this.contactDetails=false;
+    this.payment=false;
+    this.dbService.getCustomerCode().then(data=>{
+      this.customer.code=data;
+    })
     this.dbService.getAllInventories().then(data=>{
       this.inventoryList=data;
     })
   }
 
+  resetCustomer(){
+    this.customer={id:null,code:null,name : "" ,itemList : null,nameInArabic : "",contactPersonName: "",contactPersonNameInArabic:"",
+      buildingNumber:"",street:"",streetInArabic:"",city:"",cityInArabic:"",district:"",districtInArabic:"",country:"",countryInArabic:"",
+      pobox:"",postalCode:"",phoneNumber:"",mobile:"",email:"",vatNumber:"",crNumber:"",creditLimit:null,balance:null};
+  }
+
   async addNewClient() :Promise<any>{
     this.customer.itemList=this.inventoryList;
     this.dbService.createCustomer(this.customer).then(data=>{
+      this.dbService.incrementCustomerCode();
       this.tostService.presentToast("Customer added successfully");      
     }).catch(reason=>{
       console.log(reason);
     }).finally(()=>{
-      this.customer={id:null,name : "" ,location : "",contactPersonName : "",vat : null,itemList : null};
+      this.resetCustomer();
       this.navCtrl.navigateRoot('client');
     });
   } 
+
+  expandItem(item){
+    if('PERSONAL'==item){
+      this.personalDetails=!this.personalDetails;
+    }else if('ADDRESS'==item){
+      this.address=!this.address;
+    }else if('CONTACT'==item){
+      this.contactDetails=!this.contactDetails;
+    }else if('PAYMENT'==item){
+      this.payment=!this.payment;
+    }
+  }
 }
