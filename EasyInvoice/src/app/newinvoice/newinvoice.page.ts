@@ -26,8 +26,11 @@ export class NewinvoicePage implements OnInit {
   private selectedProducts:InvoiceItem[];
   private profile : Profile;
   private applyVat : boolean;
+  private showTable=false;
   constructor(public dbService:DbService,public tostService:ToastserviceService,public navCtrl:NavController,
-    public printService : PrintService,private validationService :ValidationService) { }
+    public printService : PrintService,private validationService :ValidationService) { 
+      
+    }
 
   ngOnInit() {
     this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",
@@ -40,6 +43,7 @@ export class NewinvoicePage implements OnInit {
 
 
 ionViewWillEnter(){
+  this.showTable=false;
   this.applyVat=true;
   this.dbService.getProfile().then(data=>{
     this.profile=data;
@@ -67,6 +71,11 @@ async filterProducts(evt) {
 productSelected(evt){
   this.selectedProducts=evt.value;
   this.invoice.invoiceItems=this.selectedProducts;  
+  if(this.invoice.invoiceItems!=null && this.invoice.invoiceItems!=undefined && this.invoice.invoiceItems.length>0)
+  this.showTable=true;
+  else
+  this.showTable=false;
+ 
 }
 
 resetInvoiceForm(){
@@ -75,7 +84,10 @@ resetInvoiceForm(){
   
   this.invoice=new Invoice();
   this.dbService.incrementInvoiceNumber().then(data=>{
-    this.invoice.invoiceNumber=data;
+    if(data==null || data==undefined){
+      data=1;
+    }
+    this.invoice.invoiceNumber=this.dbService.codeConstant+this.dbService.invoiceCodeConstant+ data;
   });
 
   this.invoice.invoiceDate=new Date();
@@ -141,17 +153,25 @@ submitBill(){
 }
 
 printBill(){
-  let data='---------------------RECEIPT-----------------------\n\n\nDate :'+this.invoice.invoiceDate+'\nInvoice Number :'+this.invoice.invoiceNumber+'\nCustomer:'+this.invoice.customer+'/n/n';
+  try{
+    let data='---------------------RECEIPT-----------------------\n\n\nDate :'+this.invoice.invoiceDate+'\nInvoice Number :'+this.invoice.invoiceNumber+'\nCustomer:'+this.invoice.customer.name+'/n/n';
   for(let itm of this.invoice.invoiceItems){
     data=data+'Item Name :'+itm.name+'  Price :'+itm.unitPrice+'  Quantity :'+itm.quantity;
   }
   data=data+'-----------------------------------------------------------------------';
-  data=data+'\n Vat Applied :'+this.invoice.customer.vatNumber;
+  data=data+'\n Vat Applied :'+this.invoice.tax;
   data=data+'\n Total :'+this.invoice.total;
-  this.printService.sendToBluetoothPrinter(this.printService.selectedPrinter,data);
+  this.printService.sendToBluetoothPrinter(this.dbService.getPrinter(),data);
+  }catch(reason){
+    this.tostService.presentToast("Print Failed"+reason)
+  }
+  
 }
 
 numericOnly(evt){
   return this.validationService.numericOnly(evt);
+}
+showInvoice(){
+  this.navCtrl.navigateForward("invoice");
 }
 }

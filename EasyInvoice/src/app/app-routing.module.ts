@@ -92,6 +92,10 @@ const routes: Routes = [
   {
     path: 'editsupplier',
     loadChildren: () => import('./editsupplier/editsupplier.module').then( m => m.EditsupplierPageModule)
+  },
+  {
+    path: 'newpurchase',
+    loadChildren: () => import('./newpurchase/newpurchase.module').then( m => m.NewpurchasePageModule)
   }
 ];
 

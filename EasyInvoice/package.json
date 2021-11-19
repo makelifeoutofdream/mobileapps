@@ -41,6 +41,7 @@
     "@ionic/angular": "^5.5.2",
     "@ionic/storage": "^3.0.6",
     "@ionic/storage-angular": "^3.0.6",
+    "@swimlane/ngx-datatable": "^20.0.0",
     "@types/papaparse": "^5.2.6",
     "chart.js": "^3.4.1",
     "cordova-sqlite-storage": "^6.0.0",

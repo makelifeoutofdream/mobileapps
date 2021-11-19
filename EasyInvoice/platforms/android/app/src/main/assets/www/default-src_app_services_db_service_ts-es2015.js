@@ -178,6 +178,18 @@ let DbService = class DbService {
         this.invoiceNumberKey = "invoiceNumber";
         this.profileKey = "profile";
         this.customerCodeKey = "customerCode";
+        this.supplierCodeKey = "supplierCode";
+        this.supplierKey = "supplier";
+        this.purchaseKey = "purchase";
+        this.purchaseCodeKey = "purchaseCode";
+        this.inventoryCodeKey = "inventoryCode";
+        this.codeConstant = "SA-RY-";
+        this.inventoyCodeConstant = "STO";
+        this.purchaseCodeConstant = "PUR";
+        this.customerCodeConstant = "CUS";
+        this.supplierCodeConstant = "SUP";
+        this.invoiceCodeConstant = "INV";
+        this.printerKey = "printer";
         this.init();
     }
     init() {
@@ -270,6 +282,19 @@ let DbService = class DbService {
             catch (reason) {
                 console.log(reason);
                 this.toastService.presentToast("Failed to load the customers");
+            }
+        });
+    }
+    getAllSuppliers() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.storage.get(this.supplierKey);
+                let suppliers = JSON.parse(result);
+                return suppliers;
+            }
+            catch (reason) {
+                console.log(reason);
+                this.toastService.presentToast("Failed to load the suppliers");
             }
         });
     }
@@ -372,11 +397,6 @@ let DbService = class DbService {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
             let customerCode;
             customerCode = yield this.storage.get(this.customerCodeKey);
-            if (customerCode == null || customerCode == undefined) {
-                this.incrementCustomerCode().then(data => {
-                    customerCode = data;
-                });
-            }
             return customerCode;
         });
     }
@@ -390,6 +410,25 @@ let DbService = class DbService {
             customerCode = customerCode + 1;
             yield this.storage.set(this.customerCodeKey, customerCode);
             return customerCode;
+        });
+    }
+    getSupplierCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let supplierCode;
+            supplierCode = yield this.storage.get(this.supplierCodeKey);
+            return supplierCode;
+        });
+    }
+    incrementSupplierCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let supplierCode;
+            supplierCode = yield this.storage.get(this.supplierCodeKey);
+            if (supplierCode == null || supplierCode == undefined) {
+                supplierCode = 0;
+            }
+            supplierCode = supplierCode + 1;
+            yield this.storage.set(this.supplierCodeKey, supplierCode);
+            return supplierCode;
         });
     }
     getInvoiceNumber() {
@@ -425,6 +464,147 @@ let DbService = class DbService {
                 console.log(reason);
                 new Object();
             }
+        });
+    }
+    createSupplier(supplier) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.supplierKey);
+                this.suppliers = JSON.parse(value);
+                if (this.suppliers == null || this.suppliers == undefined) {
+                    this.suppliers = [];
+                }
+                supplier.id = (0,uuid__WEBPACK_IMPORTED_MODULE_2__.default)();
+                this.suppliers.push(supplier);
+                this.storage.set(this.supplierKey, JSON.stringify(this.suppliers));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    UpdateSupplier(supplier) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.supplierKey);
+                this.suppliers = JSON.parse(value);
+                var index = this.suppliers.findIndex(i => i.id == supplier.id);
+                this.suppliers[index] = supplier;
+                this.storage.set(this.supplierKey, JSON.stringify(this.suppliers));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    getAllPurchases() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.storage.get(this.purchaseKey);
+                let purchaseList = JSON.parse(result);
+                return purchaseList;
+            }
+            catch (reason) {
+                console.log(reason);
+                this.toastService.presentToast("Failed to load the purchases");
+            }
+        });
+    }
+    createPurchase(purchase) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.purchaseKey);
+                let purchaseList = JSON.parse(value);
+                if (purchaseList == null || purchaseList == undefined) {
+                    purchaseList = [];
+                }
+                purchase.id = (0,uuid__WEBPACK_IMPORTED_MODULE_2__.default)();
+                purchaseList.push(purchase);
+                this.storage.set(this.purchaseKey, JSON.stringify(purchaseList));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    getPurchaseCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let purchaseCode;
+            purchaseCode = yield this.storage.get(this.purchaseCodeKey);
+            return purchaseCode;
+        });
+    }
+    incrementPurchaseCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let purchaseCode;
+            purchaseCode = yield this.storage.get(this.purchaseCodeKey);
+            if (purchaseCode == null || purchaseCode == undefined) {
+                purchaseCode = 0;
+            }
+            purchaseCode = purchaseCode + 1;
+            yield this.storage.set(this.purchaseCodeKey, purchaseCode);
+            return purchaseCode;
+        });
+    }
+    updateStock(purchaseItemList) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.inventoryKey);
+                let inventories = JSON.parse(value);
+                for (let pItem of purchaseItemList) {
+                    var index = inventories.findIndex(i => i.id == pItem.item.id);
+                    let inventory = this.inventories[index];
+                    inventory.quantity = inventory.quantity + pItem.deliverQuantity;
+                    this.storage.set(this.inventoryKey, JSON.stringify(this.inventories));
+                }
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    getInventoryCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let inventoryCode;
+            inventoryCode = yield this.storage.get(this.inventoryCodeKey);
+            return inventoryCode;
+        });
+    }
+    incrementInventoryCode() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let inventoryCode;
+            inventoryCode = yield this.storage.get(this.inventoryCodeKey);
+            if (inventoryCode == null || inventoryCode == undefined) {
+                inventoryCode = 0;
+            }
+            inventoryCode = inventoryCode + 1;
+            yield this.storage.set(this.inventoryCodeKey, inventoryCode);
+            return inventoryCode;
+        });
+    }
+    savePrinter(macAddress) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                this.storage.set(this.printerKey, macAddress);
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    getPrinter() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return this.storage.get(this.printerKey);
         });
     }
 };

@@ -1,12 +1,17 @@
 <ion-header>
-<ion-toolbar>
-    <ion-title>Edit Customer</ion-title>
+  <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-menu-button menu="mainmenu"> 
+      <ion-menu-button menu="mainmenu"> 
 
-        </ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons> 
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="home" (click)="showClient()"> </ion-back-button>
+      
     </ion-buttons>
+    <ion-title>Edit Customer</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>

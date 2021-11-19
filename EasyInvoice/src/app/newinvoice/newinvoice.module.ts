@@ -8,13 +8,15 @@ import { NewinvoicePageRoutingModule } from './newinvoice-routing.module';
 
 import { NewinvoicePage } from './newinvoice.page';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     NewinvoicePageRoutingModule,
-    IonicSelectableModule
+    IonicSelectableModule,
+    NgxDatatableModule
   ],
   declarations: [NewinvoicePage]
 })

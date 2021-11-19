@@ -31,7 +31,7 @@
         <ion-row>
           <ion-col size="12">
             <ion-item style="width: 100%"> 
-              <ion-textarea  placeholder="Email to send" [(ngModel)]="user.toEmail"></ion-textarea>
+              <ion-textarea  placeholder="Email to send" [(ngModel)]="user.userProfile.toEmail"></ion-textarea>
           </ion-item>
         
           </ion-col>
@@ -39,7 +39,7 @@
         <ion-row>
           <ion-col size="12">
             <ion-item style="width: 100%"> 
-              <ion-textarea  placeholder="CC Emails" [(ngModel)]="user.ccEmail"></ion-textarea>
+              <ion-textarea  placeholder="CC Emails" [(ngModel)]="user.userProfile.ccEmail"></ion-textarea>
           </ion-item>
         
           </ion-col>
@@ -59,7 +59,7 @@
         <ion-row>
           <ion-col size="12">
             <ion-item style="width: 100%"> 
-              <ion-input type="number" placeholder="Vat(%)" [(ngModel)]="user.vat"></ion-input>
+              <ion-input type="number" placeholder="Vat(%)" [(ngModel)]="user.userProfile.vat"></ion-input>
           </ion-item>
         
           </ion-col>

@@ -45,9 +45,15 @@ export class NewsupplierPage implements OnInit {
     this.address=false;;
     this.contactDetails=false;
     this.payment=false;
-    this.dbService.getSupplierCode().then(data=>{
-      this.supplier.code=data;
+    this.dbService.incrementSupplierCode().then(data=>{
+      this.dbService.getSupplierCode().then(data=>{
+        if(data==null || data==undefined){
+          data=1;
+        }
+        this.supplier.code=this.dbService.codeConstant+this.dbService.supplierCodeConstant+ data;
+      })
     })
+    
     this.dbService.getAllInventories().then(data=>{
       this.inventoryList=data;
     })
@@ -77,5 +83,8 @@ export class NewsupplierPage implements OnInit {
     });
   } 
 
+  showSupplier(){
+    this.navCtrl.navigateRoot('supplier');
+  }
 
 }

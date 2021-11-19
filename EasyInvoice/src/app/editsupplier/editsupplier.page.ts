@@ -75,5 +75,8 @@ export class EditsupplierPage implements OnInit {
     });
   } 
 
+  showSupplier(){
+    this.navCtrl.navigateRoot('supplier');
+  }
 
 }

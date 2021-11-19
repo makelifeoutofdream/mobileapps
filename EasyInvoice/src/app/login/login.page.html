@@ -8,21 +8,24 @@
 </ion-header>
 
 <ion-content>
+  
   <div style="margin-top: 50%;">
-  <form>
+    <form [formGroup]="formLogin">
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-        <ion-input name="username" type="text" [(ngModel)]="userName" required></ion-input>
+        <ion-input name="username" type="text" [(ngModel)]="userName" formControlName="email" required></ion-input>
+       
     </ion-item>
-
+    
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
+      <ion-input name="password" type="password" [(ngModel)]="password"   formControlName="password"  required></ion-input>
     </ion-item>
+  </form>
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="primary" (click)="login()" expand="block">Login</ion-button>
+        <ion-button type="submit" color="primary" (click)="login()" expand="block" >Login</ion-button>
         
       </ion-col>
       
@@ -35,6 +38,9 @@
         <a [routerLink]="['/register']" class="small-text">Create Account</a>
       </ion-col>
     </ion-row>
-  </form>
-</div>
+  </div>
+  
+  
+  
+
 </ion-content>  

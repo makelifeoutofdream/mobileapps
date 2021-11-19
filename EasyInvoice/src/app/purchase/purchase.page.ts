@@ -1,4 +1,7 @@
 import { AbstractType, Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { DbService } from '../services/db.service';
+import { Inventory } from '../services/inventory';
 import { InvoiceItem } from '../services/invoiceitem';
 import { Purchase } from '../services/purchase';
 
@@ -8,24 +11,26 @@ import { Purchase } from '../services/purchase';
   styleUrls: ['./purchase.page.scss'],
 })
 export class PurchasePage implements OnInit {
-  private purchase : Purchase;
-  private supplierList : any;
-  private product : InvoiceItem;
-  private products : InvoiceItem[];
-  constructor() { }
+
+  private purchaseList : Purchase[];
+  
+  constructor(private dbService:DbService,public navCtrl:NavController) { }
 
   ngOnInit() {
-    this.purchase={id:null,poNumber:null,deliveryDate:null,purchaseDate:null,purchaseItems:[]}
+    this.dbService.getAllPurchases().then(data=>{
+      this.purchaseList=data;
+    });
   }
 
   ionViewWillEnter(){
-    this.purchase={id:null,poNumber:null,deliveryDate:null,purchaseDate:null,purchaseItems:[]}
+    this.dbService.getAllPurchases().then(data=>{
+      this.purchaseList=data;
+    });
+   
   }
-  populateSupplier(){
 
+  addNewPurchase(){
+    this.navCtrl.navigateRoot('newpurchase');
   }
-
-  productSelected(evt){
-
-  }
+  
 }

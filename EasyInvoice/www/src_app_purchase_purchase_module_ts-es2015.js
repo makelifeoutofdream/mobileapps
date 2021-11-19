@@ -56,6 +56,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _purchase_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./purchase-routing.module */ 4552);
 /* harmony import */ var _purchase_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./purchase.page */ 47723);
+/* harmony import */ var ionic_selectable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ionic-selectable */ 93319);
+
 
 
 
@@ -71,7 +73,8 @@ PurchasePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
             _angular_common__WEBPACK_IMPORTED_MODULE_4__.CommonModule,
             _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule,
             _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule,
-            _purchase_routing_module__WEBPACK_IMPORTED_MODULE_0__.PurchasePageRoutingModule
+            _purchase_routing_module__WEBPACK_IMPORTED_MODULE_0__.PurchasePageRoutingModule,
+            ionic_selectable__WEBPACK_IMPORTED_MODULE_7__.IonicSelectableModule
         ],
         declarations: [_purchase_page__WEBPACK_IMPORTED_MODULE_1__.PurchasePage]
     })
@@ -92,22 +95,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PurchasePage": function() { return /* binding */ PurchasePage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_purchase_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./purchase.page.html */ 73765);
 /* harmony import */ var _purchase_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./purchase.page.scss */ 73481);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/db.service */ 73773);
+
+
 
 
 
 
 let PurchasePage = class PurchasePage {
-    constructor() { }
+    constructor(dbService, navCtrl) {
+        this.dbService = dbService;
+        this.navCtrl = navCtrl;
+    }
     ngOnInit() {
+        this.dbService.getAllPurchases().then(data => {
+            this.purchaseList = data;
+        });
+    }
+    ionViewWillEnter() {
+        this.dbService.getAllPurchases().then(data => {
+            this.purchaseList = data;
+        });
+    }
+    addNewPurchase() {
+        this.navCtrl.navigateRoot('newpurchase');
     }
 };
-PurchasePage.ctorParameters = () => [];
-PurchasePage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+PurchasePage.ctorParameters = () => [
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_2__.DbService },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.NavController }
+];
+PurchasePage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-purchase',
         template: _raw_loader_purchase_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_purchase_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -138,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Purchase</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Purchase</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let pur of purchaseList\">\n      <ion-label>{{pur.poNumber}}</ion-label>\n      <ion-label>{{pur.purchaseDate}}</ion-label>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewPurchase()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
 
 /***/ })
 

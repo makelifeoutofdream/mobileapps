@@ -500,15 +500,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PrintService": function() { return /* binding */ PrintService; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/bluetooth-serial/ngx */ 28078);
+/* harmony import */ var _toastservice_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toastservice.service */ 48236);
+
 
 
 
 let PrintService = class PrintService {
-    constructor(btSerial) {
+    constructor(btSerial, tostService) {
         this.btSerial = btSerial;
+        this.tostService = tostService;
     }
     searchBluetoothPrinter() {
         return this.btSerial.list();
@@ -524,17 +527,52 @@ let PrintService = class PrintService {
             this.btSerial.write(data).then(_ => {
                 this.btSerial.disconnect();
             }).catch(reason => { console.log(reason); });
-        }, err => console.log(err));
+        }, err => console.log(this.tostService.presentToast("Printer Issue - bluetooth address - " + macAddress + "-err-" + err)));
     }
 };
 PrintService.ctorParameters = () => [
-    { type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__.BluetoothSerial }
+    { type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__.BluetoothSerial },
+    { type: _toastservice_service__WEBPACK_IMPORTED_MODULE_1__.ToastserviceService }
 ];
-PrintService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+PrintService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
     })
 ], PrintService);
+
+
+
+/***/ }),
+
+/***/ 62813:
+/*!***************************************!*\
+  !*** ./src/app/validation.service.ts ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ValidationService": function() { return /* binding */ ValidationService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 37716);
+
+
+let ValidationService = class ValidationService {
+    constructor() { }
+    numericOnly(event) {
+        let pattern = /^([0-9])$/;
+        let result = pattern.test(event.key);
+        return result;
+    }
+};
+ValidationService.ctorParameters = () => [];
+ValidationService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
+        providedIn: 'root'
+    })
+], ValidationService);
 
 
 

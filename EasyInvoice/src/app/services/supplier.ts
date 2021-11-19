@@ -2,7 +2,7 @@ import { Inventory } from "./inventory";
 
 export class Supplier{
     id : number ;
-    code : number;
+    code : string;
     name : string ;
     nameInArabic : string;
     contactPersonName  : string ;

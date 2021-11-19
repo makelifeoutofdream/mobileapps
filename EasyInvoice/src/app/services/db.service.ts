@@ -12,6 +12,8 @@ import { Invoice } from './invoice';
 import { v4 as uuidv4 } from 'uuid';
 import { Profile } from './profile';
 import { Supplier } from './supplier';
+import { Purchase } from './purchase';
+import { PurchaseItem } from './PurchaseItem';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +28,9 @@ export class DbService {
   private customerCodeKey="customerCode";
   private supplierCodeKey="supplierCode";
   private supplierKey ="supplier";
+  private purchaseKey="purchase";
+  private purchaseCodeKey="purchaseCode";
+  private inventoryCodeKey="inventoryCode";
   private invoices : Invoice[] ;
   private inventory : Inventory;
   private inventories : Inventory[];
@@ -34,6 +39,13 @@ export class DbService {
   private suppliers : Supplier [];
   private user : User;
   private  users:User[]
+  public codeConstant="SA-RY-";
+  public inventoyCodeConstant="STO";
+  public purchaseCodeConstant="PUR";
+  public customerCodeConstant="CUS";
+  public supplierCodeConstant="SUP";
+  public invoiceCodeConstant="INV";
+  private printerKey="printer";
   constructor(
     private httpClient: HttpClient,
     private toastService : ToastserviceService,
@@ -152,6 +164,7 @@ export class DbService {
       if(this.inventories==null || this.inventories==undefined){
         this.inventories=[];
       }
+      
       if(inventory.id==null  || inventory.id==undefined){
         inventory.id=uuidv4();
         this.inventories.push(inventory);
@@ -222,11 +235,6 @@ export class DbService {
   async getCustomerCode():Promise<any>{
     let customerCode : number; 
     customerCode =await this.storage.get(this.customerCodeKey);
-    if(customerCode==null || customerCode==undefined){
-      this.incrementCustomerCode().then(data=>{
-        customerCode=data;
-      })
-    }
     return customerCode;
   }
 
@@ -246,11 +254,9 @@ export class DbService {
   async getSupplierCode():Promise<any>{
     let supplierCode : number; 
     supplierCode =await this.storage.get(this.supplierCodeKey);
-    if(supplierCode==null || supplierCode==undefined){
-      this.incrementSupplierCode().then(data=>{
-        supplierCode=data;
-      })
-    }
+    
+     
+    
     return supplierCode;
   }
   async incrementSupplierCode():Promise<any>{
@@ -329,5 +335,100 @@ async UpdateSupplier(supplier :Supplier) : Promise<any>{
     return false;
   }
 }
+
+async getAllPurchases():Promise<any>{
+  try{
+    const result =await this.storage.get(this.purchaseKey);
+      let purchaseList= JSON.parse(result)
+      return purchaseList;
+  }catch(reason){
+    console.log(reason);
+    this.toastService.presentToast("Failed to load the purchases");   
+  }
+}
+async createPurchase(purchase :Purchase) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.purchaseKey);
+    let purchaseList=JSON.parse(value);
+    if(purchaseList==null || purchaseList==undefined){
+      purchaseList=[];
+    }
+    purchase.id=uuidv4();
+    purchaseList.push(purchase);
+    this.storage.set(this.purchaseKey,JSON.stringify(purchaseList) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
+async getPurchaseCode():Promise<any>{
+  let purchaseCode : number; 
+  purchaseCode =await this.storage.get(this.purchaseCodeKey);
+  return purchaseCode;
+}
+async incrementPurchaseCode():Promise<any>{
+  let purchaseCode : number; 
+  purchaseCode =await this.storage.get(this.purchaseCodeKey);
+  if(purchaseCode ==null || purchaseCode==undefined){
+    purchaseCode=0;
+  }
+  purchaseCode=purchaseCode+1;
+  await this.storage.set(this.purchaseCodeKey,purchaseCode);
+  return purchaseCode;
+  
+}
+
+async updateStock(purchaseItemList :PurchaseItem[]) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.inventoryKey);
+    let inventories=JSON.parse(value);
+    for(let pItem of purchaseItemList){
+      var index = inventories.findIndex(i => i.id == pItem.item.id);
+      let inventory : Inventory=this.inventories[index];
+      inventory.quantity=inventory.quantity+pItem.deliverQuantity;
+      this.storage.set(this.inventoryKey,JSON.stringify(this.inventories) );
+    }
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
+
+async getInventoryCode():Promise<any>{
+  let inventoryCode : number; 
+  inventoryCode =await this.storage.get(this.inventoryCodeKey);
+  return inventoryCode;
+}
+async incrementInventoryCode():Promise<any>{
+  let inventoryCode : number; 
+  inventoryCode =await this.storage.get(this.inventoryCodeKey);
+  if(inventoryCode ==null || inventoryCode==undefined){
+    inventoryCode=0;
+  }
+  inventoryCode=inventoryCode+1;
+  await this.storage.set(this.inventoryCodeKey,inventoryCode);
+  return inventoryCode;
+  
+}
+
+
+async savePrinter(macAddress :any) : Promise<any>{
+  try{
+    this.storage.set(this.printerKey,macAddress );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
+async getPrinter():Promise<any>{
+  return  this.storage.get(this.printerKey );
+}
+
 }
 

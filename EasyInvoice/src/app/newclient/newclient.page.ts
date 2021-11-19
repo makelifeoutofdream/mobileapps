@@ -21,20 +21,27 @@ export class NewclientPage implements OnInit {
   constructor(public dbService:DbService,public tostService:ToastserviceService,public navCtrl:NavController) { }
 
   ngOnInit() {
-    this.resetCustomer();
-    this.dbService.getCustomerCode().then(data=>{
-      this.customer.code=data;
-    })
+   this.resetCustomer();
+    //this.setCustomerCode();
    
+  }
+  setCustomerCode(){
+    this.dbService.incrementCustomerCode().then(data=>{
+      this.dbService.getCustomerCode().then(data=>{
+        if(data==null || data==undefined){
+          data=1;
+        }
+        this.customer.code=this.dbService.codeConstant+this.dbService.customerCodeConstant+ data;
+      })
+    })
+    
   }
   ionViewWillEnter(){
     this.personalDetails=false;
     this.address=false;;
     this.contactDetails=false;
     this.payment=false;
-    this.dbService.getCustomerCode().then(data=>{
-      this.customer.code=data;
-    })
+    this.setCustomerCode();
     this.dbService.getAllInventories().then(data=>{
       this.inventoryList=data;
     })
@@ -49,7 +56,7 @@ export class NewclientPage implements OnInit {
   async addNewClient() :Promise<any>{
     this.customer.itemList=this.inventoryList;
     this.dbService.createCustomer(this.customer).then(data=>{
-      this.dbService.incrementCustomerCode();
+    //  this.dbService.incrementCustomerCode();
       this.tostService.presentToast("Customer added successfully");      
     }).catch(reason=>{
       console.log(reason);
@@ -59,6 +66,9 @@ export class NewclientPage implements OnInit {
     });
   } 
 
+  showClient(){
+    this.navCtrl.navigateRoot('client');
+  }
   expandItem(item){
     if('PERSONAL'==item){
       this.personalDetails=!this.personalDetails;

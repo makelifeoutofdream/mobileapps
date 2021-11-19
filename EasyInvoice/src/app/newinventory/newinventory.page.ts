@@ -17,7 +17,7 @@ export class NewinventoryPage implements OnInit {
     public navCtrl:NavController,private route : ActivatedRoute) { }
 
   ngOnInit() {
-    this.inventory={id:null,name : "",description:"",quantity:null,unitPrice:null,purchasePrice:null};
+    this.inventory={id:null,code:"",name : "",nameInArabic:"",description:"",quantity:null,unitPrice:null,purchasePrice:null};
   }
 
   async addNewInventory():Promise<any>{
@@ -31,16 +31,30 @@ export class NewinventoryPage implements OnInit {
     }).catch(reason=>{
       console.log(reason);
     }).finally(()=>{
-      this.inventory={id:null,name : "",description:"",quantity:null,unitPrice:null,purchasePrice:null};
+      this.inventory={id:null,code:"",name : "",nameInArabic:"",description:"",quantity:null,unitPrice:null,purchasePrice:null};
       this.navCtrl.navigateRoot('inventory');
     });
+  }
+
+  showInventory(){
+    this.navCtrl.navigateRoot('inventory');
+  
   }
 
   ionViewWillEnter(){
     
     this.route.queryParams.subscribe(params=>{
       if(params['inventory']==null || params['inventory']==undefined){
-        this.inventory={id : null,name:"",description:"",quantity:null,unitPrice:null,purchasePrice:null};
+        this.inventory={id : null,code:"",name:"",nameInArabic:"",description:"",quantity:null,unitPrice:null,purchasePrice:null};
+        this.dbService.incrementInventoryCode().then(data=>{
+          this.dbService.getInventoryCode().then(data=>{
+            if(data==null || data==undefined){
+              data=1;
+            }
+            this.inventory.code=this.dbService.codeConstant+this.dbService.inventoyCodeConstant+data;
+          }) ;
+        })
+               
       }else{
         this.inventory=params['inventory'];
       }

@@ -71,7 +71,7 @@ NewinventoryPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
             _angular_common__WEBPACK_IMPORTED_MODULE_4__.CommonModule,
             _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule,
             _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule,
-            _newinventory_routing_module__WEBPACK_IMPORTED_MODULE_0__.NewinventoryPageRoutingModule
+            _newinventory_routing_module__WEBPACK_IMPORTED_MODULE_0__.NewinventoryPageRoutingModule,
         ],
         declarations: [_newinventory_page__WEBPACK_IMPORTED_MODULE_1__.NewinventoryPage]
     })
@@ -116,7 +116,7 @@ let NewinventoryPage = class NewinventoryPage {
         this.route = route;
     }
     ngOnInit() {
-        this.inventory = { id: null, name: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
+        this.inventory = { id: null, code: "", name: "", nameInArabic: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
     }
     addNewInventory() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
@@ -130,15 +130,26 @@ let NewinventoryPage = class NewinventoryPage {
             }).catch(reason => {
                 console.log(reason);
             }).finally(() => {
-                this.inventory = { id: null, name: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
+                this.inventory = { id: null, code: "", name: "", nameInArabic: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
                 this.navCtrl.navigateRoot('inventory');
             });
         });
     }
+    showInventory() {
+        this.navCtrl.navigateRoot('inventory');
+    }
     ionViewWillEnter() {
         this.route.queryParams.subscribe(params => {
             if (params['inventory'] == null || params['inventory'] == undefined) {
-                this.inventory = { id: null, name: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
+                this.inventory = { id: null, code: "", name: "", nameInArabic: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
+                this.dbService.incrementInventoryCode().then(data => {
+                    this.dbService.getInventoryCode().then(data => {
+                        if (data == null || data == undefined) {
+                            data = 1;
+                        }
+                        this.inventory.code = this.dbService.codeConstant + this.dbService.inventoyCodeConstant + data;
+                    });
+                });
             }
             else {
                 this.inventory = params['inventory'];
@@ -185,7 +196,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>New Inventory</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"3\">\n    <ion-item >\n      <ion-label position=\"floating\">Name</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"inventory.name\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    <ion-col size=\"4\">\n    <ion-item >\n      <ion-label position=\"floating\">Description</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"inventory.description\" required></ion-input>\n    </ion-item> \n   </ion-col>\n  \n   <ion-col size=\"5\">\n    <ion-item >\n      <ion-label position=\"floating\">Quantity</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"inventory.quantity\" required></ion-input>\n    </ion-item>\n    </ion-col>\n  \n</ion-row>\n\n<ion-row>\n    <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Unit Price</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"inventory.unitPrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n   <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Purchase Price</ion-label>\n      <ion-input name=\"purchasePrice\" type=\"text\" [(ngModel)]=\"inventory.purchasePrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n\n</ion-row>\n\n</ion-grid>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n  \n    \n    \n\n\n\n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n    <ion-buttons slot=\"end\">\n      <ion-back-button defaultHref=\"home\" (click)=\"showInventory()\"> </ion-back-button>\n      \n    </ion-buttons>\n    <ion-title>New Inventory</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item >\n          <ion-label position=\"floating\">Code</ion-label>\n          <ion-input name=\"code\" type=\"text\" [(ngModel)]=\"inventory.code\" required></ion-input>\n        </ion-item>\n        </ion-col>\n      \n    </ion-row>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Name</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"inventory.name\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    <ion-col size=\"6\">\n      <ion-item >\n        <ion-label position=\"floating\">اسم</ion-label>\n        <ion-input name=\"nameinarabic\" type=\"text\" [(ngModel)]=\"inventory.nameInArabic\" required></ion-input>\n      </ion-item>\n      </ion-col>\n    \n</ion-row>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Description</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"inventory.description\" required></ion-input>\n    </ion-item> \n   </ion-col>\n   <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Quantity</ion-label>\n      <ion-input name=\"name\" type=\"number\" [(ngModel)]=\"inventory.quantity\" required></ion-input>\n    </ion-item>\n    </ion-col>\n</ion-row>\n<ion-row>\n\n   \n    <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Unit Price</ion-label>\n      <ion-input name=\"location\" type=\"number\" [(ngModel)]=\"inventory.unitPrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n   <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Purchase Price</ion-label>\n      <ion-input name=\"purchasePrice\" type=\"number\" [(ngModel)]=\"inventory.purchasePrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n\n</ion-row>\n\n</ion-grid>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n  \n    \n    \n\n\n\n</ion-footer>");
 
 /***/ })
 

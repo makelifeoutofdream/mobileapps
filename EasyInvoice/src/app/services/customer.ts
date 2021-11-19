@@ -4,7 +4,7 @@ import { InvoiceItem } from "./invoiceitem";
 export class Customer{
 
     id : number;
-    code : number;
+    code : string;
     name : string;
     nameInArabic : string;
     contactPersonName : string;

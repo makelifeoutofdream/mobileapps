@@ -63,4 +63,7 @@ export class EditclientPage implements OnInit {
       this.items=!this.items
     }
   }
+  showClient(){
+    this.navCtrl.navigateForward('client');
+  }
 }

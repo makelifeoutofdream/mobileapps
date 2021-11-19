@@ -1,11 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>New Invoice</ion-title>
     <ion-buttons slot="start">
-        <ion-menu-button menu="mainmenu"> 
+      <ion-menu-button menu="mainmenu"> 
 
-        </ion-menu-button>
-    </ion-buttons>
+      </ion-menu-button>
+    </ion-buttons> 
+   
+    <ion-title>New Invoice</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -27,8 +28,8 @@
     [isMultiple]="true">
   </ionic-selectable>
 </ion-item> 
-<table border="5" style="width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;">
-  <tr>
+<table *ngIf="showTable" border="none" style="width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;">
+  <tr style="border: none; color: white; background-color: lightslategray;">
     <td>
       Item
     </td>
@@ -42,14 +43,13 @@
       Quantity
     </td>
   </tr>
-  <tr *ngFor= "let item of invoice.invoiceItems" >
-    <td><ion-input  disabled [(ngModel)]="item.name" ></ion-input></td>
+  <tr *ngFor= "let item of invoice.invoiceItems" style="border: none;">
+    <td ><ion-input  disabled [(ngModel)]="item.name" ></ion-input></td>
     <td><ion-input (ionChange)="calculateInvoiceTotal()" type="number" [(ngModel)]="item.unitPrice" ></ion-input></td>
-    <td><ion-input (ionChange)="calculateInvoiceTotal()" type="number" [(ngModel)]="item.purchasePrice" ></ion-input></td>
+    <td><ion-input disabled (ionChange)="calculateInvoiceTotal()" type="number" [(ngModel)]="item.purchasePrice" ></ion-input></td>
     <td><ion-input (ionChange)="calculateInvoiceTotal()" type="number" [(ngModel)]="item.quantity"  (keypress)="numericOnly($event)"></ion-input></td>
   </tr>
 </table>
-
 <ion-grid>
     <ion-row>
       <ion-col size="6">
@@ -78,16 +78,16 @@
     </ion-row>   -->
   
   </ion-grid>
-    <ion-grid>
-      <ion-row> 
-        <ion-col size="3">
+    
+      <ion-row style="float: right;"> 
+       
           <ion-button color="primary" (click)="submitBill()">Submit</ion-button>
-        </ion-col>
+       
         
-        <ion-col size="3">
+       
           <ion-button color="primary" (click)="printBill()">Print</ion-button>
-        </ion-col>
+       
 
       </ion-row>
-    </ion-grid>
+   
 </ion-content>

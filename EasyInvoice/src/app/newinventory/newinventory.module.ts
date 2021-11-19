@@ -13,7 +13,8 @@ import { NewinventoryPage } from './newinventory.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    NewinventoryPageRoutingModule
+    NewinventoryPageRoutingModule,
+    
   ],
   declarations: [NewinventoryPage]
 })

@@ -240,7 +240,9 @@
           value: function ngOnInit() {
             this.inventory = {
               id: null,
+              code: "",
               name: "",
+              nameInArabic: "",
               description: "",
               quantity: null,
               unitPrice: null,
@@ -268,7 +270,9 @@
                       })["finally"](function () {
                         _this.inventory = {
                           id: null,
+                          code: "",
                           name: "",
+                          nameInArabic: "",
                           description: "",
                           quantity: null,
                           unitPrice: null,
@@ -287,6 +291,11 @@
             }));
           }
         }, {
+          key: "showInventory",
+          value: function showInventory() {
+            this.navCtrl.navigateRoot('inventory');
+          }
+        }, {
           key: "ionViewWillEnter",
           value: function ionViewWillEnter() {
             var _this2 = this;
@@ -295,12 +304,24 @@
               if (params['inventory'] == null || params['inventory'] == undefined) {
                 _this2.inventory = {
                   id: null,
+                  code: "",
                   name: "",
+                  nameInArabic: "",
                   description: "",
                   quantity: null,
                   unitPrice: null,
                   purchasePrice: null
                 };
+
+                _this2.dbService.incrementInventoryCode().then(function (data) {
+                  _this2.dbService.getInventoryCode().then(function (data) {
+                    if (data == null || data == undefined) {
+                      data = 1;
+                    }
+
+                    _this2.inventory.code = _this2.dbService.codeConstant + _this2.dbService.inventoyCodeConstant + data;
+                  });
+                });
               } else {
                 _this2.inventory = params['inventory'];
               }
@@ -364,7 +385,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>New Inventory</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"3\">\n    <ion-item >\n      <ion-label position=\"floating\">Name</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"inventory.name\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    <ion-col size=\"4\">\n    <ion-item >\n      <ion-label position=\"floating\">Description</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"inventory.description\" required></ion-input>\n    </ion-item> \n   </ion-col>\n  \n   <ion-col size=\"5\">\n    <ion-item >\n      <ion-label position=\"floating\">Quantity</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"inventory.quantity\" required></ion-input>\n    </ion-item>\n    </ion-col>\n  \n</ion-row>\n\n<ion-row>\n    <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Unit Price</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"inventory.unitPrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n   <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Purchase Price</ion-label>\n      <ion-input name=\"purchasePrice\" type=\"text\" [(ngModel)]=\"inventory.purchasePrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n\n</ion-row>\n\n</ion-grid>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n  \n    \n    \n\n\n\n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n    <ion-buttons slot=\"end\">\n      <ion-back-button defaultHref=\"home\" (click)=\"showInventory()\"> </ion-back-button>\n      \n    </ion-buttons>\n    <ion-title>New Inventory</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item >\n          <ion-label position=\"floating\">Code</ion-label>\n          <ion-input name=\"code\" type=\"text\" [(ngModel)]=\"inventory.code\" required></ion-input>\n        </ion-item>\n        </ion-col>\n      \n    </ion-row>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Name</ion-label>\n      <ion-input name=\"name\" type=\"text\" [(ngModel)]=\"inventory.name\" required></ion-input>\n    </ion-item>\n    </ion-col>\n    <ion-col size=\"6\">\n      <ion-item >\n        <ion-label position=\"floating\">اسم</ion-label>\n        <ion-input name=\"nameinarabic\" type=\"text\" [(ngModel)]=\"inventory.nameInArabic\" required></ion-input>\n      </ion-item>\n      </ion-col>\n    \n</ion-row>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Description</ion-label>\n      <ion-input name=\"location\" type=\"text\" [(ngModel)]=\"inventory.description\" required></ion-input>\n    </ion-item> \n   </ion-col>\n   <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Quantity</ion-label>\n      <ion-input name=\"name\" type=\"number\" [(ngModel)]=\"inventory.quantity\" required></ion-input>\n    </ion-item>\n    </ion-col>\n</ion-row>\n<ion-row>\n\n   \n    <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Unit Price</ion-label>\n      <ion-input name=\"location\" type=\"number\" [(ngModel)]=\"inventory.unitPrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n   <ion-col size=\"6\">\n    <ion-item >\n      <ion-label position=\"floating\">Purchase Price</ion-label>\n      <ion-input name=\"purchasePrice\" type=\"number\" [(ngModel)]=\"inventory.purchasePrice\" required></ion-input>\n    </ion-item> \n   </ion-col>\n\n</ion-row>\n\n</ion-grid>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n  \n    \n    \n\n\n\n</ion-footer>";
       /***/
     }
   }]);

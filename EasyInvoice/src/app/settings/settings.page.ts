@@ -76,19 +76,23 @@ export class SettingsPage implements OnInit {
   }
   }
   
-  selectPrinter(macAddress:string){
-    this.print.selectedPrinter=macAddress;
-    this.selectedPrinter=this.print.selectedPrinter;
+  selectPrinter(macAddress:any){
+    this.selectedPrinter=macAddress;
+    
   }
 
   updateProfile(){
     console.log("profile"+this.user.userProfile);
     this.dbService.createOrUpdateProfile(this.user.userProfile).then(data=>{
-      if(data==null || data==undefined){
-        this.toastService.presentToast("Failed to update settings");  
-      }else{
-        this.toastService.presentToast("Settings updated successfully");
-      }
+      this.dbService.savePrinter(this.selectedPrinter).then(pdata=>{
+        if(data==null || data==undefined || pdata==undefined){
+          this.toastService.presentToast("Failed to update settings");  
+        }else{
+          this.toastService.presentToast("Settings updated successfully");
+        }
+        
+      })
+    
       
     }).catch(reason=>{
       this.toastService.presentToast("Failed to update settings");

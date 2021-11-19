@@ -18,10 +18,15 @@ import {File} from '@ionic-native/file/ngx';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx'
 import { IonicSelectableModule } from 'ionic-selectable';
 import { DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,IonicSelectableModule,IonicStorageModule.forRoot({name: '_myDb',
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,IonicSelectableModule,
+    ReactiveFormsModule,FormsModule,
+    NgxDatatableModule,IonicStorageModule.forRoot({name: '_myDb',
   driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]})],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },DatePipe,
     SQLite,
