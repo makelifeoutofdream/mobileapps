@@ -14,7 +14,7 @@
   <ion-list>
     <ion-item *ngFor= "let sup of suppliers">
       <ion-label>{{sup.name}}</ion-label>
-      <ion-button color="secondary" (click)="editSupplier(sup.name)">Edit</ion-button>
+      <ion-button color="secondary" (click)="editSupplier(sup.id)">Edit</ion-button>
     </ion-item>
   </ion-list>    
   

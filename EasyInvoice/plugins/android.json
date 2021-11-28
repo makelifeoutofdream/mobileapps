@@ -44,6 +44,12 @@
     },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-btprinter": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-datecs-printer": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}

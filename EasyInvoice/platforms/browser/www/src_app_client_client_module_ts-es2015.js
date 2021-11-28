@@ -146,8 +146,14 @@ let ClientPage = class ClientPage {
     setItemsToCustomer() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             for (let inv of this.inventoryList) {
-                if (this.customer.itemList.find(it => it.name == inv.name) == null || this.customer.itemList.find(it => it.name == inv.name) == null) {
+                if (this.customer.itemList.find(it => it.id == inv.id) == null || this.customer.itemList.find(it => it.id == inv.id) == null) {
                     this.customer.itemList.push(inv);
+                }
+                else {
+                    var index = this.customer.itemList.findIndex(i => i.id == inv.id);
+                    this.customer.itemList[index].name = inv.name;
+                    this.customer.itemList[index].description = inv.description;
+                    this.customer.itemList[index].purchasePrice = inv.purchasePrice;
                 }
             }
             return this.customer;
@@ -159,6 +165,7 @@ let ClientPage = class ClientPage {
             let navigationExtras = {
                 queryParams: { customer: this.customer }
             };
+            console.log("selected customer" + this.customer);
             this.navCtrl.navigateRoot('editclient', navigationExtras);
         });
     }
@@ -200,7 +207,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Update</ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
 
 /***/ })
 

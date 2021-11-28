@@ -294,6 +294,22 @@ module.exports = [
         "merges": [
             "window.FileSystem"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-btprinter/www/BluetoothPrinter.js",
+        "id": "cordova-plugin-btprinter.BluetoothPrinter",
+        "pluginId": "cordova-plugin-btprinter",
+        "clobbers": [
+            "BTPrinter"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-datecs-printer/www/printer.js",
+        "id": "cordova-plugin-datecs-printer.DatecsPrinter",
+        "pluginId": "cordova-plugin-datecs-printer",
+        "clobbers": [
+            "DatecsPrinter"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -310,7 +326,9 @@ module.exports.metadata =
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-android-permissions": "1.1.2",
     "cordova-plugin-email-composer": "0.9.2",
-    "cordova-plugin-file": "6.0.2"
+    "cordova-plugin-file": "6.0.2",
+    "cordova-plugin-btprinter": "0.1.0-dev",
+    "cordova-plugin-datecs-printer": "0.10.0"
 }
 // BOTTOM OF METADATA
 });

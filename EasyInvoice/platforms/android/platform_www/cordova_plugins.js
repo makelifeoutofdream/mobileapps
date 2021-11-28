@@ -254,17 +254,19 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "runs": true
     },
     {
-      "id": "es6-promise-plugin.Promise",
-      "file": "plugins/es6-promise-plugin/www/promise.js",
-      "pluginId": "es6-promise-plugin",
-      "runs": true
+      "id": "cordova-plugin-btprinter.BluetoothPrinter",
+      "file": "plugins/cordova-plugin-btprinter/www/BluetoothPrinter.js",
+      "pluginId": "cordova-plugin-btprinter",
+      "clobbers": [
+        "BTPrinter"
+      ]
     },
     {
-      "id": "cordova-plugin-x-socialsharing.SocialSharing",
-      "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
-      "pluginId": "cordova-plugin-x-socialsharing",
+      "id": "cordova-plugin-datecs-printer.DatecsPrinter",
+      "file": "plugins/cordova-plugin-datecs-printer/www/printer.js",
+      "pluginId": "cordova-plugin-datecs-printer",
       "clobbers": [
-        "window.plugins.socialsharing"
+        "DatecsPrinter"
       ]
     }
   ];
@@ -281,7 +283,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-android-permissions": "1.1.2",
     "cordova-plugin-email-composer": "0.9.2",
     "cordova-plugin-file": "6.0.2",
-    "es6-promise-plugin": "4.2.2",
-    "cordova-plugin-x-socialsharing": "6.0.3"
+    "cordova-plugin-btprinter": "0.1.0-dev",
+    "cordova-plugin-datecs-printer": "0.10.0"
   };
 });

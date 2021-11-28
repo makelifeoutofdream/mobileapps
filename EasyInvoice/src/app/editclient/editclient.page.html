@@ -227,7 +227,7 @@
               <ion-col size="6">
                 <ion-item >
                   <ion-label position="floating">Balance</ion-label>
-                  <ion-input name="name" type="text" [(ngModel)]="customer.balance" required></ion-input>
+                  <ion-input name="name" type="number" [(ngModel)]="customer.balance " required></ion-input>
                 </ion-item>
                 </ion-col>   
           </ion-row>
@@ -243,8 +243,9 @@
     <ion-card-header (click)="expandItem('ITEMS')">
       <ion-card-title>Items</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content >
       <app-expandable expandHeight="240px" [expanded]="items">
+        <div style="overflow: scroll;max-height: 240px;">
         <table border="5" style="width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;">
           <tr>
             <td>
@@ -259,7 +260,7 @@
             <td><ion-input [(ngModel)]="item.unitPrice" ></ion-input></td>
           </tr>
         </table>
-        
+      </div>
       </app-expandable>
     </ion-card-content>
   </ion-card>

@@ -5,56 +5,420 @@
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
   function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-  (self["webpackChunkrem"] = self["webpackChunkrem"] || []).push([["common"], {
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common"], {
     /***/
-    6633:
-    /*!*********************************************************************!*\
-      !*** ./node_modules/@ionic/core/dist/esm/button-active-4927a4c1.js ***!
-      \*********************************************************************/
+    "74mu":
+    /*!*************************************************************!*\
+      !*** ./node_modules/@ionic/core/dist/esm/theme-ff3fc52f.js ***!
+      \*************************************************************/
+
+    /*! exports provided: c, g, h, o */
 
     /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    function mu(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
+      /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "c": function c() {
-          return (
-            /* binding */
-            createButtonActiveGesture
-          );
+      __webpack_require__.d(__webpack_exports__, "c", function () {
+        return createColorClasses;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "g", function () {
+        return getClassMap;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "h", function () {
+        return hostContext;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "o", function () {
+        return openURL;
+      });
+
+      var hostContext = function hostContext(selector, el) {
+        return el.closest(selector) !== null;
+      };
+      /**
+       * Create the mode and color classes for the component based on the classes passed in
+       */
+
+
+      var createColorClasses = function createColorClasses(color, cssClassMap) {
+        return typeof color === 'string' && color.length > 0 ? Object.assign(_defineProperty({
+          'ion-color': true
+        }, "ion-color-".concat(color), true), cssClassMap) : cssClassMap;
+      };
+
+      var getClassList = function getClassList(classes) {
+        if (classes !== undefined) {
+          var array = Array.isArray(classes) ? classes : classes.split(' ');
+          return array.filter(function (c) {
+            return c != null;
+          }).map(function (c) {
+            return c.trim();
+          }).filter(function (c) {
+            return c !== '';
+          });
         }
-        /* harmony export */
 
+        return [];
+      };
+
+      var getClassMap = function getClassMap(classes) {
+        var map = {};
+        getClassList(classes).forEach(function (c) {
+          return map[c] = true;
+        });
+        return map;
+      };
+
+      var SCHEME = /^[a-z][a-z0-9+\-.]*:/;
+
+      var openURL = /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(url, ev, direction, animation) {
+          var router;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!(url != null && url[0] !== '#' && !SCHEME.test(url))) {
+                    _context.next = 5;
+                    break;
+                  }
+
+                  router = document.querySelector('ion-router');
+
+                  if (!router) {
+                    _context.next = 5;
+                    break;
+                  }
+
+                  if (ev != null) {
+                    ev.preventDefault();
+                  }
+
+                  return _context.abrupt("return", router.push(url, direction, animation));
+
+                case 5:
+                  return _context.abrupt("return", false);
+
+                case 6:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function openURL(_x, _x2, _x3, _x4) {
+          return _ref.apply(this, arguments);
+        };
+      }();
+      /***/
+
+    },
+
+    /***/
+    "Bhbv":
+    /*!*******************************************!*\
+      !*** ./src/app/services/print.service.ts ***!
+      \*******************************************/
+
+    /*! exports provided: PrintService */
+
+    /***/
+    function Bhbv(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "PrintService", function () {
+        return PrintService;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "mrSG");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic-native/bluetooth-serial/ngx */
+      "7uwA");
+      /* harmony import */
+
+
+      var _toastservice_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./toastservice.service */
+      "Gb+d");
+
+      var PrintService = /*#__PURE__*/function () {
+        function PrintService(btSerial, tostService) {
+          _classCallCheck(this, PrintService);
+
+          this.btSerial = btSerial;
+          this.tostService = tostService;
+        }
+
+        _createClass(PrintService, [{
+          key: "listDevices",
+          value: function listDevices() {
+            return new Promise(function (resolve, reject) {
+              window.DatecsPrinter.listBluetoothDevices(function (success) {
+                resolve(success);
+              }, function (error) {
+                alert(error);
+                reject(error);
+              });
+            });
+          }
+        }, {
+          key: "connectPrinter",
+          value: function connectPrinter() {
+            return new Promise(function (resolve, reject) {
+              window.DatecsPrinter.connect(function (success) {
+                resolve(success);
+              }, function (error) {
+                alert(error);
+                reject(error);
+              });
+            });
+          }
+        }, {
+          key: "print",
+          value: function print(data) {
+            return new Promise(function (resolve, reject) {
+              window.DatecsPrinter.printText(data, 'UTF-8', function (success) {
+                resolve(success);
+              }, function (error) {
+                alert(error);
+                reject(error);
+              });
+            });
+          }
+        }, {
+          key: "printData",
+          value: function printData(macAddress, data) {
+            window.DatecsPrinter.listBluetoothDevices(function (devices) {
+              window.DatecsPrinter.connect(devices[0].address, function () {
+                printSomeTestText();
+              }, function (error) {
+                alert(JSON.stringify(error));
+              });
+            }, function (error) {
+              alert(JSON.stringify(error));
+            });
+
+            function printSomeTestText() {
+              window.DatecsPrinter.printText("Print Test!", 'ISO-8859-1', function () {
+                alert('success');
+              });
+            }
+          }
+        }, {
+          key: "searchBluetoothPrinter",
+          value: function searchBluetoothPrinter() {
+            return this.btSerial.list();
+          }
+        }, {
+          key: "connectToBluetoothPrinter",
+          value: function connectToBluetoothPrinter(macAddress) {
+            return this.btSerial.connect(macAddress);
+          }
+        }, {
+          key: "disconnectBluetoothPrinter",
+          value: function disconnectBluetoothPrinter() {
+            return this.btSerial.disconnect();
+          }
+        }, {
+          key: "sendToBluetoothPrinter",
+          value: function sendToBluetoothPrinter(macAddress, data) {
+            var _this = this;
+
+            this.connectToBluetoothPrinter(macAddress).subscribe(function (_) {
+              _this.btSerial.write(data).then(function (_) {
+                _this.btSerial.disconnect();
+              })["catch"](function (reason) {
+                console.log(reason);
+              });
+            }, function (err) {
+              return console.log(_this.tostService.presentToast("Printer Issue - bluetooth address - " + macAddress + "-err-" + err));
+            });
+          }
+        }]);
+
+        return PrintService;
+      }();
+
+      PrintService.ctorParameters = function () {
+        return [{
+          type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_2__["BluetoothSerial"]
+        }, {
+          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_3__["ToastserviceService"]
+        }];
+      };
+
+      PrintService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+      })], PrintService);
+      /***/
+    },
+
+    /***/
+    "Dq3m":
+    /*!***************************************************************!*\
+      !*** ./src/app/components/expandable/expandable.component.ts ***!
+      \***************************************************************/
+
+    /*! exports provided: ExpandableComponent */
+
+    /***/
+    function Dq3m(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "ExpandableComponent", function () {
+        return ExpandableComponent;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "mrSG");
+      /* harmony import */
+
+
+      var _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! raw-loader!./expandable.component.html */
+      "pCm6");
+      /* harmony import */
+
+
+      var _expandable_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./expandable.component.scss */
+      "lSO4");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+
+      var ExpandableComponent = /*#__PURE__*/function () {
+        function ExpandableComponent(renderer) {
+          _classCallCheck(this, ExpandableComponent);
+
+          this.renderer = renderer;
+          this.expanded = false;
+          this.expandHeight = "150px";
+        }
+
+        _createClass(ExpandableComponent, [{
+          key: "ngAfterViewInit",
+          value: function ngAfterViewInit() {
+            this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", this.expandHeight);
+          }
+        }]);
+
+        return ExpandableComponent;
+      }();
+
+      ExpandableComponent.ctorParameters = function () {
+        return [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Renderer2"]
+        }];
+      };
+
+      ExpandableComponent.propDecorators = {
+        expandWrapper: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"],
+          args: ["expandWrapper", {
+            read: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ElementRef"]
+          }]
+        }],
+        expanded: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"],
+          args: ["expanded"]
+        }],
+        expandHeight: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"],
+          args: ["expandHeight"]
+        }]
+      };
+      ExpandableComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: "app-expandable",
+        template: _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_expandable_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+      })], ExpandableComponent);
+      /***/
+    },
+
+    /***/
+    "Zcj0":
+    /*!*********************************************************************!*\
+      !*** ./node_modules/@ionic/core/dist/esm/button-active-d4bd4f74.js ***!
+      \*********************************************************************/
+
+    /*! exports provided: c */
+
+    /***/
+    function Zcj0(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "c", function () {
+        return createButtonActiveGesture;
       });
       /* harmony import */
 
 
       var _index_7a8b7a1c_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! ./index-7a8b7a1c.js */
-      23150);
+      "wEJo");
       /* harmony import */
 
 
       var _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! ./haptic-27b3f981.js */
-      52954);
+      "qULd");
       /* harmony import */
 
 
-      var _index_f49d994d_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./index-f49d994d.js */
-      97279);
+      var _index_34cb2743_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./index-34cb2743.js */
+      "KF81");
 
       var createButtonActiveGesture = function createButtonActiveGesture(el, isButton) {
         var currentTouchedButton;
@@ -86,7 +450,7 @@
           }
 
           var buttonToModify = currentTouchedButton;
-          (0, _index_7a8b7a1c_js__WEBPACK_IMPORTED_MODULE_0__.c)(function () {
+          Object(_index_7a8b7a1c_js__WEBPACK_IMPORTED_MODULE_0__["c"])(function () {
             return buttonToModify.classList.add('ion-activated');
           });
           hapticFeedbackFn();
@@ -100,7 +464,7 @@
           }
 
           var buttonToModify = currentTouchedButton;
-          (0, _index_7a8b7a1c_js__WEBPACK_IMPORTED_MODULE_0__.c)(function () {
+          Object(_index_7a8b7a1c_js__WEBPACK_IMPORTED_MODULE_0__["c"])(function () {
             return buttonToModify.classList.remove('ion-activated');
           });
           /**
@@ -119,19 +483,19 @@
           currentTouchedButton = undefined;
         };
 
-        return (0, _index_f49d994d_js__WEBPACK_IMPORTED_MODULE_2__.createGesture)({
+        return Object(_index_34cb2743_js__WEBPACK_IMPORTED_MODULE_2__["createGesture"])({
           el: el,
           gestureName: 'buttonActiveDrag',
           threshold: 0,
           onStart: function onStart(ev) {
-            return activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__.a);
+            return activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__["a"]);
           },
           onMove: function onMove(ev) {
-            return activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__.b);
+            return activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__["b"]);
           },
           onEnd: function onEnd() {
             clearActiveButton(true);
-            (0, _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__.h)();
+            Object(_haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_1__["h"])();
             initialTouchedButton = undefined;
           }
         });
@@ -141,62 +505,54 @@
     },
 
     /***/
-    77330:
+    "acej":
     /*!**************************************************************************!*\
       !*** ./node_modules/@ionic/core/dist/esm/framework-delegate-4392cd63.js ***!
       \**************************************************************************/
 
+    /*! exports provided: a, d */
+
     /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    function acej(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
+      /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "a": function a() {
-          return (
-            /* binding */
-            attachComponent
-          );
-        },
+      __webpack_require__.d(__webpack_exports__, "a", function () {
+        return attachComponent;
+      });
+      /* harmony export (binding) */
 
-        /* harmony export */
-        "d": function d() {
-          return (
-            /* binding */
-            detachComponent
-          );
-        }
-        /* harmony export */
 
+      __webpack_require__.d(__webpack_exports__, "d", function () {
+        return detachComponent;
       });
       /* harmony import */
 
 
       var _helpers_dd7e4b7b_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! ./helpers-dd7e4b7b.js */
-      52377);
+      "1vRN");
 
       var attachComponent = /*#__PURE__*/function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(delegate, container, component, cssClasses, componentProps) {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(delegate, container, component, cssClasses, componentProps) {
           var el;
-          return regeneratorRuntime.wrap(function _callee$(_context) {
+          return regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context.prev = _context.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   if (!delegate) {
-                    _context.next = 2;
+                    _context2.next = 2;
                     break;
                   }
 
-                  return _context.abrupt("return", delegate.attachViewToDom(container, component, componentProps, cssClasses));
+                  return _context2.abrupt("return", delegate.attachViewToDom(container, component, componentProps, cssClasses));
 
                 case 2:
                   if (!(typeof component !== 'string' && !(component instanceof HTMLElement))) {
-                    _context.next = 4;
+                    _context2.next = 4;
                     break;
                   }
 
@@ -216,24 +572,24 @@
                   }
 
                   container.appendChild(el);
-                  _context.next = 10;
+                  _context2.next = 10;
                   return new Promise(function (resolve) {
-                    return (0, _helpers_dd7e4b7b_js__WEBPACK_IMPORTED_MODULE_0__.c)(el, resolve);
+                    return Object(_helpers_dd7e4b7b_js__WEBPACK_IMPORTED_MODULE_0__["c"])(el, resolve);
                   });
 
                 case 10:
-                  return _context.abrupt("return", el);
+                  return _context2.abrupt("return", el);
 
                 case 11:
                 case "end":
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee);
+          }, _callee2);
         }));
 
-        return function attachComponent(_x, _x2, _x3, _x4, _x5) {
-          return _ref.apply(this, arguments);
+        return function attachComponent(_x5, _x6, _x7, _x8, _x9) {
+          return _ref2.apply(this, arguments);
         };
       }();
 
@@ -254,61 +610,277 @@
     },
 
     /***/
-    52954:
+    "h3R7":
+    /*!***********************************************************************!*\
+      !*** ./node_modules/@ionic/core/dist/esm/spinner-configs-cd7845af.js ***!
+      \***********************************************************************/
+
+    /*! exports provided: S */
+
+    /***/
+    function h3R7(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "S", function () {
+        return SPINNERS;
+      });
+
+      var spinners = {
+        'bubbles': {
+          dur: 1000,
+          circles: 9,
+          fn: function fn(dur, index, total) {
+            var animationDelay = "".concat(dur * index / total - dur, "ms");
+            var angle = 2 * Math.PI * index / total;
+            return {
+              r: 5,
+              style: {
+                'top': "".concat(9 * Math.sin(angle), "px"),
+                'left': "".concat(9 * Math.cos(angle), "px"),
+                'animation-delay': animationDelay
+              }
+            };
+          }
+        },
+        'circles': {
+          dur: 1000,
+          circles: 8,
+          fn: function fn(dur, index, total) {
+            var step = index / total;
+            var animationDelay = "".concat(dur * step - dur, "ms");
+            var angle = 2 * Math.PI * step;
+            return {
+              r: 5,
+              style: {
+                'top': "".concat(9 * Math.sin(angle), "px"),
+                'left': "".concat(9 * Math.cos(angle), "px"),
+                'animation-delay': animationDelay
+              }
+            };
+          }
+        },
+        'circular': {
+          dur: 1400,
+          elmDuration: true,
+          circles: 1,
+          fn: function fn() {
+            return {
+              r: 20,
+              cx: 48,
+              cy: 48,
+              fill: 'none',
+              viewBox: '24 24 48 48',
+              transform: 'translate(0,0)',
+              style: {}
+            };
+          }
+        },
+        'crescent': {
+          dur: 750,
+          circles: 1,
+          fn: function fn() {
+            return {
+              r: 26,
+              style: {}
+            };
+          }
+        },
+        'dots': {
+          dur: 750,
+          circles: 3,
+          fn: function fn(_, index) {
+            var animationDelay = -(110 * index) + 'ms';
+            return {
+              r: 6,
+              style: {
+                'left': "".concat(9 - 9 * index, "px"),
+                'animation-delay': animationDelay
+              }
+            };
+          }
+        },
+        'lines': {
+          dur: 1000,
+          lines: 12,
+          fn: function fn(dur, index, total) {
+            var transform = "rotate(".concat(30 * index + (index < 6 ? 180 : -180), "deg)");
+            var animationDelay = "".concat(dur * index / total - dur, "ms");
+            return {
+              y1: 17,
+              y2: 29,
+              style: {
+                'transform': transform,
+                'animation-delay': animationDelay
+              }
+            };
+          }
+        },
+        'lines-small': {
+          dur: 1000,
+          lines: 12,
+          fn: function fn(dur, index, total) {
+            var transform = "rotate(".concat(30 * index + (index < 6 ? 180 : -180), "deg)");
+            var animationDelay = "".concat(dur * index / total - dur, "ms");
+            return {
+              y1: 12,
+              y2: 20,
+              style: {
+                'transform': transform,
+                'animation-delay': animationDelay
+              }
+            };
+          }
+        }
+      };
+      var SPINNERS = spinners;
+      /***/
+    },
+
+    /***/
+    "lSO4":
+    /*!*****************************************************************!*\
+      !*** ./src/app/components/expandable/expandable.component.scss ***!
+      \*****************************************************************/
+
+    /*! exports provided: default */
+
+    /***/
+    function lSO4(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = ".expand-wrapper {\n  transition: max-height 0.4s ease-in-out;\n  overflow: hidden;\n  height: auto;\n}\n\n.collapsed {\n  max-height: 0 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2V4cGFuZGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx1Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNFO0VBQ0Usd0JBQUE7QUFFSiIsImZpbGUiOiJleHBhbmRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC13cmFwcGVyIHtcbiAgICB0cmFuc2l0aW9uOiBtYXgtaGVpZ2h0IDAuNHMgZWFzZS1pbi1vdXQ7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBoZWlnaHQ6IGF1dG87XG4gIH1cbiAgLmNvbGxhcHNlZCB7XG4gICAgbWF4LWhlaWdodDogMCAhaW1wb3J0YW50O1xuICB9Il19 */";
+      /***/
+    },
+
+    /***/
+    "oxX3":
+    /*!***************************************!*\
+      !*** ./src/app/validation.service.ts ***!
+      \***************************************/
+
+    /*! exports provided: ValidationService */
+
+    /***/
+    function oxX3(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "ValidationService", function () {
+        return ValidationService;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "mrSG");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+
+      var ValidationService = /*#__PURE__*/function () {
+        function ValidationService() {
+          _classCallCheck(this, ValidationService);
+        }
+
+        _createClass(ValidationService, [{
+          key: "numericOnly",
+          value: function numericOnly(event) {
+            var pattern = /^([0-9])$/;
+            var result = pattern.test(event.key);
+            return result;
+          }
+        }]);
+
+        return ValidationService;
+      }();
+
+      ValidationService.ctorParameters = function () {
+        return [];
+      };
+
+      ValidationService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+      })], ValidationService);
+      /***/
+    },
+
+    /***/
+    "pCm6":
+    /*!*******************************************************************************************************!*\
+      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/expandable/expandable.component.html ***!
+      \*******************************************************************************************************/
+
+    /*! exports provided: default */
+
+    /***/
+    function pCm6(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "<div #expandWrapper class=\"expand-wrapper\" [class.collapsed]=\"!expanded\">\n  <ng-content></ng-content>\n</div>";
+      /***/
+    },
+
+    /***/
+    "qULd":
     /*!**************************************************************!*\
       !*** ./node_modules/@ionic/core/dist/esm/haptic-27b3f981.js ***!
       \**************************************************************/
 
+    /*! exports provided: a, b, c, d, h */
+
     /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    function qULd(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
+      /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "a": function a() {
-          return (
-            /* binding */
-            hapticSelectionStart
-          );
-        },
+      __webpack_require__.d(__webpack_exports__, "a", function () {
+        return hapticSelectionStart;
+      });
+      /* harmony export (binding) */
 
-        /* harmony export */
-        "b": function b() {
-          return (
-            /* binding */
-            hapticSelectionChanged
-          );
-        },
 
-        /* harmony export */
-        "c": function c() {
-          return (
-            /* binding */
-            hapticSelection
-          );
-        },
+      __webpack_require__.d(__webpack_exports__, "b", function () {
+        return hapticSelectionChanged;
+      });
+      /* harmony export (binding) */
 
-        /* harmony export */
-        "d": function d() {
-          return (
-            /* binding */
-            hapticImpact
-          );
-        },
 
-        /* harmony export */
-        "h": function h() {
-          return (
-            /* binding */
-            hapticSelectionEnd
-          );
-        }
-        /* harmony export */
+      __webpack_require__.d(__webpack_exports__, "c", function () {
+        return hapticSelection;
+      });
+      /* harmony export (binding) */
 
+
+      __webpack_require__.d(__webpack_exports__, "d", function () {
+        return hapticImpact;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "h", function () {
+        return hapticSelectionEnd;
       });
 
       var HapticEngine = {
@@ -439,583 +1011,6 @@
       };
       /***/
 
-    },
-
-    /***/
-    60408:
-    /*!***********************************************************************!*\
-      !*** ./node_modules/@ionic/core/dist/esm/spinner-configs-cd7845af.js ***!
-      \***********************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "S": function S() {
-          return (
-            /* binding */
-            SPINNERS
-          );
-        }
-        /* harmony export */
-
-      });
-
-      var spinners = {
-        'bubbles': {
-          dur: 1000,
-          circles: 9,
-          fn: function fn(dur, index, total) {
-            var animationDelay = "".concat(dur * index / total - dur, "ms");
-            var angle = 2 * Math.PI * index / total;
-            return {
-              r: 5,
-              style: {
-                'top': "".concat(9 * Math.sin(angle), "px"),
-                'left': "".concat(9 * Math.cos(angle), "px"),
-                'animation-delay': animationDelay
-              }
-            };
-          }
-        },
-        'circles': {
-          dur: 1000,
-          circles: 8,
-          fn: function fn(dur, index, total) {
-            var step = index / total;
-            var animationDelay = "".concat(dur * step - dur, "ms");
-            var angle = 2 * Math.PI * step;
-            return {
-              r: 5,
-              style: {
-                'top': "".concat(9 * Math.sin(angle), "px"),
-                'left': "".concat(9 * Math.cos(angle), "px"),
-                'animation-delay': animationDelay
-              }
-            };
-          }
-        },
-        'circular': {
-          dur: 1400,
-          elmDuration: true,
-          circles: 1,
-          fn: function fn() {
-            return {
-              r: 20,
-              cx: 48,
-              cy: 48,
-              fill: 'none',
-              viewBox: '24 24 48 48',
-              transform: 'translate(0,0)',
-              style: {}
-            };
-          }
-        },
-        'crescent': {
-          dur: 750,
-          circles: 1,
-          fn: function fn() {
-            return {
-              r: 26,
-              style: {}
-            };
-          }
-        },
-        'dots': {
-          dur: 750,
-          circles: 3,
-          fn: function fn(_, index) {
-            var animationDelay = -(110 * index) + 'ms';
-            return {
-              r: 6,
-              style: {
-                'left': "".concat(9 - 9 * index, "px"),
-                'animation-delay': animationDelay
-              }
-            };
-          }
-        },
-        'lines': {
-          dur: 1000,
-          lines: 12,
-          fn: function fn(dur, index, total) {
-            var transform = "rotate(".concat(30 * index + (index < 6 ? 180 : -180), "deg)");
-            var animationDelay = "".concat(dur * index / total - dur, "ms");
-            return {
-              y1: 17,
-              y2: 29,
-              style: {
-                'transform': transform,
-                'animation-delay': animationDelay
-              }
-            };
-          }
-        },
-        'lines-small': {
-          dur: 1000,
-          lines: 12,
-          fn: function fn(dur, index, total) {
-            var transform = "rotate(".concat(30 * index + (index < 6 ? 180 : -180), "deg)");
-            var animationDelay = "".concat(dur * index / total - dur, "ms");
-            return {
-              y1: 12,
-              y2: 20,
-              style: {
-                'transform': transform,
-                'animation-delay': animationDelay
-              }
-            };
-          }
-        }
-      };
-      var SPINNERS = spinners;
-      /***/
-    },
-
-    /***/
-    61269:
-    /*!*************************************************************!*\
-      !*** ./node_modules/@ionic/core/dist/esm/theme-ff3fc52f.js ***!
-      \*************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "c": function c() {
-          return (
-            /* binding */
-            createColorClasses
-          );
-        },
-
-        /* harmony export */
-        "g": function g() {
-          return (
-            /* binding */
-            getClassMap
-          );
-        },
-
-        /* harmony export */
-        "h": function h() {
-          return (
-            /* binding */
-            hostContext
-          );
-        },
-
-        /* harmony export */
-        "o": function o() {
-          return (
-            /* binding */
-            openURL
-          );
-        }
-        /* harmony export */
-
-      });
-
-      var hostContext = function hostContext(selector, el) {
-        return el.closest(selector) !== null;
-      };
-      /**
-       * Create the mode and color classes for the component based on the classes passed in
-       */
-
-
-      var createColorClasses = function createColorClasses(color, cssClassMap) {
-        return typeof color === 'string' && color.length > 0 ? Object.assign(_defineProperty({
-          'ion-color': true
-        }, "ion-color-".concat(color), true), cssClassMap) : cssClassMap;
-      };
-
-      var getClassList = function getClassList(classes) {
-        if (classes !== undefined) {
-          var array = Array.isArray(classes) ? classes : classes.split(' ');
-          return array.filter(function (c) {
-            return c != null;
-          }).map(function (c) {
-            return c.trim();
-          }).filter(function (c) {
-            return c !== '';
-          });
-        }
-
-        return [];
-      };
-
-      var getClassMap = function getClassMap(classes) {
-        var map = {};
-        getClassList(classes).forEach(function (c) {
-          return map[c] = true;
-        });
-        return map;
-      };
-
-      var SCHEME = /^[a-z][a-z0-9+\-.]*:/;
-
-      var openURL = /*#__PURE__*/function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(url, ev, direction, animation) {
-          var router;
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  if (!(url != null && url[0] !== '#' && !SCHEME.test(url))) {
-                    _context2.next = 5;
-                    break;
-                  }
-
-                  router = document.querySelector('ion-router');
-
-                  if (!router) {
-                    _context2.next = 5;
-                    break;
-                  }
-
-                  if (ev != null) {
-                    ev.preventDefault();
-                  }
-
-                  return _context2.abrupt("return", router.push(url, direction, animation));
-
-                case 5:
-                  return _context2.abrupt("return", false);
-
-                case 6:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        }));
-
-        return function openURL(_x6, _x7, _x8, _x9) {
-          return _ref2.apply(this, arguments);
-        };
-      }();
-      /***/
-
-    },
-
-    /***/
-    38932:
-    /*!***************************************************************!*\
-      !*** ./src/app/components/expandable/expandable.component.ts ***!
-      \***************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "ExpandableComponent": function ExpandableComponent() {
-          return (
-            /* binding */
-            _ExpandableComponent
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! tslib */
-      64762);
-      /* harmony import */
-
-
-      var _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! !raw-loader!./expandable.component.html */
-      93032);
-      /* harmony import */
-
-
-      var _expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! ./expandable.component.scss */
-      63680);
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @angular/core */
-      37716);
-
-      var _ExpandableComponent = /*#__PURE__*/function () {
-        function ExpandableComponent(renderer) {
-          _classCallCheck(this, ExpandableComponent);
-
-          this.renderer = renderer;
-          this.expanded = false;
-          this.expandHeight = "150px";
-        }
-
-        _createClass(ExpandableComponent, [{
-          key: "ngAfterViewInit",
-          value: function ngAfterViewInit() {
-            this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", this.expandHeight);
-          }
-        }]);
-
-        return ExpandableComponent;
-      }();
-
-      _ExpandableComponent.ctorParameters = function () {
-        return [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Renderer2
-        }];
-      };
-
-      _ExpandableComponent.propDecorators = {
-        expandWrapper: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
-          args: ["expandWrapper", {
-            read: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef
-          }]
-        }],
-        expanded: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
-          args: ["expanded"]
-        }],
-        expandHeight: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
-          args: ["expandHeight"]
-        }]
-      };
-      _ExpandableComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
-        selector: "app-expandable",
-        template: _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
-        styles: [_expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
-      })], _ExpandableComponent);
-      /***/
-    },
-
-    /***/
-    39534:
-    /*!*******************************************!*\
-      !*** ./src/app/services/print.service.ts ***!
-      \*******************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "PrintService": function PrintService() {
-          return (
-            /* binding */
-            _PrintService
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! tslib */
-      64762);
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! @angular/core */
-      37716);
-      /* harmony import */
-
-
-      var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! @ionic-native/bluetooth-serial/ngx */
-      28078);
-      /* harmony import */
-
-
-      var _toastservice_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! ./toastservice.service */
-      48236);
-
-      var _PrintService = /*#__PURE__*/function () {
-        function PrintService(btSerial, tostService) {
-          _classCallCheck(this, PrintService);
-
-          this.btSerial = btSerial;
-          this.tostService = tostService;
-        }
-
-        _createClass(PrintService, [{
-          key: "searchBluetoothPrinter",
-          value: function searchBluetoothPrinter() {
-            return this.btSerial.list();
-          }
-        }, {
-          key: "connectToBluetoothPrinter",
-          value: function connectToBluetoothPrinter(macAddress) {
-            return this.btSerial.connect(macAddress);
-          }
-        }, {
-          key: "disconnectBluetoothPrinter",
-          value: function disconnectBluetoothPrinter() {
-            return this.btSerial.disconnect();
-          }
-        }, {
-          key: "sendToBluetoothPrinter",
-          value: function sendToBluetoothPrinter(macAddress, data) {
-            var _this = this;
-
-            this.connectToBluetoothPrinter(macAddress).subscribe(function (_) {
-              _this.btSerial.write(data).then(function (_) {
-                _this.btSerial.disconnect();
-              })["catch"](function (reason) {
-                console.log(reason);
-              });
-            }, function (err) {
-              return console.log(_this.tostService.presentToast("Printer Issue - bluetooth address - " + macAddress + "-err-" + err));
-            });
-          }
-        }]);
-
-        return PrintService;
-      }();
-
-      _PrintService.ctorParameters = function () {
-        return [{
-          type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__.BluetoothSerial
-        }, {
-          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_1__.ToastserviceService
-        }];
-      };
-
-      _PrintService = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
-        providedIn: 'root'
-      })], _PrintService);
-      /***/
-    },
-
-    /***/
-    62813:
-    /*!***************************************!*\
-      !*** ./src/app/validation.service.ts ***!
-      \***************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "ValidationService": function ValidationService() {
-          return (
-            /* binding */
-            _ValidationService
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! tslib */
-      64762);
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @angular/core */
-      37716);
-
-      var _ValidationService = /*#__PURE__*/function () {
-        function ValidationService() {
-          _classCallCheck(this, ValidationService);
-        }
-
-        _createClass(ValidationService, [{
-          key: "numericOnly",
-          value: function numericOnly(event) {
-            var pattern = /^([0-9])$/;
-            var result = pattern.test(event.key);
-            return result;
-          }
-        }]);
-
-        return ValidationService;
-      }();
-
-      _ValidationService.ctorParameters = function () {
-        return [];
-      };
-
-      _ValidationService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
-        providedIn: 'root'
-      })], _ValidationService);
-      /***/
-    },
-
-    /***/
-    63680:
-    /*!*****************************************************************!*\
-      !*** ./src/app/components/expandable/expandable.component.scss ***!
-      \*****************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony default export */
-
-
-      __webpack_exports__["default"] = ".expand-wrapper {\n  transition: max-height 0.4s ease-in-out;\n  overflow: hidden;\n  height: auto;\n}\n\n.collapsed {\n  max-height: 0 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV4cGFuZGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx1Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNFO0VBQ0Usd0JBQUE7QUFFSiIsImZpbGUiOiJleHBhbmRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC13cmFwcGVyIHtcbiAgICB0cmFuc2l0aW9uOiBtYXgtaGVpZ2h0IDAuNHMgZWFzZS1pbi1vdXQ7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBoZWlnaHQ6IGF1dG87XG4gIH1cbiAgLmNvbGxhcHNlZCB7XG4gICAgbWF4LWhlaWdodDogMCAhaW1wb3J0YW50O1xuICB9Il19 */";
-      /***/
-    },
-
-    /***/
-    93032:
-    /*!*******************************************************************************************************!*\
-      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/expandable/expandable.component.html ***!
-      \*******************************************************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony default export */
-
-
-      __webpack_exports__["default"] = "<div #expandWrapper class=\"expand-wrapper\" [class.collapsed]=\"!expanded\">\n  <ng-content></ng-content>\n</div>";
-      /***/
     }
   }]);
 })();

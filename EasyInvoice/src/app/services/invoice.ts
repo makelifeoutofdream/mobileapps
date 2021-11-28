@@ -9,4 +9,6 @@ export class Invoice{
     total : number;
     tax : number;
     invoiceDateString : string;
+    balanceAmount : number ;
+    amountPaid : number ;
 }

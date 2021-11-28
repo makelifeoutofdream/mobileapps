@@ -1,10 +1,11 @@
-(self["webpackChunkrem"] = self["webpackChunkrem"] || []).push([["polyfills-css-shim"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["polyfills-css-shim"],{
 
-/***/ 95902:
+/***/ "9qUq":
 /*!****************************************************************!*\
   !*** ./node_modules/@ionic/core/dist/esm/css-shim-2ccf4dec.js ***!
   \****************************************************************/
-/***/ (function() {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
 /*
  Stencil Client Patch Esm v2.5.0 | MIT Licensed | https://stenciljs.com

@@ -712,10 +712,10 @@
     },
 
     /***/
-    73773:
-    /*!****************************************!*\
-      !*** ./src/app/services/db.service.ts ***!
-      \****************************************/
+    38932:
+    /*!***************************************************************!*\
+      !*** ./src/app/components/expandable/expandable.component.ts ***!
+      \***************************************************************/
 
     /***/
     function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -727,10 +727,10 @@
 
       __webpack_require__.d(__webpack_exports__, {
         /* harmony export */
-        "DbService": function DbService() {
+        "ExpandableComponent": function ExpandableComponent() {
           return (
             /* binding */
-            _DbService
+            _ExpandableComponent
           );
         }
         /* harmony export */
@@ -739,484 +739,74 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! !raw-loader!./expandable.component.html */
+      93032);
+      /* harmony import */
+
+
+      var _expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./expandable.component.scss */
+      63680);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! @angular/core */
       37716);
-      /* harmony import */
 
+      var _ExpandableComponent = /*#__PURE__*/function () {
+        function ExpandableComponent(renderer) {
+          _classCallCheck(this, ExpandableComponent);
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @angular/common/http */
-      91841);
-      /* harmony import */
-
-
-      var _toastservice_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ./toastservice.service */
-      48236);
-      /* harmony import */
-
-
-      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! @ionic/storage-angular */
-      61628);
-
-      var _DbService = /*#__PURE__*/function () {
-        function DbService(httpClient, toastService, storage) {
-          _classCallCheck(this, DbService);
-
-          this.httpClient = httpClient;
-          this.toastService = toastService;
-          this.storage = storage;
-          this.usersKey = "users";
-          this.customersKey = "customers";
-          this.inventoryKey = "inventories";
-          this.invoiceKey = "invoices";
-          this.invoiceNumberKey = "invoiceNumber";
-          this.init();
+          this.renderer = renderer;
+          this.expanded = false;
+          this.expandHeight = "150px";
         }
 
-        _createClass(DbService, [{
-          key: "init",
-          value: function init() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var storageVar;
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                while (1) {
-                  switch (_context3.prev = _context3.next) {
-                    case 0:
-                      _context3.next = 2;
-                      return this.storage.create();
-
-                    case 2:
-                      storageVar = _context3.sent;
-                      this.storage = storageVar;
-
-                    case 4:
-                    case "end":
-                      return _context3.stop();
-                  }
-                }
-              }, _callee3, this);
-            }));
-          }
-        }, {
-          key: "signup",
-          value: function signup(user) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-              var value, result;
-              return regeneratorRuntime.wrap(function _callee4$(_context4) {
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      _context4.prev = 0;
-                      _context4.next = 3;
-                      return this.storage.get(this.usersKey);
-
-                    case 3:
-                      value = _context4.sent;
-                      this.users = JSON.parse(value);
-
-                      if (this.users == undefined || this.users == null) {
-                        this.users = [];
-                      }
-
-                      this.users.push(user);
-                      _context4.next = 9;
-                      return this.storage.set(this.usersKey, JSON.stringify(this.users));
-
-                    case 9:
-                      result = _context4.sent;
-                      console.log('user signed up successfully' + user);
-                      return _context4.abrupt("return", true);
-
-                    case 14:
-                      _context4.prev = 14;
-                      _context4.t0 = _context4["catch"](0);
-                      console.log(_context4.t0);
-                      this.toastService.presentToast("User Registration Failed");
-                      return _context4.abrupt("return", false);
-
-                    case 19:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }
-              }, _callee4, this, [[0, 14]]);
-            }));
-          }
-        }, {
-          key: "fetchUserByUserNameAndPassword",
-          value: function fetchUserByUserNameAndPassword(username, password) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-              var result, fetchedUser;
-              return regeneratorRuntime.wrap(function _callee5$(_context5) {
-                while (1) {
-                  switch (_context5.prev = _context5.next) {
-                    case 0:
-                      _context5.prev = 0;
-                      _context5.next = 3;
-                      return this.storage.get(this.usersKey);
-
-                    case 3:
-                      result = _context5.sent;
-                      this.users = JSON.parse(result);
-                      fetchedUser = this.users.find(function (u) {
-                        return u.email == username && u.user_password == password;
-                      });
-                      console.log('retrieved user' + fetchedUser);
-                      return _context5.abrupt("return", fetchedUser);
-
-                    case 10:
-                      _context5.prev = 10;
-                      _context5.t0 = _context5["catch"](0);
-                      console.log(_context5.t0);
-                      return _context5.abrupt("return", null);
-
-                    case 14:
-                    case "end":
-                      return _context5.stop();
-                  }
-                }
-              }, _callee5, this, [[0, 10]]);
-            }));
-          }
-        }, {
-          key: "createCustomer",
-          value: function createCustomer(customer) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-              var value;
-              return regeneratorRuntime.wrap(function _callee6$(_context6) {
-                while (1) {
-                  switch (_context6.prev = _context6.next) {
-                    case 0:
-                      _context6.prev = 0;
-                      _context6.next = 3;
-                      return this.storage.get(this.customersKey);
-
-                    case 3:
-                      value = _context6.sent;
-                      this.customers = JSON.parse(value);
-
-                      if (this.customers == null || this.customers == undefined) {
-                        this.customers = [];
-                      }
-
-                      this.customers.push(customer);
-                      this.storage.set(this.customersKey, JSON.stringify(this.customers));
-                      return _context6.abrupt("return", true);
-
-                    case 11:
-                      _context6.prev = 11;
-                      _context6.t0 = _context6["catch"](0);
-                      console.log(_context6.t0);
-                      return _context6.abrupt("return", false);
-
-                    case 15:
-                    case "end":
-                      return _context6.stop();
-                  }
-                }
-              }, _callee6, this, [[0, 11]]);
-            }));
-          }
-        }, {
-          key: "findIndexToUpdate",
-          value: function findIndexToUpdate(newCustomer) {
-            return newCustomer.name == this;
-          }
-        }, {
-          key: "UpdateCustomer",
-          value: function UpdateCustomer(customer) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
-              var value, cust, index;
-              return regeneratorRuntime.wrap(function _callee7$(_context7) {
-                while (1) {
-                  switch (_context7.prev = _context7.next) {
-                    case 0:
-                      _context7.prev = 0;
-                      _context7.next = 3;
-                      return this.storage.get(this.customersKey);
-
-                    case 3:
-                      value = _context7.sent;
-                      this.customers = JSON.parse(value);
-                      cust = this.customers.find(this.findIndexToUpdate, customer.name);
-                      index = this.customers.indexOf(cust);
-                      this.customers[index] = customer;
-                      this.storage.set(this.customersKey, JSON.stringify(this.customers));
-                      return _context7.abrupt("return", true);
-
-                    case 12:
-                      _context7.prev = 12;
-                      _context7.t0 = _context7["catch"](0);
-                      console.log(_context7.t0);
-                      return _context7.abrupt("return", false);
-
-                    case 16:
-                    case "end":
-                      return _context7.stop();
-                  }
-                }
-              }, _callee7, this, [[0, 12]]);
-            }));
-          }
-        }, {
-          key: "getAllCustomers",
-          value: function getAllCustomers() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
-              var result;
-              return regeneratorRuntime.wrap(function _callee8$(_context8) {
-                while (1) {
-                  switch (_context8.prev = _context8.next) {
-                    case 0:
-                      _context8.prev = 0;
-                      _context8.next = 3;
-                      return this.storage.get(this.customersKey);
-
-                    case 3:
-                      result = _context8.sent;
-                      this.customers = JSON.parse(result);
-                      return _context8.abrupt("return", this.customers);
-
-                    case 8:
-                      _context8.prev = 8;
-                      _context8.t0 = _context8["catch"](0);
-                      console.log(_context8.t0);
-                      this.toastService.presentToast("Failed to load the customers");
-
-                    case 12:
-                    case "end":
-                      return _context8.stop();
-                  }
-                }
-              }, _callee8, this, [[0, 8]]);
-            }));
-          }
-        }, {
-          key: "createOrUpdateInventory",
-          value: function createOrUpdateInventory(inventory) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
-              var value;
-              return regeneratorRuntime.wrap(function _callee9$(_context9) {
-                while (1) {
-                  switch (_context9.prev = _context9.next) {
-                    case 0:
-                      _context9.prev = 0;
-                      _context9.next = 3;
-                      return this.storage.get(this.inventoryKey);
-
-                    case 3:
-                      value = _context9.sent;
-                      this.inventories = JSON.parse(value);
-
-                      if (this.inventories == null || this.inventories == undefined) {
-                        this.inventories = [];
-                      }
-
-                      this.inventories.push(inventory);
-                      this.storage.set(this.inventoryKey, JSON.stringify(this.inventories));
-                      return _context9.abrupt("return", true);
-
-                    case 11:
-                      _context9.prev = 11;
-                      _context9.t0 = _context9["catch"](0);
-                      console.log(_context9.t0);
-                      return _context9.abrupt("return", false);
-
-                    case 15:
-                    case "end":
-                      return _context9.stop();
-                  }
-                }
-              }, _callee9, this, [[0, 11]]);
-            }));
-          }
-        }, {
-          key: "getAllInventories",
-          value: function getAllInventories() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
-              var result;
-              return regeneratorRuntime.wrap(function _callee10$(_context10) {
-                while (1) {
-                  switch (_context10.prev = _context10.next) {
-                    case 0:
-                      _context10.prev = 0;
-                      _context10.next = 3;
-                      return this.storage.get(this.inventoryKey);
-
-                    case 3:
-                      result = _context10.sent;
-                      this.inventories = JSON.parse(result);
-                      return _context10.abrupt("return", this.inventories);
-
-                    case 8:
-                      _context10.prev = 8;
-                      _context10.t0 = _context10["catch"](0);
-                      console.log(_context10.t0);
-                      this.toastService.presentToast("Failed to load the inventories");
-
-                    case 12:
-                    case "end":
-                      return _context10.stop();
-                  }
-                }
-              }, _callee10, this, [[0, 8]]);
-            }));
-          }
-        }, {
-          key: "getAllInvoices",
-          value: function getAllInvoices() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
-              var result;
-              return regeneratorRuntime.wrap(function _callee11$(_context11) {
-                while (1) {
-                  switch (_context11.prev = _context11.next) {
-                    case 0:
-                      _context11.prev = 0;
-                      _context11.next = 3;
-                      return this.storage.get(this.invoiceKey);
-
-                    case 3:
-                      result = _context11.sent;
-                      this.invoices = JSON.parse(result);
-                      return _context11.abrupt("return", this.invoices);
-
-                    case 8:
-                      _context11.prev = 8;
-                      _context11.t0 = _context11["catch"](0);
-                      console.log(_context11.t0);
-                      this.toastService.presentToast("Failed to load the invoices");
-
-                    case 12:
-                    case "end":
-                      return _context11.stop();
-                  }
-                }
-              }, _callee11, this, [[0, 8]]);
-            }));
-          }
-        }, {
-          key: "createOrUpdateInvoice",
-          value: function createOrUpdateInvoice(invoice) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
-              var value;
-              return regeneratorRuntime.wrap(function _callee12$(_context12) {
-                while (1) {
-                  switch (_context12.prev = _context12.next) {
-                    case 0:
-                      _context12.prev = 0;
-                      _context12.next = 3;
-                      return this.storage.get(this.invoiceKey);
-
-                    case 3:
-                      value = _context12.sent;
-                      this.invoices = JSON.parse(value);
-
-                      if (this.invoices == null || this.invoices == undefined) {
-                        this.invoices = [];
-                      }
-
-                      this.invoices.push(invoice);
-                      this.storage.set(this.invoiceKey, JSON.stringify(this.invoices));
-                      return _context12.abrupt("return", true);
-
-                    case 11:
-                      _context12.prev = 11;
-                      _context12.t0 = _context12["catch"](0);
-                      console.log(_context12.t0);
-                      return _context12.abrupt("return", false);
-
-                    case 15:
-                    case "end":
-                      return _context12.stop();
-                  }
-                }
-              }, _callee12, this, [[0, 11]]);
-            }));
-          }
-        }, {
-          key: "incrementInvoiceNumber",
-          value: function incrementInvoiceNumber() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
-              var invoiceNumber;
-              return regeneratorRuntime.wrap(function _callee13$(_context13) {
-                while (1) {
-                  switch (_context13.prev = _context13.next) {
-                    case 0:
-                      _context13.next = 2;
-                      return this.storage.get(this.invoiceNumberKey);
-
-                    case 2:
-                      invoiceNumber = _context13.sent;
-
-                      if (invoiceNumber == null || invoiceNumber == undefined) {
-                        invoiceNumber = 0;
-                      }
-
-                      invoiceNumber = invoiceNumber + 1;
-                      _context13.next = 7;
-                      return this.storage.set(this.invoiceNumberKey, invoiceNumber);
-
-                    case 7:
-                      return _context13.abrupt("return", invoiceNumber);
-
-                    case 8:
-                    case "end":
-                      return _context13.stop();
-                  }
-                }
-              }, _callee13, this);
-            }));
-          }
-        }, {
-          key: "getInvoiceNumber",
-          value: function getInvoiceNumber() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
-              var invoiceNumber;
-              return regeneratorRuntime.wrap(function _callee14$(_context14) {
-                while (1) {
-                  switch (_context14.prev = _context14.next) {
-                    case 0:
-                      _context14.next = 2;
-                      return this.storage.get(this.invoiceNumberKey);
-
-                    case 2:
-                      invoiceNumber = _context14.sent;
-                      return _context14.abrupt("return", invoiceNumber);
-
-                    case 4:
-                    case "end":
-                      return _context14.stop();
-                  }
-                }
-              }, _callee14, this);
-            }));
+        _createClass(ExpandableComponent, [{
+          key: "ngAfterViewInit",
+          value: function ngAfterViewInit() {
+            this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", this.expandHeight);
           }
         }]);
 
-        return DbService;
+        return ExpandableComponent;
       }();
 
-      _DbService.ctorParameters = function () {
+      _ExpandableComponent.ctorParameters = function () {
         return [{
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient
-        }, {
-          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_0__.ToastserviceService
-        }, {
-          type: _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_3__.Storage
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Renderer2
         }];
       };
 
-      _DbService = (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-        providedIn: 'root'
-      })], _DbService);
+      _ExpandableComponent.propDecorators = {
+        expandWrapper: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+          args: ["expandWrapper", {
+            read: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef
+          }]
+        }],
+        expanded: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
+          args: ["expanded"]
+        }],
+        expandHeight: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
+          args: ["expandHeight"]
+        }]
+      };
+      _ExpandableComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+        selector: "app-expandable",
+        template: _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
+      })], _ExpandableComponent);
       /***/
     },
 
@@ -1248,13 +838,13 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
@@ -1263,12 +853,19 @@
       var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! @ionic-native/bluetooth-serial/ngx */
       28078);
+      /* harmony import */
+
+
+      var _toastservice_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./toastservice.service */
+      48236);
 
       var _PrintService = /*#__PURE__*/function () {
-        function PrintService(btSerial) {
+        function PrintService(btSerial, tostService) {
           _classCallCheck(this, PrintService);
 
           this.btSerial = btSerial;
+          this.tostService = tostService;
         }
 
         _createClass(PrintService, [{
@@ -1298,7 +895,7 @@
                 console.log(reason);
               });
             }, function (err) {
-              return console.log(err);
+              return console.log(_this.tostService.presentToast("Printer Issue - bluetooth address - " + macAddress + "-err-" + err));
             });
           }
         }]);
@@ -1309,20 +906,22 @@
       _PrintService.ctorParameters = function () {
         return [{
           type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__.BluetoothSerial
+        }, {
+          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_1__.ToastserviceService
         }];
       };
 
-      _PrintService = (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+      _PrintService = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
       })], _PrintService);
       /***/
     },
 
     /***/
-    48236:
-    /*!**************************************************!*\
-      !*** ./src/app/services/toastservice.service.ts ***!
-      \**************************************************/
+    62813:
+    /*!***************************************!*\
+      !*** ./src/app/validation.service.ts ***!
+      \***************************************/
 
     /***/
     function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -1334,10 +933,10 @@
 
       __webpack_require__.d(__webpack_exports__, {
         /* harmony export */
-        "ToastserviceService": function ToastserviceService() {
+        "ValidationService": function ValidationService() {
           return (
             /* binding */
-            _ToastserviceService
+            _ValidationService
           );
         }
         /* harmony export */
@@ -1352,64 +951,70 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/core */
       37716);
-      /* harmony import */
 
-
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @ionic/angular */
-      80476);
-
-      var _ToastserviceService = /*#__PURE__*/function () {
-        function ToastserviceService(toastController) {
-          _classCallCheck(this, ToastserviceService);
-
-          this.toastController = toastController;
+      var _ValidationService = /*#__PURE__*/function () {
+        function ValidationService() {
+          _classCallCheck(this, ValidationService);
         }
 
-        _createClass(ToastserviceService, [{
-          key: "presentToast",
-          value: function presentToast(message) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
-              var toast;
-              return regeneratorRuntime.wrap(function _callee15$(_context15) {
-                while (1) {
-                  switch (_context15.prev = _context15.next) {
-                    case 0:
-                      _context15.next = 2;
-                      return this.toastController.create({
-                        message: message,
-                        duration: 2000
-                      });
-
-                    case 2:
-                      toast = _context15.sent;
-                      toast.present();
-
-                    case 4:
-                    case "end":
-                      return _context15.stop();
-                  }
-                }
-              }, _callee15, this);
-            }));
+        _createClass(ValidationService, [{
+          key: "numericOnly",
+          value: function numericOnly(event) {
+            var pattern = /^([0-9])$/;
+            var result = pattern.test(event.key);
+            return result;
           }
         }]);
 
-        return ToastserviceService;
+        return ValidationService;
       }();
 
-      _ToastserviceService.ctorParameters = function () {
-        return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.ToastController
-        }];
+      _ValidationService.ctorParameters = function () {
+        return [];
       };
 
-      _ToastserviceService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+      _ValidationService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
         providedIn: 'root'
-      })], _ToastserviceService);
+      })], _ValidationService);
+      /***/
+    },
+
+    /***/
+    63680:
+    /*!*****************************************************************!*\
+      !*** ./src/app/components/expandable/expandable.component.scss ***!
+      \*****************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = ".expand-wrapper {\n  transition: max-height 0.4s ease-in-out;\n  overflow: hidden;\n  height: auto;\n}\n\n.collapsed {\n  max-height: 0 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV4cGFuZGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx1Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNFO0VBQ0Usd0JBQUE7QUFFSiIsImZpbGUiOiJleHBhbmRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC13cmFwcGVyIHtcbiAgICB0cmFuc2l0aW9uOiBtYXgtaGVpZ2h0IDAuNHMgZWFzZS1pbi1vdXQ7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBoZWlnaHQ6IGF1dG87XG4gIH1cbiAgLmNvbGxhcHNlZCB7XG4gICAgbWF4LWhlaWdodDogMCAhaW1wb3J0YW50O1xuICB9Il19 */";
+      /***/
+    },
+
+    /***/
+    93032:
+    /*!*******************************************************************************************************!*\
+      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/expandable/expandable.component.html ***!
+      \*******************************************************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "<div #expandWrapper class=\"expand-wrapper\" [class.collapsed]=\"!expanded\">\n  <ng-content></ng-content>\n</div>";
       /***/
     }
   }]);

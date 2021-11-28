@@ -440,223 +440,50 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
-/***/ 73773:
-/*!****************************************!*\
-  !*** ./src/app/services/db.service.ts ***!
-  \****************************************/
+/***/ 38932:
+/*!***************************************************************!*\
+  !*** ./src/app/components/expandable/expandable.component.ts ***!
+  \***************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DbService": function() { return /* binding */ DbService; }
+/* harmony export */   "ExpandableComponent": function() { return /* binding */ ExpandableComponent; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 91841);
-/* harmony import */ var _toastservice_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toastservice.service */ 48236);
-/* harmony import */ var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/storage-angular */ 61628);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./expandable.component.html */ 93032);
+/* harmony import */ var _expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./expandable.component.scss */ 63680);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
 
 
 
 
-
-let DbService = class DbService {
-    constructor(httpClient, toastService, storage) {
-        this.httpClient = httpClient;
-        this.toastService = toastService;
-        this.storage = storage;
-        this.usersKey = "users";
-        this.customersKey = "customers";
-        this.inventoryKey = "inventories";
-        this.invoiceKey = "invoices";
-        this.invoiceNumberKey = "invoiceNumber";
-        this.init();
+let ExpandableComponent = class ExpandableComponent {
+    constructor(renderer) {
+        this.renderer = renderer;
+        this.expanded = false;
+        this.expandHeight = "150px";
     }
-    init() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            const storageVar = yield this.storage.create();
-            this.storage = storageVar;
-        });
-    }
-    signup(user) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                let value = yield this.storage.get(this.usersKey);
-                this.users = JSON.parse(value);
-                if (this.users == undefined || this.users == null) {
-                    this.users = [];
-                }
-                this.users.push(user);
-                const result = yield this.storage.set(this.usersKey, JSON.stringify(this.users));
-                console.log('user signed up successfully' + user);
-                return true;
-            }
-            catch (reason) {
-                console.log(reason);
-                this.toastService.presentToast("User Registration Failed");
-                return false;
-            }
-        });
-    }
-    fetchUserByUserNameAndPassword(username, password) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const result = yield this.storage.get(this.usersKey);
-                this.users = JSON.parse(result);
-                let fetchedUser = this.users.find(u => u.email == username && u.user_password == password);
-                console.log('retrieved user' + fetchedUser);
-                return fetchedUser;
-            }
-            catch (reason) {
-                console.log(reason);
-                return null;
-            }
-        });
-    }
-    createCustomer(customer) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const value = yield this.storage.get(this.customersKey);
-                this.customers = JSON.parse(value);
-                if (this.customers == null || this.customers == undefined) {
-                    this.customers = [];
-                }
-                this.customers.push(customer);
-                this.storage.set(this.customersKey, JSON.stringify(this.customers));
-                return true;
-            }
-            catch (reason) {
-                console.log(reason);
-                return false;
-            }
-        });
-    }
-    findIndexToUpdate(newCustomer) {
-        return newCustomer.name == this;
-    }
-    UpdateCustomer(customer) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const value = yield this.storage.get(this.customersKey);
-                this.customers = JSON.parse(value);
-                let cust = this.customers.find(this.findIndexToUpdate, customer.name);
-                let index = this.customers.indexOf(cust);
-                this.customers[index] = customer;
-                this.storage.set(this.customersKey, JSON.stringify(this.customers));
-                return true;
-            }
-            catch (reason) {
-                console.log(reason);
-                return false;
-            }
-        });
-    }
-    getAllCustomers() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const result = yield this.storage.get(this.customersKey);
-                this.customers = JSON.parse(result);
-                return this.customers;
-            }
-            catch (reason) {
-                console.log(reason);
-                this.toastService.presentToast("Failed to load the customers");
-            }
-        });
-    }
-    createOrUpdateInventory(inventory) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const value = yield this.storage.get(this.inventoryKey);
-                this.inventories = JSON.parse(value);
-                if (this.inventories == null || this.inventories == undefined) {
-                    this.inventories = [];
-                }
-                this.inventories.push(inventory);
-                this.storage.set(this.inventoryKey, JSON.stringify(this.inventories));
-                return true;
-            }
-            catch (reason) {
-                console.log(reason);
-                return false;
-            }
-        });
-    }
-    getAllInventories() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const result = yield this.storage.get(this.inventoryKey);
-                this.inventories = JSON.parse(result);
-                return this.inventories;
-            }
-            catch (reason) {
-                console.log(reason);
-                this.toastService.presentToast("Failed to load the inventories");
-            }
-        });
-    }
-    getAllInvoices() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const result = yield this.storage.get(this.invoiceKey);
-                this.invoices = JSON.parse(result);
-                return this.invoices;
-            }
-            catch (reason) {
-                console.log(reason);
-                this.toastService.presentToast("Failed to load the invoices");
-            }
-        });
-    }
-    createOrUpdateInvoice(invoice) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            try {
-                const value = yield this.storage.get(this.invoiceKey);
-                this.invoices = JSON.parse(value);
-                if (this.invoices == null || this.invoices == undefined) {
-                    this.invoices = [];
-                }
-                this.invoices.push(invoice);
-                this.storage.set(this.invoiceKey, JSON.stringify(this.invoices));
-                return true;
-            }
-            catch (reason) {
-                console.log(reason);
-                return false;
-            }
-        });
-    }
-    incrementInvoiceNumber() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            let invoiceNumber;
-            invoiceNumber = yield this.storage.get(this.invoiceNumberKey);
-            if (invoiceNumber == null || invoiceNumber == undefined) {
-                invoiceNumber = 0;
-            }
-            invoiceNumber = invoiceNumber + 1;
-            yield this.storage.set(this.invoiceNumberKey, invoiceNumber);
-            return invoiceNumber;
-        });
-    }
-    getInvoiceNumber() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            let invoiceNumber;
-            invoiceNumber = yield this.storage.get(this.invoiceNumberKey);
-            return invoiceNumber;
-        });
+    ngAfterViewInit() {
+        this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", this.expandHeight);
     }
 };
-DbService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient },
-    { type: _toastservice_service__WEBPACK_IMPORTED_MODULE_0__.ToastserviceService },
-    { type: _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_3__.Storage }
+ExpandableComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Renderer2 }
 ];
-DbService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-        providedIn: 'root'
+ExpandableComponent.propDecorators = {
+    expandWrapper: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild, args: ["expandWrapper", { read: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef },] }],
+    expanded: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input, args: ["expanded",] }],
+    expandHeight: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input, args: ["expandHeight",] }]
+};
+ExpandableComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+        selector: "app-expandable",
+        template: _raw_loader_expandable_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
+        styles: [_expandable_component_scss__WEBPACK_IMPORTED_MODULE_1__.default]
     })
-], DbService);
+], ExpandableComponent);
 
 
 
@@ -673,15 +500,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PrintService": function() { return /* binding */ PrintService; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/bluetooth-serial/ngx */ 28078);
+/* harmony import */ var _toastservice_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toastservice.service */ 48236);
+
 
 
 
 let PrintService = class PrintService {
-    constructor(btSerial) {
+    constructor(btSerial, tostService) {
         this.btSerial = btSerial;
+        this.tostService = tostService;
     }
     searchBluetoothPrinter() {
         return this.btSerial.list();
@@ -697,14 +527,15 @@ let PrintService = class PrintService {
             this.btSerial.write(data).then(_ => {
                 this.btSerial.disconnect();
             }).catch(reason => { console.log(reason); });
-        }, err => console.log(err));
+        }, err => console.log(this.tostService.presentToast("Printer Issue - bluetooth address - " + macAddress + "-err-" + err)));
     }
 };
 PrintService.ctorParameters = () => [
-    { type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__.BluetoothSerial }
+    { type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_0__.BluetoothSerial },
+    { type: _toastservice_service__WEBPACK_IMPORTED_MODULE_1__.ToastserviceService }
 ];
-PrintService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+PrintService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
     })
 ], PrintService);
@@ -713,47 +544,61 @@ PrintService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 48236:
-/*!**************************************************!*\
-  !*** ./src/app/services/toastservice.service.ts ***!
-  \**************************************************/
+/***/ 62813:
+/*!***************************************!*\
+  !*** ./src/app/validation.service.ts ***!
+  \***************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ToastserviceService": function() { return /* binding */ ToastserviceService; }
+/* harmony export */   "ValidationService": function() { return /* binding */ ValidationService; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 37716);
 
 
-
-let ToastserviceService = class ToastserviceService {
-    constructor(toastController) {
-        this.toastController = toastController;
-    }
-    presentToast(message) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-            const toast = yield this.toastController.create({
-                message: message,
-                duration: 2000
-            });
-            toast.present();
-        });
+let ValidationService = class ValidationService {
+    constructor() { }
+    numericOnly(event) {
+        let pattern = /^([0-9])$/;
+        let result = pattern.test(event.key);
+        return result;
     }
 };
-ToastserviceService.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.ToastController }
-];
-ToastserviceService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+ValidationService.ctorParameters = () => [];
+ValidationService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
         providedIn: 'root'
     })
-], ToastserviceService);
+], ValidationService);
 
 
+
+/***/ }),
+
+/***/ 63680:
+/*!*****************************************************************!*\
+  !*** ./src/app/components/expandable/expandable.component.scss ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (".expand-wrapper {\n  transition: max-height 0.4s ease-in-out;\n  overflow: hidden;\n  height: auto;\n}\n\n.collapsed {\n  max-height: 0 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV4cGFuZGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx1Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNFO0VBQ0Usd0JBQUE7QUFFSiIsImZpbGUiOiJleHBhbmRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC13cmFwcGVyIHtcbiAgICB0cmFuc2l0aW9uOiBtYXgtaGVpZ2h0IDAuNHMgZWFzZS1pbi1vdXQ7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBoZWlnaHQ6IGF1dG87XG4gIH1cbiAgLmNvbGxhcHNlZCB7XG4gICAgbWF4LWhlaWdodDogMCAhaW1wb3J0YW50O1xuICB9Il19 */");
+
+/***/ }),
+
+/***/ 93032:
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/expandable/expandable.component.html ***!
+  \*******************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div #expandWrapper class=\"expand-wrapper\" [class.collapsed]=\"!expanded\">\n  <ng-content></ng-content>\n</div>");
 
 /***/ })
 

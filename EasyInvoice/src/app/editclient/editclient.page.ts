@@ -35,6 +35,7 @@ export class EditclientPage implements OnInit {
     this.route.queryParams.subscribe(params=>{
       this.customer=params['customer'];
     })
+    this.customer.balance=Math.round((this.customer.balance + Number.EPSILON) * 100) / 100;
     console.log('selected customer'+this.customer.name);
   }
 

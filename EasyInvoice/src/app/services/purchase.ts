@@ -1,5 +1,6 @@
 import { Inventory } from "./inventory";
 import { PurchaseItem } from "./PurchaseItem";
+import { Supplier } from "./supplier";
 
 export class Purchase{
     id : number;
@@ -7,4 +8,5 @@ export class Purchase{
     purchaseDate : Date;
     deliveryDate  :Date;
     purchaseItems : PurchaseItem[];
+    supplier : Supplier;
 }

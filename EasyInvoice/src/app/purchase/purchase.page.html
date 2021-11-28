@@ -11,9 +11,9 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor= "let pur of purchaseList">
+    <ion-item *ngFor= "let pur of purchaseList" (click)="editPurchase(pur.id)">
       <ion-label>{{pur.poNumber}}</ion-label>
-      <ion-label>{{pur.purchaseDate}}</ion-label>
+      <ion-label>{{pur.purchaseDate|date}}</ion-label>
     </ion-item>
   </ion-list>    
   

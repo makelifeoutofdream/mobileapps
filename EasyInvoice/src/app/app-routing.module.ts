@@ -96,6 +96,10 @@ const routes: Routes = [
   {
     path: 'newpurchase',
     loadChildren: () => import('./newpurchase/newpurchase.module').then( m => m.NewpurchasePageModule)
+  },
+  {
+    path: 'editpurchase',
+    loadChildren: () => import('./editpurchase/editpurchase.module').then( m => m.EditpurchasePageModule)
   }
 ];
 

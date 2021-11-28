@@ -26,7 +26,7 @@ export class NewpurchasePage implements OnInit {
    
   }
 resetPurchase(){
-  this.purchase={id: null,poNumber:null,purchaseDate:new Date(),deliveryDate:new Date(),purchaseItems:[]}
+  this.purchase={id: null,poNumber:null,purchaseDate:new Date(),deliveryDate:new Date(),purchaseItems:[],supplier:null}
 }
   ionViewWillEnter(){
     this.showTable=false;
@@ -60,19 +60,30 @@ resetPurchase(){
 
   productSelected(evt){
     this.selectedProducts=evt.value;
-    
+    let  tempList : PurchaseItem [];
+    tempList=[];
     for(let inv of this.selectedProducts){
+      var index = this.purchase.purchaseItems.findIndex(i => i.item.id == inv.id);
+      let p : PurchaseItem=this.purchase.purchaseItems[index];
       let pItem : PurchaseItem={item:{id:null,code:"",name:"",nameInArabic:"",description:"",quantity:null,purchasePrice:null,unitPrice:null},orderQuantity:null,deliverQuantity:null,price:null}; 
       pItem.item=inv;
-      this.purchase.purchaseItems.push(pItem);
+      if(p!=null && p!=undefined){
+        pItem.deliverQuantity=p.deliverQuantity
+        pItem.orderQuantity=p.orderQuantity;
+        pItem.price=p.price;
+        
+      }
+      tempList.push(pItem);
+      }
+    
+      this.purchase.purchaseItems=tempList;
       this.showTable=true;
-    }
   }
 
   async addNewPurchase() :Promise<any>{
     
     this.dbService.createPurchase(this.purchase).then(data=>{
-      this.dbService.incrementPurchaseCode();
+      
       this.dbService.updateStock(this.purchase.purchaseItems).then(data=>{
         this.tostService.presentToast("Purchase added successfully");      
       })

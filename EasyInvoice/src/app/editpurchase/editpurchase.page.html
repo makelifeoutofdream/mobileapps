@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainmenu"> 
+
+      </ion-menu-button>
+    </ion-buttons> 
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="home" (click)="showPurchase()"> </ion-back-button>
+      
+    </ion-buttons>
+    <ion-title>Edit Purchase</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+          <ion-item style="margin-top: 2%;">
+            <ion-label position="floating">PO No</ion-label>
+            <ion-input name="poNumber" disabled type="text" [(ngModel)]="purchase.poNumber" required></ion-input>
+          </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Date</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="purchase.purchaseDate" required ></ion-datetime>
+        </ion-item>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item style="margin-top: 7%;">
+        <ion-select style="margin-top: 2%;height: 30px;margin-right: 4%;"  [(ngModel)]="purchase.supplier" [compareWith]="compareSupplier" placeholder="Select Supplier">
+          <ion-select-option *ngFor="let sup of supplierList" [value]="sup">{{sup.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+        </ion-col>
+        <ion-col size="6">
+        <ion-item >
+          <ion-label position="floating">Delivery Date</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="purchase.deliveryDate" required ></ion-datetime>
+        </ion-item> 
+       </ion-col>
+    </ion-row>
+    
+    <ion-item>
+      <ion-label>Product</ion-label>
+      <ionic-selectable style="height: 30px;"
+        
+        [(ngModel)]="deafultProducts"
+        [items]="products"
+        itemValueField="name"
+        itemTextField="name"
+        [canSearch]="true"
+        (onChange)="productSelected($event)"
+        [isMultiple]="true"
+        >
+      </ionic-selectable>
+    </ion-item> 
+    
+<table *ngIf="showTable" border="none" style="width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;">
+  <tr style="border: none; color: white; background-color: lightslategray;">
+    <td>
+      Item Code
+    </td>
+    <td>
+      Item Name
+    </td>
+    <td>
+      Order Quantity
+    </td>
+    <td>
+      Received Quantity
+    </td>
+    <td>
+      Price
+    </td>
+  </tr>
+  <tr *ngFor= "let pItem of purchase.purchaseItems" style="border: none;">
+    <td><ion-input  disabled [(ngModel)]="pItem.item.code" ></ion-input></td>
+    <td><ion-input  disabled [(ngModel)]="pItem.item.name" ></ion-input></td>
+    <td><ion-input  type="number" [(ngModel)]="pItem.orderQuantity"  (keypress)="numericOnly($event)"></ion-input></td>
+    <td><ion-input  type="number" [(ngModel)]="pItem.deliverQuantity"  (keypress)="numericOnly($event)"></ion-input></td>
+    <td><ion-input  type="number" [(ngModel)]="pItem.price"  ></ion-input></td>
+  </tr>
+</table>
+    </ion-grid>
+    <ion-row style="float:right">
+      <ion-col >
+      <ion-button  color="primary" (click)="editPurchase()">
+        <ion-icon name="checkmark"></ion-icon>
+       
+        
+      </ion-button>
+    </ion-col>
+    </ion-row>
+    
+    
+</ion-content>

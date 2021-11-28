@@ -322,7 +322,7 @@
             return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
               var _this2 = this;
 
-              var _iterator, _step, _loop;
+              var _iterator, _step, _loop, index;
 
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
@@ -335,11 +335,18 @@
                           var inv = _step.value;
 
                           if (_this2.customer.itemList.find(function (it) {
-                            return it.name == inv.name;
+                            return it.id == inv.id;
                           }) == null || _this2.customer.itemList.find(function (it) {
-                            return it.name == inv.name;
+                            return it.id == inv.id;
                           }) == null) {
                             _this2.customer.itemList.push(inv);
+                          } else {
+                            index = _this2.customer.itemList.findIndex(function (i) {
+                              return i.id == inv.id;
+                            });
+                            _this2.customer.itemList[index].name = inv.name;
+                            _this2.customer.itemList[index].description = inv.description;
+                            _this2.customer.itemList[index].purchasePrice = inv.purchasePrice;
                           }
                         };
 
@@ -381,9 +388,10 @@
                           customer: this.customer
                         }
                       };
+                      console.log("selected customer" + this.customer);
                       this.navCtrl.navigateRoot('editclient', navigationExtras);
 
-                    case 5:
+                    case 6:
                     case "end":
                       return _context4.stop();
                   }
@@ -446,7 +454,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Update</ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
       /***/
     }
   }]);

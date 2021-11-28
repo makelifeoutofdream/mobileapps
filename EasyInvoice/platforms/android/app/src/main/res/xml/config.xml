@@ -26,6 +26,12 @@
         <param name="onload" value="true" />
     </feature>
     <allow-navigation href="cdvfile:*" />
+    <feature name="BluetoothPrinter">
+        <param name="android-package" value="br.com.cordova.printer.bluetooth.BluetoothPrinter" />
+    </feature>
+    <feature name="DatecsPrinter">
+        <param name="android-package" value="com.giorgiofellipe.datecsprinter.DatecsPrinter" />
+    </feature>
     <feature name="BluetoothSerial">
         <param name="android-package" value="com.megster.cordova.BluetoothSerial" />
     </feature>

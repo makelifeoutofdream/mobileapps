@@ -210,8 +210,15 @@ export class DbService {
       if(this.invoices==null || this.invoices==undefined){
         this.invoices=[];
       }
-      invoice.id=uuidv4();
-      this.invoices.push(invoice);
+      if(invoice.id==null || invoice.id==undefined){
+        invoice.id=uuidv4();
+        this.invoices.push(invoice);
+      }else{
+        var index = this.invoices.findIndex(i => i.id == invoice.id);
+        this.invoices[index]=invoice;
+      }
+      
+      
       this.storage.set(this.invoiceKey,JSON.stringify(this.invoices) );
       return true;
     }catch(reason){
@@ -362,6 +369,21 @@ async createPurchase(purchase :Purchase) : Promise<any>{
     return false;
   }
 }
+
+async updatePurchase(purchase :Purchase) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.purchaseKey);
+    let purchaseList=JSON.parse(value);
+    var index = purchaseList.findIndex(i => i.id == purchase.id);
+    purchaseList[index]=purchase;
+    this.storage.set(this.purchaseKey,JSON.stringify(purchaseList) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
 
 async getPurchaseCode():Promise<any>{
   let purchaseCode : number; 

@@ -104,5 +104,21 @@
     },
     "is_top_level": false,
     "variables": {}
+  },
+  "cordova-plugin-btprinter": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-datecs-printer": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/giorgiofellipe/cordova-plugin-datecs-printer.git"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -22,6 +22,7 @@ export class ReportPage implements OnInit {
   invoiceList : Invoice [] ;
   filterInvoiceList : Invoice [];
   customerList : Customer [];
+  header : string [];
   constructor(public dbService : DbService,public toastService : ToastserviceService,
     public navCtrl:NavController,private dataService : DataService) { }
 
@@ -47,6 +48,10 @@ export class ReportPage implements OnInit {
     this.dbService.getAllCustomers().then(data=>this.customerList=data);
   }
   ionViewWillEnter(){
+    this.header=[];
+    this.header.push('Inv No');
+    this.header.push('Customer');
+    this.header.push('Total');
     this.startDate=null;
     this.endDate=null;
     this.getAllInvoices();

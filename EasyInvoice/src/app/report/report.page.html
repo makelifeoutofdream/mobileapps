@@ -35,17 +35,17 @@
   <ion-item-divider></ion-item-divider>
   
   <ion-list>
-    <ion-row>
-      <ion-col size="3">Inv No</ion-col>
-      <ion-col size="5">Customer</ion-col>
+    <ion-row style="margin-left: 5%;">
+      <ion-col size="4">Inv No</ion-col>
+      <ion-col size="4">Customer</ion-col>
       <ion-col size="4">Total</ion-col>
     </ion-row>
     <ion-item *ngFor= "let inv of filterInvoiceList" (click)="viewInvoice(inv)">
       
         
         
-          <ion-col size="3">{{inv.invoiceNumber}}</ion-col>
-          <ion-col size="5">{{inv.customer.name}}</ion-col>
+          <ion-col size="4">{{inv.invoiceNumber}}</ion-col>
+          <ion-col size="4">{{inv.customer.name}}</ion-col>
           <ion-col size="4">{{inv.total}}</ion-col>
        
      

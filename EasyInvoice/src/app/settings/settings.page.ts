@@ -15,15 +15,17 @@ export class SettingsPage implements OnInit {
   user : any={};
   type : string;
   bluetoothList:any=[];
-  selectedPrinter:any;
+  
   showProfileSegment : boolean=true;
   showTaxSegment : Boolean=false;
   showPrinterSegment : Boolean=false;
-  private userProfile : Profile={id:null,toEmail:"",ccEmail:"",vat:null};
+  private userProfile : Profile=  {id:null , companyName:"",companyNameInArabic:"", 
+  addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
   constructor(public navCtrl:NavController,private print:PrintService,private toastService:ToastserviceService,
     private dbService:DbService,private ref: ApplicationRef,private plt:Platform) { 
     this.type="profile";
-    this.userProfile={id:null,toEmail:"",ccEmail:"",vat:null};
+    this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
+    addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
     this.user.userProfile=this.userProfile;
   }
 
@@ -32,8 +34,9 @@ export class SettingsPage implements OnInit {
     this.showHideSegment();
     this.listPrinter();
     
-      this.userProfile={id:null,toEmail:"",ccEmail:"",vat:null};
-      this.user.userProfile=this.userProfile;
+    //this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
+   // addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
+     // this.user.userProfile=this.userProfile;
   }
 
   
@@ -59,9 +62,13 @@ export class SettingsPage implements OnInit {
     this.listPrinter();
     this.type="profile";
     this.showHideSegment();
-    this.dbService.getProfile().then(data=>this.userProfile=data);
+    this.dbService.getProfile().then(data=>{
+      this.userProfile=data
+      this.user.userProfile=data;
+    }  );
     if(this.userProfile==null || this.userProfile==undefined){
-      this.userProfile={id:null,toEmail:"",ccEmail:"",vat:null};
+      this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
+      addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
       this.user.userProfile=this.userProfile;
     }
     console.log("profile"+this.user.userProfile);
@@ -69,31 +76,32 @@ export class SettingsPage implements OnInit {
 
   listPrinter(){
     if(this.plt.is('cordova')){
-    this.print.searchBluetoothPrinter().then(resp=>{
+   this.print.searchBluetoothPrinter().then(resp=>{
       this.bluetoothList=resp;
       
     });
+    /*this.print.listDevices().then(res=>{
+      this.bluetoothList=res;
+    })*/
   }
+  
+
   }
   
   selectPrinter(macAddress:any){
-    this.selectedPrinter=macAddress;
+    this.user.userProfile.selectedPrinter=macAddress;
     
   }
 
   updateProfile(){
-    console.log("profile"+this.user.userProfile);
+    console.log("profile printer"+this.user.userProfile.selectedPrinter);
     this.dbService.createOrUpdateProfile(this.user.userProfile).then(data=>{
-      this.dbService.savePrinter(this.selectedPrinter).then(pdata=>{
-        if(data==null || data==undefined || pdata==undefined){
+        if(data==null || data==undefined ){
           this.toastService.presentToast("Failed to update settings");  
         }else{
+          this.user.userProfile=data;
           this.toastService.presentToast("Settings updated successfully");
         }
-        
-      })
-    
-      
     }).catch(reason=>{
       this.toastService.presentToast("Failed to update settings");
     })
@@ -111,12 +119,11 @@ export class SettingsPage implements OnInit {
 
     this.dbService.getProfile().then(data=>this.userProfile=data);
     if(this.userProfile==null || this.userProfile==undefined){
-      this.userProfile={id:null,toEmail:"",ccEmail:"",vat:null};
+      this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
+      addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
       this.user.userProfile=this.userProfile;
     }
     this.showHideSegment();
   }
-  updatePrinter(){
-   this.toastService.presentToast("Printer configured successfully");
-  }
+  
 }

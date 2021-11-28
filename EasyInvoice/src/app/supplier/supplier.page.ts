@@ -65,8 +65,8 @@ export class SupplierPage implements OnInit {
     this.navCtrl.navigateRoot('newsupplier');
   }
 
-  async editSupplier(name){
-    this.supplier=this.suppliers.find(sup=>sup.name==name);
+  async editSupplier(id){
+    this.supplier=this.suppliers.find(sup=>sup.id==id);
 
     let navigationExtras : NavigationExtras ={
           queryParams : {supplier : this.supplier}
