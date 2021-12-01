@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n\n<ion-header>\n  <ion-toolbar>\n    <ion-title>Inventory</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content style=\"background-color: darkblue;\">\n  <ion-list>\n    <ion-list-header>\n      <ion-label>Name</ion-label>\n      <ion-label>Quantity</ion-label>\n      <ion-label>Unit Price</ion-label>\n      <ion-label>Purchase Price</ion-label>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of inventories\" (click)=\"editInventory(inv)\">\n      <ion-label>{{inv.name}}</ion-label>\n      <ion-label>{{inv.quantity}}</ion-label>\n      <ion-label>{{inv.unitPrice}}</ion-label>\n      <ion-label>{{inv.purchasePrice}}</ion-label>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("\n\n<ion-header>\n  <ion-toolbar>\n    <ion-title>Inventory</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content style=\"background-color: darkblue;\">\n  <ion-list>\n    <ion-list-header>\n      <ion-label>Name</ion-label>\n      <ion-label>Quantity</ion-label>\n      <ion-label>Unit Price</ion-label>\n      <ion-label>Purchase Price</ion-label>\n      <ion-label>Delete</ion-label>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of inventories\" >\n      <ion-label (click)=\"editInventory(inv)\" >{{inv.name}}</ion-label>\n      <ion-label (click)=\"editInventory(inv)\">{{inv.quantity}}</ion-label>\n      <ion-label (click)=\"editInventory(inv)\">{{inv.unitPrice}}</ion-label>\n      <ion-label (click)=\"editInventory(inv)\">{{inv.purchasePrice}}</ion-label>\n      <ion-button (click)=\"presentDeleteAlertConfirm(inv)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
 
 /***/ }),
 
@@ -51,10 +51,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let InventoryPage = class InventoryPage {
-    constructor(dbService, toastService, navCtrl) {
+    constructor(dbService, toastService, navCtrl, alertController) {
         this.dbService = dbService;
         this.toastService = toastService;
         this.navCtrl = navCtrl;
+        this.alertController = alertController;
     }
     ngOnInit() {
     }
@@ -80,11 +81,54 @@ let InventoryPage = class InventoryPage {
         console.log("selected inventory" + inv);
         this.navCtrl.navigateRoot('newinventory', navigationExtras);
     }
+    deleteInventory(inv) {
+        this.dbService.deleteInventory(inv).then(data => {
+            this.toastService.presentToast('Inventory removed successfully');
+            this.getAllInventories().then(data => {
+                this.updateInventoryToCustomers();
+            });
+        });
+    }
+    updateInventoryToCustomers() {
+        this.dbService.getAllCustomers().then(data => {
+            let cusList = data;
+            for (let cus of data) {
+                cus.itemList = this.inventories;
+                this.dbService.UpdateCustomer(cus);
+            }
+        });
+    }
+    presentDeleteAlertConfirm(inv) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                // cssClass: 'my-custom-class',
+                header: 'Confirm!',
+                message: '<strong>Are you sure to delete this inventory?</strong>!!!',
+                buttons: [
+                    {
+                        text: 'No',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            console.log('Confirm Cancel');
+                        }
+                    }, {
+                        text: 'Yes',
+                        handler: () => {
+                            this.deleteInventory(inv);
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
+        });
+    }
 };
 InventoryPage.ctorParameters = () => [
     { type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"] },
     { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] }
 ];
 InventoryPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

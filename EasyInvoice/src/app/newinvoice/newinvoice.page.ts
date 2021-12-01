@@ -15,7 +15,8 @@ import {sprintf} from "sprintf-js";
 import * as iconv from 'iconv-lite';
 import { IncomingMessage } from 'http';
 import EscPosEncoder from 'esc-pos-encoder-ionic';
-//var iconv = require('iconv-lite');
+import { DatePipe } from '@angular/common'
+
 @Component({
   selector: 'app-newinvoice',
   templateUrl: './newinvoice.page.html',
@@ -32,13 +33,13 @@ export class NewinvoicePage implements OnInit {
   private profile : Profile;
   private applyVat : boolean;
   private showTable=false;
-  
-  
+  private inventoryList: Inventory[];
+  time:string;
 
   
 
   constructor(public dbService:DbService,public tostService:ToastserviceService,public navCtrl:NavController,
-    public printService : PrintService,private validationService :ValidationService) { 
+    public printService : PrintService,private validationService :ValidationService,public datepipe: DatePipe) { 
       
     }
 
@@ -63,7 +64,7 @@ ionViewWillEnter(){
 
 
 async filterProducts(evt) {
-  this.product={id: null, name: "",nameInArabic:"",unitPrice : null,billingUnitPrice:null,quantity:null,selected:null,purchaseUnitPrice:null};
+  this.product={id: null, name: "",nameInArabic:"",unitPrice : null,billingUnitPrice:null,quantity:null,balanceQuantity:null,displayBalanceQuantity:null,selected:null,purchaseUnitPrice:null};
   this.products=this.productsBackup;
   const searchTerm = evt.srcElement.value;
 
@@ -91,7 +92,9 @@ productSelected(evt){
 resetInvoiceForm(){
   this.productsBackup=new Array();
   this.products=new Array();
-  
+  this.dbService.getAllInventories().then(data=>{
+    this.inventoryList=data;
+  });
   this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",amountPaid:null,balanceAmount:null,
   customer :  {id:null,code:null,name : "" ,itemList : null,nameInArabic : "",contactPersonName: "",contactPersonNameInArabic:"",
   buildingNumber:"",street:"",streetInArabic:"",city:"",cityInArabic:"",district:"",districtInArabic:"",country:"",countryInArabic:"",
@@ -105,7 +108,7 @@ total:null,tax:null} ;
     this.invoice.invoiceNumber=this.dbService.codeConstant+this.dbService.invoiceCodeConstant+ data;
   });
 
-  this.invoice.invoiceDate=new Date();
+  
   this.invoice.invoiceItems=new Array();
   this.selectedProducts=new Array();
   //this.dbService.getInvoiceNumber().then(data=>{
@@ -118,17 +121,23 @@ populateCustomerProducts(){
   if(this.invoice.customer!=null && this.invoice.customer!=undefined && this.invoice.customer.itemList!=null && this.invoice.customer.itemList!=undefined){
     console.log("populateCustomerProducts");
     let inventory ;
+    
     for(let inv of this.invoice.customer.itemList){
-      inventory={id: inv.id, name : inv.name,nameInArabic: inv.nameInArabic, unitPrice : inv.unitPrice,billingUnitPrice:null,quantity:null,InvoiceItem:[],purchasePrice:inv.purchasePrice};
+      var index = this.inventoryList.findIndex(i => i.id == inv.id);
+      if(index!=null && index!=undefined && index>=0){
+        inventory={id: inv.id, name : inv.name,nameInArabic: inv.nameInArabic, unitPrice : inv.unitPrice,billingUnitPrice:null,quantity:null,InvoiceItem:[],purchasePrice:inv.purchasePrice,balanceQuantity:this.inventoryList[index].quantity};
         this.products.push(inventory);
         this.productsBackup.push(inventory);
+      }
+      
     }
   }
   
 }
 
-calculateInvoiceTotal(evt){
+calculateInvoiceTotal(item){
   this.invoice.total=0;
+  this.invoice.tax=0;
   if(undefined==this.invoice.total || null==this.invoice.total){
     this.invoice.total=0;
   }
@@ -146,14 +155,24 @@ calculateInvoiceTotal(evt){
   if(this.invoice.customer.balance==null || this.invoice.customer.balance==undefined){
     this.invoice.customer.balance=0;
   }
+  
   this.invoice.balanceAmount=( this.invoice.customer.balance+this.invoice.total)-this.invoice.amountPaid;
+  this.invoice.balanceAmount=Math.round((this.invoice.balanceAmount+ Number.EPSILON) * 100) / 100;
+  this.invoice.total=Math.round((this.invoice.total+ Number.EPSILON) * 100) / 100;
+  
 
+  if(item!=null && item!=undefined){
+    var index = this.invoice.invoiceItems.findIndex(i => i.id == item.id);
+  if(index!=null && index!=undefined && index>=0)
+    this.invoice.invoiceItems[index].displayBalanceQuantity=this.invoice.invoiceItems[index].balanceQuantity-item.quantity;
+  
+  }
   
   
 }
 
 submitBill(){
-  this.invoice.invoiceDate.setHours(0,0,0,0);
+  
   this.dbService.createOrUpdateInvoice(this.invoice).then(data=>{
     this.dbService.getAllInventories().then(stocks=>{
       let stockList=stocks;
@@ -168,6 +187,7 @@ submitBill(){
         this.dbService.UpdateCustomer(this.invoice.customer);
         }
         this.tostService.presentToast("Bill submitted successfully");
+        
         //this.navCtrl.navigateRoot('invoice');
       })
     });
@@ -177,32 +197,56 @@ submitBill(){
   })
 }
 
+generateQRCodeContent(){
+  let datetime:string =this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
+  let data="Customer : "+this.invoice.customer.name+"  Address : "+this.invoice.customer.city+","+this.invoice.customer.district+" Date"+
+  datetime+" Invoice No : "+this.invoice.invoiceNumber+" Total "+this.invoice.total;
+  return data;
+}
+
 getFormatedContent(){
   const encoder = new EscPosEncoder();
   let result="";
-  let billDetails=encoder.initialize().bold(true).align('center').line(this.profile.companyName).newline().
-  align('left').line('VAT # : '+ this.profile.vatNumber+','+'CR # : '+this.profile.crNumber).
-  align('left').bold(true).line('------------------------------------------------').bold(false).
-  align('center').bold(true).line('VAT INVOICE').bold(false).
-  align('left').text(this.invoice.invoiceNumber).align('right').line(this.getDateFormated(this.invoice.invoiceDate)).
-  align('left').bold(true).line('------------------------------------------------').bold(false).
+  let datetime:string =this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
+  let billDetails=encoder.initialize().bold(true).raw([0x1B, 0x21, 0x20]).align('center').line(this.profile.companyName).bold(true).newline().
+  raw([0x1B, 0x21, 0x03]).align('left').bold(true).line('VAT # : '+ this.profile.vatNumber+','+'CR # : '+this.profile.crNumber).
+  align('left').bold(true).line('---------------------------------------------------------------').bold(true).
+  raw([0x1B, 0x21, 0x20]).align('center').bold(true).line('VAT INVOICE').bold(true).
+  raw([0x1B, 0x21, 0x03]).align('left').text(this.invoice.invoiceNumber+'            '+ datetime).newline().
+  align('left').bold(true).line('---------------------------------------------------------------').bold(true).
   align('left').bold(true).line('Bill To').
-  align('left').bold(true).line('------------------------------------------------').bold(false).
+  align('left').bold(true).line('---------------------------------------------------------------').bold(true).
   align('left').line(this.invoice.customer.name).
   align('left').line(this.invoice.customer.street+','+this.invoice.customer.city+','+this.invoice.customer.district).
   align('left').line('VAT #: '+this.invoice.customer.vatNumber+'  CR#: '+this.invoice.customer.crNumber).
   align('left').line('Mob: '+this.invoice.customer.mobile).
-  align('left').bold(true).line('------------------------------------------------').
-  align('left').line(sprintf('%s %-24.25s %13s %7s %12s','#', 'Item', 'Qty','Rate', 'Amount')).bold(true).
-  align('left').bold(true).line('------------------------------------------------');
+  align('left').bold(true).line('---------------------------------------------------------------').
+  align('left').line(sprintf('%s %-25.22s %6s %7s %16s','#', 'Item', 'Qty','Rate', 'Amount')).bold(true).
+  align('left').bold(true).line('---------------------------------------------------------------');
   let counter:number=1;
+  let totalQuantity=0;
   let itemDetails="";
   for(let itm of this.invoice.invoiceItems){
+    totalQuantity+=itm.quantity;
     let temp=encoder.initialize().
-    align('left').line(sprintf('%d %-20.20s %9.2f %3.0f %11.2f ',counter, itm.name, itm.quantity,itm.unitPrice, itm.unitPrice*itm.quantity));
+    align('left').line(sprintf('%d %-13.13s %9.0f %8.2f %11.2f ',counter, itm.name, itm.quantity,itm.unitPrice, itm.unitPrice*itm.quantity));
     itemDetails+=temp;
     counter=counter+1;
   }
+
+  let footer=encoder.initialize(). align('left').bold(true).line('------------------------------------------------').bold(true).
+  raw([0x1B, 0x21, 0x08]).align('left').line('Qty : '+totalQuantity).
+  align('right').line('Total Invoice Value(Excl. VAT) : '+  sprintf('%6.2f ',(this.invoice.total-this.invoice.tax))) .
+  align('right').line('VAT Payable in SAR('+this.profile.vat+'%) : '+sprintf('%6.2f ',this.invoice.tax)).
+  align('right').line('Gross Amount in SAR : '+sprintf('%6.2f ',this.invoice.total)).
+  align('left').bold(true).line('------------------------------------------------').bold(true).
+  align('right').line('Previous Balance : '+ sprintf('%6.2f',(this.invoice.balanceAmount+this.invoice.amountPaid))).
+  align('right').line('Paid Amount : '+sprintf('%6.2f',this.invoice.amountPaid)).
+  raw([0x1B, 0x21, 0x20]).align('left').line('Balance Amount: '+sprintf('%6.2f',this.invoice.balanceAmount)).
+  raw([0x1B, 0x21, 0x08]).align('left').bold(true).line('------------------------------------------------').bold(true);
+  
+  let qrcode= encoder.initialize().raw([0x1B, 0x21, 0x03]).align('center').qrcode(this.generateQRCodeContent(),1,4,'h').newline().
+  align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!'); ;
  // result+=billDetails+itemDetails;
   result=encoder.initialize().encode();
   //line(billDetails).line(itemDetails).encode();
@@ -363,7 +407,11 @@ showInvoice(){
   this.navCtrl.navigateForward("invoice");
 }
 
-getDateFormated(todayDate){
-  return (todayDate.getFullYear() + '-' + ((todayDate.getMonth() + 1)) + '-' + todayDate.getDate() + ' ' +todayDate.getHours() + ':' + todayDate.getMinutes()+ ':' + todayDate.getSeconds());
+getDateFormated(todayDate) : string{
+  return (todayDate.getFullYear() + '-' + ((todayDate.getMonth() + 1)) + '-' + todayDate.getDate() );
+}
+
+getTimeFormated(todayDate) : string{
+  return ( ' ' +todayDate.getHours() + ':' + todayDate.getMinutes()+ ':' + todayDate.getSeconds());
 }
 }

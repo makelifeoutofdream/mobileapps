@@ -75,12 +75,13 @@
       "Gb+d");
 
       var ClientPage = /*#__PURE__*/function () {
-        function ClientPage(navCtrl, dbService, tostService) {
+        function ClientPage(navCtrl, dbService, tostService, alertController) {
           _classCallCheck(this, ClientPage);
 
           this.navCtrl = navCtrl;
           this.dbService = dbService;
           this.tostService = tostService;
+          this.alertController = alertController;
         }
 
         _createClass(ClientPage, [{
@@ -248,6 +249,63 @@
               }, _callee4, this);
             }));
           }
+        }, {
+          key: "deleteCustomer",
+          value: function deleteCustomer(cus) {
+            var _this3 = this;
+
+            this.dbService.deleteCustomer(cus).then(function (data) {
+              _this3.tostService.presentToast('Customer removed successfully');
+
+              _this3.dbService.getAllCustomers().then(function (data) {
+                _this3.customers = data;
+              });
+            });
+          }
+        }, {
+          key: "presentDeleteAlertConfirm",
+          value: function presentDeleteAlertConfirm(cus) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+              var _this4 = this;
+
+              var alert;
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                  switch (_context5.prev = _context5.next) {
+                    case 0:
+                      _context5.next = 2;
+                      return this.alertController.create({
+                        // cssClass: 'my-custom-class',
+                        header: 'Confirm!',
+                        message: '<strong>Are you sure to delete this customer?</strong>!!!',
+                        buttons: [{
+                          text: 'No',
+                          role: 'cancel',
+                          cssClass: 'secondary',
+                          handler: function handler(blah) {
+                            console.log('Confirm Cancel');
+                          }
+                        }, {
+                          text: 'Yes',
+                          handler: function handler() {
+                            _this4.deleteCustomer(cus);
+                          }
+                        }]
+                      });
+
+                    case 2:
+                      alert = _context5.sent;
+                      _context5.next = 5;
+                      return alert.present();
+
+                    case 5:
+                    case "end":
+                      return _context5.stop();
+                  }
+                }
+              }, _callee5, this);
+            }));
+          }
         }]);
 
         return ClientPage;
@@ -260,6 +318,8 @@
           type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"]
         }, {
           type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"]
         }];
       };
 
@@ -287,7 +347,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n      <ion-button (click)=\"presentDeleteAlertConfirm(cus)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
       /***/
     },
 

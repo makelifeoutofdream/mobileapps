@@ -1,5 +1,8 @@
+import { JsonpClientBackend } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { DbService } from '../services/db.service';
+import { Inventory } from '../services/inventory';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -11,31 +14,63 @@ export class DashboardPage implements OnInit {
 
   private doughnutChart: Chart;
   private lineChart: Chart;
+  private donutLabels;
+  private donutdata; 
+  private donutColors;
+  private donutHoverColors;
+  private inventoryList : Inventory[];
+  constructor(private dbService:DbService) {Chart.register(...registerables); }
+  ngOnInit(){    
+    this.inventoryList=[];
+  }
 
+  ionViewWillEnter(){
+    if(this.doughnutChart!=null && this.doughnutChart!=undefined)
+    this.doughnutChart.destroy();
+    if(this.lineChart!=null && this.lineChart!=undefined)
+    this.lineChart.destroy();
+    this.dbService.getAllInventories().then(data=>{
+      this.inventoryList=data;
+      this.getDonutdata().then(resp=>{
+        console.log(JSON.stringify(this.donutColors))
+        this.showDashboard();
+      })
+    })
+    
+  }
 
-  constructor() {Chart.register(...registerables); }
-  ngOnInit(){setTimeout(() => {
-    this.showDashboard();
-  }, 1000);}
+  async getDonutdata() : Promise<any>{
+    this.donutColors=[];
+    this.donutHoverColors=[];
+    this.donutLabels=this.inventoryList.map(a=>a.name);
+    this.donutdata=this.inventoryList.map(a=>a.quantity);
+    for(let i of this.inventoryList){
+        this.donutColors.push(this.random_rgba());
+        this.donutHoverColors.push(this.random_rgba());
+    }
+  }
+  
+
   showDashboard() {
     console.log('called');
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: "doughnut",
       data: {
-        labels: ["Advertisement", "Car&Truck", "Office Expenses", "Rent", "Travel", "Others"],
+        labels: this.donutLabels,
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)"
-            ],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF6384", "#36A2EB", "#FFCE56"]
+            label: "Quantity",
+            data: this.donutdata,
+            backgroundColor : this.donutColors,
+            // backgroundColor: [
+            //   "rgba(255, 99, 132, 0.2)",
+            //   "rgba(54, 162, 235, 0.2)",
+            //   "rgba(255, 206, 86, 0.2)",
+            //   "rgba(75, 192, 192, 0.2)",
+            //   "rgba(153, 102, 255, 0.2)",
+            //   "rgba(255, 159, 64, 0.2)"
+            // ],
+            hoverBackgroundColor: this.donutHoverColors
           }
         ]
       }
@@ -73,4 +108,8 @@ export class DashboardPage implements OnInit {
     });
   }
 
+random_rgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+}
 }

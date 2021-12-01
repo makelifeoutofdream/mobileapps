@@ -121,13 +121,26 @@ let NewclientPage = class NewclientPage {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.customer.itemList = this.inventoryList;
             this.dbService.createCustomer(this.customer).then(data => {
-                //  this.dbService.incrementCustomerCode();
+                this.updateInventoryToCustomers();
                 this.tostService.presentToast("Customer added successfully");
             }).catch(reason => {
                 console.log(reason);
             }).finally(() => {
                 this.resetCustomer();
                 this.navCtrl.navigateRoot('client');
+            });
+        });
+    }
+    updateInventoryToCustomers() {
+        let invList;
+        this.dbService.getAllInventories().then(resp => {
+            invList = resp;
+            this.dbService.getAllCustomers().then(data => {
+                let cusList = data;
+                for (let cus of data) {
+                    cus.itemList = invList;
+                    this.dbService.UpdateCustomer(cus);
+                }
             });
         });
     }

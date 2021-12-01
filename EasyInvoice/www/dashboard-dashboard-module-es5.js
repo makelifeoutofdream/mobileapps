@@ -4232,7 +4232,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding\">\n   \n    <ion-card>\n      <ion-card-header>\n        Expenses\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card>\n      <ion-card-header>\n        Profit\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #lineCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding\">\n   \n    <ion-card>\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Profit\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #lineCanvas></canvas>\n      </ion-card-content>\n    </ion-card> -->\n  </div>\n</ion-content>\n";
       /***/
     },
 
@@ -4285,12 +4285,20 @@
       var chart_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! chart.js */
       "m0r1");
+      /* harmony import */
+
+
+      var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ../services/db.service */
+      "ajt+");
 
       var DashboardPage = /*#__PURE__*/function () {
-        function DashboardPage() {
+        function DashboardPage(dbService) {
           var _chart_js__WEBPACK_IM;
 
           _classCallCheck(this, DashboardPage);
+
+          this.dbService = dbService;
 
           (_chart_js__WEBPACK_IM = chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"]).register.apply(_chart_js__WEBPACK_IM, _toConsumableArray(chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]));
         }
@@ -4298,11 +4306,64 @@
         _createClass(DashboardPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
+            this.inventoryList = [];
+          }
+        }, {
+          key: "ionViewWillEnter",
+          value: function ionViewWillEnter() {
             var _this = this;
 
-            setTimeout(function () {
-              _this.showDashboard();
-            }, 1000);
+            if (this.doughnutChart != null && this.doughnutChart != undefined) this.doughnutChart.destroy();
+            if (this.lineChart != null && this.lineChart != undefined) this.lineChart.destroy();
+            this.dbService.getAllInventories().then(function (data) {
+              _this.inventoryList = data;
+
+              _this.getDonutdata().then(function (resp) {
+                console.log(JSON.stringify(_this.donutColors));
+
+                _this.showDashboard();
+              });
+            });
+          }
+        }, {
+          key: "getDonutdata",
+          value: function getDonutdata() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var _iterator10, _step10, i;
+
+              return regeneratorRuntime.wrap(function _callee$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      this.donutColors = [];
+                      this.donutHoverColors = [];
+                      this.donutLabels = this.inventoryList.map(function (a) {
+                        return a.name;
+                      });
+                      this.donutdata = this.inventoryList.map(function (a) {
+                        return a.quantity;
+                      });
+                      _iterator10 = _createForOfIteratorHelper(this.inventoryList);
+
+                      try {
+                        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                          i = _step10.value;
+                          this.donutColors.push(this.random_rgba());
+                          this.donutHoverColors.push(this.random_rgba());
+                        }
+                      } catch (err) {
+                        _iterator10.e(err);
+                      } finally {
+                        _iterator10.f();
+                      }
+
+                    case 6:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
           }
         }, {
           key: "showDashboard",
@@ -4311,12 +4372,20 @@
             this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.doughnutCanvas.nativeElement, {
               type: "doughnut",
               data: {
-                labels: ["Advertisement", "Car&Truck", "Office Expenses", "Rent", "Travel", "Others"],
+                labels: this.donutLabels,
                 datasets: [{
-                  label: "# of Votes",
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(255, 159, 64, 0.2)"],
-                  hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF6384", "#36A2EB", "#FFCE56"]
+                  label: "Quantity",
+                  data: this.donutdata,
+                  backgroundColor: this.donutColors,
+                  // backgroundColor: [
+                  //   "rgba(255, 99, 132, 0.2)",
+                  //   "rgba(54, 162, 235, 0.2)",
+                  //   "rgba(255, 206, 86, 0.2)",
+                  //   "rgba(75, 192, 192, 0.2)",
+                  //   "rgba(153, 102, 255, 0.2)",
+                  //   "rgba(255, 159, 64, 0.2)"
+                  // ],
+                  hoverBackgroundColor: this.donutHoverColors
                 }]
               }
             });
@@ -4348,13 +4417,23 @@
               }
             });
           }
+        }, {
+          key: "random_rgba",
+          value: function random_rgba() {
+            var o = Math.round,
+                r = Math.random,
+                s = 255;
+            return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+          }
         }]);
 
         return DashboardPage;
       }();
 
       DashboardPage.ctorParameters = function () {
-        return [];
+        return [{
+          type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"]
+        }];
       };
 
       DashboardPage.propDecorators = {
@@ -5243,18 +5322,18 @@
 
               var resolved = {};
 
-              var _iterator10 = _createForOfIteratorHelper(animationOptions),
-                  _step10;
+              var _iterator11 = _createForOfIteratorHelper(animationOptions),
+                  _step11;
 
               try {
-                for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-                  var option = _step10.value;
+                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+                  var option = _step11.value;
                   resolved[option] = cfg[option];
                 }
               } catch (err) {
-                _iterator10.e(err);
+                _iterator11.e(err);
               } finally {
-                _iterator10.f();
+                _iterator11.f();
               }
 
               (Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["b"])(cfg.properties) && cfg.properties || [key]).forEach(function (prop) {
@@ -5523,12 +5602,12 @@
       }
 
       function getLastIndexInStack(stack, vScale, positive, type) {
-        var _iterator11 = _createForOfIteratorHelper(vScale.getMatchingVisibleMetas(type).reverse()),
-            _step11;
+        var _iterator12 = _createForOfIteratorHelper(vScale.getMatchingVisibleMetas(type).reverse()),
+            _step12;
 
         try {
-          for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-            var meta = _step11.value;
+          for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+            var meta = _step12.value;
             var value = stack[meta.index];
 
             if (positive && value > 0 || !positive && value < 0) {
@@ -5536,9 +5615,9 @@
             }
           }
         } catch (err) {
-          _iterator11.e(err);
+          _iterator12.e(err);
         } finally {
-          _iterator11.f();
+          _iterator12.f();
         }
 
         return null;
@@ -5610,12 +5689,12 @@
 
         items = items || meta._parsed;
 
-        var _iterator12 = _createForOfIteratorHelper(items),
-            _step12;
+        var _iterator13 = _createForOfIteratorHelper(items),
+            _step13;
 
         try {
-          for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-            var parsed = _step12.value;
+          for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+            var parsed = _step13.value;
             var stacks = parsed._stacks;
 
             if (!stacks || stacks[axis] === undefined || stacks[axis][datasetIndex] === undefined) {
@@ -5625,9 +5704,9 @@
             delete stacks[axis][datasetIndex];
           }
         } catch (err) {
-          _iterator12.e(err);
+          _iterator13.e(err);
         } finally {
-          _iterator12.f();
+          _iterator13.f();
         }
       }
 
@@ -6280,22 +6359,22 @@
             var data = this._data;
             var elements = this._cachedMeta.data;
 
-            var _iterator13 = _createForOfIteratorHelper(this._syncList),
-                _step13;
+            var _iterator14 = _createForOfIteratorHelper(this._syncList),
+                _step14;
 
             try {
-              for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
-                var _step13$value = _slicedToArray(_step13.value, 3),
-                    method = _step13$value[0],
-                    arg1 = _step13$value[1],
-                    arg2 = _step13$value[2];
+              for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+                var _step14$value = _slicedToArray(_step14.value, 3),
+                    method = _step14$value[0],
+                    arg1 = _step14$value[1],
+                    arg2 = _step14$value[2];
 
                 this[method](arg1, arg2);
               }
             } catch (err) {
-              _iterator13.e(err);
+              _iterator14.e(err);
             } finally {
-              _iterator13.f();
+              _iterator14.f();
             }
 
             this._syncList = [];
@@ -6370,10 +6449,10 @@
             if (this._parsing) {
               this._syncList.push(args);
             } else {
-              var _args2 = _slicedToArray(args, 3),
-                  method = _args2[0],
-                  arg1 = _args2[1],
-                  arg2 = _args2[2];
+              var _args3 = _slicedToArray(args, 3),
+                  method = _args3[0],
+                  arg1 = _args3[1],
+                  arg2 = _args3[2];
 
               this[method](arg1, arg2);
             }
@@ -8581,12 +8660,12 @@
       function buildStacks(layouts) {
         var stacks = {};
 
-        var _iterator14 = _createForOfIteratorHelper(layouts),
-            _step14;
+        var _iterator15 = _createForOfIteratorHelper(layouts),
+            _step15;
 
         try {
-          for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
-            var wrap = _step14.value;
+          for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
+            var wrap = _step15.value;
             var stack = wrap.stack,
                 pos = wrap.pos,
                 stackWeight = wrap.stackWeight;
@@ -8606,9 +8685,9 @@
             _stack.weight += stackWeight;
           }
         } catch (err) {
-          _iterator14.e(err);
+          _iterator15.e(err);
         } finally {
-          _iterator14.f();
+          _iterator15.f();
         }
 
         return stacks;
@@ -8780,12 +8859,12 @@
         var x = chartArea.x,
             y = chartArea.y;
 
-        var _iterator15 = _createForOfIteratorHelper(boxes),
-            _step15;
+        var _iterator16 = _createForOfIteratorHelper(boxes),
+            _step16;
 
         try {
-          for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
-            var layout = _step15.value;
+          for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
+            var layout = _step16.value;
             var box = layout.box;
             var stack = stacks[layout.stack] || {
               count: 1,
@@ -8832,9 +8911,9 @@
             }
           }
         } catch (err) {
-          _iterator15.e(err);
+          _iterator16.e(err);
         } finally {
-          _iterator15.f();
+          _iterator16.f();
         }
 
         chartArea.x = x;
@@ -9112,34 +9191,34 @@
       function createAttachObserver(chart, type, listener) {
         var canvas = chart.canvas;
         var observer = new MutationObserver(function (entries) {
-          var _iterator16 = _createForOfIteratorHelper(entries),
-              _step16;
+          var _iterator17 = _createForOfIteratorHelper(entries),
+              _step17;
 
           try {
-            for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
-              var entry = _step16.value;
+            for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
+              var entry = _step17.value;
 
-              var _iterator17 = _createForOfIteratorHelper(entry.addedNodes),
-                  _step17;
+              var _iterator18 = _createForOfIteratorHelper(entry.addedNodes),
+                  _step18;
 
               try {
-                for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
-                  var node = _step17.value;
+                for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
+                  var node = _step18.value;
 
                   if (node === canvas || node.contains(canvas)) {
                     return listener();
                   }
                 }
               } catch (err) {
-                _iterator17.e(err);
+                _iterator18.e(err);
               } finally {
-                _iterator17.f();
+                _iterator18.f();
               }
             }
           } catch (err) {
-            _iterator16.e(err);
+            _iterator17.e(err);
           } finally {
-            _iterator16.f();
+            _iterator17.f();
           }
         });
         observer.observe(document, {
@@ -9152,34 +9231,34 @@
       function createDetachObserver(chart, type, listener) {
         var canvas = chart.canvas;
         var observer = new MutationObserver(function (entries) {
-          var _iterator18 = _createForOfIteratorHelper(entries),
-              _step18;
+          var _iterator19 = _createForOfIteratorHelper(entries),
+              _step19;
 
           try {
-            for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
-              var entry = _step18.value;
+            for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
+              var entry = _step19.value;
 
-              var _iterator19 = _createForOfIteratorHelper(entry.removedNodes),
-                  _step19;
+              var _iterator20 = _createForOfIteratorHelper(entry.removedNodes),
+                  _step20;
 
               try {
-                for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
-                  var node = _step19.value;
+                for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
+                  var node = _step20.value;
 
                   if (node === canvas || node.contains(canvas)) {
                     return listener();
                   }
                 }
               } catch (err) {
-                _iterator19.e(err);
+                _iterator20.e(err);
               } finally {
-                _iterator19.f();
+                _iterator20.f();
               }
             }
           } catch (err) {
-            _iterator18.e(err);
+            _iterator19.e(err);
           } finally {
-            _iterator18.f();
+            _iterator19.f();
           }
         });
         observer.observe(document, {
@@ -11635,12 +11714,12 @@
           value: function _notify(descriptors, chart, hook, args) {
             args = args || {};
 
-            var _iterator20 = _createForOfIteratorHelper(descriptors),
-                _step20;
+            var _iterator21 = _createForOfIteratorHelper(descriptors),
+                _step21;
 
             try {
-              for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
-                var descriptor = _step20.value;
+              for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
+                var descriptor = _step21.value;
                 var plugin = descriptor.plugin;
                 var method = plugin[hook];
                 var params = [chart, args, descriptor.options];
@@ -11650,9 +11729,9 @@
                 }
               }
             } catch (err) {
-              _iterator20.e(err);
+              _iterator21.e(err);
             } finally {
-              _iterator20.f();
+              _iterator21.f();
             }
 
             return true;
@@ -12085,18 +12164,18 @@
               options = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["a5"])(resolver, context, subResolver);
             }
 
-            var _iterator21 = _createForOfIteratorHelper(names),
-                _step21;
+            var _iterator22 = _createForOfIteratorHelper(names),
+                _step22;
 
             try {
-              for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
-                var prop = _step21.value;
+              for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
+                var prop = _step22.value;
                 result[prop] = options[prop];
               }
             } catch (err) {
-              _iterator21.e(err);
+              _iterator22.e(err);
             } finally {
-              _iterator21.f();
+              _iterator22.f();
             }
 
             return result;
@@ -12153,12 +12232,12 @@
             isScriptable = _Object2.isScriptable,
             isIndexable = _Object2.isIndexable;
 
-        var _iterator22 = _createForOfIteratorHelper(names),
-            _step22;
+        var _iterator23 = _createForOfIteratorHelper(names),
+            _step23;
 
         try {
-          for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
-            var prop = _step22.value;
+          for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
+            var prop = _step23.value;
             var scriptable = isScriptable(prop);
             var indexable = isIndexable(prop);
             var value = (indexable || scriptable) && proxy[prop];
@@ -12168,9 +12247,9 @@
             }
           }
         } catch (err) {
-          _iterator22.e(err);
+          _iterator23.e(err);
         } finally {
-          _iterator22.f();
+          _iterator23.f();
         }
 
         return false;
@@ -13863,12 +13942,12 @@
 
         var segmentMethod = _getSegmentMethod(line);
 
-        var _iterator23 = _createForOfIteratorHelper(segments),
-            _step23;
+        var _iterator24 = _createForOfIteratorHelper(segments),
+            _step24;
 
         try {
-          for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
-            var segment = _step23.value;
+          for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
+            var segment = _step24.value;
             setStyle(ctx, options, segment.style);
             ctx.beginPath();
 
@@ -13882,9 +13961,9 @@
             ctx.stroke();
           }
         } catch (err) {
-          _iterator23.e(err);
+          _iterator24.e(err);
         } finally {
-          _iterator23.f();
+          _iterator24.f();
         }
       }
 
@@ -14032,21 +14111,21 @@
             start = start || 0;
             count = count || this.points.length - start;
 
-            var _iterator24 = _createForOfIteratorHelper(segments),
-                _step24;
+            var _iterator25 = _createForOfIteratorHelper(segments),
+                _step25;
 
             try {
-              for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
-                var segment = _step24.value;
+              for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
+                var segment = _step25.value;
                 loop &= segmentMethod(ctx, this, segment, {
                   start: start,
                   end: start + count - 1
                 });
               }
             } catch (err) {
-              _iterator24.e(err);
+              _iterator25.e(err);
             } finally {
-              _iterator24.f();
+              _iterator25.f();
             }
 
             return !!loop;
@@ -15144,12 +15223,12 @@
         var tpoints = target.points;
         var parts = [];
 
-        var _iterator25 = _createForOfIteratorHelper(segments),
-            _step25;
+        var _iterator26 = _createForOfIteratorHelper(segments),
+            _step26;
 
         try {
-          for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
-            var segment = _step25.value;
+          for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
+            var segment = _step26.value;
             var start = segment.start,
                 end = segment.end;
             end = findSegmentEnd(start, end, points);
@@ -15167,21 +15246,21 @@
 
             var targetSegments = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["aj"])(target, bounds);
 
-            var _iterator26 = _createForOfIteratorHelper(targetSegments),
-                _step26;
+            var _iterator27 = _createForOfIteratorHelper(targetSegments),
+                _step27;
 
             try {
-              for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
-                var tgt = _step26.value;
+              for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
+                var tgt = _step27.value;
                 var subBounds = getBounds(property, tpoints[tgt.start], tpoints[tgt.end], tgt.loop);
                 var fillSources = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["at"])(segment, points, subBounds);
 
-                var _iterator27 = _createForOfIteratorHelper(fillSources),
-                    _step27;
+                var _iterator28 = _createForOfIteratorHelper(fillSources),
+                    _step28;
 
                 try {
-                  for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
-                    var fillSource = _step27.value;
+                  for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
+                    var fillSource = _step28.value;
                     parts.push({
                       source: fillSource,
                       target: tgt,
@@ -15190,21 +15269,21 @@
                     });
                   }
                 } catch (err) {
-                  _iterator27.e(err);
+                  _iterator28.e(err);
                 } finally {
-                  _iterator27.f();
+                  _iterator28.f();
                 }
               }
             } catch (err) {
-              _iterator26.e(err);
+              _iterator27.e(err);
             } finally {
-              _iterator26.f();
+              _iterator27.f();
             }
           }
         } catch (err) {
-          _iterator25.e(err);
+          _iterator26.e(err);
         } finally {
-          _iterator25.f();
+          _iterator26.f();
         }
 
         return parts;
@@ -15244,16 +15323,16 @@
 
         var segments = _segments(line, target, property);
 
-        var _iterator28 = _createForOfIteratorHelper(segments),
-            _step28;
+        var _iterator29 = _createForOfIteratorHelper(segments),
+            _step29;
 
         try {
-          for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
-            var _step28$value = _step28.value,
-                src = _step28$value.source,
-                tgt = _step28$value.target,
-                start = _step28$value.start,
-                end = _step28$value.end;
+          for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
+            var _step29$value = _step29.value,
+                src = _step29$value.source,
+                tgt = _step29$value.target,
+                start = _step29$value.start,
+                end = _step29$value.end;
             var _src$style = src.style;
             _src$style = _src$style === void 0 ? {} : _src$style;
             var _src$style$background = _src$style.backgroundColor,
@@ -15289,9 +15368,9 @@
             ctx.restore();
           }
         } catch (err) {
-          _iterator28.e(err);
+          _iterator29.e(err);
         } finally {
-          _iterator28.f();
+          _iterator29.f();
         }
       }
 
@@ -15692,12 +15771,12 @@
               var row = 0;
               var left = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, this.left + padding, this.right - this.lineWidths[row]);
 
-              var _iterator29 = _createForOfIteratorHelper(hitboxes),
-                  _step29;
+              var _iterator30 = _createForOfIteratorHelper(hitboxes),
+                  _step30;
 
               try {
-                for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
-                  var hitbox = _step29.value;
+                for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
+                  var hitbox = _step30.value;
 
                   if (row !== hitbox.row) {
                     row = hitbox.row;
@@ -15709,20 +15788,20 @@
                   left += hitbox.width + padding;
                 }
               } catch (err) {
-                _iterator29.e(err);
+                _iterator30.e(err);
               } finally {
-                _iterator29.f();
+                _iterator30.f();
               }
             } else {
               var col = 0;
               var top = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, this.top + titleHeight + padding, this.bottom - this.columnSizes[col].height);
 
-              var _iterator30 = _createForOfIteratorHelper(hitboxes),
-                  _step30;
+              var _iterator31 = _createForOfIteratorHelper(hitboxes),
+                  _step31;
 
               try {
-                for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
-                  var _hitbox = _step30.value;
+                for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
+                  var _hitbox = _step31.value;
 
                   if (_hitbox.col !== col) {
                     col = _hitbox.col;
@@ -15735,9 +15814,9 @@
                   top += _hitbox.height + padding;
                 }
               } catch (err) {
-                _iterator30.e(err);
+                _iterator31.e(err);
               } finally {
-                _iterator30.f();
+                _iterator31.f();
               }
             }
           }

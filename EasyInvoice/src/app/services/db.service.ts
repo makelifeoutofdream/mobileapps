@@ -109,6 +109,25 @@ export class DbService {
       return false;
     }
   }
+
+  async deleteCustomer(customer :Customer) : Promise<any>{
+    try{
+      const value=await this.storage.get(this.customersKey);
+      this.customers=JSON.parse(value);
+      if(this.customers==null || this.customers==undefined){
+        this.customers=[];
+      }
+      
+      var index = this.customers.findIndex(i => i.id == customer.id);
+      this.customers.splice(index,1);
+      this.storage.set(this.customersKey,JSON.stringify(this.customers) );
+      return true;
+    }catch(reason){
+      console.log(reason);
+      return false;
+    }
+  }
+
   findIndexToUpdate(newCustomer){
     return newCustomer.name==this;
   }
@@ -180,6 +199,24 @@ export class DbService {
     }
   }
 
+
+  async deleteInventory(inventory :Inventory) : Promise<any>{
+    try{
+      const value=await this.storage.get(this.inventoryKey);
+      this.inventories=JSON.parse(value);
+      if(this.inventories==null || this.inventories==undefined){
+        this.inventories=[];
+      }
+      
+      var index = this.inventories.findIndex(i => i.id == inventory.id);
+      this.inventories.splice(index,1);
+      this.storage.set(this.inventoryKey,JSON.stringify(this.inventories) );
+      return true;
+    }catch(reason){
+      console.log(reason);
+      return false;
+    }
+  }
 
   async getAllInventories():Promise<Inventory[]>{
     try{

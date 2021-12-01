@@ -7,4 +7,6 @@ export class InvoiceItem{
     purchaseUnitPrice : number;
     quantity : number;
     selected : boolean;
+    balanceQuantity : number ;
+    displayBalanceQuantity : number ;
 }

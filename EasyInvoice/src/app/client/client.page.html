@@ -14,6 +14,9 @@
     <ion-item *ngFor= "let cus of customers">
       <ion-label>{{cus.name}}</ion-label>
       <ion-button color="secondary" (click)="editCustomer(cus.name)">Edit</ion-button>
+      <ion-button (click)="presentDeleteAlertConfirm(cus)">
+        <ion-icon name="trash-bin"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>    
   

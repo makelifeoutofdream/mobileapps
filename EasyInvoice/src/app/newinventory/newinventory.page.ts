@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Customer } from '../services/customer';
 import { DbService } from '../services/db.service';
 import { Inventory } from '../services/inventory';
 import { ToastserviceService } from '../services/toastservice.service';
@@ -22,6 +23,7 @@ export class NewinventoryPage implements OnInit {
 
   async addNewInventory():Promise<any>{
     this.dbService.createOrUpdateInventory(this.inventory).then(data=>{
+      this.updateInventoryToCustomers();
       if(this.inventory.id==null || this.inventory.id==undefined){
         console.log("Item added successfully");
       }else{
@@ -36,6 +38,21 @@ export class NewinventoryPage implements OnInit {
     });
   }
 
+  updateInventoryToCustomers(){
+    let invList : Inventory[];
+    this.dbService.getAllInventories().then(resp=>{
+      invList=resp;
+      this.dbService.getAllCustomers().then(data=>{
+        let cusList : Customer=data;
+        for(let cus of data){
+          cus.itemList=invList;
+          this.dbService.UpdateCustomer(cus);
+        }
+      })
+    })
+    
+  }
+  
   showInventory(){
     this.navCtrl.navigateRoot('inventory');
   

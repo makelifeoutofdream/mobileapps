@@ -1,4 +1,10 @@
 (function () {
+  function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+  function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -52,19 +58,25 @@
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var ionic_selectable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! ionic-selectable */
+      "8xsl");
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic/angular */
       "TEn/");
       /* harmony import */
 
 
-      var _viewinvoice_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _viewinvoice_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ./viewinvoice-routing.module */
       "duT6");
       /* harmony import */
 
 
-      var _viewinvoice_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _viewinvoice_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ./viewinvoice.page */
       "QXuh");
 
@@ -73,8 +85,8 @@
       };
 
       ViewinvoicePageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _viewinvoice_routing_module__WEBPACK_IMPORTED_MODULE_5__["ViewinvoicePageRoutingModule"]],
-        declarations: [_viewinvoice_page__WEBPACK_IMPORTED_MODULE_6__["ViewinvoicePage"]]
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"], ionic_selectable__WEBPACK_IMPORTED_MODULE_4__["IonicSelectableModule"], _viewinvoice_routing_module__WEBPACK_IMPORTED_MODULE_6__["ViewinvoicePageRoutingModule"]],
+        declarations: [_viewinvoice_page__WEBPACK_IMPORTED_MODULE_7__["ViewinvoicePage"]]
       })], ViewinvoicePageModule);
       /***/
     },
@@ -115,7 +127,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice Details</ion-title>\n    <ion-buttons slot=\"start\">\n    \n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n       \n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Customer</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.customer.name}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Invoice Number</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.invoiceNumber}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n\n<ion-row>\n  <ion-col size=\"6\">\n    <ion-label>Invoice Date</ion-label>\n  </ion-col>\n  <ion-col>\n    <ion-label>\n      {{invoice.invoiceDateString}}\n    </ion-label>\n  </ion-col>\n</ion-row>\n</ion-grid>\n<table border=\"5\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%;\">\n  <tr>\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Purchase Price\n    </td>\n    <td>\n      Quantity\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" >\n    <td><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input disabled  [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input disabled  [(ngModel)]=\"item.purchasePrice\" ></ion-input></td>\n    <td><ion-input disabled [(ngModel)]=\"item.quantity\"  ></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Amount</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col size=\"6\">\n        <ion-label color=\"primary\">Balance Amount(Incl. current invoice)</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label >{{invoice.balanceAmount}}</ion-label>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n     \n    \n        <ion-col size=\"6\">\n          <ion-label color=\"primary\">Amount Paid</ion-label>\n        </ion-col>\n        <ion-col size=\"6\">\n          <ion-label >{{invoice.amountPaid}}</ion-label>\n        </ion-col>\n       \n      \n    </ion-row>\n    \n   \n  </ion-grid>\n</ion-content>\n\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice Details</ion-title>\n    <ion-buttons slot=\"start\">\n    \n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n       \n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n<ion-row >\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"6\">\n    <ion-label>Customer</ion-label>\n  </ion-col>\n  <ion-col size=\"6\">\n    <ion-label style=\"float: right;\">\n      {{invoice.customer.name}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n\n<ion-row>\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"6\">\n    <ion-label>Invoice Number</ion-label>\n  </ion-col>\n  <ion-col size=\"6\">\n    <ion-label style=\"float: right;\">\n      {{invoice.invoiceNumber}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n\n<ion-row>\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"3\">\n    <ion-label >Date</ion-label>\n  </ion-col>\n  <ion-col size=\"9\">\n    <ion-label style=\"float: right;\">\n      {{invoice.invoiceDateString}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n</ion-grid>\n<table  border=\"none\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;\">\n  <tr style=\"border: none; color: white; background-color: lightslategray;\">\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Quantity\n    </td>\n    <td>\n      Avl.Qty\n    </td>\n    <td>\n      Amount\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" style=\"border: none;\">\n    <td ><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.quantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.displayBalanceQuantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice*item.quantity\" ></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n      <ion-col size=\"6\">\n        <ion-label >Amount</ion-label>\n      </ion-col>\n      <ion-col size=\"6\" >\n        <ion-label style=\"float: right;\">{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n      <ion-col size=\"6\">\n        <ion-label >Balance Amount(Incl. current invoice)</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label style=\"float: right;\">{{invoice.balanceAmount}}</ion-label>\n      </ion-col>\n    </ion-item>\n    </ion-row>\n\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n        <ion-col size=\"6\">\n          <ion-label >Amount Paid</ion-label>\n        </ion-col>\n        <ion-col size=\"6\" >\n          <ion-label style=\"float: right;\">{{invoice.amountPaid}}</ion-label>\n        </ion-col>\n       </ion-item>\n    </ion-row>\n    \n   \n  </ion-grid>\n</ion-content>\n\n<ion-footer>\n  <ion-row style=\"float:right\">\n    <ion-col >\n    \n    <ion-button color=\"primary\" (click)=\"printBill()\">\n      <ion-icon name=\"print\"></ion-icon>\n    </ion-button>\n  </ion-col>\n  </ion-row>\n\n</ion-footer>";
       /***/
     },
 
@@ -174,13 +186,47 @@
       var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/router */
       "tyNb");
+      /* harmony import */
+
+
+      var _services_db_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ../services/db.service */
+      "ajt+");
+      /* harmony import */
+
+
+      var _services_print_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! ../services/print.service */
+      "Bhbv");
+      /* harmony import */
+
+
+      var esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! esc-pos-encoder-ionic */
+      "+4vP");
+      /* harmony import */
+
+
+      var esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8__);
+      /* harmony import */
+
+
+      var sprintf_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! sprintf-js */
+      "4Z/T");
+      /* harmony import */
+
+
+      var sprintf_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(sprintf_js__WEBPACK_IMPORTED_MODULE_9__);
 
       var ViewinvoicePage = /*#__PURE__*/function () {
-        function ViewinvoicePage(route, datePipe) {
+        function ViewinvoicePage(route, datePipe, printService, dbService) {
           _classCallCheck(this, ViewinvoicePage);
 
           this.route = route;
           this.datePipe = datePipe;
+          this.printService = printService;
+          this.dbService = dbService;
         }
 
         _createClass(ViewinvoicePage, [{
@@ -230,12 +276,56 @@
           value: function ionViewWillEnter() {
             var _this = this;
 
+            this.dbService.getProfile().then(function (data) {
+              _this.profile = data;
+            });
             this.route.queryParams.subscribe(function (params) {
               _this.invoice = params['invoice'];
             });
-            this.invoice.invoiceDateString = this.datePipe.transform(this.invoice.invoiceDate, 'dd-mm-yyyy');
+            this.invoice.invoiceDateString = this.datePipe.transform(new Date(this.invoice.invoiceDate), 'dd-MM-yyyy HH:mm:ss');
             console.log('selected invoice' + this.invoice.invoiceNumber);
             console.log('selected invoice customer' + this.invoice.customer);
+          }
+        }, {
+          key: "printBill",
+          value: function printBill() {
+            var result = this.getFormatedContent();
+            this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, result);
+          }
+        }, {
+          key: "getFormatedContent",
+          value: function getFormatedContent() {
+            var encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8___default.a();
+            var result = "";
+            var datetime = new Date(this.invoice.invoiceDate).toISOString().substr(0, 19).replace('T', ' ');
+            var billDetails = encoder.initialize().bold(true).raw([0x1B, 0x21, 0x20]).align('center').line(this.profile.companyName).bold(true).newline().raw([0x1B, 0x21, 0x03]).align('left').bold(true).line('VAT # : ' + this.profile.vatNumber + ',' + 'CR # : ' + this.profile.crNumber).align('left').bold(true).line('---------------------------------------------------------------').bold(true).raw([0x1B, 0x21, 0x20]).align('center').bold(true).line('VAT INVOICE').bold(true).raw([0x1B, 0x21, 0x03]).align('left').text(this.invoice.invoiceNumber + '            ' + datetime).newline().align('left').bold(true).line('---------------------------------------------------------------').bold(true).align('left').bold(true).line('Bill To').align('left').bold(true).line('---------------------------------------------------------------').bold(true).align('left').line(this.invoice.customer.name).align('left').line(this.invoice.customer.street + ',' + this.invoice.customer.city + ',' + this.invoice.customer.district).align('left').line('VAT #: ' + this.invoice.customer.vatNumber + '  CR#: ' + this.invoice.customer.crNumber).align('left').line('Mob: ' + this.invoice.customer.mobile).align('left').bold(true).line('---------------------------------------------------------------').align('left').line(Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%s %-25.22s %6s %7s %16s', '#', 'Item', 'Qty', 'Rate', 'Amount')).bold(true).align('left').bold(true).line('---------------------------------------------------------------');
+            var counter = 1;
+            var totalQuantity = 0;
+            var itemDetails = "";
+
+            var _iterator = _createForOfIteratorHelper(this.invoice.invoiceItems),
+                _step;
+
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                var itm = _step.value;
+                totalQuantity += itm.quantity;
+                var temp = encoder.initialize().align('left').line(Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%d %-13.13s %9.0f %8.2f %11.2f ', counter, itm.name, itm.quantity, itm.unitPrice, itm.unitPrice * itm.quantity));
+                itemDetails += temp;
+                counter = counter + 1;
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
+
+            var footer = encoder.initialize().align('left').bold(true).line('------------------------------------------------').bold(true).raw([0x1B, 0x21, 0x08]).align('left').line('Qty : ' + totalQuantity).align('right').line('Total Invoice Value(Excl. VAT) : ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f ', this.invoice.total - this.invoice.tax)).align('right').line('VAT Payable in SAR(' + this.profile.vat + '%) : ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f ', this.invoice.tax)).align('right').line('Gross Amount in SAR : ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f ', this.invoice.total)).align('left').bold(true).line('------------------------------------------------').bold(true).align('right').line('Previous Balance : ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f', this.invoice.balanceAmount + this.invoice.amountPaid)).align('right').line('Paid Amount : ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f', this.invoice.amountPaid)).raw([0x1B, 0x21, 0x20]).align('left').line('Balance Amount : ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f', this.invoice.balanceAmount)).align('left').bold(true).line('------------------------------------------------').bold(true).align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!'); // result+=billDetails+itemDetails;
+
+            result = encoder.initialize().encode(); //line(billDetails).line(itemDetails).encode();
+            //sprintf('%d %-20.20s %9.2f %3.0f %11.2f ',counter, itm.name, itm.unitPrice, itm.quantity, itm.unitPrice*itm.quantity);
+
+            return result;
           }
         }]);
 
@@ -247,6 +337,10 @@
           type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]
         }, {
           type: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"]
+        }, {
+          type: _services_print_service__WEBPACK_IMPORTED_MODULE_7__["PrintService"]
+        }, {
+          type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"]
         }];
       };
 

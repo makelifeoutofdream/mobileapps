@@ -68,10 +68,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AppComponent = class AppComponent {
-    constructor(router, platform, navCtrl) {
+    constructor(router, platform, navCtrl, alertController) {
         this.router = router;
         this.platform = platform;
         this.navCtrl = navCtrl;
+        this.alertController = alertController;
         this.closed$ = new rxjs__WEBPACK_IMPORTED_MODULE_5__["Subject"]();
         this.showTabs = true;
         this.backButtonEvent();
@@ -83,10 +84,35 @@ let AppComponent = class AppComponent {
                     outlet.pop();
                 }
                 else {
-                    navigator['app'].exitApp();
+                    this.presentAlertConfirm();
                 }
             });
         }));
+    }
+    presentAlertConfirm() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                // cssClass: 'my-custom-class',
+                header: 'Confirm!',
+                message: '<strong>Are you sure to exit the app?</strong>!!!',
+                buttons: [
+                    {
+                        text: 'No',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            console.log('Confirm Cancel');
+                        }
+                    }, {
+                        text: 'Yes',
+                        handler: () => {
+                            navigator['app'].exitApp();
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
+        });
     }
     ngOnInit() {
         this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["filter"])(e => e instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.closed$)).subscribe(event => {
@@ -102,7 +128,8 @@ let AppComponent = class AppComponent {
 AppComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["Platform"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["NavController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["NavController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["AlertController"] }
 ];
 AppComponent.propDecorators = {
     routerOutlets: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChildren"], args: [_ionic_angular__WEBPACK_IMPORTED_MODULE_7__["IonRouterOutlet"],] }]
@@ -128,7 +155,7 @@ AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-app >\n  <ion-menu side=\"start\" menuId=\"mainmenu\" contentId=\"maincontent\">\n    <ion-header>\n      <ion-toolbar color=\"primary\">\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle>\n        <ion-item routerLink=\"/inventory\">\n          <ion-icon name=\"storefront\" slot=\"start\"></ion-icon>\n          <ion-label>Inventory</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"purchase\">\n          <ion-icon name=\"bag\" slot=\"start\"></ion-icon>\n          <ion-label>Purchase</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"client\">\n          <ion-icon name=\"people\" slot=\"start\"></ion-icon>\n          <ion-label>Customer</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"supplier\">\n          <ion-icon name=\"man\" slot=\"start\"></ion-icon>\n          <ion-label>Supplier</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"newinvoice\">\n          <ion-icon name=\"receipt\" slot=\"start\"></ion-icon>\n          <ion-label>Invoice</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n    <ion-menu-toggle>\n        <ion-item routerLink=\"report\">\n          <ion-icon name=\"podium\" slot=\"start\"></ion-icon>\n        <ion-label>Report</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"settings\">\n          <ion-icon name=\"settings-outline\" slot=\"start\"></ion-icon>\n          <ion-label>Settings</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n  <ion-router-outlet id=\"maincontent\"></ion-router-outlet>\n  <!-- <ion-tabs id=\"tabs\"  >\n    <ion-tab-bar slot=\"bottom\" *ngIf=\"showTabs\">\n      <ion-tab-button tab=\"inventory\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Inventory</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"purchase\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Purchase</ion-label>\n      </ion-tab-button>\n\n        \n      <ion-tab-button tab=\"client\">\n        <ion-icon name=\"people\"></ion-icon>\n        <ion-label>Customer</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"newinvoice\">\n        <ion-icon name=\"receipt\"></ion-icon>\n        <ion-label>Invoice</ion-label>\n      </ion-tab-button>\n      \n      <ion-tab-button tab=\"report\">\n        <ion-icon name=\"podium\"></ion-icon>\n        <ion-label>Report</ion-label>\n      </ion-tab-button>\n      \n    \n    \n      \n      <ion-tab-button tab=\"settings\" >\n        <ion-icon name=\"settings-outline\"></ion-icon>\n        <ion-label>Settings</ion-label>\n\n      </ion-tab-button> \n  \n    </ion-tab-bar>\n  </ion-tabs> -->\n\n</ion-app>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-app >\n  <ion-menu side=\"start\" menuId=\"mainmenu\" contentId=\"maincontent\">\n    <ion-header>\n      <ion-toolbar color=\"primary\">\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle>\n          <ion-item routerLink=\"/dashboard\">\n            <ion-icon name=\"pie-chart\" slot=\"start\"></ion-icon>\n            <ion-label>Dashboard</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle>\n        <ion-item routerLink=\"/inventory\">\n          <ion-icon name=\"storefront\" slot=\"start\"></ion-icon>\n          <ion-label>Inventory</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"purchase\">\n          <ion-icon name=\"bag\" slot=\"start\"></ion-icon>\n          <ion-label>Purchase</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"client\">\n          <ion-icon name=\"people\" slot=\"start\"></ion-icon>\n          <ion-label>Customer</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"supplier\">\n          <ion-icon name=\"man\" slot=\"start\"></ion-icon>\n          <ion-label>Supplier</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"newinvoice\">\n          <ion-icon name=\"receipt\" slot=\"start\"></ion-icon>\n          <ion-label>Invoice</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n    <ion-menu-toggle>\n        <ion-item routerLink=\"report\">\n          <ion-icon name=\"podium\" slot=\"start\"></ion-icon>\n        <ion-label>Report</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      <ion-menu-toggle>\n        <ion-item routerLink=\"settings\">\n          <ion-icon name=\"settings-outline\" slot=\"start\"></ion-icon>\n          <ion-label>Settings</ion-label>\n        </ion-item>\n      </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n  <ion-router-outlet id=\"maincontent\"></ion-router-outlet>\n  <!-- <ion-tabs id=\"tabs\"  >\n    <ion-tab-bar slot=\"bottom\" *ngIf=\"showTabs\">\n      <ion-tab-button tab=\"inventory\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Inventory</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"purchase\">\n        <ion-icon name=\"bag\"></ion-icon>\n        <ion-label>Purchase</ion-label>\n      </ion-tab-button>\n\n        \n      <ion-tab-button tab=\"client\">\n        <ion-icon name=\"people\"></ion-icon>\n        <ion-label>Customer</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"newinvoice\">\n        <ion-icon name=\"receipt\"></ion-icon>\n        <ion-label>Invoice</ion-label>\n      </ion-tab-button>\n      \n      <ion-tab-button tab=\"report\">\n        <ion-icon name=\"podium\"></ion-icon>\n        <ion-label>Report</ion-label>\n      </ion-tab-button>\n      \n    \n    \n      \n      <ion-tab-button tab=\"settings\" >\n        <ion-icon name=\"settings-outline\"></ion-icon>\n        <ion-label>Settings</ion-label>\n\n      </ion-tab-button> \n  \n    </ion-tab-bar>\n  </ion-tabs> -->\n\n</ion-app>\n");
 
 /***/ }),
 
@@ -162,6 +189,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common */ "ofXK");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
 /* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @swimlane/ngx-datatable */ "lDzL");
+/* harmony import */ var _ionic_native_unique_device_id_ngx__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @ionic-native/unique-device-id/ngx */ "/+Rg");
+/* harmony import */ var _ionic_native_uid_ngx__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @ionic-native/uid/ngx */ "JN8Z");
+/* harmony import */ var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @ionic-native/android-permissions/ngx */ "WOgW");
+/* harmony import */ var _ionic_native_sim_ngx__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @ionic-native/sim/ngx */ "ObYS");
+
+
+
+
 
 
 
@@ -192,7 +227,9 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _angular_forms__WEBPACK_IMPORTED_MODULE_18__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_18__["FormsModule"],
             _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_19__["NgxDatatableModule"], _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_10__["IonicStorageModule"].forRoot({ name: '_myDb',
                 driverOrder: [_ionic_storage__WEBPACK_IMPORTED_MODULE_11__["Drivers"].IndexedDB, _ionic_storage__WEBPACK_IMPORTED_MODULE_11__["Drivers"].LocalStorage] })],
-        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }, _angular_common__WEBPACK_IMPORTED_MODULE_17__["DatePipe"],
+        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }, _angular_common__WEBPACK_IMPORTED_MODULE_17__["DatePipe"], _ionic_native_unique_device_id_ngx__WEBPACK_IMPORTED_MODULE_20__["UniqueDeviceID"],
+            _ionic_native_uid_ngx__WEBPACK_IMPORTED_MODULE_21__["Uid"], _ionic_native_sim_ngx__WEBPACK_IMPORTED_MODULE_23__["Sim"],
+            _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_22__["AndroidPermissions"],
             _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_7__["SQLite"],
             _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_12__["BluetoothSerial"],
             _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_14__["File"],
@@ -474,15 +511,15 @@ const routes = [
     },
     {
         path: 'login',
-        loadChildren: () => Promise.all(/*! import() | login-login-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("login-login-module")]).then(__webpack_require__.bind(null, /*! ./login/login.module */ "X3zk")).then(m => m.LoginPageModule)
+        loadChildren: () => Promise.all(/*! import() | login-login-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("login-login-module")]).then(__webpack_require__.bind(null, /*! ./login/login.module */ "X3zk")).then(m => m.LoginPageModule)
     },
     {
         path: 'client',
-        loadChildren: () => Promise.all(/*! import() | client-client-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("client-client-module")]).then(__webpack_require__.bind(null, /*! ./client/client.module */ "kk3Z")).then(m => m.ClientPageModule)
+        loadChildren: () => Promise.all(/*! import() | client-client-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("client-client-module")]).then(__webpack_require__.bind(null, /*! ./client/client.module */ "kk3Z")).then(m => m.ClientPageModule)
     },
     {
         path: 'invoice',
-        loadChildren: () => Promise.all(/*! import() | invoice-invoice-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("default~invoice-invoice-module~report-report-module"), __webpack_require__.e("invoice-invoice-module")]).then(__webpack_require__.bind(null, /*! ./invoice/invoice.module */ "hdHI")).then(m => m.InvoicePageModule)
+        loadChildren: () => Promise.all(/*! import() | invoice-invoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("default~invoice-invoice-module~report-report-module"), __webpack_require__.e("invoice-invoice-module")]).then(__webpack_require__.bind(null, /*! ./invoice/invoice.module */ "hdHI")).then(m => m.InvoicePageModule)
     },
     {
         path: 'expense',
@@ -498,11 +535,11 @@ const routes = [
     },
     {
         path: 'newclient',
-        loadChildren: () => Promise.all(/*! import() | newclient-newclient-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("newclient-newclient-module")]).then(__webpack_require__.bind(null, /*! ./newclient/newclient.module */ "F+5T")).then(m => m.NewclientPageModule)
+        loadChildren: () => Promise.all(/*! import() | newclient-newclient-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("newclient-newclient-module")]).then(__webpack_require__.bind(null, /*! ./newclient/newclient.module */ "F+5T")).then(m => m.NewclientPageModule)
     },
     {
         path: 'newinvoice',
-        loadChildren: () => Promise.all(/*! import() | newinvoice-newinvoice-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("newinvoice-newinvoice-module")]).then(__webpack_require__.bind(null, /*! ./newinvoice/newinvoice.module */ "6VJF")).then(m => m.NewinvoicePageModule)
+        loadChildren: () => Promise.all(/*! import() | newinvoice-newinvoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("default~newinvoice-newinvoice-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("common"), __webpack_require__.e("newinvoice-newinvoice-module")]).then(__webpack_require__.bind(null, /*! ./newinvoice/newinvoice.module */ "6VJF")).then(m => m.NewinvoicePageModule)
     },
     {
         path: 'newexpense',
@@ -510,59 +547,59 @@ const routes = [
     },
     {
         path: 'dashboard',
-        loadChildren: () => __webpack_require__.e(/*! import() | dashboard-dashboard-module */ "dashboard-dashboard-module").then(__webpack_require__.bind(null, /*! ./dashboard/dashboard.module */ "TDBs")).then(m => m.DashboardPageModule)
+        loadChildren: () => Promise.all(/*! import() | dashboard-dashboard-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("dashboard-dashboard-module")]).then(__webpack_require__.bind(null, /*! ./dashboard/dashboard.module */ "TDBs")).then(m => m.DashboardPageModule)
     },
     {
         path: 'register',
-        loadChildren: () => Promise.all(/*! import() | register-register-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("register-register-module")]).then(__webpack_require__.bind(null, /*! ./register/register.module */ "x5bZ")).then(m => m.RegisterPageModule)
+        loadChildren: () => Promise.all(/*! import() | register-register-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("register-register-module")]).then(__webpack_require__.bind(null, /*! ./register/register.module */ "x5bZ")).then(m => m.RegisterPageModule)
     },
     {
         path: 'inventory',
-        loadChildren: () => Promise.all(/*! import() | inventory-inventory-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("inventory-inventory-module")]).then(__webpack_require__.bind(null, /*! ./inventory/inventory.module */ "cLqD")).then(m => m.InventoryPageModule)
+        loadChildren: () => Promise.all(/*! import() | inventory-inventory-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("inventory-inventory-module")]).then(__webpack_require__.bind(null, /*! ./inventory/inventory.module */ "cLqD")).then(m => m.InventoryPageModule)
     },
     {
         path: 'newinventory',
-        loadChildren: () => Promise.all(/*! import() | newinventory-newinventory-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("newinventory-newinventory-module")]).then(__webpack_require__.bind(null, /*! ./newinventory/newinventory.module */ "AOgB")).then(m => m.NewinventoryPageModule)
+        loadChildren: () => Promise.all(/*! import() | newinventory-newinventory-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("newinventory-newinventory-module")]).then(__webpack_require__.bind(null, /*! ./newinventory/newinventory.module */ "AOgB")).then(m => m.NewinventoryPageModule)
     },
     {
         path: 'settings',
-        loadChildren: () => Promise.all(/*! import() | settings-settings-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("settings-settings-module")]).then(__webpack_require__.bind(null, /*! ./settings/settings.module */ "7wo0")).then(m => m.SettingsPageModule)
+        loadChildren: () => Promise.all(/*! import() | settings-settings-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("settings-settings-module")]).then(__webpack_require__.bind(null, /*! ./settings/settings.module */ "7wo0")).then(m => m.SettingsPageModule)
     },
     {
         path: 'editclient',
-        loadChildren: () => Promise.all(/*! import() | editclient-editclient-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("editclient-editclient-module")]).then(__webpack_require__.bind(null, /*! ./editclient/editclient.module */ "rrI9")).then(m => m.EditclientPageModule)
+        loadChildren: () => Promise.all(/*! import() | editclient-editclient-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("editclient-editclient-module")]).then(__webpack_require__.bind(null, /*! ./editclient/editclient.module */ "rrI9")).then(m => m.EditclientPageModule)
     },
     {
         path: 'report',
-        loadChildren: () => Promise.all(/*! import() | report-report-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("default~invoice-invoice-module~report-report-module"), __webpack_require__.e("report-report-module")]).then(__webpack_require__.bind(null, /*! ./report/report.module */ "LVab")).then(m => m.ReportPageModule)
+        loadChildren: () => Promise.all(/*! import() | report-report-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("default~invoice-invoice-module~report-report-module"), __webpack_require__.e("report-report-module")]).then(__webpack_require__.bind(null, /*! ./report/report.module */ "LVab")).then(m => m.ReportPageModule)
     },
     {
         path: 'viewinvoice',
-        loadChildren: () => __webpack_require__.e(/*! import() | viewinvoice-viewinvoice-module */ "viewinvoice-viewinvoice-module").then(__webpack_require__.bind(null, /*! ./viewinvoice/viewinvoice.module */ "+4lU")).then(m => m.ViewinvoicePageModule)
+        loadChildren: () => Promise.all(/*! import() | viewinvoice-viewinvoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("default~newinvoice-newinvoice-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("viewinvoice-viewinvoice-module")]).then(__webpack_require__.bind(null, /*! ./viewinvoice/viewinvoice.module */ "+4lU")).then(m => m.ViewinvoicePageModule)
     },
     {
         path: 'purchase',
-        loadChildren: () => Promise.all(/*! import() | purchase-purchase-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("purchase-purchase-module")]).then(__webpack_require__.bind(null, /*! ./purchase/purchase.module */ "Tsp1")).then(m => m.PurchasePageModule)
+        loadChildren: () => Promise.all(/*! import() | purchase-purchase-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("purchase-purchase-module")]).then(__webpack_require__.bind(null, /*! ./purchase/purchase.module */ "Tsp1")).then(m => m.PurchasePageModule)
     },
     {
         path: 'supplier',
-        loadChildren: () => Promise.all(/*! import() | supplier-supplier-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("supplier-supplier-module")]).then(__webpack_require__.bind(null, /*! ./supplier/supplier.module */ "LLgv")).then(m => m.SupplierPageModule)
+        loadChildren: () => Promise.all(/*! import() | supplier-supplier-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("supplier-supplier-module")]).then(__webpack_require__.bind(null, /*! ./supplier/supplier.module */ "LLgv")).then(m => m.SupplierPageModule)
     },
     {
         path: 'newsupplier',
-        loadChildren: () => Promise.all(/*! import() | newsupplier-newsupplier-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("newsupplier-newsupplier-module")]).then(__webpack_require__.bind(null, /*! ./newsupplier/newsupplier.module */ "YGnE")).then(m => m.NewsupplierPageModule)
+        loadChildren: () => Promise.all(/*! import() | newsupplier-newsupplier-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("newsupplier-newsupplier-module")]).then(__webpack_require__.bind(null, /*! ./newsupplier/newsupplier.module */ "YGnE")).then(m => m.NewsupplierPageModule)
     },
     {
         path: 'editsupplier',
-        loadChildren: () => Promise.all(/*! import() | editsupplier-editsupplier-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("editsupplier-editsupplier-module")]).then(__webpack_require__.bind(null, /*! ./editsupplier/editsupplier.module */ "7L+G")).then(m => m.EditsupplierPageModule)
+        loadChildren: () => Promise.all(/*! import() | editsupplier-editsupplier-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("editsupplier-editsupplier-module")]).then(__webpack_require__.bind(null, /*! ./editsupplier/editsupplier.module */ "7L+G")).then(m => m.EditsupplierPageModule)
     },
     {
         path: 'newpurchase',
-        loadChildren: () => Promise.all(/*! import() | newpurchase-newpurchase-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("newpurchase-newpurchase-module")]).then(__webpack_require__.bind(null, /*! ./newpurchase/newpurchase.module */ "GIh0")).then(m => m.NewpurchasePageModule)
+        loadChildren: () => Promise.all(/*! import() | newpurchase-newpurchase-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("newpurchase-newpurchase-module")]).then(__webpack_require__.bind(null, /*! ./newpurchase/newpurchase.module */ "GIh0")).then(m => m.NewpurchasePageModule)
     },
     {
         path: 'editpurchase',
-        loadChildren: () => Promise.all(/*! import() | editpurchase-editpurchase-module */[__webpack_require__.e("default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~112c8e63"), __webpack_require__.e("common"), __webpack_require__.e("editpurchase-editpurchase-module")]).then(__webpack_require__.bind(null, /*! ./editpurchase/editpurchase.module */ "wvd0")).then(m => m.EditpurchasePageModule)
+        loadChildren: () => Promise.all(/*! import() | editpurchase-editpurchase-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"), __webpack_require__.e("common"), __webpack_require__.e("editpurchase-editpurchase-module")]).then(__webpack_require__.bind(null, /*! ./editpurchase/editpurchase.module */ "wvd0")).then(m => m.EditpurchasePageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {

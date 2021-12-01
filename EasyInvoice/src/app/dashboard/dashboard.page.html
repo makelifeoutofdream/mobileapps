@@ -1,5 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainmenu"> 
+
+      </ion-menu-button>
+    </ion-buttons> 
+   
     <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,20 +15,20 @@
    
     <ion-card>
       <ion-card-header>
-        Expenses
+        Inventory 
       </ion-card-header>
       <ion-card-content>
         <canvas #doughnutCanvas></canvas>
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <!-- <ion-card>
       <ion-card-header>
         Profit
       </ion-card-header>
       <ion-card-content>
         <canvas #lineCanvas></canvas>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
   </div>
 </ion-content>

@@ -2647,7 +2647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding\">\n   \n    <ion-card>\n      <ion-card-header>\n        Expenses\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card>\n      <ion-card-header>\n        Profit\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #lineCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding\">\n   \n    <ion-card>\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Profit\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #lineCanvas></canvas>\n      </ion-card-content>\n    </ion-card> -->\n  </div>\n</ion-content>\n");
 
 /***/ }),
 
@@ -2666,37 +2666,66 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.page.scss */ "B3xu");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! chart.js */ "m0r1");
+/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/db.service */ "ajt+");
+
 
 
 
 
 
 let DashboardPage = class DashboardPage {
-    constructor() { chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]); }
+    constructor(dbService) {
+        this.dbService = dbService;
+        chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]);
+    }
     ngOnInit() {
-        setTimeout(() => {
-            this.showDashboard();
-        }, 1000);
+        this.inventoryList = [];
+    }
+    ionViewWillEnter() {
+        if (this.doughnutChart != null && this.doughnutChart != undefined)
+            this.doughnutChart.destroy();
+        if (this.lineChart != null && this.lineChart != undefined)
+            this.lineChart.destroy();
+        this.dbService.getAllInventories().then(data => {
+            this.inventoryList = data;
+            this.getDonutdata().then(resp => {
+                console.log(JSON.stringify(this.donutColors));
+                this.showDashboard();
+            });
+        });
+    }
+    getDonutdata() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.donutColors = [];
+            this.donutHoverColors = [];
+            this.donutLabels = this.inventoryList.map(a => a.name);
+            this.donutdata = this.inventoryList.map(a => a.quantity);
+            for (let i of this.inventoryList) {
+                this.donutColors.push(this.random_rgba());
+                this.donutHoverColors.push(this.random_rgba());
+            }
+        });
     }
     showDashboard() {
         console.log('called');
         this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.doughnutCanvas.nativeElement, {
             type: "doughnut",
             data: {
-                labels: ["Advertisement", "Car&Truck", "Office Expenses", "Rent", "Travel", "Others"],
+                labels: this.donutLabels,
                 datasets: [
                     {
-                        label: "# of Votes",
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            "rgba(255, 99, 132, 0.2)",
-                            "rgba(54, 162, 235, 0.2)",
-                            "rgba(255, 206, 86, 0.2)",
-                            "rgba(75, 192, 192, 0.2)",
-                            "rgba(153, 102, 255, 0.2)",
-                            "rgba(255, 159, 64, 0.2)"
-                        ],
-                        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF6384", "#36A2EB", "#FFCE56"]
+                        label: "Quantity",
+                        data: this.donutdata,
+                        backgroundColor: this.donutColors,
+                        // backgroundColor: [
+                        //   "rgba(255, 99, 132, 0.2)",
+                        //   "rgba(54, 162, 235, 0.2)",
+                        //   "rgba(255, 206, 86, 0.2)",
+                        //   "rgba(75, 192, 192, 0.2)",
+                        //   "rgba(153, 102, 255, 0.2)",
+                        //   "rgba(255, 159, 64, 0.2)"
+                        // ],
+                        hoverBackgroundColor: this.donutHoverColors
                     }
                 ]
             }
@@ -2731,8 +2760,14 @@ let DashboardPage = class DashboardPage {
             }
         });
     }
+    random_rgba() {
+        var o = Math.round, r = Math.random, s = 255;
+        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+    }
 };
-DashboardPage.ctorParameters = () => [];
+DashboardPage.ctorParameters = () => [
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"] }
+];
 DashboardPage.propDecorators = {
     doughnutCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["doughnutCanvas",] }],
     lineCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["lineCanvas",] }]

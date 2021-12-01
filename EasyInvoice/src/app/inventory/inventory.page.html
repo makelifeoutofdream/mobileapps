@@ -17,12 +17,16 @@
       <ion-label>Quantity</ion-label>
       <ion-label>Unit Price</ion-label>
       <ion-label>Purchase Price</ion-label>
+      <ion-label>Delete</ion-label>
     </ion-list-header>
-    <ion-item *ngFor= "let inv of inventories" (click)="editInventory(inv)">
-      <ion-label>{{inv.name}}</ion-label>
-      <ion-label>{{inv.quantity}}</ion-label>
-      <ion-label>{{inv.unitPrice}}</ion-label>
-      <ion-label>{{inv.purchasePrice}}</ion-label>
+    <ion-item *ngFor= "let inv of inventories" >
+      <ion-label (click)="editInventory(inv)" >{{inv.name}}</ion-label>
+      <ion-label (click)="editInventory(inv)">{{inv.quantity}}</ion-label>
+      <ion-label (click)="editInventory(inv)">{{inv.unitPrice}}</ion-label>
+      <ion-label (click)="editInventory(inv)">{{inv.purchasePrice}}</ion-label>
+      <ion-button (click)="presentDeleteAlertConfirm(inv)">
+        <ion-icon name="trash-bin"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>    
   

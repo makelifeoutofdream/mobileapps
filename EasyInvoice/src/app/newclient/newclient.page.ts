@@ -56,7 +56,7 @@ export class NewclientPage implements OnInit {
   async addNewClient() :Promise<any>{
     this.customer.itemList=this.inventoryList;
     this.dbService.createCustomer(this.customer).then(data=>{
-    //  this.dbService.incrementCustomerCode();
+      this.updateInventoryToCustomers();
       this.tostService.presentToast("Customer added successfully");      
     }).catch(reason=>{
       console.log(reason);
@@ -66,6 +66,21 @@ export class NewclientPage implements OnInit {
     });
   } 
 
+  updateInventoryToCustomers(){
+    let invList : Inventory[];
+    this.dbService.getAllInventories().then(resp=>{
+      invList=resp;
+      this.dbService.getAllCustomers().then(data=>{
+        let cusList : Customer=data;
+        for(let cus of data){
+          cus.itemList=invList;
+          this.dbService.UpdateCustomer(cus);
+        }
+      })
+    })
+    
+  }
+  
   showClient(){
     this.navCtrl.navigateRoot('client');
   }

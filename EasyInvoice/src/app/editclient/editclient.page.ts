@@ -5,6 +5,7 @@ import { ToastserviceService } from '../services/toastservice.service';
 import { ActivatedRoute } from '@angular/router';
 import { Customer } from '../services/customer';
 import { DataService } from '../data.service';
+import { Inventory } from '../services/inventory';
 @Component({
   selector: 'app-editclient',
   templateUrl: './editclient.page.html',
@@ -18,6 +19,7 @@ export class EditclientPage implements OnInit {
   private contactDetails : boolean;
   private payment : boolean;
   private items : boolean;
+  
   constructor(public dbService : DbService,public toastService : ToastserviceService,
     public navCtrl:NavController , private route : ActivatedRoute) { }
 
@@ -43,6 +45,7 @@ export class EditclientPage implements OnInit {
     
     this.dbService.UpdateCustomer(this.customer).then(res=>
       {
+
         this.toastService.presentToast("Customer updated successfully");
         this.navCtrl.navigateRoot('client');
   })
@@ -51,6 +54,10 @@ export class EditclientPage implements OnInit {
       console.log(reason);
     })
   }
+
+
+
+
   expandItem(item){
     if('PERSONAL'==item){
       this.personalDetails=!this.personalDetails;

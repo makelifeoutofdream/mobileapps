@@ -268,6 +268,38 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "DatecsPrinter"
       ]
+    },
+    {
+      "id": "cordova-plugin-dreamover-uid.uid",
+      "file": "plugins/cordova-plugin-dreamover-uid/www/uid.js",
+      "pluginId": "cordova-plugin-dreamover-uid",
+      "clobbers": [
+        "cordova.plugins.uid"
+      ]
+    },
+    {
+      "id": "cordova-plugin-unique-device-id2.UniqueDeviceID",
+      "file": "plugins/cordova-plugin-unique-device-id2/www/uniqueid.js",
+      "pluginId": "cordova-plugin-unique-device-id2",
+      "merges": [
+        "window.plugins.uniqueDeviceID"
+      ]
+    },
+    {
+      "id": "cordova-plugin-sim.Sim",
+      "file": "plugins/cordova-plugin-sim/www/sim.js",
+      "pluginId": "cordova-plugin-sim",
+      "merges": [
+        "window.plugins.sim"
+      ]
+    },
+    {
+      "id": "cordova-plugin-sim.SimAndroid",
+      "file": "plugins/cordova-plugin-sim/www/android/sim.js",
+      "pluginId": "cordova-plugin-sim",
+      "merges": [
+        "window.plugins.sim"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -284,6 +316,9 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-email-composer": "0.9.2",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-btprinter": "0.1.0-dev",
-    "cordova-plugin-datecs-printer": "0.10.0"
+    "cordova-plugin-datecs-printer": "0.10.0",
+    "cordova-plugin-dreamover-uid": "1.3.0",
+    "cordova-plugin-unique-device-id2": "2.0.0",
+    "cordova-plugin-sim": "1.3.3"
   };
 });

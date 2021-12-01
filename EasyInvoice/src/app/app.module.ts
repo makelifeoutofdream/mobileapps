@@ -20,7 +20,10 @@ import { IonicSelectableModule } from 'ionic-selectable';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { Uid } from '@ionic-native/uid/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { Sim } from '@ionic-native/sim/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -28,7 +31,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ReactiveFormsModule,FormsModule,
     NgxDatatableModule,IonicStorageModule.forRoot({name: '_myDb',
   driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]})],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },DatePipe,
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },DatePipe, UniqueDeviceID,
+    Uid,Sim,
+    AndroidPermissions,
     SQLite,
     BluetoothSerial,
     File,

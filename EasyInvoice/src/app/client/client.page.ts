@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Customer } from '../services/customer';
 import { DbService } from '../services/db.service';
 import { Inventory } from '../services/inventory';
@@ -17,7 +17,7 @@ export class ClientPage implements OnInit {
   private customer : Customer;
   private inventoryList : Inventory [];
   constructor(public navCtrl:NavController,public dbService:DbService,
-    public tostService : ToastserviceService) { }
+    public tostService : ToastserviceService,public alertController: AlertController) { }
 
   ngOnInit() {
     console.log("init called");
@@ -73,4 +73,41 @@ export class ClientPage implements OnInit {
     console.log("selected customer"+this.customer);
   this.navCtrl.navigateRoot('editclient',navigationExtras);    
   }
+deleteCustomer(cus : Customer){
+  
+    this.dbService.deleteCustomer(cus).then(data=>{
+      this.tostService.presentToast('Customer removed successfully');
+      this.dbService.getAllCustomers().then(data=>{
+        this.customers=data;
+      })
+  });
+
 }
+async presentDeleteAlertConfirm(cus : Customer) {
+  const alert = await this.alertController.create({
+   // cssClass: 'my-custom-class',
+    header: 'Confirm!',
+    message: '<strong>Are you sure to delete this customer?</strong>!!!',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel');
+        }
+      }, {
+        text: 'Yes',
+        handler: () => {
+          this.deleteCustomer(cus);
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
+}
+
+

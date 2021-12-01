@@ -48,6 +48,15 @@
     },
     "cordova-plugin-datecs-printer": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-dreamover-uid": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-unique-device-id2": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-sim": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}

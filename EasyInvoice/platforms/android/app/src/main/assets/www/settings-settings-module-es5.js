@@ -160,6 +160,162 @@
     },
 
     /***/
+    "Bhbv":
+    /*!*******************************************!*\
+      !*** ./src/app/services/print.service.ts ***!
+      \*******************************************/
+
+    /*! exports provided: PrintService */
+
+    /***/
+    function Bhbv(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "PrintService", function () {
+        return PrintService;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "mrSG");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic-native/bluetooth-serial/ngx */
+      "7uwA");
+      /* harmony import */
+
+
+      var _toastservice_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./toastservice.service */
+      "Gb+d");
+
+      var PrintService = /*#__PURE__*/function () {
+        function PrintService(btSerial, tostService) {
+          _classCallCheck(this, PrintService);
+
+          this.btSerial = btSerial;
+          this.tostService = tostService;
+        }
+
+        _createClass(PrintService, [{
+          key: "listDevices",
+          value: function listDevices() {
+            return new Promise(function (resolve, reject) {
+              window.DatecsPrinter.listBluetoothDevices(function (success) {
+                resolve(success);
+              }, function (error) {
+                alert(error);
+                reject(error);
+              });
+            });
+          }
+        }, {
+          key: "connectPrinter",
+          value: function connectPrinter() {
+            return new Promise(function (resolve, reject) {
+              window.DatecsPrinter.connect(function (success) {
+                resolve(success);
+              }, function (error) {
+                alert(error);
+                reject(error);
+              });
+            });
+          }
+        }, {
+          key: "print",
+          value: function print(data) {
+            return new Promise(function (resolve, reject) {
+              window.DatecsPrinter.printText(data, 'UTF-8', function (success) {
+                resolve(success);
+              }, function (error) {
+                alert(error);
+                reject(error);
+              });
+            });
+          }
+        }, {
+          key: "printData",
+          value: function printData(macAddress, data) {
+            window.DatecsPrinter.listBluetoothDevices(function (devices) {
+              window.DatecsPrinter.connect(devices[0].address, function () {
+                printSomeTestText();
+              }, function (error) {
+                alert(JSON.stringify(error));
+              });
+            }, function (error) {
+              alert(JSON.stringify(error));
+            });
+
+            function printSomeTestText() {
+              window.DatecsPrinter.printText("Print Test!", 'ISO-8859-1', function () {
+                alert('success');
+              });
+            }
+          }
+        }, {
+          key: "searchBluetoothPrinter",
+          value: function searchBluetoothPrinter() {
+            return this.btSerial.list();
+          }
+        }, {
+          key: "connectToBluetoothPrinter",
+          value: function connectToBluetoothPrinter(macAddress) {
+            return this.btSerial.connect(macAddress);
+          }
+        }, {
+          key: "disconnectBluetoothPrinter",
+          value: function disconnectBluetoothPrinter() {
+            return this.btSerial.disconnect();
+          }
+        }, {
+          key: "sendToBluetoothPrinter",
+          value: function sendToBluetoothPrinter(macAddress, data) {
+            var _this = this;
+
+            this.connectToBluetoothPrinter(macAddress).subscribe(function (_) {
+              _this.btSerial.write(data).then(function (_) {
+                _this.btSerial.disconnect();
+              })["catch"](function (reason) {
+                console.log(reason);
+              });
+            }, function (err) {
+              return console.log(_this.tostService.presentToast("Printer Issue - bluetooth address - " + macAddress + "-err-" + err));
+            });
+          }
+        }]);
+
+        return PrintService;
+      }();
+
+      PrintService.ctorParameters = function () {
+        return [{
+          type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_2__["BluetoothSerial"]
+        }, {
+          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_3__["ToastserviceService"]
+        }];
+      };
+
+      PrintService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+      })], PrintService);
+      /***/
+    },
+
+    /***/
     "Uncc":
     /*!*******************************************!*\
       !*** ./src/app/settings/settings.page.ts ***!
@@ -306,14 +462,14 @@
         }, {
           key: "ionViewWillEnter",
           value: function ionViewWillEnter() {
-            var _this = this;
+            var _this2 = this;
 
             this.listPrinter();
             this.type = "profile";
             this.showHideSegment();
             this.dbService.getProfile().then(function (data) {
-              _this.userProfile = data;
-              _this.user.userProfile = data;
+              _this2.userProfile = data;
+              _this2.user.userProfile = data;
             });
 
             if (this.userProfile == null || this.userProfile == undefined) {
@@ -340,11 +496,11 @@
         }, {
           key: "listPrinter",
           value: function listPrinter() {
-            var _this2 = this;
+            var _this3 = this;
 
             if (this.plt.is('cordova')) {
               this.print.searchBluetoothPrinter().then(function (resp) {
-                _this2.bluetoothList = resp;
+                _this3.bluetoothList = resp;
               });
               /*this.print.listDevices().then(res=>{
                 this.bluetoothList=res;
@@ -359,25 +515,25 @@
         }, {
           key: "updateProfile",
           value: function updateProfile() {
-            var _this3 = this;
+            var _this4 = this;
 
             console.log("profile printer" + this.user.userProfile.selectedPrinter);
             this.dbService.createOrUpdateProfile(this.user.userProfile).then(function (data) {
               if (data == null || data == undefined) {
-                _this3.toastService.presentToast("Failed to update settings");
+                _this4.toastService.presentToast("Failed to update settings");
               } else {
-                _this3.user.userProfile = data;
+                _this4.user.userProfile = data;
 
-                _this3.toastService.presentToast("Settings updated successfully");
+                _this4.toastService.presentToast("Settings updated successfully");
               }
             })["catch"](function (reason) {
-              _this3.toastService.presentToast("Failed to update settings");
+              _this4.toastService.presentToast("Failed to update settings");
             });
           }
         }, {
           key: "segmentChanged",
           value: function segmentChanged(evt) {
-            var _this4 = this;
+            var _this5 = this;
 
             if (evt.detail.value == 'profile') {
               this.type = "profile";
@@ -388,7 +544,7 @@
             }
 
             this.dbService.getProfile().then(function (data) {
-              return _this4.userProfile = data;
+              return _this5.userProfile = data;
             });
 
             if (this.userProfile == null || this.userProfile == undefined) {

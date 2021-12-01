@@ -39,6 +39,7 @@ let NewinventoryPage = class NewinventoryPage {
     addNewInventory() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.dbService.createOrUpdateInventory(this.inventory).then(data => {
+                this.updateInventoryToCustomers();
                 if (this.inventory.id == null || this.inventory.id == undefined) {
                     console.log("Item added successfully");
                 }
@@ -50,6 +51,19 @@ let NewinventoryPage = class NewinventoryPage {
             }).finally(() => {
                 this.inventory = { id: null, code: "", name: "", nameInArabic: "", description: "", quantity: null, unitPrice: null, purchasePrice: null };
                 this.navCtrl.navigateRoot('inventory');
+            });
+        });
+    }
+    updateInventoryToCustomers() {
+        let invList;
+        this.dbService.getAllInventories().then(resp => {
+            invList = resp;
+            this.dbService.getAllCustomers().then(data => {
+                let cusList = data;
+                for (let cus of data) {
+                    cus.itemList = invList;
+                    this.dbService.UpdateCustomer(cus);
+                }
             });
         });
     }

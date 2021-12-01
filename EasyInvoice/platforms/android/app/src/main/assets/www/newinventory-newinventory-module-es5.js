@@ -1,4 +1,10 @@
 (function () {
+  function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+  function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -109,6 +115,8 @@
                   switch (_context.prev = _context.next) {
                     case 0:
                       this.dbService.createOrUpdateInventory(this.inventory).then(function (data) {
+                        _this.updateInventoryToCustomers();
+
                         if (_this.inventory.id == null || _this.inventory.id == undefined) {
                           console.log("Item added successfully");
                         } else {
@@ -140,6 +148,36 @@
             }));
           }
         }, {
+          key: "updateInventoryToCustomers",
+          value: function updateInventoryToCustomers() {
+            var _this2 = this;
+
+            var invList;
+            this.dbService.getAllInventories().then(function (resp) {
+              invList = resp;
+
+              _this2.dbService.getAllCustomers().then(function (data) {
+                var cusList = data;
+
+                var _iterator = _createForOfIteratorHelper(data),
+                    _step;
+
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    var cus = _step.value;
+                    cus.itemList = invList;
+
+                    _this2.dbService.UpdateCustomer(cus);
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
+                }
+              });
+            });
+          }
+        }, {
           key: "showInventory",
           value: function showInventory() {
             this.navCtrl.navigateRoot('inventory');
@@ -147,11 +185,11 @@
         }, {
           key: "ionViewWillEnter",
           value: function ionViewWillEnter() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.route.queryParams.subscribe(function (params) {
               if (params['inventory'] == null || params['inventory'] == undefined) {
-                _this2.inventory = {
+                _this3.inventory = {
                   id: null,
                   code: "",
                   name: "",
@@ -162,17 +200,17 @@
                   purchasePrice: null
                 };
 
-                _this2.dbService.incrementInventoryCode().then(function (data) {
-                  _this2.dbService.getInventoryCode().then(function (data) {
+                _this3.dbService.incrementInventoryCode().then(function (data) {
+                  _this3.dbService.getInventoryCode().then(function (data) {
                     if (data == null || data == undefined) {
                       data = 1;
                     }
 
-                    _this2.inventory.code = _this2.dbService.codeConstant + _this2.dbService.inventoyCodeConstant + data;
+                    _this3.inventory.code = _this3.dbService.codeConstant + _this3.dbService.inventoyCodeConstant + data;
                   });
                 });
               } else {
-                _this2.inventory = params['inventory'];
+                _this3.inventory = params['inventory'];
               }
             });
             console.log('selected inventory' + this.inventory.name);

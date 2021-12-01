@@ -25,10 +25,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ClientPage = class ClientPage {
-    constructor(navCtrl, dbService, tostService) {
+    constructor(navCtrl, dbService, tostService, alertController) {
         this.navCtrl = navCtrl;
         this.dbService = dbService;
         this.tostService = tostService;
+        this.alertController = alertController;
     }
     ngOnInit() {
         console.log("init called");
@@ -87,11 +88,45 @@ let ClientPage = class ClientPage {
             this.navCtrl.navigateRoot('editclient', navigationExtras);
         });
     }
+    deleteCustomer(cus) {
+        this.dbService.deleteCustomer(cus).then(data => {
+            this.tostService.presentToast('Customer removed successfully');
+            this.dbService.getAllCustomers().then(data => {
+                this.customers = data;
+            });
+        });
+    }
+    presentDeleteAlertConfirm(cus) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                // cssClass: 'my-custom-class',
+                header: 'Confirm!',
+                message: '<strong>Are you sure to delete this customer?</strong>!!!',
+                buttons: [
+                    {
+                        text: 'No',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            console.log('Confirm Cancel');
+                        }
+                    }, {
+                        text: 'Yes',
+                        handler: () => {
+                            this.deleteCustomer(cus);
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
+        });
+    }
 };
 ClientPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
     { type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"] },
-    { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"] }
+    { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] }
 ];
 ClientPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -114,7 +149,7 @@ ClientPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n      <ion-button (click)=\"presentDeleteAlertConfirm(cus)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
 
 /***/ }),
 
