@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { ClientPage } from '../client/client.page';
 import { NavController } from '@ionic/angular';
 import { AppComponent } from '../app.component';
@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
   error : boolean =false;
   errorMessage : string ;
   private whiteListedMACs : string []=['919074292305','0564863010','0508812145','919074247482']
-  constructor(public app:AppComponent,public navCtrl:NavController,public dbServise:DbService,
+  constructor(public app:AppComponent,public navCtrl:NavController,public dbServise:DbService,private plt:Platform,
     formBuilder : FormBuilder,public tostService:ToastserviceService,
     private uniqueDeviceID: UniqueDeviceID,
     private uid: Uid,
@@ -83,7 +83,14 @@ export class LoginPage implements OnInit {
     }
     
     this.dbServise.fetchUserByUserNameAndPassword(this.userName,this.password).then(data=>{
-  //    if(this.whiteListedMACs.includes(this.phoneNo)){
+      
+      if(this.plt.is('cordova')){
+        if(! this.whiteListedMACs.includes(this.phoneNo)){
+          this.tostService.presentToast("Configuration Error");
+          return ;
+        }
+      }
+      
 
         if(data!=null && data!=undefined){
           this.loginUser=data;
@@ -92,9 +99,7 @@ export class LoginPage implements OnInit {
         }else{
           this.tostService.presentToast("Incorrect username or password");
         }
-    //  }else{
-      //  this.tostService.presentToast("Configuration Error");
-     // }
+     
 
     }).catch(err=>{
         console.log(err);

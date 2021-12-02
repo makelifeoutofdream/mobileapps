@@ -1,0 +1,48 @@
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inventory</ion-title>
+    <ion-buttons slot="start">
+        <ion-menu-button menu="mainmenu"> 
+
+        </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content style="background-color: darkblue;">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Name</ion-label>
+      <ion-label>Quantity</ion-label>
+      <ion-label>Unit Price</ion-label>
+      <ion-label>Purchase Price</ion-label>
+      <ion-label>Delete</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor= "let inv of inventories" >
+      <ion-label (click)="editInventory(inv)" >{{inv.name}}</ion-label>
+      <ion-label (click)="editInventory(inv)">{{inv.quantity}}</ion-label>
+      <ion-label (click)="editInventory(inv)">{{inv.unitPrice}}</ion-label>
+      <ion-label (click)="editInventory(inv)">{{inv.purchasePrice}}</ion-label>
+      <ion-button (click)="presentDeleteAlertConfirm(inv)">
+        <ion-icon name="trash-bin"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>    
+  
+</ion-content>
+<ion-footer>
+  
+    
+      <ion-row style="float:right">
+        <ion-col >
+        <ion-button  color="primary" (click)="addNewInventory()">
+          <ion-icon name="add-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
+        
+    
+  
+  
+</ion-footer>

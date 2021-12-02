@@ -35,18 +35,19 @@
   <ion-item-divider></ion-item-divider>
   
   <ion-list>
-    <ion-row style="margin-left: 5%;">
-      <ion-col size="4">Inv No</ion-col>
-      <ion-col size="4">Customer</ion-col>
-      <ion-col size="4">Total</ion-col>
-    </ion-row>
+    <ion-list-header>
+      <ion-label >Date</ion-label>
+      <ion-label style="text-align: center;">Customer</ion-label>
+      <ion-label style="text-align: right;margin-right: 3%;" >Total</ion-label>
+    </ion-list-header>
+   
     <ion-item *ngFor= "let inv of filterInvoiceList" (click)="viewInvoice(inv)">
       
         
         
-          <ion-col size="4">{{inv.invoiceNumber}}</ion-col>
-          <ion-col size="4">{{inv.customer.name}}</ion-col>
-          <ion-col size="4">{{inv.total}}</ion-col>
+          <ion-label >{{inv.invoiceDate | date : format : short}}</ion-label>
+          <ion-label style="text-align: center;">{{inv.customer.name}}</ion-label>
+          <ion-label style="text-align: right;">{{inv.total}}</ion-label>
        
      
     </ion-item>

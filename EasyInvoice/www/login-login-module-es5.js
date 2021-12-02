@@ -105,7 +105,7 @@
       "ObYS");
 
       var LoginPage = /*#__PURE__*/function () {
-        function LoginPage(app, navCtrl, dbServise, formBuilder, tostService, uniqueDeviceID, uid, androidPermissions, sim) {
+        function LoginPage(app, navCtrl, dbServise, plt, formBuilder, tostService, uniqueDeviceID, uid, androidPermissions, sim) {
           var _this = this;
 
           _classCallCheck(this, LoginPage);
@@ -113,6 +113,7 @@
           this.app = app;
           this.navCtrl = navCtrl;
           this.dbServise = dbServise;
+          this.plt = plt;
           this.tostService = tostService;
           this.uniqueDeviceID = uniqueDeviceID;
           this.uid = uid;
@@ -177,7 +178,14 @@
             }
 
             this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(function (data) {
-              //    if(this.whiteListedMACs.includes(this.phoneNo)){
+              if (_this3.plt.is('cordova')) {
+                if (!_this3.whiteListedMACs.includes(_this3.phoneNo)) {
+                  _this3.tostService.presentToast("Configuration Error");
+
+                  return;
+                }
+              }
+
               if (data != null && data != undefined) {
                 _this3.loginUser = data;
                 _this3.app.showTabs = true;
@@ -185,10 +193,7 @@
                 _this3.navCtrl.navigateRoot('dashboard');
               } else {
                 _this3.tostService.presentToast("Incorrect username or password");
-              } //  }else{
-              //  this.tostService.presentToast("Configuration Error");
-              // }
-
+              }
             })["catch"](function (err) {
               console.log(err);
 
@@ -212,6 +217,8 @@
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"]
         }, {
           type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Platform"]
         }, {
           type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"]
         }, {

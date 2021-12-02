@@ -2653,8 +2653,7 @@ let NewinvoicePage = class NewinvoicePage {
             raw([0x1B, 0x21, 0x20]).align('left').line('Balance Amount: ' + Object(sprintf_js__WEBPACK_IMPORTED_MODULE_9__["sprintf"])('%6.2f', this.invoice.balanceAmount)).
             raw([0x1B, 0x21, 0x08]).align('left').bold(true).line('------------------------------------------------').bold(true);
         let qrcode = encoder.initialize().raw([0x1B, 0x21, 0x03]).align('center').qrcode(this.generateQRCodeContent(), 1, 4, 'h').newline().
-            align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!');
-        ;
+            align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline();
         // result+=billDetails+itemDetails;
         result = encoder.initialize().encode();
         //line(billDetails).line(itemDetails).encode();

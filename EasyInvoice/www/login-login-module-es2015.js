@@ -36,11 +36,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 let LoginPage = class LoginPage {
-    constructor(app, navCtrl, dbServise, formBuilder, tostService, uniqueDeviceID, uid, androidPermissions, sim) {
+    constructor(app, navCtrl, dbServise, plt, formBuilder, tostService, uniqueDeviceID, uid, androidPermissions, sim) {
         this.app = app;
         this.navCtrl = navCtrl;
         this.dbServise = dbServise;
+        this.plt = plt;
         this.tostService = tostService;
         this.uniqueDeviceID = uniqueDeviceID;
         this.uid = uid;
@@ -88,7 +90,12 @@ let LoginPage = class LoginPage {
             return;
         }
         this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(data => {
-            //    if(this.whiteListedMACs.includes(this.phoneNo)){
+            if (this.plt.is('cordova')) {
+                if (!this.whiteListedMACs.includes(this.phoneNo)) {
+                    this.tostService.presentToast("Configuration Error");
+                    return;
+                }
+            }
             if (data != null && data != undefined) {
                 this.loginUser = data;
                 this.app.showTabs = true;
@@ -97,9 +104,6 @@ let LoginPage = class LoginPage {
             else {
                 this.tostService.presentToast("Incorrect username or password");
             }
-            //  }else{
-            //  this.tostService.presentToast("Configuration Error");
-            // }
         }).catch(err => {
             console.log(err);
             this.tostService.presentToast("Incorrect username or password");
@@ -113,6 +117,7 @@ LoginPage.ctorParameters = () => [
     { type: _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
     { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Platform"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"] },
     { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__["ToastserviceService"] },
     { type: _ionic_native_unique_device_id_ngx__WEBPACK_IMPORTED_MODULE_9__["UniqueDeviceID"] },

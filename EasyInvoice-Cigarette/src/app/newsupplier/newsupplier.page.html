@@ -1,0 +1,244 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainmenu"> 
+
+      </ion-menu-button>
+    </ion-buttons> 
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="home" (click)="showSupplier()"> </ion-back-button>
+      
+    </ion-buttons>
+    <ion-title>New Supplier</ion-title>
+  </ion-toolbar>
+ 
+</ion-header>
+
+
+<ion-content>
+  <ion-card  >
+    <ion-card-header (click)="expandItem('PERSONAL')">
+      <ion-card-title>Personal Details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-expandable expandHeight="240px" [expanded]="personalDetails">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Supplier Code</ion-label>
+                  <ion-input name="name" type="text" [(ngModel)]="supplier.code" required></ion-input>
+                </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">Name</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.name" required></ion-input>
+              </ion-item>
+              </ion-col>
+              <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">اسم</ion-label>
+                <ion-input name="namearabic" type="text" [(ngModel)]="supplier.nameInArabic" required></ion-input>
+              </ion-item> 
+             </ion-col>
+            
+            
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">Contact Name</ion-label>
+                <ion-input name="contactpersonname" type="text" [(ngModel)]="supplier.contactPersonName" required></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">اسم جهة الاتصال</ion-label>
+                <ion-input name="contactpersonname" type="text" [(ngModel)]="supplier.contactPersonNameInArabic" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          </ion-grid>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  >
+    <ion-card-header (click)="expandItem('ADDRESS')">
+      <ion-card-title>Address</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-expandable expandHeight="440px" [expanded]="address">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Building No</ion-label>
+                  <ion-input name="name" type="text" [(ngModel)]="supplier.buildingNumber" required></ion-input>
+                </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">Street</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.street" required></ion-input>
+              </ion-item>
+              </ion-col>
+              <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">شارع</ion-label>
+                <ion-input name="namearabic" type="text" [(ngModel)]="supplier.streetInArabic" required></ion-input>
+              </ion-item> 
+             </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">City</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.city" required></ion-input>
+              </ion-item>
+              </ion-col>
+              <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">مدينة</ion-label>
+                <ion-input name="namearabic" type="text" [(ngModel)]="supplier.cityInArabic" required></ion-input>
+              </ion-item> 
+             </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">District</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.district" required></ion-input>
+              </ion-item>
+              </ion-col>
+              <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">يصرف</ion-label>
+                <ion-input name="namearabic" type="text" [(ngModel)]="supplier.districtInArabic" required></ion-input>
+              </ion-item> 
+             </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">Country</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.country" required></ion-input>
+              </ion-item>
+              </ion-col>
+              <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">دولة</ion-label>
+                <ion-input name="namearabic" type="text" [(ngModel)]="supplier.countryInArabic" required></ion-input>
+              </ion-item> 
+             </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">PO Box</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.pobox" required></ion-input>
+              </ion-item>
+              </ion-col>
+              <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">Postal Code</ion-label>
+                <ion-input name="namearabic" type="text" [(ngModel)]="supplier.postalCode" required></ion-input>
+              </ion-item> 
+             </ion-col>
+          </ion-row>
+          
+          </ion-grid>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  >
+    <ion-card-header (click)="expandItem('CONTACT')">
+      <ion-card-title>Contact</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-expandable expandHeight="240px" [expanded]="contactDetails">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                  <ion-label position="floating">Phone No</ion-label>
+                  <ion-input name="name" type="text" [(ngModel)]="supplier.phoneNumber" required></ion-input>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Mobile</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.mobile" required></ion-input>
+              </ion-item>
+          </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item >
+                <ion-label position="floating">Email</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.email" required></ion-input>
+              </ion-item>
+              </ion-col>   
+          </ion-row>
+          
+          </ion-grid>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card  >
+    <ion-card-header (click)="expandItem('PAYMENT')">
+      <ion-card-title>Payment</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-expandable expandHeight="240px" [expanded]="payment">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                  <ion-label position="floating">VAT No</ion-label>
+                  <ion-input name="name" type="text" [(ngModel)]="supplier.vatNumber" required></ion-input>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">CR No</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="supplier.crNumber" required></ion-input>
+              </ion-item>
+          </ion-col>
+          </ion-row>
+          <ion-row>
+            
+              <ion-col size="12">
+                <ion-item >
+                  <ion-label position="floating">Balance</ion-label>
+                  <ion-input name="name" type="text" [(ngModel)]="supplier.balance" required></ion-input>
+                </ion-item>
+                </ion-col>   
+          </ion-row>
+          
+          </ion-grid>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+  <ion-row style="float:right">
+    <ion-col >
+    <ion-button  color="primary" (click)="addNewSupplier()">
+      <ion-icon name="checkmark"></ion-icon>
+     
+      
+    </ion-button>
+  </ion-col>
+  </ion-row>
+</ion-content>

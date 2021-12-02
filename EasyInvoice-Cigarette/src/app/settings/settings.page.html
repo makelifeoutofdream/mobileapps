@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+    <ion-buttons slot="start">
+        <ion-menu-button menu="mainmenu"> 
+
+        </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-segment color="secondary" (ionChange)="segmentChanged($event)" [(ngModel)]="type"> 
+    <ion-segment-button checked value="profile">
+      <ion-label>Profile</ion-label>
+      <ion-icon name="person-circle"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="tax">
+      <ion-label>Tax</ion-label>
+       <ion-icon name="clipboard"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="printer">
+      <ion-label>Printer</ion-label>
+      <ion-icon name="print"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'profile'"> 
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="Company Name" [(ngModel)]="user.userProfile.companyName"></ion-textarea>
+            </ion-item>
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="اسم الشركة" [(ngModel)]="user.userProfile.companyNameInArabic"></ion-textarea>
+            </ion-item>
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="Address Line1" [(ngModel)]="user.userProfile.addressLine1"></ion-textarea>
+            </ion-item>
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="العنوان السطر 1" [(ngModel)]="user.userProfile.addressLine1inArabic"></ion-textarea>
+            </ion-item>
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="addressLine2" [(ngModel)]="user.userProfile.addressLine2"></ion-textarea>
+            </ion-item>
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="سطر العنوان 2" [(ngModel)]="user.userProfile.addressLine2InArabic"></ion-textarea>
+            </ion-item>
+            
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="Email to send" [(ngModel)]="user.userProfile.toEmail"></ion-textarea>
+          </ion-item>
+        
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item style="width: 100%"> 
+              <ion-textarea  placeholder="CC Emails" [(ngModel)]="user.userProfile.ccEmail"></ion-textarea>
+          </ion-item>
+        
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-row style="float:right">
+        <ion-col >
+        <ion-button  color="primary" (click)="updateProfile()">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
+      
+    </div>
+    <div *ngSwitchCase="'tax'"> 
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item style="width: 100%"> 
+              <ion-input type="number" placeholder="Vat(%)" [(ngModel)]="user.userProfile.vat"></ion-input>
+          </ion-item>
+          <ion-item style="width: 100%"> 
+            <ion-textarea  placeholder="VAT Number" [(ngModel)]="user.userProfile.vatNumber"></ion-textarea>
+          </ion-item>
+          <ion-item style="width: 100%"> 
+            <ion-textarea  placeholder="CR Number" [(ngModel)]="user.userProfile.crNumber"></ion-textarea>
+          </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-row style="float:right">
+        <ion-col >
+        <ion-button  color="primary" (click)="updateProfile()">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
+      
+    </div>
+    <div *ngSwitchCase="'printer'">
+      <ion-list>
+        <ion-item *ngFor="let item of bluetoothList" (click)="selectPrinter(item.address)">
+          {{item.name}} {{item.address}}
+        </ion-item>
+      </ion-list>
+      <ion-item *ngIf="bluetoothList!=null && bluetoothList!=undefined">
+        Selected Printer: {{user.userProfile.selectedPrinter}} 
+      </ion-item>
+      <ion-item *ngIf="bluetoothList==null || bluetoothList==undefined">
+        No Printer Connected..
+      </ion-item>
+      <ion-row style="float:right">
+        <ion-col >
+        <ion-button  color="primary" (click)="updateProfile()">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
