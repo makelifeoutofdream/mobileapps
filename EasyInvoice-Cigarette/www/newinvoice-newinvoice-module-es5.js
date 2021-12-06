@@ -1177,6 +1177,9 @@
           value: function populateCustomerProducts() {
             var _this3 = this;
 
+            this.products = [];
+            this.productsBackup = [];
+
             if (this.invoice.customer != null && this.invoice.customer != undefined && this.invoice.customer.itemList != null && this.invoice.customer.itemList != undefined) {
               console.log("populateCustomerProducts");
               var inventory;

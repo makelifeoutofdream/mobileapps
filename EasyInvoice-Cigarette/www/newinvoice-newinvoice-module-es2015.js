@@ -995,6 +995,8 @@ let NewinvoicePage = class NewinvoicePage {
         this.dbService.getAllCustomers().then(data => this.customerList = data);
     }
     populateCustomerProducts() {
+        this.products = [];
+        this.productsBackup = [];
         if (this.invoice.customer != null && this.invoice.customer != undefined && this.invoice.customer.itemList != null && this.invoice.customer.itemList != undefined) {
             console.log("populateCustomerProducts");
             let inventory;

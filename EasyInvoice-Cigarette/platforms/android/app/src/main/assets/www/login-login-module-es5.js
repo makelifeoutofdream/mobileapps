@@ -177,18 +177,19 @@
             }
 
             this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(function (data) {
-              if (_this3.whiteListedMACs.includes(_this3.phoneNo)) {
-                if (data != null && data != undefined) {
-                  _this3.loginUser = data;
-                  _this3.app.showTabs = true;
+              // if(this.whiteListedMACs.includes(this.phoneNo)){
+              if (data != null && data != undefined) {
+                _this3.loginUser = data;
+                _this3.app.showTabs = true;
 
-                  _this3.navCtrl.navigateRoot('dashboard');
-                } else {
-                  _this3.tostService.presentToast("Incorrect username or password");
-                }
+                _this3.navCtrl.navigateRoot('dashboard');
               } else {
-                _this3.tostService.presentToast("Configuration Error");
+                _this3.tostService.presentToast("Incorrect username or password");
               }
+              /*}else{
+                this.tostService.presentToast("Configuration Error");
+              }*/
+
             })["catch"](function (err) {
               console.log(err);
 

@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
     }
     
     this.dbServise.fetchUserByUserNameAndPassword(this.userName,this.password).then(data=>{
-      if(this.whiteListedMACs.includes(this.phoneNo)){
+     // if(this.whiteListedMACs.includes(this.phoneNo)){
 
         if(data!=null && data!=undefined){
           this.loginUser=data;
@@ -92,9 +92,9 @@ export class LoginPage implements OnInit {
         }else{
           this.tostService.presentToast("Incorrect username or password");
         }
-      }else{
+      /*}else{
         this.tostService.presentToast("Configuration Error");
-     }
+     }*/
 
     }).catch(err=>{
         console.log(err);

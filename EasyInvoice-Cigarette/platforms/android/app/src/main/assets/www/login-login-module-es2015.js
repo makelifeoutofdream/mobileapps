@@ -88,19 +88,18 @@ let LoginPage = class LoginPage {
             return;
         }
         this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(data => {
-            if (this.whiteListedMACs.includes(this.phoneNo)) {
-                if (data != null && data != undefined) {
-                    this.loginUser = data;
-                    this.app.showTabs = true;
-                    this.navCtrl.navigateRoot('dashboard');
-                }
-                else {
-                    this.tostService.presentToast("Incorrect username or password");
-                }
+            // if(this.whiteListedMACs.includes(this.phoneNo)){
+            if (data != null && data != undefined) {
+                this.loginUser = data;
+                this.app.showTabs = true;
+                this.navCtrl.navigateRoot('dashboard');
             }
             else {
-                this.tostService.presentToast("Configuration Error");
+                this.tostService.presentToast("Incorrect username or password");
             }
+            /*}else{
+              this.tostService.presentToast("Configuration Error");
+           }*/
         }).catch(err => {
             console.log(err);
             this.tostService.presentToast("Incorrect username or password");
