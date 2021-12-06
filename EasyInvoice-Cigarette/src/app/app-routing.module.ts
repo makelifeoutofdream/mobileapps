@@ -21,10 +21,7 @@ const routes: Routes = [
     path: 'invoice',
     loadChildren: () => import('./invoice/invoice.module').then( m => m.InvoicePageModule)
   },
-  {
-    path: 'expense',
-    loadChildren: () => import('./expense/expense.module').then( m => m.ExpensePageModule)
-  },
+
   {
     path: 'project',
     loadChildren: () => import('./project/project.module').then( m => m.ProjectPageModule)
@@ -41,10 +38,7 @@ const routes: Routes = [
     path: 'newinvoice',
     loadChildren: () => import('./newinvoice/newinvoice.module').then( m => m.NewinvoicePageModule)
   },
-  {
-    path: 'newexpense',
-    loadChildren: () => import('./newexpense/newexpense.module').then( m => m.NewexpensePageModule)
-  },
+  
   {
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
@@ -100,6 +94,14 @@ const routes: Routes = [
   {
     path: 'editpurchase',
     loadChildren: () => import('./editpurchase/editpurchase.module').then( m => m.EditpurchasePageModule)
+  },
+  {
+    path: 'expense',
+    loadChildren: () => import('./expense/expense.module').then( m => m.ExpensePageModule)
+  },
+  {
+    path: 'newexpense',
+    loadChildren: () => import('./newexpense/newexpense.module').then( m => m.NewexpensePageModule)
   }
 ];
 

@@ -4232,7 +4232,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding\">\n   \n    <ion-card>\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Profit\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #lineCanvas></canvas>\n      </ion-card-content>\n    </ion-card> -->\n  </div>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding : min-height:100%\">\n   \n    <ion-card style=\"min-height: 100%;\">\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Revenue Vs GP\n        <div style=\"float: right;\">\n          <ion-label ion-button color=\"secondary\"  (click)=\"download()\">\nExport\n          </ion-label>\n        </div>\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #barCanvas></canvas>\n      </ion-card-content>\n\n      <ion-card-footer>\n        <ion-row>\n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n          </ion-item>\n       \n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label ion-button color=\"secondary\">Apply</ion-label>\n          </ion-item>\n        </ion-row>\n      </ion-card-footer>\n    </ion-card> -->\n  </div>\n</ion-content>\n";
       /***/
     },
 
@@ -4307,6 +4307,7 @@
           key: "ngOnInit",
           value: function ngOnInit() {
             this.inventoryList = [];
+            this.invoiceList = [];
           }
         }, {
           key: "ionViewWillEnter",
@@ -4314,7 +4315,7 @@
             var _this = this;
 
             if (this.doughnutChart != null && this.doughnutChart != undefined) this.doughnutChart.destroy();
-            if (this.lineChart != null && this.lineChart != undefined) this.lineChart.destroy();
+            if (this.barChart != null && this.barChart != undefined) this.barChart.destroy();
             this.dbService.getAllInventories().then(function (data) {
               _this.inventoryList = data;
 
@@ -4326,14 +4327,109 @@
             });
           }
         }, {
-          key: "getDonutdata",
-          value: function getDonutdata() {
+          key: "filterInvoices",
+          value: function filterInvoices() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var _iterator10, _step10, i;
+              var _this2 = this;
 
               return regeneratorRuntime.wrap(function _callee$(_context2) {
                 while (1) {
                   switch (_context2.prev = _context2.next) {
+                    case 0:
+                      this.dbService.getAllInvoices().then(function (data) {
+                        var res = data;
+
+                        if (_this2.startDate != null && _this2.startDate != undefined && (_this2.endDate == null || _this2.endDate == undefined)) {
+                          _this2.startDate = new Date(_this2.startDate.getFullYear(), _this2.startDate.getMonth(), _this2.startDate.getDate());
+
+                          _this2.startDate.setHours(0);
+
+                          _this2.startDate.setMinutes(0);
+
+                          _this2.startDate.setSeconds(0);
+
+                          res.filter(function (inv) {
+                            var date = new Date(inv.invoiceDate);
+                            date.setHours(1);
+                            date.setMinutes(1);
+                            date.setSeconds(1);
+                            return date.getTime() >= _this2.startDate.getTime();
+                          });
+                        } else if ((_this2.startDate == null || _this2.startDate == undefined) && _this2.endDate != null && _this2.endDate != undefined) {
+                          _this2.endDate = new Date(_this2.endDate.getFullYear(), _this2.endDate.getMonth(), _this2.endDate.getDate());
+
+                          _this2.endDate.setHours(23);
+
+                          _this2.endDate.setMinutes(23);
+
+                          _this2.endDate.setSeconds(23);
+
+                          res.filter(function (inv) {
+                            var date = new Date(inv.invoiceDate);
+                            date.setHours(1);
+                            date.setMinutes(1);
+                            date.setSeconds(1);
+                            return date.getTime() <= _this2.endDate.getTime();
+                          });
+                        } else if ((_this2.startDate != null || _this2.startDate != undefined) && (_this2.endDate != null || _this2.endDate != undefined)) {
+                          _this2.endDate = new Date(_this2.endDate.getFullYear(), _this2.endDate.getMonth(), _this2.endDate.getDate());
+
+                          _this2.endDate.setHours(23);
+
+                          _this2.endDate.setMinutes(23);
+
+                          _this2.endDate.setSeconds(23);
+
+                          _this2.startDate = new Date(_this2.startDate.getFullYear(), _this2.startDate.getMonth(), _this2.startDate.getDate());
+
+                          _this2.startDate.setHours(0);
+
+                          _this2.startDate.setMinutes(0);
+
+                          _this2.startDate.setSeconds(0);
+
+                          res.filter(function (inv) {
+                            var date = new Date(inv.invoiceDate);
+                            date.setHours(1);
+                            date.setMinutes(1);
+                            date.setSeconds(1);
+                            return date.getTime() >= _this2.startDate.getTime() && date.getTime() <= _this2.endDate.getTime();
+                          });
+                        } else {
+                          return res;
+                        }
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          } // async getBarData() : Promise<any>{
+          //     this.filterInvoices().then(data=>{
+          //       let invoices : Invoice []=data;
+          //       let revenue = new Array();
+          //       let profit = new Array();
+          //       for(let inv of invoices){
+          //         revenue.push(inv.total);
+          //         for(let itm of inv.invoiceItems){
+          //           itm.;
+          //         }
+          //       }
+          //     })
+          // }
+
+        }, {
+          key: "getDonutdata",
+          value: function getDonutdata() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+              var _iterator10, _step10, i;
+
+              return regeneratorRuntime.wrap(function _callee2$(_context3) {
+                while (1) {
+                  switch (_context3.prev = _context3.next) {
                     case 0:
                       this.donutColors = [];
                       this.donutHoverColors = [];
@@ -4359,10 +4455,10 @@
 
                     case 6:
                     case "end":
-                      return _context2.stop();
+                      return _context3.stop();
                   }
                 }
-              }, _callee, this);
+              }, _callee2, this);
             }));
           }
         }, {
@@ -4388,34 +4484,35 @@
                   hoverBackgroundColor: this.donutHoverColors
                 }]
               }
-            });
-            this.lineChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.lineCanvas.nativeElement, {
-              type: "line",
-              data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                  label: "Total Profit for 2021",
-                  fill: false,
-                  backgroundColor: "rgba(75,192,192,0.4)",
-                  borderColor: "rgba(75,192,192,1)",
-                  borderCapStyle: "butt",
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  borderJoinStyle: "miter",
-                  pointBorderColor: "rgba(75,192,192,1)",
-                  pointBackgroundColor: "#fff",
-                  pointBorderWidth: 1,
-                  pointHoverRadius: 5,
-                  pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                  pointHoverBorderColor: "rgba(220,220,220,1)",
-                  pointHoverBorderWidth: 2,
-                  pointRadius: 1,
-                  pointHitRadius: 10,
-                  data: [65, 59, 80, 81, 56, 55, 40],
-                  spanGaps: false
-                }]
-              }
-            });
+            }); // this.barChart = new Chart(this.barCanvas.nativeElement, {
+            //   type: "bar",
+            //   data: {
+            //     labels: this.barLabels,
+            //     datasets: [
+            //       {
+            //         label: "# of Votes",
+            //         data: [12, 19, 3, 5, 2, 3],
+            //         backgroundColor: [
+            //           "rgba(255, 99, 132, 0.2)",
+            //           "rgba(54, 162, 235, 0.2)",
+            //           "rgba(255, 206, 86, 0.2)",
+            //           "rgba(75, 192, 192, 0.2)",
+            //           "rgba(153, 102, 255, 0.2)",
+            //           "rgba(255, 159, 64, 0.2)"
+            //         ],
+            //         borderColor: [
+            //           "rgba(255,99,132,1)",
+            //           "rgba(54, 162, 235, 1)",
+            //           "rgba(255, 206, 86, 1)",
+            //           "rgba(75, 192, 192, 1)",
+            //           "rgba(153, 102, 255, 1)",
+            //           "rgba(255, 159, 64, 1)"
+            //         ],
+            //         borderWidth: 1
+            //       }
+            //     ]
+            //   }
+            // });
           }
         }, {
           key: "random_rgba",
@@ -4441,9 +4538,9 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"],
           args: ["doughnutCanvas"]
         }],
-        lineCanvas: [{
+        barCanvas: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"],
-          args: ["lineCanvas"]
+          args: ["barCanvas"]
         }]
       };
       DashboardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -4917,7 +5014,7 @@
         }, {
           key: "_refresh",
           value: function _refresh() {
-            var _this2 = this;
+            var _this3 = this;
 
             if (this._request) {
               return;
@@ -4925,19 +5022,19 @@
 
             this._running = true;
             this._request = _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["r"].call(window, function () {
-              _this2._update();
+              _this3._update();
 
-              _this2._request = null;
+              _this3._request = null;
 
-              if (_this2._running) {
-                _this2._refresh();
+              if (_this3._running) {
+                _this3._refresh();
               }
             });
           }
         }, {
           key: "_update",
           value: function _update() {
-            var _this3 = this;
+            var _this4 = this;
 
             var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
             var remaining = 0;
@@ -4971,13 +5068,13 @@
               if (draw) {
                 chart.draw();
 
-                _this3._notify(chart, anims, date, 'progress');
+                _this4._notify(chart, anims, date, 'progress');
               }
 
               if (!items.length) {
                 anims.running = false;
 
-                _this3._notify(chart, anims, date, 'complete');
+                _this4._notify(chart, anims, date, 'complete');
 
                 anims.initial = false;
               }
@@ -6223,7 +6320,7 @@
         }, {
           key: "_resolveElementOptions",
           value: function _resolveElementOptions(elementType) {
-            var _this4 = this;
+            var _this5 = this;
 
             var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'default';
             var index = arguments.length > 2 ? arguments[2] : undefined;
@@ -6244,7 +6341,7 @@
             var names = Object.keys(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["d"].elements[elementType]);
 
             var context = function context() {
-              return _this4.getContext(index, active);
+              return _this5.getContext(index, active);
             };
 
             var values = config.resolveNamedOptions(scopes, names, context, prefixes);
@@ -6449,10 +6546,10 @@
             if (this._parsing) {
               this._syncList.push(args);
             } else {
-              var _args3 = _slicedToArray(args, 3),
-                  method = _args3[0],
-                  arg1 = _args3[1],
-                  arg2 = _args3[2];
+              var _args4 = _slicedToArray(args, 3),
+                  method = _args4[0],
+                  arg1 = _args4[1],
+                  arg2 = _args4[2];
 
               this[method](arg1, arg2);
             }
@@ -7328,17 +7425,17 @@
         var _super3 = _createSuper(DoughnutController);
 
         function DoughnutController(chart, datasetIndex) {
-          var _this5;
+          var _this6;
 
           _classCallCheck(this, DoughnutController);
 
-          _this5 = _super3.call(this, chart, datasetIndex);
-          _this5.enableOptionSharing = true;
-          _this5.innerRadius = undefined;
-          _this5.outerRadius = undefined;
-          _this5.offsetX = undefined;
-          _this5.offsetY = undefined;
-          return _this5;
+          _this6 = _super3.call(this, chart, datasetIndex);
+          _this6.enableOptionSharing = true;
+          _this6.innerRadius = undefined;
+          _this6.outerRadius = undefined;
+          _this6.offsetX = undefined;
+          _this6.offsetY = undefined;
+          return _this6;
         }
 
         _createClass(DoughnutController, [{
@@ -7924,14 +8021,14 @@
         var _super5 = _createSuper(PolarAreaController);
 
         function PolarAreaController(chart, datasetIndex) {
-          var _this6;
+          var _this7;
 
           _classCallCheck(this, PolarAreaController);
 
-          _this6 = _super5.call(this, chart, datasetIndex);
-          _this6.innerRadius = undefined;
-          _this6.outerRadius = undefined;
-          return _this6;
+          _this7 = _super5.call(this, chart, datasetIndex);
+          _this7.innerRadius = undefined;
+          _this7.outerRadius = undefined;
+          return _this7;
         }
 
         _createClass(PolarAreaController, [{
@@ -8024,13 +8121,13 @@
         }, {
           key: "countVisibleElements",
           value: function countVisibleElements() {
-            var _this7 = this;
+            var _this8 = this;
 
             var dataset = this.getDataset();
             var meta = this._cachedMeta;
             var count = 0;
             meta.data.forEach(function (element, index) {
-              if (!isNaN(dataset.data[index]) && _this7.chart.getDataVisibility(index)) {
+              if (!isNaN(dataset.data[index]) && _this8.chart.getDataVisibility(index)) {
                 count++;
               }
             });
@@ -9500,7 +9597,7 @@
         }, {
           key: "getProps",
           value: function getProps(props, _final) {
-            var _this8 = this;
+            var _this9 = this;
 
             var anims = this.$animations;
 
@@ -9510,7 +9607,7 @@
 
             var ret = {};
             props.forEach(function (prop) {
-              ret[prop] = anims[prop] && anims[prop].active() ? anims[prop]._to : _this8[prop];
+              ret[prop] = anims[prop] && anims[prop].active() ? anims[prop]._to : _this9[prop];
             });
             return ret;
           }
@@ -9967,59 +10064,59 @@
         var _super11 = _createSuper(Scale);
 
         function Scale(cfg) {
-          var _this9;
+          var _this10;
 
           _classCallCheck(this, Scale);
 
-          _this9 = _super11.call(this);
-          _this9.id = cfg.id;
-          _this9.type = cfg.type;
-          _this9.options = undefined;
-          _this9.ctx = cfg.ctx;
-          _this9.chart = cfg.chart;
-          _this9.top = undefined;
-          _this9.bottom = undefined;
-          _this9.left = undefined;
-          _this9.right = undefined;
-          _this9.width = undefined;
-          _this9.height = undefined;
-          _this9._margins = {
+          _this10 = _super11.call(this);
+          _this10.id = cfg.id;
+          _this10.type = cfg.type;
+          _this10.options = undefined;
+          _this10.ctx = cfg.ctx;
+          _this10.chart = cfg.chart;
+          _this10.top = undefined;
+          _this10.bottom = undefined;
+          _this10.left = undefined;
+          _this10.right = undefined;
+          _this10.width = undefined;
+          _this10.height = undefined;
+          _this10._margins = {
             left: 0,
             right: 0,
             top: 0,
             bottom: 0
           };
-          _this9.maxWidth = undefined;
-          _this9.maxHeight = undefined;
-          _this9.paddingTop = undefined;
-          _this9.paddingBottom = undefined;
-          _this9.paddingLeft = undefined;
-          _this9.paddingRight = undefined;
-          _this9.axis = undefined;
-          _this9.labelRotation = undefined;
-          _this9.min = undefined;
-          _this9.max = undefined;
-          _this9._range = undefined;
-          _this9.ticks = [];
-          _this9._gridLineItems = null;
-          _this9._labelItems = null;
-          _this9._labelSizes = null;
-          _this9._length = 0;
-          _this9._maxLength = 0;
-          _this9._longestTextCache = {};
-          _this9._startPixel = undefined;
-          _this9._endPixel = undefined;
-          _this9._reversePixels = false;
-          _this9._userMax = undefined;
-          _this9._userMin = undefined;
-          _this9._suggestedMax = undefined;
-          _this9._suggestedMin = undefined;
-          _this9._ticksLength = 0;
-          _this9._borderValue = 0;
-          _this9._cache = {};
-          _this9._dataLimitsCached = false;
-          _this9.$context = undefined;
-          return _this9;
+          _this10.maxWidth = undefined;
+          _this10.maxHeight = undefined;
+          _this10.paddingTop = undefined;
+          _this10.paddingBottom = undefined;
+          _this10.paddingLeft = undefined;
+          _this10.paddingRight = undefined;
+          _this10.axis = undefined;
+          _this10.labelRotation = undefined;
+          _this10.min = undefined;
+          _this10.max = undefined;
+          _this10._range = undefined;
+          _this10.ticks = [];
+          _this10._gridLineItems = null;
+          _this10._labelItems = null;
+          _this10._labelSizes = null;
+          _this10._length = 0;
+          _this10._maxLength = 0;
+          _this10._longestTextCache = {};
+          _this10._startPixel = undefined;
+          _this10._endPixel = undefined;
+          _this10._reversePixels = false;
+          _this10._userMax = undefined;
+          _this10._userMin = undefined;
+          _this10._suggestedMax = undefined;
+          _this10._suggestedMin = undefined;
+          _this10._ticksLength = 0;
+          _this10._borderValue = 0;
+          _this10._cache = {};
+          _this10._dataLimitsCached = false;
+          _this10.$context = undefined;
+          return _this10;
         }
 
         _createClass(Scale, [{
@@ -11324,7 +11421,7 @@
         }, {
           key: "_layers",
           value: function _layers() {
-            var _this10 = this;
+            var _this11 = this;
 
             var opts = this.options;
             var tz = opts.ticks && opts.ticks.z || 0;
@@ -11334,7 +11431,7 @@
               return [{
                 z: tz,
                 draw: function draw(chartArea) {
-                  _this10.draw(chartArea);
+                  _this11.draw(chartArea);
                 }
               }];
             }
@@ -11342,21 +11439,21 @@
             return [{
               z: gz,
               draw: function draw(chartArea) {
-                _this10.drawBackground();
+                _this11.drawBackground();
 
-                _this10.drawGrid(chartArea);
+                _this11.drawGrid(chartArea);
 
-                _this10.drawTitle();
+                _this11.drawTitle();
               }
             }, {
               z: gz + 1,
               draw: function draw() {
-                _this10.drawBorder();
+                _this11.drawBorder();
               }
             }, {
               z: tz,
               draw: function draw(chartArea) {
-                _this10.drawLabels(chartArea);
+                _this11.drawLabels(chartArea);
               }
             }];
           }
@@ -11626,18 +11723,18 @@
         }, {
           key: "_each",
           value: function _each(method, args, typedRegistry) {
-            var _this11 = this;
+            var _this12 = this;
 
             _toConsumableArray(args).forEach(function (arg) {
-              var reg = typedRegistry || _this11._getRegistryForType(arg);
+              var reg = typedRegistry || _this12._getRegistryForType(arg);
 
-              if (typedRegistry || reg.isForType(arg) || reg === _this11.plugins && arg.id) {
-                _this11._exec(method, reg, arg);
+              if (typedRegistry || reg.isForType(arg) || reg === _this12.plugins && arg.id) {
+                _this12._exec(method, reg, arg);
               } else {
                 Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(arg, function (item) {
-                  var itemReg = typedRegistry || _this11._getRegistryForType(item);
+                  var itemReg = typedRegistry || _this12._getRegistryForType(item);
 
-                  _this11._exec(method, itemReg, item);
+                  _this12._exec(method, itemReg, item);
                 });
               }
             });
@@ -12306,7 +12403,7 @@
 
       var Chart = /*#__PURE__*/function () {
         function Chart(item, userConfig) {
-          var _this12 = this;
+          var _this13 = this;
 
           _classCallCheck(this, Chart);
 
@@ -12351,7 +12448,7 @@
           this._animationsDisabled = undefined;
           this.$context = undefined;
           this._doResize = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["aa"])(function (mode) {
-            return _this12.update(mode);
+            return _this13.update(mode);
           }, options.resizeDelay || 0);
           instances[this.id] = this;
 
@@ -12485,7 +12582,7 @@
         }, {
           key: "buildOrUpdateScales",
           value: function buildOrUpdateScales() {
-            var _this13 = this;
+            var _this14 = this;
 
             var options = this.options;
             var scaleOpts = options.scales;
@@ -12530,8 +12627,8 @@
                 scale = new scaleClass({
                   id: id,
                   type: scaleType,
-                  ctx: _this13.ctx,
-                  chart: _this13
+                  ctx: _this14.ctx,
+                  chart: _this14
                 });
                 scales[scale.id] = scale;
               }
@@ -12544,8 +12641,8 @@
               }
             });
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(scales, function (scale) {
-              layouts.configure(_this13, scale, scale.options);
-              layouts.addBox(_this13, scale);
+              layouts.configure(_this14, scale, scale.options);
+              layouts.addBox(_this14, scale);
             });
           }
         }, {
@@ -12571,7 +12668,7 @@
         }, {
           key: "_removeUnreferencedMetasets",
           value: function _removeUnreferencedMetasets() {
-            var _this14 = this;
+            var _this15 = this;
 
             var metasets = this._metasets,
                 datasets = this.data.datasets;
@@ -12584,7 +12681,7 @@
               if (datasets.filter(function (x) {
                 return x === meta._dataset;
               }).length === 0) {
-                _this14._destroyDatasetMeta(index);
+                _this15._destroyDatasetMeta(index);
               }
             });
           }
@@ -12639,10 +12736,10 @@
         }, {
           key: "_resetElements",
           value: function _resetElements() {
-            var _this15 = this;
+            var _this16 = this;
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.data.datasets, function (dataset, datasetIndex) {
-              _this15.getDatasetMeta(datasetIndex).controller.reset();
+              _this16.getDatasetMeta(datasetIndex).controller.reset();
             }, this);
           }
         }, {
@@ -12655,13 +12752,13 @@
         }, {
           key: "update",
           value: function update(mode) {
-            var _this16 = this;
+            var _this17 = this;
 
             var config = this.config;
             config.update();
             var options = this._options = config.createResolver(config.chartOptionScopes(), this.getContext());
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.scales, function (scale) {
-              layouts.removeBox(_this16, scale);
+              layouts.removeBox(_this17, scale);
             });
             var animsDisabled = this._animationsDisabled = !options.animation;
             this.ensureScalesHaveIDs();
@@ -12723,7 +12820,7 @@
         }, {
           key: "_updateLayout",
           value: function _updateLayout(minPadding) {
-            var _this17 = this;
+            var _this18 = this;
 
             if (this.notifyPlugins('beforeLayout', {
               cancelable: true
@@ -12736,7 +12833,7 @@
             var noArea = area.width <= 0 || area.height <= 0;
             this._layers = [];
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.boxes, function (box) {
-              var _this17$_layers;
+              var _this18$_layers;
 
               if (noArea && box.position === 'chartArea') {
                 return;
@@ -12746,7 +12843,7 @@
                 box.configure();
               }
 
-              (_this17$_layers = _this17._layers).push.apply(_this17$_layers, _toConsumableArray(box._layers()));
+              (_this18$_layers = _this18._layers).push.apply(_this18$_layers, _toConsumableArray(box._layers()));
             }, this);
 
             this._layers.forEach(function (item, index) {
@@ -13106,13 +13203,13 @@
         }, {
           key: "bindUserEvents",
           value: function bindUserEvents() {
-            var _this18 = this;
+            var _this19 = this;
 
             var listeners = this._listeners;
             var platform = this.platform;
 
             var _add = function _add(type, listener) {
-              platform.addEventListener(_this18, type, listener);
+              platform.addEventListener(_this19, type, listener);
               listeners[type] = listener;
             };
 
@@ -13120,7 +13217,7 @@
               e.offsetX = x;
               e.offsetY = y;
 
-              _this18._eventHandler(e);
+              _this19._eventHandler(e);
             };
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.options.events, function (type) {
@@ -13130,7 +13227,7 @@
         }, {
           key: "bindResponsiveEvents",
           value: function bindResponsiveEvents() {
-            var _this19 = this;
+            var _this20 = this;
 
             if (!this._responsiveListeners) {
               this._responsiveListeners = {};
@@ -13140,20 +13237,20 @@
             var platform = this.platform;
 
             var _add = function _add(type, listener) {
-              platform.addEventListener(_this19, type, listener);
+              platform.addEventListener(_this20, type, listener);
               listeners[type] = listener;
             };
 
             var _remove = function _remove(type, listener) {
               if (listeners[type]) {
-                platform.removeEventListener(_this19, type, listener);
+                platform.removeEventListener(_this20, type, listener);
                 delete listeners[type];
               }
             };
 
             var listener = function listener(width, height) {
-              if (_this19.canvas) {
-                _this19.resize(width, height);
+              if (_this20.canvas) {
+                _this20.resize(width, height);
               }
             };
 
@@ -13162,9 +13259,9 @@
             var attached = function attached() {
               _remove('attach', attached);
 
-              _this19.attached = true;
+              _this20.attached = true;
 
-              _this19.resize();
+              _this20.resize();
 
               _add('resize', listener);
 
@@ -13172,13 +13269,13 @@
             };
 
             detached = function detached() {
-              _this19.attached = false;
+              _this20.attached = false;
 
               _remove('resize', listener);
 
-              _this19._stop();
+              _this20._stop();
 
-              _this19._resize(0, 0);
+              _this20._resize(0, 0);
 
               _add('attach', attached);
             };
@@ -13192,14 +13289,14 @@
         }, {
           key: "unbindEvents",
           value: function unbindEvents() {
-            var _this20 = this;
+            var _this21 = this;
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this._listeners, function (listener, type) {
-              _this20.platform.removeEventListener(_this20, type, listener);
+              _this21.platform.removeEventListener(_this21, type, listener);
             });
             this._listeners = {};
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this._responsiveListeners, function (listener, type) {
-              _this20.platform.removeEventListener(_this20, type, listener);
+              _this21.platform.removeEventListener(_this21, type, listener);
             });
             this._responsiveListeners = undefined;
           }
@@ -13231,14 +13328,14 @@
         }, {
           key: "setActiveElements",
           value: function setActiveElements(activeElements) {
-            var _this21 = this;
+            var _this22 = this;
 
             var lastActive = this._active || [];
             var active = activeElements.map(function (_ref3) {
               var datasetIndex = _ref3.datasetIndex,
                   index = _ref3.index;
 
-              var meta = _this21.getDatasetMeta(datasetIndex);
+              var meta = _this22.getDatasetMeta(datasetIndex);
 
               if (!meta) {
                 throw new Error('No dataset found at index ' + datasetIndex);
@@ -13290,7 +13387,7 @@
         }, {
           key: "_eventHandler",
           value: function _eventHandler(e, replay) {
-            var _this22 = this;
+            var _this23 = this;
 
             var args = {
               event: e,
@@ -13299,7 +13396,7 @@
             };
 
             var eventFilter = function eventFilter(plugin) {
-              return (plugin.options.events || _this22.options.events).includes(e["native"].type);
+              return (plugin.options.events || _this23.options.events).includes(e["native"].type);
             };
 
             if (this.notifyPlugins('beforeEvent', args, eventFilter) === false) {
@@ -13624,25 +13721,25 @@
         var _super12 = _createSuper(ArcElement);
 
         function ArcElement(cfg) {
-          var _this23;
+          var _this24;
 
           _classCallCheck(this, ArcElement);
 
-          _this23 = _super12.call(this);
-          _this23.options = undefined;
-          _this23.circumference = undefined;
-          _this23.startAngle = undefined;
-          _this23.endAngle = undefined;
-          _this23.innerRadius = undefined;
-          _this23.outerRadius = undefined;
-          _this23.pixelMargin = 0;
-          _this23.fullCircles = 0;
+          _this24 = _super12.call(this);
+          _this24.options = undefined;
+          _this24.circumference = undefined;
+          _this24.startAngle = undefined;
+          _this24.endAngle = undefined;
+          _this24.innerRadius = undefined;
+          _this24.outerRadius = undefined;
+          _this24.pixelMargin = 0;
+          _this24.fullCircles = 0;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this23), cfg);
+            Object.assign(_assertThisInitialized(_this24), cfg);
           }
 
-          return _this23;
+          return _this24;
         }
 
         _createClass(ArcElement, [{
@@ -13983,28 +14080,28 @@
         var _super13 = _createSuper(LineElement);
 
         function LineElement(cfg) {
-          var _this24;
+          var _this25;
 
           _classCallCheck(this, LineElement);
 
-          _this24 = _super13.call(this);
-          _this24.animated = true;
-          _this24.options = undefined;
-          _this24._chart = undefined;
-          _this24._loop = undefined;
-          _this24._fullLoop = undefined;
-          _this24._path = undefined;
-          _this24._points = undefined;
-          _this24._segments = undefined;
-          _this24._decimated = false;
-          _this24._pointsUpdated = false;
-          _this24._datasetIndex = undefined;
+          _this25 = _super13.call(this);
+          _this25.animated = true;
+          _this25.options = undefined;
+          _this25._chart = undefined;
+          _this25._loop = undefined;
+          _this25._fullLoop = undefined;
+          _this25._path = undefined;
+          _this25._points = undefined;
+          _this25._segments = undefined;
+          _this25._decimated = false;
+          _this25._pointsUpdated = false;
+          _this25._datasetIndex = undefined;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this24), cfg);
+            Object.assign(_assertThisInitialized(_this25), cfg);
           }
 
-          return _this24;
+          return _this25;
         }
 
         _createClass(LineElement, [{
@@ -14194,21 +14291,21 @@
         var _super14 = _createSuper(PointElement);
 
         function PointElement(cfg) {
-          var _this25;
+          var _this26;
 
           _classCallCheck(this, PointElement);
 
-          _this25 = _super14.call(this);
-          _this25.options = undefined;
-          _this25.parsed = undefined;
-          _this25.skip = undefined;
-          _this25.stop = undefined;
+          _this26 = _super14.call(this);
+          _this26.options = undefined;
+          _this26.parsed = undefined;
+          _this26.skip = undefined;
+          _this26.stop = undefined;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this25), cfg);
+            Object.assign(_assertThisInitialized(_this26), cfg);
           }
 
-          return _this25;
+          return _this26;
         }
 
         _createClass(PointElement, [{
@@ -14424,23 +14521,23 @@
         var _super15 = _createSuper(BarElement);
 
         function BarElement(cfg) {
-          var _this26;
+          var _this27;
 
           _classCallCheck(this, BarElement);
 
-          _this26 = _super15.call(this);
-          _this26.options = undefined;
-          _this26.horizontal = undefined;
-          _this26.base = undefined;
-          _this26.width = undefined;
-          _this26.height = undefined;
-          _this26.inflateAmount = undefined;
+          _this27 = _super15.call(this);
+          _this27.options = undefined;
+          _this27.horizontal = undefined;
+          _this27.base = undefined;
+          _this27.width = undefined;
+          _this27.height = undefined;
+          _this27.inflateAmount = undefined;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this26), cfg);
+            Object.assign(_assertThisInitialized(_this27), cfg);
           }
 
-          return _this26;
+          return _this27;
         }
 
         _createClass(BarElement, [{
@@ -15557,34 +15654,34 @@
         var _super16 = _createSuper(Legend);
 
         function Legend(config) {
-          var _this27;
+          var _this28;
 
           _classCallCheck(this, Legend);
 
-          _this27 = _super16.call(this);
-          _this27._added = false;
-          _this27.legendHitBoxes = [];
-          _this27._hoveredItem = null;
-          _this27.doughnutMode = false;
-          _this27.chart = config.chart;
-          _this27.options = config.options;
-          _this27.ctx = config.ctx;
-          _this27.legendItems = undefined;
-          _this27.columnSizes = undefined;
-          _this27.lineWidths = undefined;
-          _this27.maxHeight = undefined;
-          _this27.maxWidth = undefined;
-          _this27.top = undefined;
-          _this27.bottom = undefined;
-          _this27.left = undefined;
-          _this27.right = undefined;
-          _this27.height = undefined;
-          _this27.width = undefined;
-          _this27._margins = undefined;
-          _this27.position = undefined;
-          _this27.weight = undefined;
-          _this27.fullSize = undefined;
-          return _this27;
+          _this28 = _super16.call(this);
+          _this28._added = false;
+          _this28.legendHitBoxes = [];
+          _this28._hoveredItem = null;
+          _this28.doughnutMode = false;
+          _this28.chart = config.chart;
+          _this28.options = config.options;
+          _this28.ctx = config.ctx;
+          _this28.legendItems = undefined;
+          _this28.columnSizes = undefined;
+          _this28.lineWidths = undefined;
+          _this28.maxHeight = undefined;
+          _this28.maxWidth = undefined;
+          _this28.top = undefined;
+          _this28.bottom = undefined;
+          _this28.left = undefined;
+          _this28.right = undefined;
+          _this28.height = undefined;
+          _this28.width = undefined;
+          _this28._margins = undefined;
+          _this28.position = undefined;
+          _this28.weight = undefined;
+          _this28.fullSize = undefined;
+          return _this28;
         }
 
         _createClass(Legend, [{
@@ -15613,20 +15710,20 @@
         }, {
           key: "buildLabels",
           value: function buildLabels() {
-            var _this28 = this;
+            var _this29 = this;
 
             var labelOpts = this.options.labels || {};
             var legendItems = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["N"])(labelOpts.generateLabels, [this.chart], this) || [];
 
             if (labelOpts.filter) {
               legendItems = legendItems.filter(function (item) {
-                return labelOpts.filter(item, _this28.chart.data);
+                return labelOpts.filter(item, _this29.chart.data);
               });
             }
 
             if (labelOpts.sort) {
               legendItems = legendItems.sort(function (a, b) {
-                return labelOpts.sort(a, b, _this28.chart.data);
+                return labelOpts.sort(a, b, _this29.chart.data);
               });
             }
 
@@ -15840,7 +15937,7 @@
         }, {
           key: "_draw",
           value: function _draw() {
-            var _this29 = this;
+            var _this30 = this;
 
             var opts = this.options,
                 columnSizes = this.columnSizes,
@@ -15957,23 +16054,23 @@
               var width = boxWidth + halfFontSize + textWidth;
               var x = cursor.x;
               var y = cursor.y;
-              rtlHelper.setWidth(_this29.width);
+              rtlHelper.setWidth(_this30.width);
 
               if (isHorizontal) {
-                if (i > 0 && x + width + padding > _this29.right) {
+                if (i > 0 && x + width + padding > _this30.right) {
                   y = cursor.y += lineHeight;
                   cursor.line++;
-                  x = cursor.x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this29.left + padding, _this29.right - lineWidths[cursor.line]);
+                  x = cursor.x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this30.left + padding, _this30.right - lineWidths[cursor.line]);
                 }
-              } else if (i > 0 && y + lineHeight > _this29.bottom) {
+              } else if (i > 0 && y + lineHeight > _this30.bottom) {
                 x = cursor.x = x + columnSizes[cursor.line].width + padding;
                 cursor.line++;
-                y = cursor.y = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this29.top + titleHeight + padding, _this29.bottom - columnSizes[cursor.line].height);
+                y = cursor.y = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this30.top + titleHeight + padding, _this30.bottom - columnSizes[cursor.line].height);
               }
 
               var realX = rtlHelper.x(x);
               drawLegendBox(realX, y, legendItem);
-              x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["ax"])(textAlign, x + boxWidth + halfFontSize, isHorizontal ? x + width : _this29.right, opts.rtl);
+              x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["ax"])(textAlign, x + boxWidth + halfFontSize, isHorizontal ? x + width : _this30.right, opts.rtl);
               fillText(rtlHelper.x(x), y, legendItem);
 
               if (isHorizontal) {
@@ -16211,25 +16308,25 @@
         var _super17 = _createSuper(Title);
 
         function Title(config) {
-          var _this30;
+          var _this31;
 
           _classCallCheck(this, Title);
 
-          _this30 = _super17.call(this);
-          _this30.chart = config.chart;
-          _this30.options = config.options;
-          _this30.ctx = config.ctx;
-          _this30._padding = undefined;
-          _this30.top = undefined;
-          _this30.bottom = undefined;
-          _this30.left = undefined;
-          _this30.right = undefined;
-          _this30.width = undefined;
-          _this30.height = undefined;
-          _this30.position = undefined;
-          _this30.weight = undefined;
-          _this30.fullSize = undefined;
-          return _this30;
+          _this31 = _super17.call(this);
+          _this31.chart = config.chart;
+          _this31.options = config.options;
+          _this31.ctx = config.ctx;
+          _this31._padding = undefined;
+          _this31.top = undefined;
+          _this31.bottom = undefined;
+          _this31.left = undefined;
+          _this31.right = undefined;
+          _this31.width = undefined;
+          _this31.height = undefined;
+          _this31.position = undefined;
+          _this31.weight = undefined;
+          _this31.fullSize = undefined;
+          return _this31;
         }
 
         _createClass(Title, [{
@@ -16742,39 +16839,39 @@
         var _super18 = _createSuper(Tooltip);
 
         function Tooltip(config) {
-          var _this31;
+          var _this32;
 
           _classCallCheck(this, Tooltip);
 
-          _this31 = _super18.call(this);
-          _this31.opacity = 0;
-          _this31._active = [];
-          _this31._chart = config._chart;
-          _this31._eventPosition = undefined;
-          _this31._size = undefined;
-          _this31._cachedAnimations = undefined;
-          _this31._tooltipItems = [];
-          _this31.$animations = undefined;
-          _this31.$context = undefined;
-          _this31.options = config.options;
-          _this31.dataPoints = undefined;
-          _this31.title = undefined;
-          _this31.beforeBody = undefined;
-          _this31.body = undefined;
-          _this31.afterBody = undefined;
-          _this31.footer = undefined;
-          _this31.xAlign = undefined;
-          _this31.yAlign = undefined;
-          _this31.x = undefined;
-          _this31.y = undefined;
-          _this31.height = undefined;
-          _this31.width = undefined;
-          _this31.caretX = undefined;
-          _this31.caretY = undefined;
-          _this31.labelColors = undefined;
-          _this31.labelPointStyles = undefined;
-          _this31.labelTextColors = undefined;
-          return _this31;
+          _this32 = _super18.call(this);
+          _this32.opacity = 0;
+          _this32._active = [];
+          _this32._chart = config._chart;
+          _this32._eventPosition = undefined;
+          _this32._size = undefined;
+          _this32._cachedAnimations = undefined;
+          _this32._tooltipItems = [];
+          _this32.$animations = undefined;
+          _this32.$context = undefined;
+          _this32.options = config.options;
+          _this32.dataPoints = undefined;
+          _this32.title = undefined;
+          _this32.beforeBody = undefined;
+          _this32.body = undefined;
+          _this32.afterBody = undefined;
+          _this32.footer = undefined;
+          _this32.xAlign = undefined;
+          _this32.yAlign = undefined;
+          _this32.x = undefined;
+          _this32.y = undefined;
+          _this32.height = undefined;
+          _this32.width = undefined;
+          _this32.caretX = undefined;
+          _this32.caretY = undefined;
+          _this32.labelColors = undefined;
+          _this32.labelPointStyles = undefined;
+          _this32.labelTextColors = undefined;
+          return _this32;
         }
 
         _createClass(Tooltip, [{
@@ -16830,7 +16927,7 @@
         }, {
           key: "getBody",
           value: function getBody(tooltipItems, options) {
-            var _this32 = this;
+            var _this33 = this;
 
             var callbacks = options.callbacks;
             var bodyItems = [];
@@ -16841,9 +16938,9 @@
                 after: []
               };
               var scoped = overrideCallbacks(callbacks, context);
-              pushOrConcat(bodyItem.before, splitNewlines(scoped.beforeLabel.call(_this32, context)));
-              pushOrConcat(bodyItem.lines, scoped.label.call(_this32, context));
-              pushOrConcat(bodyItem.after, splitNewlines(scoped.afterLabel.call(_this32, context)));
+              pushOrConcat(bodyItem.before, splitNewlines(scoped.beforeLabel.call(_this33, context)));
+              pushOrConcat(bodyItem.lines, scoped.label.call(_this33, context));
+              pushOrConcat(bodyItem.after, splitNewlines(scoped.afterLabel.call(_this33, context)));
               bodyItems.push(bodyItem);
             });
             return bodyItems;
@@ -16869,7 +16966,7 @@
         }, {
           key: "_createItems",
           value: function _createItems(options) {
-            var _this33 = this;
+            var _this34 = this;
 
             var active = this._active;
             var data = this._chart.data;
@@ -16897,9 +16994,9 @@
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(tooltipItems, function (context) {
               var scoped = overrideCallbacks(options.callbacks, context);
-              labelColors.push(scoped.labelColor.call(_this33, context));
-              labelPointStyles.push(scoped.labelPointStyle.call(_this33, context));
-              labelTextColors.push(scoped.labelTextColor.call(_this33, context));
+              labelColors.push(scoped.labelColor.call(_this34, context));
+              labelPointStyles.push(scoped.labelPointStyle.call(_this34, context));
+              labelTextColors.push(scoped.labelTextColor.call(_this34, context));
             });
             this.labelColors = labelColors;
             this.labelPointStyles = labelPointStyles;
@@ -17350,14 +17447,14 @@
         }, {
           key: "setActiveElements",
           value: function setActiveElements(activeElements, eventPosition) {
-            var _this34 = this;
+            var _this35 = this;
 
             var lastActive = this._active;
             var active = activeElements.map(function (_ref10) {
               var datasetIndex = _ref10.datasetIndex,
                   index = _ref10.index;
 
-              var meta = _this34._chart.getDatasetMeta(datasetIndex);
+              var meta = _this35._chart.getDatasetMeta(datasetIndex);
 
               if (!meta) {
                 throw new Error('Cannot find a dataset at index ' + datasetIndex);
@@ -17656,14 +17753,14 @@
         var _super19 = _createSuper(CategoryScale);
 
         function CategoryScale(cfg) {
-          var _this35;
+          var _this36;
 
           _classCallCheck(this, CategoryScale);
 
-          _this35 = _super19.call(this, cfg);
-          _this35._startValue = undefined;
-          _this35._valueRange = 0;
-          return _this35;
+          _this36 = _super19.call(this, cfg);
+          _this36._startValue = undefined;
+          _this36._valueRange = 0;
+          return _this36;
         }
 
         _createClass(CategoryScale, [{
@@ -17915,17 +18012,17 @@
         var _super20 = _createSuper(LinearScaleBase);
 
         function LinearScaleBase(cfg) {
-          var _this36;
+          var _this37;
 
           _classCallCheck(this, LinearScaleBase);
 
-          _this36 = _super20.call(this, cfg);
-          _this36.start = undefined;
-          _this36.end = undefined;
-          _this36._startValue = undefined;
-          _this36._endValue = undefined;
-          _this36._valueRange = 0;
-          return _this36;
+          _this37 = _super20.call(this, cfg);
+          _this37.start = undefined;
+          _this37.end = undefined;
+          _this37._startValue = undefined;
+          _this37._endValue = undefined;
+          _this37._valueRange = 0;
+          return _this37;
         }
 
         _createClass(LinearScaleBase, [{
@@ -18187,16 +18284,16 @@
         var _super22 = _createSuper(LogarithmicScale);
 
         function LogarithmicScale(cfg) {
-          var _this37;
+          var _this38;
 
           _classCallCheck(this, LogarithmicScale);
 
-          _this37 = _super22.call(this, cfg);
-          _this37.start = undefined;
-          _this37.end = undefined;
-          _this37._startValue = undefined;
-          _this37._valueRange = 0;
-          return _this37;
+          _this38 = _super22.call(this, cfg);
+          _this38.start = undefined;
+          _this38.end = undefined;
+          _this38._startValue = undefined;
+          _this38._valueRange = 0;
+          return _this38;
         }
 
         _createClass(LogarithmicScale, [{
@@ -18582,17 +18679,17 @@
         var _super23 = _createSuper(RadialLinearScale);
 
         function RadialLinearScale(cfg) {
-          var _this38;
+          var _this39;
 
           _classCallCheck(this, RadialLinearScale);
 
-          _this38 = _super23.call(this, cfg);
-          _this38.xCenter = undefined;
-          _this38.yCenter = undefined;
-          _this38.drawingArea = undefined;
-          _this38._pointLabels = [];
-          _this38._pointLabelItems = [];
-          return _this38;
+          _this39 = _super23.call(this, cfg);
+          _this39.xCenter = undefined;
+          _this39.yCenter = undefined;
+          _this39.drawingArea = undefined;
+          _this39._pointLabels = [];
+          _this39._pointLabelItems = [];
+          return _this39;
         }
 
         _createClass(RadialLinearScale, [{
@@ -18624,11 +18721,11 @@
         }, {
           key: "generateTickLabels",
           value: function generateTickLabels(ticks) {
-            var _this39 = this;
+            var _this40 = this;
 
             LinearScaleBase.prototype.generateTickLabels.call(this, ticks);
             this._pointLabels = this.getLabels().map(function (value, index) {
-              var label = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["N"])(_this39.options.pointLabels.callback, [value, index], _this39);
+              var label = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["N"])(_this40.options.pointLabels.callback, [value, index], _this40);
               return label || label === 0 ? label : '';
             });
           }
@@ -18766,7 +18863,7 @@
         }, {
           key: "drawGrid",
           value: function drawGrid() {
-            var _this40 = this;
+            var _this41 = this;
 
             var ctx = this.ctx;
             var opts = this.options;
@@ -18782,9 +18879,9 @@
             if (grid.display) {
               this.ticks.forEach(function (tick, index) {
                 if (index !== 0) {
-                  offset = _this40.getDistanceFromCenterForValue(tick.value);
-                  var optsAtIndex = grid.setContext(_this40.getContext(index - 1));
-                  drawRadiusLine(_this40, optsAtIndex, offset, labelCount);
+                  offset = _this41.getDistanceFromCenterForValue(tick.value);
+                  var optsAtIndex = grid.setContext(_this41.getContext(index - 1));
+                  drawRadiusLine(_this41, optsAtIndex, offset, labelCount);
                 }
               });
             }
@@ -18822,7 +18919,7 @@
         }, {
           key: "drawLabels",
           value: function drawLabels() {
-            var _this41 = this;
+            var _this42 = this;
 
             var ctx = this.ctx;
             var opts = this.options;
@@ -18844,9 +18941,9 @@
                 return;
               }
 
-              var optsAtIndex = tickOpts.setContext(_this41.getContext(index));
+              var optsAtIndex = tickOpts.setContext(_this42.getContext(index));
               var tickFont = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["Y"])(optsAtIndex.font);
-              offset = _this41.getDistanceFromCenterForValue(_this41.ticks[index].value);
+              offset = _this42.getDistanceFromCenterForValue(_this42.ticks[index].value);
 
               if (optsAtIndex.showLabelBackdrop) {
                 ctx.font = tickFont.string;
@@ -19084,22 +19181,22 @@
         var _super24 = _createSuper(TimeScale);
 
         function TimeScale(props) {
-          var _this42;
+          var _this43;
 
           _classCallCheck(this, TimeScale);
 
-          _this42 = _super24.call(this, props);
-          _this42._cache = {
+          _this43 = _super24.call(this, props);
+          _this43._cache = {
             data: [],
             labels: [],
             all: []
           };
-          _this42._unit = 'day';
-          _this42._majorUnit = undefined;
-          _this42._offsets = {};
-          _this42._normalized = false;
-          _this42._parseOpts = undefined;
-          return _this42;
+          _this43._unit = 'day';
+          _this43._majorUnit = undefined;
+          _this43._offsets = {};
+          _this43._normalized = false;
+          _this43._parseOpts = undefined;
+          return _this43;
         }
 
         _createClass(TimeScale, [{
@@ -19496,15 +19593,15 @@
         var _super25 = _createSuper(TimeSeriesScale);
 
         function TimeSeriesScale(props) {
-          var _this43;
+          var _this44;
 
           _classCallCheck(this, TimeSeriesScale);
 
-          _this43 = _super25.call(this, props);
-          _this43._table = [];
-          _this43._minPos = undefined;
-          _this43._tableRange = undefined;
-          return _this43;
+          _this44 = _super25.call(this, props);
+          _this44._table = [];
+          _this44._minPos = undefined;
+          _this44._tableRange = undefined;
+          return _this44;
         }
 
         _createClass(TimeSeriesScale, [{

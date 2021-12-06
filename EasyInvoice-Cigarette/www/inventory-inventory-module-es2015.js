@@ -90,12 +90,14 @@ let InventoryPage = class InventoryPage {
         });
     }
     updateInventoryToCustomers() {
-        this.dbService.getAllCustomers().then(data => {
-            let cusList = data;
-            for (let cus of data) {
-                cus.itemList = this.inventories;
-                this.dbService.UpdateCustomer(cus);
-            }
+        this.dbService.getAllInventories().then(invList => {
+            this.dbService.getAllCustomers().then(data => {
+                let cusList = data;
+                for (let cus of data) {
+                    cus.itemList = invList;
+                    this.dbService.UpdateCustomer(cus);
+                }
+            });
         });
     }
     presentDeleteAlertConfirm(inv) {

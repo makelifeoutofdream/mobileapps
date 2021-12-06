@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"],{
 
 /***/ "/8ZT":
 /*!***************************************************!*\
@@ -460,6 +460,7 @@ let DbService = class DbService {
         this.supplierCodeConstant = "SUP";
         this.invoiceCodeConstant = "INV";
         this.printerKey = "printer";
+        this.expenseKey = "printer";
         this.init();
     }
     init() {
@@ -935,6 +936,54 @@ let DbService = class DbService {
     getPrinter() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             return this.storage.get(this.printerKey);
+        });
+    }
+    getAllExpenses() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.storage.get(this.expenseKey);
+                let expenseList = JSON.parse(result);
+                return expenseList;
+            }
+            catch (reason) {
+                console.log(reason);
+                this.toastService.presentToast("Failed to load the expenses");
+            }
+        });
+    }
+    createExpense(expense) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.expenseKey);
+                let expenses = JSON.parse(value);
+                if (expenses == null || expenses == undefined) {
+                    expenses = [];
+                }
+                expense.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                expenses.push(expense);
+                this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    UpdateExpense(expense) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.expenseKey);
+                let expenses = JSON.parse(value);
+                var index = expenses.findIndex(i => i.id == expense.id);
+                expenses[index] = expense;
+                this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
         });
     }
 };
@@ -1422,4 +1471,4 @@ function v1(options, buf, offset) {
 /***/ })
 
 }]);
-//# sourceMappingURL=default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89-es2015.js.map
+//# sourceMappingURL=default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae-es2015.js.map

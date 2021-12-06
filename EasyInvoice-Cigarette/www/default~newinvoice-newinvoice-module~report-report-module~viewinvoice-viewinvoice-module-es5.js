@@ -2213,13 +2213,13 @@
         if (nodeVerArr[0] > 0 || nodeVerArr[1] >= 10) {
           __webpack_require__(
           /*! ./streams */
-          8)(iconv);
+          7)(iconv);
         } // Load Node primitive extensions.
 
 
         __webpack_require__(
         /*! ./extend-node */
-        9)(iconv);
+        8)(iconv);
       }
 
       if (false) {}
@@ -2512,6 +2512,21 @@
     },
 
     /***/
+    7:
+    /*!***************************!*\
+      !*** ./streams (ignored) ***!
+      \***************************/
+
+    /*! no static exports found */
+
+    /***/
+    function _(module, exports) {
+      /* (ignored) */
+
+      /***/
+    },
+
+    /***/
     "75lf":
     /*!************************************************************************************************!*\
       !*** ./node_modules/esc-pos-encoder-ionic/node_modules/iconv-lite/encodings/tables/cp936.json ***!
@@ -2527,21 +2542,6 @@
 
     /***/
     8:
-    /*!***************************!*\
-      !*** ./streams (ignored) ***!
-      \***************************/
-
-    /*! no static exports found */
-
-    /***/
-    function _(module, exports) {
-      /* (ignored) */
-
-      /***/
-    },
-
-    /***/
-    9:
     /*!*******************************!*\
       !*** ./extend-node (ignored) ***!
       \*******************************/

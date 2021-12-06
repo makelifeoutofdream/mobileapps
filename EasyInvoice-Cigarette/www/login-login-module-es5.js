@@ -121,7 +121,7 @@
           this.userName = "";
           this.password = "";
           this.error = false;
-          this.whiteListedMACs = ['919074292305', '0564863010', '0508812145', '919074247482'];
+          this.whiteListedMACs = ['919074292305', '0564863010', '0508812145', '919074247482', '0560545887'];
           this.formLogin = new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormGroup"]({
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required])),
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required]))
@@ -177,18 +177,18 @@
             }
 
             this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(function (data) {
-              //    if(this.whiteListedMACs.includes(this.phoneNo)){
-              if (data != null && data != undefined) {
-                _this3.loginUser = data;
-                _this3.app.showTabs = true;
+              if (_this3.whiteListedMACs.includes(_this3.phoneNo)) {
+                if (data != null && data != undefined) {
+                  _this3.loginUser = data;
+                  _this3.app.showTabs = true;
 
-                _this3.navCtrl.navigateRoot('dashboard');
+                  _this3.navCtrl.navigateRoot('dashboard');
+                } else {
+                  _this3.tostService.presentToast("Incorrect username or password");
+                }
               } else {
-                _this3.tostService.presentToast("Incorrect username or password");
-              } //  }else{
-              //  this.tostService.presentToast("Configuration Error");
-              // }
-
+                _this3.tostService.presentToast("Configuration Error");
+              }
             })["catch"](function (err) {
               console.log(err);
 

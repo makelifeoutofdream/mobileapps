@@ -245,7 +245,7 @@
               vatNumber: "",
               crNumber: "",
               creditLimit: null,
-              balance: null
+              balance: 0
             };
           }
         }, {

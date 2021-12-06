@@ -190,24 +190,26 @@
           value: function updateInventoryToCustomers() {
             var _this3 = this;
 
-            this.dbService.getAllCustomers().then(function (data) {
-              var cusList = data;
+            this.dbService.getAllInventories().then(function (invList) {
+              _this3.dbService.getAllCustomers().then(function (data) {
+                var cusList = data;
 
-              var _iterator = _createForOfIteratorHelper(data),
-                  _step;
+                var _iterator = _createForOfIteratorHelper(data),
+                    _step;
 
-              try {
-                for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                  var cus = _step.value;
-                  cus.itemList = _this3.inventories;
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    var cus = _step.value;
+                    cus.itemList = invList;
 
-                  _this3.dbService.UpdateCustomer(cus);
+                    _this3.dbService.UpdateCustomer(cus);
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
                 }
-              } catch (err) {
-                _iterator.e(err);
-              } finally {
-                _iterator.f();
-              }
+              });
             });
           }
         }, {

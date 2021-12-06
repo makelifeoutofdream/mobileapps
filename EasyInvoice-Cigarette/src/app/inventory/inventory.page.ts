@@ -54,13 +54,17 @@ export class InventoryPage implements OnInit {
 }
 
 updateInventoryToCustomers(){
-    this.dbService.getAllCustomers().then(data=>{
-      let cusList : Customer=data;
-      for(let cus of data){
-        cus.itemList=this.inventories;
-        this.dbService.UpdateCustomer(cus);
-      }
+    this.dbService.getAllInventories().then(invList=>{
+
+      this.dbService.getAllCustomers().then(data=>{
+        let cusList : Customer=data;
+        for(let cus of data){
+          cus.itemList=invList;
+          this.dbService.UpdateCustomer(cus);
+        }
+      })
     })
+    
   }
 
   async presentDeleteAlertConfirm(inv : Inventory) {

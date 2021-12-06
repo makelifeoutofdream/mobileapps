@@ -13,6 +13,7 @@
     <ion-item style="width: 95%;" >
       <ion-col size="12">
       <ion-select style="margin-top: 2%;height: 30px;margin-right: 4%; width: 95%;  max-width: 95% !important;"  [(ngModel)]="selectedCustomer" placeholder="Customer">
+      <ion-select-option [value]=null>All</ion-select-option>
         <ion-select-option style="width: 95%;" *ngFor="let cus of customerList" [value]="cus">{{cus.name}}</ion-select-option>
       </ion-select>
     </ion-col>

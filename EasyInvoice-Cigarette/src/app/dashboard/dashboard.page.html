@@ -11,9 +11,9 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
+  <div class="ion-padding : min-height:100%">
    
-    <ion-card>
+    <ion-card style="min-height: 100%;">
       <ion-card-header>
         Inventory 
       </ion-card-header>
@@ -24,11 +24,31 @@
 
     <!-- <ion-card>
       <ion-card-header>
-        Profit
+        Revenue Vs GP
+        <div style="float: right;">
+          <ion-label ion-button color="secondary"  (click)="download()">
+Export
+          </ion-label>
+        </div>
       </ion-card-header>
       <ion-card-content>
-        <canvas #lineCanvas></canvas>
+        <canvas #barCanvas></canvas>
       </ion-card-content>
+
+      <ion-card-footer>
+        <ion-row>
+          <ion-item>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate" placeholder="Start Date"></ion-datetime>
+          </ion-item>
+       
+          <ion-item>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" placeholder="End Date"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label ion-button color="secondary">Apply</ion-label>
+          </ion-item>
+        </ion-row>
+      </ion-card-footer>
     </ion-card> -->
   </div>
 </ion-content>

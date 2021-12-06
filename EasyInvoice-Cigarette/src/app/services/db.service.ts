@@ -14,6 +14,7 @@ import { Profile } from './profile';
 import { Supplier } from './supplier';
 import { Purchase } from './purchase';
 import { PurchaseItem } from './PurchaseItem';
+import { Expense } from './expense';
 @Injectable({
   providedIn: 'root'
 })
@@ -46,6 +47,7 @@ export class DbService {
   public supplierCodeConstant="SUP";
   public invoiceCodeConstant="INV";
   private printerKey="printer";
+  private expenseKey="printer";
   constructor(
     private httpClient: HttpClient,
     private toastService : ToastserviceService,
@@ -487,6 +489,49 @@ async savePrinter(macAddress :any) : Promise<any>{
 
 async getPrinter():Promise<any>{
   return  this.storage.get(this.printerKey );
+}
+
+
+async getAllExpenses():Promise<any>{
+  try{
+    const result =await this.storage.get(this.expenseKey);
+    let expenseList : Expense[]= JSON.parse(result)
+    return expenseList;
+  }catch(reason){
+    console.log(reason);
+    this.toastService.presentToast("Failed to load the expenses");
+  }
+}
+
+async createExpense(expense :Expense) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.expenseKey);
+    let expenses=JSON.parse(value);
+    if(expenses==null || expenses==undefined){
+      expenses=[];
+    }
+    expense.id=uuidv4();
+    expenses.push(expense);
+    this.storage.set(this.expenseKey,JSON.stringify(expenses) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
+async UpdateExpense(expense :Expense) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.expenseKey);
+    let expenses=JSON.parse(value);
+    var index = expenses.findIndex(i => i.id == expense.id);
+    expenses[index]=expense;
+    this.storage.set(this.expenseKey,JSON.stringify(expenses) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
 }
 
 }

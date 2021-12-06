@@ -49,7 +49,7 @@ let LoginPage = class LoginPage {
         this.userName = "";
         this.password = "";
         this.error = false;
-        this.whiteListedMACs = ['919074292305', '0564863010', '0508812145', '919074247482'];
+        this.whiteListedMACs = ['919074292305', '0564863010', '0508812145', '919074247482', '0560545887'];
         this.formLogin = new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormGroup"]({
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required])),
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required]))
@@ -88,18 +88,19 @@ let LoginPage = class LoginPage {
             return;
         }
         this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(data => {
-            //    if(this.whiteListedMACs.includes(this.phoneNo)){
-            if (data != null && data != undefined) {
-                this.loginUser = data;
-                this.app.showTabs = true;
-                this.navCtrl.navigateRoot('dashboard');
+            if (this.whiteListedMACs.includes(this.phoneNo)) {
+                if (data != null && data != undefined) {
+                    this.loginUser = data;
+                    this.app.showTabs = true;
+                    this.navCtrl.navigateRoot('dashboard');
+                }
+                else {
+                    this.tostService.presentToast("Incorrect username or password");
+                }
             }
             else {
-                this.tostService.presentToast("Incorrect username or password");
+                this.tostService.presentToast("Configuration Error");
             }
-            //  }else{
-            //  this.tostService.presentToast("Configuration Error");
-            // }
         }).catch(err => {
             console.log(err);
             this.tostService.presentToast("Incorrect username or password");

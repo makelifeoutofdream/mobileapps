@@ -16,7 +16,9 @@ import * as iconv from 'iconv-lite';
 import { IncomingMessage } from 'http';
 import EscPosEncoder from 'esc-pos-encoder-ionic';
 import { DatePipe } from '@angular/common'
-
+import html2canvas from "html2canvas";
+import domtoimage from 'dom-to-image'
+import { Buffer } from 'buffer';
 @Component({
   selector: 'app-newinvoice',
   templateUrl: './newinvoice.page.html',
@@ -118,6 +120,8 @@ total:null,tax:null} ;
 }
   
 populateCustomerProducts(){
+  this.products=[];
+  this.productsBackup=[];
   if(this.invoice.customer!=null && this.invoice.customer!=undefined && this.invoice.customer.itemList!=null && this.invoice.customer.itemList!=undefined){
     console.log("populateCustomerProducts");
     let inventory ;
@@ -191,11 +195,11 @@ submitBill(){
         stockList[index].quantity=stockList[index].quantity-itm.quantity;
       }
       this.dbService.saveAllInventories(stockList).then(res=>{
-        if(this.invoice.balanceAmount>=this.invoice.amountPaid){
+       
           var index = this.customerList.findIndex(i => i.id == this.invoice.customer.id);
         this.invoice.customer.balance=this.invoice.balanceAmount;
         this.dbService.UpdateCustomer(this.invoice.customer);
-        }
+        
         this.tostService.presentToast("Bill submitted successfully");
         
         //this.navCtrl.navigateRoot('invoice');
@@ -208,17 +212,33 @@ submitBill(){
 }
 
 generateQRCodeContent(){
-  let datetime:string =this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
-  let data="Customer : "+this.invoice.customer.name+"  Address : "+this.invoice.customer.city+","+this.invoice.customer.district+" Date"+
-  datetime+" Invoice No : "+this.invoice.invoiceNumber+" Total "+this.invoice.total;
-  return data;
+
+  var sellerName=this.getTLVForValue("1",this.profile.companyName);
+  var vatNumber=this.getTLVForValue("2",this.profile.vatNumber);
+  var timestamp=this.getTLVForValue("3",""+this.invoice.invoiceDate);
+  let amt : number =(this.invoice.total-this.invoice.tax);
+  var amount=this.getTLVForValue("4",""+amt);
+  var vatAmount=this.getTLVForValue("5",""+this.invoice.tax);
+  var tagsBufArray=[sellerName,vatNumber,timestamp,amount,vatAmount];
+  var qrCodeBuf=Buffer.concat(tagsBufArray);
+  var qrCodeBase64=qrCodeBuf.toString('base64');
+  return qrCodeBase64;
+}
+
+getTLVForValue(tagNum,tagValue){
+  var tagBuf=Buffer.from([tagNum]);
+  var tagValueLenBuf=Buffer.from([tagValue.length]);
+  var tagValueBuf=Buffer.from(tagValue);
+  var buffsArray=[tagBuf,tagValueLenBuf,tagValueBuf];
+  return Buffer.concat(buffsArray);
 }
 
 getFormatedContent(){
   const encoder = new EscPosEncoder();
-  let result="";
+    let result="";
   let datetime:string =this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
   let billDetails=encoder.initialize().bold(true).raw([0x1B, 0x21, 0x20]).align('center').line(this.profile.companyName).bold(true).newline().
+  
   raw([0x1B, 0x21, 0x03]).align('left').bold(true).line('VAT # : '+ this.profile.vatNumber+','+'CR # : '+this.profile.crNumber).
   align('left').bold(true).line('---------------------------------------------------------------').bold(true).
   raw([0x1B, 0x21, 0x20]).align('center').bold(true).line('VAT INVOICE').bold(true).
@@ -258,6 +278,8 @@ getFormatedContent(){
   let qrcode= encoder.initialize().raw([0x1B, 0x21, 0x03]).align('center').qrcode(this.generateQRCodeContent(),1,4,'h').newline().
   align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline(); ;
  // result+=billDetails+itemDetails;
+ 
+ 
   result=encoder.initialize().encode();
   //line(billDetails).line(itemDetails).encode();
   //sprintf('%d %-20.20s %9.2f %3.0f %11.2f ',counter, itm.name, itm.unitPrice, itm.quantity, itm.unitPrice*itm.quantity);
@@ -266,148 +288,40 @@ return result;
 }
 
 printBill(){
-  const encoder = new EscPosEncoder();
+  
   try{
-    var esc = '\x1B';
-    var newLine = '\x0A';
-    var centerAllign = '\x1B' + '\x61'+ '\x31';
-    var double_strike_on= '\x1b'+'\x47'+'\x05'
-    var left_align='\x1B' + '\x61' + '\x30';
-    var  right_align= '\x1B' + '\x61' + '\x32';
-    var  bold_on='\x1B' + '\x45' + '\x0D';
-    let data=esc+'@';
-    data+=centerAllign;
-    data+=esc + '!' + '\x25';
-   // data+=bold_on;
-    data+=this.profile.companyName;
-    data+=newLine;
-    //data+=centerAllign;
-    //data+=esc + '!' + '\x01';
-    //data+=this.profile.companyNameInArabic
-    //data+=newLine;
-    data+=centerAllign;
-    data+=esc + '!' + '\x01';
-    data+=this.profile.addressLine1;
-    data+=newLine;
-    //data+=centerAllign;
-    //data+=esc + '!' + '\x01';
-    //data+=this.profile.addressLine1InArabic;
-    //data+=newLine;
-    data+=centerAllign;
-    data+=esc + '!' + '\x01';
-    data+=this.profile.addressLine2;
-    data+=newLine;
-    //data+=centerAllign;
-    //data+=esc + '!' + '\x01';
-    //data+=this.profile.addressLine2InArabic;
-    //data+=newLine;
-    data+=centerAllign;
-    data+=esc + '!' + '\x01';
-    data+=this.profile.vatNumber;
-    data+=newLine;
-    data+=centerAllign;
-    data+=esc + '!' + '\x01';
-    data+=this.profile.crNumber;
-    data+=newLine;
-    data+=esc+'-'+'\x01';
-    data+=newLine;
-    data+=centerAllign;
-    data+=double_strike_on;
-    data+=esc + '!' + '\x01';
-    data+="TAX INVOICE";
-    data+=esc + '!' + '\x01';
-    data+=newLine;
-    data+=centerAllign;
-    data+="---------------------"
-    data+=newLine;
-    data+=left_align;
-    data+=esc + '!' + '\x01';
-    data+="Bill To         ";
-    //data+=right_align;
-    //data+="فاتورة الى";
-    data+=newLine;
-    data+=left_align;
-    data+=esc + '!' + '\x01';
-    data+=this.invoice.customer.name;//+right_align+this.invoice.customer.nameInArabic;
-    data+=newLine;
-    data+=left_align;
-    data+=this.invoice.customer.street+','+this.invoice.customer.city ;//+right_align+this.invoice.customer.streetInArabic+','+this.invoice.customer.cityInArabic;
-    data+=newLine;
-    data+=left_align;
-    data+=this.invoice.customer.mobile;
-    data+=newLine;
-    data+=left_align;
-    data+='VAT # : '+this.invoice.customer.vatNumber;
-    //data+=right_align+'CR # : '+this.invoice.customer.crNumber;
-    data+=newLine;
-    data+=left_align+'CR # : '+this.invoice.customer.crNumber;
-    data+=newLine;
-    data+=left_align;
-    data+=this.getDateFormated(this.invoice.invoiceDate);
-    //data+=right_align;
-    data+=left_align;
-    data+=this.invoice.invoiceNumber;
-    data+=newLine;
-    data+=left_align;
-    data+='Sales Person : '+       "  Ph : ";
-    data+=newLine;
-    data+=double_strike_on;
-    data+=left_align;
-    data+=esc  + '\x01';
-    data+=sprintf('%s %-24.25s %13s %7s %12s ','#', 'Items', 'Price','Qty', 'Amount');
-   // data+=newLine;
-    //data+='#  '+'كمية    سعر   كمية                    العناصر';
-    //data+=double_strike_on;
-    data+=newLine;
-    let counter:number=1;
-    for(let itm of this.invoice.invoiceItems){
-      data+=esc + '!' + '\x00';
-     // data+=counter+'  '+itm.name+'          '+itm.unitPrice+'   '+itm.quantity+'    '+itm.unitPrice*itm.quantity;
-     data+=sprintf('%d %-20.20s %9.2f %3.0f %11.2f ',counter, itm.name, itm.unitPrice, itm.quantity, itm.unitPrice*itm.quantity);
-     data+=newLine;
-      //data+=right_align+itm.nameInArabic;
-      //data+=newLine;
-      counter=counter+1;
-    }
-    data+=double_strike_on;
-    data+=right_align+'Vat Applied     :'+this.invoice.tax;
-    data+=newLine;
-    data+=right_align+'Total(Incl VAT) :'+this.invoice.total;
-    data+=newLine;
-    data+=centerAllign+'THANKS';
-    data+=newLine;
-    data+=newLine;
-    data+=newLine;
-    data+=newLine;
-    data+=newLine;
-    data="Ajay";  
-  // data=data+'\x1B' + '\x74' + '\x37' +"اسم";
-  /*let result = encoder
-    .codepage('win1256')
-    .text('اسم')
-    .codepage('cp936')
-    .text('简体中文')
-    .encode();*/
-   // this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
-   /*let result = encoder
-   .codepage('windows1251')
-   .text('Iñtërnâtiônàlizætiøn')
-   .codepage('cp936')
-   .text('简体中文')
-   .encode()*/
-    let buf = iconv.encode("اسم", 'cp864');
-    let result=this.getFormatedContent();
+  let result=this.getFormatedContent(); 
    this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
-   //let d1=iconv.encode("اسم", 'cp864');
-   //this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,d1);
-
-   
-  // this.printService.printData(this.profile.selectedPrinter,result);
+  
   return this.navCtrl.navigateRoot('invoice');
  }catch(reason){
     this.tostService.presentToast("Print Failed"+reason)
   }
-  
+
+}
+
+async getImage(): Promise<any>{
+  var node = document.getElementById("content");
+  var img = new Image();
+domtoimage
+  .toPng(node)
+  .then(function (dataUrl) {
+    
+    img.src = dataUrl;
+    let encoder = new EscPosEncoder();
+     let result = encoder.initialize();
+img.src=dataUrl;
+img.onload=()=>{
+  var ht = Math.ceil(node.offsetHeight / 8) * 8;
+         ht = ht + 120;
+  result.align('left').image(img,520,ht,'threshold',128);
+  this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
+  console.log('print called');
+}
+  })
+  .catch(function (error) {
+    console.error("oops, something went wrong!", error);
+  });
 }
 
 numericOnly(evt){

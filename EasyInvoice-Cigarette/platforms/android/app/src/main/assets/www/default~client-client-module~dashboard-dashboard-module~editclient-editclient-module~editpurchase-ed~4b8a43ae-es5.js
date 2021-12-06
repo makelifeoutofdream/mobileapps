@@ -11,7 +11,7 @@
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89"], {
+  (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"], {
     /***/
     "/8ZT":
     /*!***************************************************!*\
@@ -759,6 +759,7 @@
           this.supplierCodeConstant = "SUP";
           this.invoiceCodeConstant = "INV";
           this.printerKey = "printer";
+          this.expenseKey = "printer";
           this.init();
         }
 
@@ -1931,6 +1932,115 @@
               }, _callee35, this);
             }));
           }
+        }, {
+          key: "getAllExpenses",
+          value: function getAllExpenses() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
+              var result, expenseList;
+              return regeneratorRuntime.wrap(function _callee36$(_context36) {
+                while (1) {
+                  switch (_context36.prev = _context36.next) {
+                    case 0:
+                      _context36.prev = 0;
+                      _context36.next = 3;
+                      return this.storage.get(this.expenseKey);
+
+                    case 3:
+                      result = _context36.sent;
+                      expenseList = JSON.parse(result);
+                      return _context36.abrupt("return", expenseList);
+
+                    case 8:
+                      _context36.prev = 8;
+                      _context36.t0 = _context36["catch"](0);
+                      console.log(_context36.t0);
+                      this.toastService.presentToast("Failed to load the expenses");
+
+                    case 12:
+                    case "end":
+                      return _context36.stop();
+                  }
+                }
+              }, _callee36, this, [[0, 8]]);
+            }));
+          }
+        }, {
+          key: "createExpense",
+          value: function createExpense(expense) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
+              var value, expenses;
+              return regeneratorRuntime.wrap(function _callee37$(_context37) {
+                while (1) {
+                  switch (_context37.prev = _context37.next) {
+                    case 0:
+                      _context37.prev = 0;
+                      _context37.next = 3;
+                      return this.storage.get(this.expenseKey);
+
+                    case 3:
+                      value = _context37.sent;
+                      expenses = JSON.parse(value);
+
+                      if (expenses == null || expenses == undefined) {
+                        expenses = [];
+                      }
+
+                      expense.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                      expenses.push(expense);
+                      this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                      return _context37.abrupt("return", true);
+
+                    case 12:
+                      _context37.prev = 12;
+                      _context37.t0 = _context37["catch"](0);
+                      console.log(_context37.t0);
+                      return _context37.abrupt("return", false);
+
+                    case 16:
+                    case "end":
+                      return _context37.stop();
+                  }
+                }
+              }, _callee37, this, [[0, 12]]);
+            }));
+          }
+        }, {
+          key: "UpdateExpense",
+          value: function UpdateExpense(expense) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
+              var value, expenses, index;
+              return regeneratorRuntime.wrap(function _callee38$(_context38) {
+                while (1) {
+                  switch (_context38.prev = _context38.next) {
+                    case 0:
+                      _context38.prev = 0;
+                      _context38.next = 3;
+                      return this.storage.get(this.expenseKey);
+
+                    case 3:
+                      value = _context38.sent;
+                      expenses = JSON.parse(value);
+                      index = expenses.findIndex(function (i) {
+                        return i.id == expense.id;
+                      });
+                      expenses[index] = expense;
+                      this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                      return _context38.abrupt("return", true);
+
+                    case 11:
+                      _context38.prev = 11;
+                      _context38.t0 = _context38["catch"](0);
+                      console.log(_context38.t0);
+                      return _context38.abrupt("return", false);
+
+                    case 15:
+                    case "end":
+                      return _context38.stop();
+                  }
+                }
+              }, _callee38, this, [[0, 11]]);
+            }));
+          }
         }]);
 
         return DbService;
@@ -2461,4 +2571,4 @@
     }
   }]);
 })();
-//# sourceMappingURL=default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~78a7cb89-es5.js.map
+//# sourceMappingURL=default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae-es5.js.map

@@ -10,6 +10,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <div id="content">
   <div class="row"></div>
    
  <ion-select style="margin-top: 2%;height: 30px;margin-right: 4%;" (ionChange)="populateCustomerProducts()" [(ngModel)]="invoice.customer" placeholder="Select Customer">
@@ -145,6 +146,7 @@
   </ion-grid>
   <div style="display: none;">
   <ion-datetime value="invoice.invoiceDate" ></ion-datetime>
+</div>
 </div>
 </ion-content>
 <ion-footer>

@@ -70,21 +70,22 @@ export class ReportPage implements OnInit {
   
   filterInvoices(){
     var start=new Date(this.startDate);
-    start.setHours(0);
-    start.setMinutes(0);
-    start.setSeconds(0);
+    
     var end=new Date(this.endDate);
-    end.setHours(23);
-    end.setMinutes(23);
-    end.setSeconds(23);
+    
     if(this.startDate!=null && this.startDate!=undefined){
       
       start=new Date(start.getFullYear(),start.getMonth(),start.getDate());
+      start.setHours(0);
+      start.setMinutes(0);
+      start.setSeconds(0);
     }
     if(this.endDate!=null && this.endDate!=undefined){
       end=new Date(end.getFullYear(),end.getMonth(),end.getDate())
+      end.setHours(23);
+      end.setMinutes(23);
+      end.setSeconds(23);
     }
-    
     
     if(this.selectedCustomer!=null && this.selectedCustomer!=undefined && (this.startDate==null || this.startDate==undefined) && (this.endDate==null || this.endDate==undefined)){
       this.filterInvoiceList= this.invoiceList.filter(inv=>inv.customer.id==this.selectedCustomer.id);
@@ -93,17 +94,20 @@ export class ReportPage implements OnInit {
     }else if(this.selectedCustomer!=null && this.selectedCustomer!=undefined && this.startDate!=null && this.startDate!=undefined &&  this.endDate!=null && this.endDate!=undefined){
       this.filterInvoiceList= this.invoiceList.filter(inv=>{
         var date=new Date(inv.invoiceDate);
-        date.setHours(inv.invoiceDate.getHours());
-        date.setMinutes(inv.invoiceDate.getMinutes());
-        date.setSeconds(inv.invoiceDate.getSeconds());
+        date.setHours(1);
+        date.setMinutes(1);
+        date.setSeconds(1);
        return  inv.customer.id==this.selectedCustomer.id && date.getTime()>=start.getTime() && date.getTime()<=end.getTime();
       });
     }else if((this.selectedCustomer==null || this.selectedCustomer==undefined) && this.startDate!=null && this.startDate!=undefined &&  this.endDate!=null && this.endDate!=undefined){
       this.filterInvoiceList= this.invoiceList.filter(inv=>{
         var date=new Date(inv.invoiceDate);
-        date.setHours(inv.invoiceDate.getHours());
-        date.setMinutes(inv.invoiceDate.getMinutes());
-        date.setSeconds(inv.invoiceDate.getSeconds());
+        date.setHours(1);
+        date.setMinutes(1);
+        date.setSeconds(1);
+        console.log('date '+date.getTime());
+        console.log('start '+start.getTime());
+        console.log('end '+end.getTime());
         return date.getTime()>=start.getTime() && date.getTime()<=end.getTime();
       } )
     }else if((this.selectedCustomer==null || this.selectedCustomer==undefined) && this.startDate!=null && this.startDate!=undefined &&  (this.endDate==null || this.endDate==undefined)){
@@ -133,7 +137,7 @@ export class ReportPage implements OnInit {
     let invoiceDataList=new Array();
     for(let inv of this.invoiceList){
       for(let itm of inv.invoiceItems){
-        let invoiceData ={InvoiceNumber : inv.invoiceNumber,InvoiceDate:inv.invoiceDate,Customer:inv.customer.name,Item:itm.name,UnitPrice:itm.unitPrice,Quantity:itm.quantity,Tax:inv.tax,Total:inv.total};
+        let invoiceData ={InvoiceNumber : inv.invoiceNumber,InvoiceDate:inv.invoiceDate,Customer:inv.customer.name,Item:itm.name,UnitPrice:itm.unitPrice,Quantity:itm.quantity,Cost:itm.purchaseUnitPrice,TotalCost:itm.purchaseUnitPrice*itm.quantity,Tax:inv.tax,GP:(itm.quantity*itm.unitPrice) -(itm.purchaseUnitPrice*itm.quantity),TotalWithVAT:inv.total};
         invoiceDataList.push(invoiceData);
       }
       

@@ -2075,11 +2075,11 @@ if (nodeVer) {
     // Load streaming support in Node v0.10+
     var nodeVerArr = nodeVer.split(".").map(Number);
     if (nodeVerArr[0] > 0 || nodeVerArr[1] >= 10) {
-        __webpack_require__(/*! ./streams */ 8)(iconv);
+        __webpack_require__(/*! ./streams */ 7)(iconv);
     }
 
     // Load Node primitive extensions.
-    __webpack_require__(/*! ./extend-node */ 9)(iconv);
+    __webpack_require__(/*! ./extend-node */ 8)(iconv);
 }
 
 if (false) {}
@@ -2330,6 +2330,17 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
 
 /***/ }),
 
+/***/ 7:
+/*!***************************!*\
+  !*** ./streams (ignored) ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ "75lf":
 /*!************************************************************************************************!*\
   !*** ./node_modules/esc-pos-encoder-ionic/node_modules/iconv-lite/encodings/tables/cp936.json ***!
@@ -2342,17 +2353,6 @@ module.exports = JSON.parse("[[\"0\",\"\\u0000\",127,\"€\"],[\"8140\",\"丂丄
 /***/ }),
 
 /***/ 8:
-/*!***************************!*\
-  !*** ./streams (ignored) ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 9:
 /*!*******************************!*\
   !*** ./extend-node (ignored) ***!
   \*******************************/
