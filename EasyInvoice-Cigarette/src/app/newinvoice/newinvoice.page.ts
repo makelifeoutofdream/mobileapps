@@ -297,7 +297,8 @@ async printPreview() {
     component:PrintPreviewComponent,
     componentProps:  {
       profile: this.profile,
-      invoice: this.invoice
+      invoice: this.invoice,
+      products : this.products
     }
   });
   modal.present();
