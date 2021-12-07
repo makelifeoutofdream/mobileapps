@@ -21,7 +21,7 @@ export class PrintPreviewComponent implements OnInit {
   ngOnInit() {
      setTimeout(() => {
         this.pairTo();
-      },1000);
+      },3000);
   }
 
   pairTo() {
