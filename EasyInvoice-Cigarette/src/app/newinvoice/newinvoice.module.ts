@@ -9,6 +9,7 @@ import { NewinvoicePageRoutingModule } from './newinvoice-routing.module';
 import { NewinvoicePage } from './newinvoice.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PrintPreviewComponent } from './print-preview/print-preview.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +19,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     IonicSelectableModule,
     NgxDatatableModule
   ],
-  declarations: [NewinvoicePage]
+  declarations: [NewinvoicePage, PrintPreviewComponent]
 })
 export class NewinvoicePageModule {}
