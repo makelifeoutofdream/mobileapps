@@ -1,6 +1,6 @@
 import { isNgTemplate } from '@angular/compiler';
 import { Component, IterableDiffers, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { threadId } from 'worker_threads';
 import { Customer } from '../services/customer';
 import { DbService } from '../services/db.service';
@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common'
 import html2canvas from "html2canvas";
 import domtoimage from 'dom-to-image'
 import { Buffer } from 'buffer';
+import { PrintPreviewComponent } from './print-preview/print-preview.component';
 @Component({
   selector: 'app-newinvoice',
   templateUrl: './newinvoice.page.html',
@@ -41,7 +42,7 @@ export class NewinvoicePage implements OnInit {
   
 
   constructor(public dbService:DbService,public tostService:ToastserviceService,public navCtrl:NavController,
-    public printService : PrintService,private validationService :ValidationService,public datepipe: DatePipe) { 
+    public printService : PrintService,private validationService :ValidationService,public datepipe: DatePipe,public modalController: ModalController,) { 
       
     }
 
@@ -237,7 +238,11 @@ getFormatedContent(){
   const encoder = new EscPosEncoder();
     let result="";
   let datetime:string =this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
-  let billDetails=encoder.initialize().bold(true).raw([0x1B, 0x21, 0x20]).align('center').line(this.profile.companyName).bold(true).newline().
+  let billDetails=
+  encoder.initialize()
+  .bold(true).
+  raw([0x1B, 0x21, 0x20]).align('center')
+  .line(this.profile.companyName).bold(true).newline().
   
   raw([0x1B, 0x21, 0x03]).align('left').bold(true).line('VAT # : '+ this.profile.vatNumber+','+'CR # : '+this.profile.crNumber).
   align('left').bold(true).line('---------------------------------------------------------------').bold(true).
@@ -287,36 +292,53 @@ getFormatedContent(){
 return result;
 }
 
+async printPreview() {
+  let modal = await this.modalController.create({
+    component:PrintPreviewComponent,
+    componentProps:  {
+      profile: this.profile,
+      invoice: this.invoice
+    }
+  });
+  modal.present();
+}
+
 printBill(){
   
-  try{
-  let result=this.getFormatedContent(); 
-   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
+//   try{
+//   let result=this.getFormatedContent(); 
+//    this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
   
-  return this.navCtrl.navigateRoot('invoice');
- }catch(reason){
-    this.tostService.presentToast("Print Failed"+reason)
-  }
+//   return this.navCtrl.navigateRoot('invoice');
+//  }catch(reason){
+//     this.tostService.presentToast("Print Failed"+reason)
+//   }
+//this.getImage();
+this.printPreview();
 
 }
 
 async getImage(): Promise<any>{
   var node = document.getElementById("content");
   var img = new Image();
-domtoimage
-  .toPng(node)
-  .then(function (dataUrl) {
-    
-    img.src = dataUrl;
-    let encoder = new EscPosEncoder();
-     let result = encoder.initialize();
-img.src=dataUrl;
-img.onload=()=>{
-  var ht = Math.ceil(node.offsetHeight / 8) * 8;
-         ht = ht + 120;
-  result.align('left').image(img,520,ht,'threshold',128);
-  this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
-  console.log('print called');
+html2canvas(node, {
+  allowTaint: true,
+  useCORS: true,
+  logging: false,
+}).then(canvas => {
+  var imgData = canvas.toDataURL("image/png");
+  let encoder = new EscPosEncoder();
+  let result = encoder.initialize();
+  let img = new Image();
+  img.src = imgData; 
+   img.onload  = (e) =>  {
+    var ht = Math.ceil(node.offsetHeight / 8) * 8;
+    ht = ht + 120;
+    result
+      .align('left')
+      .image(img,520,ht,'threshold',128);
+    this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+    console.log('print called');
 }
   })
   .catch(function (error) {

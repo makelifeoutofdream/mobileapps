@@ -1,0 +1,82 @@
+.text-center {
+    text-align: center;
+}
+#imageToPrint {
+    position: relative;
+}
+img {
+    width: 100px;
+    height: 100px;
+}
+.content-center {
+    text-align: center;
+    font-size: 14px;
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+.line-separator {
+    margin: 10px 0px;
+    border : 1px dashed black;
+}
+.bill-details {
+    display: inline-block;
+}
+.full-width {
+    width: 100%;
+}
+.display-flex {
+    display: flex;
+    text-align: left;
+}
+.item-label {
+    width: 33.33%;
+    padding: 3px 10px;
+}
+.item-value {
+    width: 33.33%;
+    padding: 3px 10px;
+}
+.item-arabic {
+    width: 33.33%;
+    padding: 3px 10px;
+}
+.overflow {
+    overflow: auto; 
+}
+.dummy-img {
+    img {
+        width: 55px !important;
+        height: 50px !important;
+    }
+}
+.m-t-1 {
+    margin-top: 2px;
+} 
+.letter-space {
+    letter-spacing: 0;
+    word-spacing: normal;
+    /* text-align: center !important; */
+    word-wrap: normal !important;
+}
+table.fixed {
+    width: 100%;
+  }
+  table th {
+      padding: 5px 0px 15px;
+      text-align: center;
+  }
+  table thead tr {
+      border-bottom: 1px solid black;
+  }
+  table tr td {
+    padding: 5px 0px 15px;
+  }
+  table td:nth-child(4) {
+      width: 40%;
+      text-align: center;
+  }
+  table td:nth-child(3) , td:nth-child(2), td:nth-child(1){
+    width: 20%;
+    text-align: center;
+}

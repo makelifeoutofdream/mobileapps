@@ -1,0 +1,145 @@
+<div id="imageToPrint">  
+  <h3 class="text-center">Print Receipt Preview</h3>
+    <div> 
+       <div class="text-center dummy-img" > 
+      </div> 
+      <div class="text-center" >
+          <h3 class="content-center"> {{profile?.companyName}}</h3>
+      </div>
+      <div class="line-separator"></div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            VAT #  :
+          </div>
+          <div text-center class="item-value">
+            {{profile?.vatNumber}} : 
+          </div>
+          <div text-right class="item-arabic letter-space">
+            رقم الفاتورة    
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            CR #  :
+          </div>
+          <div text-center class="item-value">
+            {{profile?.crNumber}} : 
+          </div>
+          <div text-right class="item-arabic letter-space">
+            رقم الفاتورة    
+          </div>
+        </div>
+       
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            VAT INVOICE :
+          </div>
+          <div text-center class="item-value">
+            {{invoice?.invoiceNumber}} {{datetime}}
+          </div>
+          <div text-right class="item-arabic letter-space">
+            التاريخ و الوقت
+          </div>
+        </div>
+
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            Customer :
+          </div>
+          <div text-center class="item-value">
+            {{invoice?.customer.name}} : 
+          </div>
+          <div text-right class="item-arabic">
+            <span class="letter-space text-left" style="text-align: left;">العميل</span>
+          </div>
+        </div>
+
+        <div class="line-separator"></div>
+        <table style="width:100%" class="fixed">
+          <thead>
+            <tr>
+              <th>
+                <div>Amount</div>
+                <div class="letter-space">المبلغ</div>
+              </th>
+              <th>
+                <div>Price</div>
+                <div class="letter-space">السعر</div>
+              </th> 
+              <th>
+                <div>Qty</div>
+                <div class="letter-space">الكمية</div>
+              </th>
+              <th>
+                <div>Item Name</div>
+                <div class="letter-space">اسم العنصر</div>
+              </th>
+            </tr>
+          </thead>
+          <tr *ngFor="let order of invoice.invoiceItems">
+            <td>{{order.unitPrice * order.quantity}}</td>
+            <td>{{order.unitPrice }}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.name}}</td>
+          </tr>
+        </table>
+        <div class="line-separator"></div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            Qty :
+          </div>
+          <div text-center class="item-value">
+            {{totalQuantity}}
+          </div>
+          <div text-right class="item-arabic letter-space">
+            مجموع الفرعي
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            Total Invoice Value(Excl. VAT) :
+          </div>
+          <div text-center class="item-value">
+            {{invoice?.total-invoice?.tax}}
+          </div>
+          <div text-right class="item-arabic letter-space">
+            رسوم التوصيل
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            VAT Payable in SAR
+          </div>
+          <div text-center class="item-value">
+            <!-- {{order.total}} --> 45
+          </div>
+          <div text-right class="item-arabic letter-space">
+            المجموع الاجلي
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+            Gross Amount in SAR :
+          </div>
+          <div text-center class="item-value">
+            <!-- {{order.total}} --> 11235
+          </div>
+          <div text-right class="item-arabic letter-space">
+            المجموع الاجلي
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label">
+          Grand Total :
+          </div>
+          <div text-center class="item-value">
+            <!-- {{order.total}} --> 120
+          </div>
+          <div text-right class="item-arabic letter-space">
+            المجموع الاجلي
+          </div>
+        </div>
+        <div class="line-separator"></div>
+        <div text-center>Thank you for shopping.....</div>
+    </div>
+ </div>
