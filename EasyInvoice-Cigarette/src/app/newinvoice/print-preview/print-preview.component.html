@@ -1,145 +1,172 @@
-<div id="imageToPrint">  
-  <h3 class="text-center">Print Receipt Preview</h3>
-    <div> 
-       <div class="text-center dummy-img" > 
-      </div> 
-      <div class="text-center" >
-          <h3 class="content-center"> {{profile?.companyName}}</h3>
+<div id="imageToPrint" style="overflow: scroll;">  
+  <div> 
+     <div class="text-center dummy-img" > 
+    </div> 
+    <div class="text-center" >
+        <h3 class="title-content-center"> {{profile?.companyName}}</h3>
+    </div>
+    <div class="text-center" >
+      <h3 class="title-content-center"> {{profile?.companyNameInArabic}}</h3>
+  </div>
+  
+  <div  class=" text-center ">
+    {{profile?.addressLine1}} {{profile?.addressLine1inArabic}}   
+  </div>
+  <div  class=" text-center ">
+    {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   
+</div>
+<div class="display-flex full-width">
+    <div  class="item-label no-wrap-text" style="margin-left: 1%;">
+      VAT # / ضريبة القيمة المضافة  :
+    </div>
+    <div  class="item-label "  style="margin-left: 20%;">
+      {{profile?.vatNumber}}  
+    </div>
+    
+</div>
+<div class="line-separator"></div>
+
+<div  class="text-center">
+ <h5>VAT INVOICE / فاتوره ضريبية </h5>
+</div>
+<div class=" full-width">
+  <div class="item-label no-wrap-text">
+  Invoice # / رقم الفاتورة : {{invoice?.invoiceNumber}}
+  </div>
+</div>
+<div class="display-flex  full-width">
+  <div class="item-label no-wrap-text">
+  Invoice Date / تاريخ   :
+  
+  </div>
+  <div class="item-label no-wrap-text" style="margin-left: 10%;">{{invoice?.invoiceDate | date : 'dd-MM-yyyy hh:mm'}} </div>
+</div>
+<div class="line-separator"></div>
+
+<div class="display-flex  full-width">
+  <div class="item-lebel no-wrap-text" style="margin-left: 3%;">
+    <b>Bill To : </b>
+  </div>
+</div>
+<div class="full-width">
+  <div  class=" full-width" style="margin-left: 3%; word-wrap: break-word;" >
+    {{invoice?.customer.name}} 
+  </div>
+  <div  class=" full-width letter-space" style="margin-left: 3%; word-wrap: break-word;" >
+    {{invoice?.customer.nameInArabic}} 
+  </div>
+  
+</div>
+<div class="full-width">
+  <div  class=" full-width" style="margin-left: 3%; word-wrap: break-word;" >
+    {{invoice?.customer.street}},{{invoice?.customer.city}} 
+  </div>
+  <div  class=" full-width letter-space" style="margin-left: 3%; word-wrap: break-word;" >
+    {{invoice?.customer.streetInArabic}},{{invoice?.customer.cityInArabic }} 
+  </div>
+  
+</div>
+<div class="display-flex  full-width">
+  <div  class="item-label no-wrap-text letter-space" >
+     VAT # / ضريبة القيمة المضافة : 
+  </div>
+  <div  class="item-label "  style="width: 100%; margin-left: 20%;">
+    {{invoice?.customer.vatNumber}}
+  </div>
+  
+</div>
+<div class="line-separator"></div>
+<table style="width:100%" class="fixed">
+        <thead>
+          <tr>
+
+            <th style="text-align: left; width: 37%; margin-left: 2%;">
+              <div style="margin-left: 3%;">Item</div>
+              <div class="letter-space" style="margin-left: 3%;">العنصر</div>
+            </th>
+            <th style="width:4%">
+              <div>Qty</div>
+              <div class="letter-space">الكمية</div>
+            </th>
+            <th style="width:7%">
+              <div>Price</div>
+              <div class="letter-space">السعر</div>
+            </th>
+            <th style="width:35% ;margin-right: 2%;">
+              <div style="margin-right: 2%;">Amount</div>
+              <div class="letter-space">المبلغ</div>
+            </th>
+             
+            
+          </tr>
+        </thead>
+        <tr *ngFor="let order of orderItems">
+          <td style="text-align: left;margin-left: 3%;">
+            <div style="margin-left: 3%; " class="letter-space">
+              {{order.name}} {{order.nameInArabic}}
+            </div>
+          </td>
+          <td>{{order.quantity}}</td>
+          <td>{{order.unitPrice }}</td>
+          <td >
+            <div style="margin-right: 3%;">
+              {{(order.unitPrice * order.quantity) | number : '1.2-2'}}
+            </div>
+            
+          </td>
+
+          
+         
+        </tr>
+      </table>
+      <div class="line-separator"></div>
+      <div class="display-flex full-width">
+        <div  class="item-label">
+          Qty : {{totalQuantity}}
+        </div>
+      </div>
+      <div class="display-flex full-width">
+        <div  class="content-right item-label" style="width: 100%;">
+          Total Invoice Value(Excl. VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}
+        </div>
+      </div>
+      <div class="display-flex full-width">
+        <div  class="item-label content-right" style="width: 100%;">
+          VAT Payable in SAR ({{profile?.vat}}%): {{invoice?.tax | number : '1.2-2'}}
+        </div>
+        
+      </div>
+      <div class="display-flex full-width">
+        <div  class="item-label content-right" style="width: 100%;">
+          Gross Amount in SAR : {{invoice?.total | number : '1.2-2'}}
+        </div>
       </div>
       <div class="line-separator"></div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            VAT #  :
-          </div>
-          <div text-center class="item-value">
-            {{profile?.vatNumber}} : 
-          </div>
-          <div text-right class="item-arabic letter-space">
-            رقم الفاتورة    
-          </div>
+      <div class="display-flex full-width">
+        <div  class="item-label content-right" style="width: 100%;">
+        Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}
         </div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            CR #  :
-          </div>
-          <div text-center class="item-value">
-            {{profile?.crNumber}} : 
-          </div>
-          <div text-right class="item-arabic letter-space">
-            رقم الفاتورة    
-          </div>
+      </div>
+      <div class="display-flex full-width">
+        <div  class="item-label content-right" style="width: 100%;">
+        Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}
         </div>
-       
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            VAT INVOICE :
-          </div>
-          <div text-center class="item-value">
-            {{invoice?.invoiceNumber}} {{datetime}}
-          </div>
-          <div text-right class="item-arabic letter-space">
-            التاريخ و الوقت
-          </div>
+      </div>
+      <div class="display-flex full-width">
+        <div  class="item-label title-content-left" style="width: 100%;">
+        Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}
         </div>
+      </div>
+      <div class="line-separator"></div>
+      <div class="display-flex full-width " >
+      <div style="margin-left: 10%;">
+        <ngx-qrcode  
+[elementType]="elementType"
+[errorCorrectionLevel]="correctionLevel"
+[value]="value"
 
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            Customer :
-          </div>
-          <div text-center class="item-value">
-            {{invoice?.customer.name}} : 
-          </div>
-          <div text-right class="item-arabic">
-            <span class="letter-space text-left" style="text-align: left;">العميل</span>
-          </div>
-        </div>
-
-        <div class="line-separator"></div>
-        <table style="width:100%" class="fixed">
-          <thead>
-            <tr>
-              <th>
-                <div>Amount</div>
-                <div class="letter-space">المبلغ</div>
-              </th>
-              <th>
-                <div>Price</div>
-                <div class="letter-space">السعر</div>
-              </th> 
-              <th>
-                <div>Qty</div>
-                <div class="letter-space">الكمية</div>
-              </th>
-              <th>
-                <div>Item Name</div>
-                <div class="letter-space">اسم العنصر</div>
-              </th>
-            </tr>
-          </thead>
-          <tr *ngFor="let order of invoice.invoiceItems">
-            <td>{{order.unitPrice * order.quantity}}</td>
-            <td>{{order.unitPrice }}</td>
-            <td>{{order.quantity}}</td>
-            <td>{{order.name}}</td>
-          </tr>
-        </table>
-        <div class="line-separator"></div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            Qty :
-          </div>
-          <div text-center class="item-value">
-            {{totalQuantity}}
-          </div>
-          <div text-right class="item-arabic letter-space">
-            مجموع الفرعي
-          </div>
-        </div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            Total Invoice Value(Excl. VAT) :
-          </div>
-          <div text-center class="item-value">
-            {{invoice?.total-invoice?.tax}}
-          </div>
-          <div text-right class="item-arabic letter-space">
-            رسوم التوصيل
-          </div>
-        </div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            VAT Payable in SAR
-          </div>
-          <div text-center class="item-value">
-            <!-- {{order.total}} --> 45
-          </div>
-          <div text-right class="item-arabic letter-space">
-            المجموع الاجلي
-          </div>
-        </div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-            Gross Amount in SAR :
-          </div>
-          <div text-center class="item-value">
-            <!-- {{order.total}} --> 11235
-          </div>
-          <div text-right class="item-arabic letter-space">
-            المجموع الاجلي
-          </div>
-        </div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-          Grand Total :
-          </div>
-          <div text-center class="item-value">
-            <!-- {{order.total}} --> 120
-          </div>
-          <div text-right class="item-arabic letter-space">
-            المجموع الاجلي
-          </div>
-        </div>
-        <div class="line-separator"></div>
-        <div text-center>Thank you for shopping.....</div>
-    </div>
- </div>
+></ngx-qrcode>
+</div>
+</div>
+  </div>
+</div>

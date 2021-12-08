@@ -10,6 +10,7 @@ import { NewinvoicePage } from './newinvoice.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PrintPreviewComponent } from './print-preview/print-preview.component';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +18,8 @@ import { PrintPreviewComponent } from './print-preview/print-preview.component';
     IonicModule,
     NewinvoicePageRoutingModule,
     IonicSelectableModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgxQRCodeModule
   ],
   declarations: [NewinvoicePage, PrintPreviewComponent]
 })

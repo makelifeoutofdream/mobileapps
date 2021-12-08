@@ -445,6 +445,12 @@
       var _ionic_native_sim_ngx__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
       /*! @ionic-native/sim/ngx */
       "ObYS");
+      /* harmony import */
+
+
+      var _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+      /*! @techiediaries/ngx-qrcode */
+      "hiuq");
 
       var AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
@@ -453,7 +459,7 @@
       AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"], ionic_selectable__WEBPACK_IMPORTED_MODULE_16__["IonicSelectableModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_18__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_18__["FormsModule"], _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_19__["NgxDatatableModule"], _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_10__["IonicStorageModule"].forRoot({
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"], ionic_selectable__WEBPACK_IMPORTED_MODULE_16__["IonicSelectableModule"], _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_24__["NgxQRCodeModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_18__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_18__["FormsModule"], _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_19__["NgxDatatableModule"], _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_10__["IonicStorageModule"].forRoot({
           name: '_myDb',
           driverOrder: [_ionic_storage__WEBPACK_IMPORTED_MODULE_11__["Drivers"].IndexedDB, _ionic_storage__WEBPACK_IMPORTED_MODULE_11__["Drivers"].LocalStorage]
         })],
