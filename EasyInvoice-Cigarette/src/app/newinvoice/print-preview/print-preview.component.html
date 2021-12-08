@@ -23,11 +23,11 @@
     <div  class=" text-center letter-space content-center">
       {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   
   </div>
-  <div class="display-flex full-width">
-      <div text-left class="item-label letter-space">
+  <div class="full-width">
+      <div text-left class="item-cus-label letter-space">
         VAT # / ضريبة القيمة المضافة  :
       </div>
-      <div  text-right class="item-value">
+      <div  text-left class="item-cus-label">
         {{profile?.vatNumber}}  
       </div>
       
@@ -35,20 +35,20 @@
   <div class="line-separator"></div>
   
   <div  class="text-center">
-   <h5>VAT INVOICE / فاتوره ضريبية </h5>
+   <h5 class="font-14">VAT INVOICE / فاتوره ضريبية </h5>
   </div>
-  <div class="display-flex full-width">
-    <div class="item-label">
+  <div class="full-width">
+    <div class="item-cus-label">
     Invoice # / رقم الفاتورة :
     </div>
-    <div text-right class="item-value">
+    <div text-left class="item-cus-label">
       {{invoice?.invoiceNumber}}
     </div>
   </div>
-  <div class="display-flex  full-width">
-    <div class="item-label">
+  <div class="full-width">
+    <div class="item-cus-label">
     Invoice Date / تاريخ   :</div>
-    <div text-right class="item-value">{{invoice?.invoiceDate | date : 'dd-MM-yyyy hh:mm'}} </div>
+    <div text-left class="item-cus-label">{{invoice?.invoiceDate | date : 'dd-MM-yyyy hh:mm'}} </div>
   </div>
   <div class="line-separator"></div>
   
@@ -75,8 +75,8 @@
     </div>
     
   </div>
-  <div class="display-flex  full-width">
-    <div  class="item-label letter-space" >
+  <div class="full-width">
+    <div  class="item-cus-label letter-space" >
        VAT # / ضريبة القيمة المضافة : 
     </div>
     <div  text-right class="item-value ">
