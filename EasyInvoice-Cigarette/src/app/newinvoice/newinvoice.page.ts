@@ -1,38 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@makelifeoutofdream 
-makelifeoutofdream
-/
-mobileapps
-Public
-1
-00
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-68
-Insights
-Settings
-We found potential security vulnerabilities in your dependencies.
-Only the owner of this repository can see this message.
-
-mobileapps/EasyInvoice-Cigarette/src/app/newinvoice/newinvoice.page.ts /
-@makelifeoutofdream
-makelifeoutofdream QR Code added
-Latest commit c0c6d88 17 hours ago
- History
- 1 contributor
-364 lines (309 sloc)  14.5 KB
-   
 import { isNgTemplate } from '@angular/compiler';
 import { Component, IterableDiffers, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';

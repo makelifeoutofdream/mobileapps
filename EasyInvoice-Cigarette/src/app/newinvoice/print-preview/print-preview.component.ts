@@ -52,9 +52,6 @@ export class PrintPreviewComponent implements OnInit {
     
     var node = document.getElementById("imageToPrint");
     html2canvas(node, {
-      allowTaint: true,
-      scrollY : -window.scrollY,
-      scrollX : -window.scrollX
     }).then(canvas => {
         var imgData = canvas.toDataURL("image/png");
         let encoder = new EscPosEncoder();
@@ -66,9 +63,9 @@ export class PrintPreviewComponent implements OnInit {
           ht = ht + 120;
           result
             .align('left')
-            .image(img,520,ht,'threshold',128).newline().
+            .image(img,552,ht,'threshold',128).newline().
             align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline(); ;
-          this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+            this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           console.log('print called');
           this.modalCtrl.dismiss();
         }
@@ -81,8 +78,8 @@ export class PrintPreviewComponent implements OnInit {
 
   generateQRCodeContent(){
 
-    var sellerName=this.getTLVForValue("1",this.profile.companyName);
-    var vatNumber=this.getTLVForValue("2",this.profile.vatNumber);
+    var sellerName=this.getTLVForValue("1",'dddd');
+    var vatNumber=this.getTLVForValue("2",'1244');
     var timestamp=this.getTLVForValue("3",""+this.invoice.invoiceDate);
     let amt : number =(this.invoice.total-this.invoice.tax);
     var amount=this.getTLVForValue("4",""+amt);

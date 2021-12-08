@@ -21,6 +21,7 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
     NgxDatatableModule,
     NgxQRCodeModule
   ],
-  declarations: [NewinvoicePage, PrintPreviewComponent]
+  declarations: [NewinvoicePage, PrintPreviewComponent],
+  entryComponents: [PrintPreviewComponent]
 })
 export class NewinvoicePageModule {}
