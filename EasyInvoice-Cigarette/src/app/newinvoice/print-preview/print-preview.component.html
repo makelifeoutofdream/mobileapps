@@ -1,5 +1,4 @@
-<div id="imageToPrint" style="overflow-y: scroll;">  
-  <h3 class="text-center">Print Receipt Preview</h3>
+<div id="imageToPrint" style="overflow: scroll;">  
     <div> 
        <div class="text-center dummy-img" > 
       </div> 
@@ -123,60 +122,51 @@
         <div class="line-separator"></div>
         <div class="display-flex full-width">
           <div  class="item-label">
-            Qty :
-          </div>
-          <div text-center class="item-value">
-            {{totalQuantity}}
-          </div>
-          <div text-right class="item-arabic letter-space">
-            مجموع الفرعي
+            Qty : {{totalQuantity}}
           </div>
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label">
-            Total Invoice Value(Excl. VAT) :
-          </div>
-          <div text-center class="item-value">
-            {{invoice?.total-invoice?.tax}}
-          </div>
-          <div text-right class="item-arabic letter-space">
-            رسوم التوصيل
+          <div  class="content-right item-label" style="width: 100%;">
+            Total Invoice Value(Excl. VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}
           </div>
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label">
-            VAT Payable in SAR
+          <div  class="item-label content-right" style="width: 100%;">
+            VAT Payable in SAR ({{profile?.vat}}%): {{invoice?.tax | number : '1.2-2'}}
           </div>
-          <div text-center class="item-value">
-            <!-- {{order.total}} --> 45
-          </div>
-          <div text-right class="item-arabic letter-space">
-            المجموع الاجلي
-          </div>
+          
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label">
-            Gross Amount in SAR :
-          </div>
-          <div text-center class="item-value">
-            <!-- {{order.total}} --> 11235
-          </div>
-          <div text-right class="item-arabic letter-space">
-            المجموع الاجلي
-          </div>
-        </div>
-        <div class="display-flex full-width">
-          <div  class="item-label">
-          Grand Total :
-          </div>
-          <div text-center class="item-value">
-            <!-- {{order.total}} --> 120
-          </div>
-          <div text-right class="item-arabic letter-space">
-            المجموع الاجلي
+          <div  class="item-label content-right" style="width: 100%;">
+            Gross Amount in SAR : {{invoice?.total | number : '1.2-2'}}
           </div>
         </div>
         <div class="line-separator"></div>
-        <div text-center>Thank you for shopping.....</div>
+        <div class="display-flex full-width">
+          <div  class="item-label content-right" style="width: 100%;">
+          Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label content-right" style="width: 100%;">
+          Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}
+          </div>
+        </div>
+        <div class="display-flex full-width">
+          <div  class="item-label title-content-left" style="width: 100%;">
+          Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}
+          </div>
+        </div>
+        <div class="line-separator"></div>
+        <div class="display-flex full-width " >
+        <div style="margin-left: 10%;">
+          <ngx-qrcode  
+  [elementType]="elementType"
+  [errorCorrectionLevel]="correctionLevel"
+  [value]="value"
+  
+  ></ngx-qrcode>
+</div>
+</div>
     </div>
  </div>

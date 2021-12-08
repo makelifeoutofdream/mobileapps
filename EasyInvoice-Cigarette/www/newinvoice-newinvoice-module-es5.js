@@ -91,13 +91,19 @@
       var _print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! ./print-preview/print-preview.component */
       "NKOA");
+      /* harmony import */
+
+
+      var _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @techiediaries/ngx-qrcode */
+      "hiuq");
 
       var NewinvoicePageModule = function NewinvoicePageModule() {
         _classCallCheck(this, NewinvoicePageModule);
       };
 
       NewinvoicePageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _newinvoice_routing_module__WEBPACK_IMPORTED_MODULE_5__["NewinvoicePageRoutingModule"], ionic_selectable__WEBPACK_IMPORTED_MODULE_7__["IonicSelectableModule"], _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_8__["NgxDatatableModule"]],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _newinvoice_routing_module__WEBPACK_IMPORTED_MODULE_5__["NewinvoicePageRoutingModule"], ionic_selectable__WEBPACK_IMPORTED_MODULE_7__["IonicSelectableModule"], _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_8__["NgxDatatableModule"], _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_10__["NgxQRCodeModule"]],
         declarations: [_newinvoice_page__WEBPACK_IMPORTED_MODULE_6__["NewinvoicePage"], _print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_9__["PrintPreviewComponent"]]
       })], NewinvoicePageModule);
       /***/
@@ -184,6 +190,22 @@
       var src_app_services_print_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! src/app/services/print.service */
       "Bhbv");
+      /* harmony import */
+
+
+      var buffer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! buffer */
+      "tjlA");
+      /* harmony import */
+
+
+      var buffer__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(buffer__WEBPACK_IMPORTED_MODULE_9__);
+      /* harmony import */
+
+
+      var _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @techiediaries/ngx-qrcode */
+      "hiuq");
 
       var PrintPreviewComponent = /*#__PURE__*/function () {
         function PrintPreviewComponent(printService, dbService, modalCtrl) {
@@ -192,6 +214,9 @@
           this.printService = printService;
           this.dbService = dbService;
           this.modalCtrl = modalCtrl;
+          this.elementType = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_10__["NgxQrcodeElementTypes"].URL;
+          this.correctionLevel = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_10__["NgxQrcodeErrorCorrectionLevels"].HIGH;
+          this.value = "";
         }
 
         _createClass(PrintPreviewComponent, [{
@@ -199,9 +224,57 @@
           value: function ngOnInit() {
             var _this2 = this;
 
-            setTimeout(function () {
-              _this2.pairTo();
-            }, 3000);
+            this.value = this.generateQRCodeContent();
+            this.datetime = this.invoice.invoiceDate.getDate() + '-' + this.invoice.invoiceDate.getMonth() + '-' + this.invoice.invoiceDate.getFullYear() + ' ' + this.invoice.invoiceDate.getHours() + ':' + this.invoice.invoiceDate.getMinutes() + ':' + this.invoice.invoiceDate.getSeconds();
+            this.filterUnselectedProducts().then(function (data) {
+              _this2.orderItems = data;
+
+              _this2.getTotalQuantity().then(function (data) {
+                setTimeout(function () {
+                  _this2.pairTo();
+                }, 3000);
+              });
+            });
+          }
+        }, {
+          key: "filterUnselectedProducts",
+          value: function filterUnselectedProducts() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              return regeneratorRuntime.wrap(function _callee$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      return _context2.abrupt("return", this.products.filter(function (a) {
+                        return a.quantity != null && a.quantity != undefined && a.quantity > 0;
+                      }));
+
+                    case 1:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
+        }, {
+          key: "getTotalQuantity",
+          value: function getTotalQuantity() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+              return regeneratorRuntime.wrap(function _callee2$(_context3) {
+                while (1) {
+                  switch (_context3.prev = _context3.next) {
+                    case 0:
+                      this.totalQuantity = this.orderItems.reduce(function (accum, item) {
+                        return accum + item.quantity;
+                      }, 0);
+
+                    case 1:
+                    case "end":
+                      return _context3.stop();
+                  }
+                }
+              }, _callee2, this);
+            }));
           }
         }, {
           key: "pairTo",
@@ -210,7 +283,9 @@
 
             var node = document.getElementById("imageToPrint");
             html2canvas__WEBPACK_IMPORTED_MODULE_6___default()(node, {
-              allowTaint: true
+              allowTaint: true,
+              scrollY: -window.scrollY,
+              scrollX: -window.scrollX
             }).then(function (canvas) {
               var imgData = canvas.toDataURL("image/png");
               var encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_5___default.a();
@@ -221,7 +296,8 @@
               img.onload = function (e) {
                 var ht = Math.ceil(node.offsetHeight / 8) * 8;
                 ht = ht + 120;
-                result.align('left').image(img, 520, ht, 'threshold', 128);
+                result.align('left').image(img, 520, ht, 'threshold', 128).newline().align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline();
+                ;
 
                 _this3.printService.sendToBluetoothPrinter(_this3.profile.selectedPrinter, result.encode());
 
@@ -231,8 +307,32 @@
               };
             })["catch"](function (error) {
               console.error("oops, something went wrong!", error);
+              alert(error);
               this.modalCtrl.dismiss();
             });
+          }
+        }, {
+          key: "generateQRCodeContent",
+          value: function generateQRCodeContent() {
+            var sellerName = this.getTLVForValue("1", this.profile.companyName);
+            var vatNumber = this.getTLVForValue("2", this.profile.vatNumber);
+            var timestamp = this.getTLVForValue("3", "" + this.invoice.invoiceDate);
+            var amt = this.invoice.total - this.invoice.tax;
+            var amount = this.getTLVForValue("4", "" + amt);
+            var vatAmount = this.getTLVForValue("5", "" + this.invoice.tax);
+            var tagsBufArray = [sellerName, vatNumber, timestamp, amount, vatAmount];
+            var qrCodeBuf = buffer__WEBPACK_IMPORTED_MODULE_9__["Buffer"].concat(tagsBufArray);
+            var qrCodeBase64 = qrCodeBuf.toString('base64');
+            return qrCodeBase64;
+          }
+        }, {
+          key: "getTLVForValue",
+          value: function getTLVForValue(tagNum, tagValue) {
+            var tagBuf = buffer__WEBPACK_IMPORTED_MODULE_9__["Buffer"].from([tagNum]);
+            var tagValueLenBuf = buffer__WEBPACK_IMPORTED_MODULE_9__["Buffer"].from([tagValue.length]);
+            var tagValueBuf = buffer__WEBPACK_IMPORTED_MODULE_9__["Buffer"].from(tagValue);
+            var buffsArray = [tagBuf, tagValueLenBuf, tagValueBuf];
+            return buffer__WEBPACK_IMPORTED_MODULE_9__["Buffer"].concat(buffsArray);
           }
         }]);
 
@@ -254,6 +354,9 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"]
         }],
         invoice: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"]
+        }],
+        products: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"]
         }]
       };
@@ -301,7 +404,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = ".text-center {\n  text-align: center;\n}\n\n#imageToPrint {\n  position: relative;\n}\n\nimg {\n  width: 100px;\n  height: 100px;\n}\n\n.content-center {\n  text-align: center;\n  font-size: 14px;\n  margin: 0px;\n  font-weight: 700;\n  line-height: 1.5;\n}\n\n.line-separator {\n  margin: 10px 0px;\n  border: 1px dashed black;\n}\n\n.bill-details {\n  display: inline-block;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.display-flex {\n  display: flex;\n  text-align: left;\n}\n\n.item-label {\n  width: 33.33%;\n  padding: 3px 10px;\n}\n\n.item-value {\n  width: 33.33%;\n  padding: 3px 10px;\n}\n\n.item-arabic {\n  width: 33.33%;\n  padding: 3px 10px;\n}\n\n.overflow {\n  overflow: auto;\n}\n\n.dummy-img img {\n  width: 55px !important;\n  height: 50px !important;\n}\n\n.m-t-1 {\n  margin-top: 2px;\n}\n\n.letter-space {\n  letter-spacing: 0;\n  word-spacing: normal;\n  /* text-align: center !important; */\n  word-wrap: normal !important;\n}\n\ntable.fixed {\n  width: 100%;\n}\n\ntable th {\n  padding: 5px 0px 15px;\n  text-align: center;\n}\n\ntable thead tr {\n  border-bottom: 1px solid black;\n}\n\ntable tr td {\n  padding: 5px 0px 15px;\n}\n\ntable td:nth-child(4) {\n  width: 40%;\n  text-align: center;\n}\n\ntable td:nth-child(3), td:nth-child(2), td:nth-child(1) {\n  width: 20%;\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3ByaW50LXByZXZpZXcuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtBQUNKOztBQUNBO0VBQ0ksa0JBQUE7QUFFSjs7QUFBQTtFQUNJLFlBQUE7RUFDQSxhQUFBO0FBR0o7O0FBREE7RUFDSSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxXQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtBQUlKOztBQUZBO0VBQ0ksZ0JBQUE7RUFDQSx3QkFBQTtBQUtKOztBQUhBO0VBQ0kscUJBQUE7QUFNSjs7QUFKQTtFQUNJLFdBQUE7QUFPSjs7QUFMQTtFQUNJLGFBQUE7RUFDQSxnQkFBQTtBQVFKOztBQU5BO0VBQ0ksYUFBQTtFQUNBLGlCQUFBO0FBU0o7O0FBUEE7RUFDSSxhQUFBO0VBQ0EsaUJBQUE7QUFVSjs7QUFSQTtFQUNJLGFBQUE7RUFDQSxpQkFBQTtBQVdKOztBQVRBO0VBQ0ksY0FBQTtBQVlKOztBQVRJO0VBQ0ksc0JBQUE7RUFDQSx1QkFBQTtBQVlSOztBQVRBO0VBQ0ksZUFBQTtBQVlKOztBQVZBO0VBQ0ksaUJBQUE7RUFDQSxvQkFBQTtFQUNBLG1DQUFBO0VBQ0EsNEJBQUE7QUFhSjs7QUFYQTtFQUNJLFdBQUE7QUFjSjs7QUFaRTtFQUNJLHFCQUFBO0VBQ0Esa0JBQUE7QUFlTjs7QUFiRTtFQUNJLDhCQUFBO0FBZ0JOOztBQWRFO0VBQ0UscUJBQUE7QUFpQko7O0FBZkU7RUFDSSxVQUFBO0VBQ0Esa0JBQUE7QUFrQk47O0FBaEJFO0VBQ0UsVUFBQTtFQUNBLGtCQUFBO0FBbUJKIiwiZmlsZSI6InByaW50LXByZXZpZXcuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudGV4dC1jZW50ZXIge1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbiNpbWFnZVRvUHJpbnQge1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG59XHJcbmltZyB7XHJcbiAgICB3aWR0aDogMTAwcHg7XHJcbiAgICBoZWlnaHQ6IDEwMHB4O1xyXG59XHJcbi5jb250ZW50LWNlbnRlciB7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICBtYXJnaW46IDBweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgICBsaW5lLWhlaWdodDogMS41O1xyXG59XHJcbi5saW5lLXNlcGFyYXRvciB7XHJcbiAgICBtYXJnaW46IDEwcHggMHB4O1xyXG4gICAgYm9yZGVyIDogMXB4IGRhc2hlZCBibGFjaztcclxufVxyXG4uYmlsbC1kZXRhaWxzIHtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxufVxyXG4uZnVsbC13aWR0aCB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxufVxyXG4uZGlzcGxheS1mbGV4IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG59XHJcbi5pdGVtLWxhYmVsIHtcclxuICAgIHdpZHRoOiAzMy4zMyU7XHJcbiAgICBwYWRkaW5nOiAzcHggMTBweDtcclxufVxyXG4uaXRlbS12YWx1ZSB7XHJcbiAgICB3aWR0aDogMzMuMzMlO1xyXG4gICAgcGFkZGluZzogM3B4IDEwcHg7XHJcbn1cclxuLml0ZW0tYXJhYmljIHtcclxuICAgIHdpZHRoOiAzMy4zMyU7XHJcbiAgICBwYWRkaW5nOiAzcHggMTBweDtcclxufVxyXG4ub3ZlcmZsb3cge1xyXG4gICAgb3ZlcmZsb3c6IGF1dG87IFxyXG59XHJcbi5kdW1teS1pbWcge1xyXG4gICAgaW1nIHtcclxuICAgICAgICB3aWR0aDogNTVweCAhaW1wb3J0YW50O1xyXG4gICAgICAgIGhlaWdodDogNTBweCAhaW1wb3J0YW50O1xyXG4gICAgfVxyXG59XHJcbi5tLXQtMSB7XHJcbiAgICBtYXJnaW4tdG9wOiAycHg7XHJcbn0gXHJcbi5sZXR0ZXItc3BhY2Uge1xyXG4gICAgbGV0dGVyLXNwYWNpbmc6IDA7XHJcbiAgICB3b3JkLXNwYWNpbmc6IG5vcm1hbDtcclxuICAgIC8qIHRleHQtYWxpZ246IGNlbnRlciAhaW1wb3J0YW50OyAqL1xyXG4gICAgd29yZC13cmFwOiBub3JtYWwgIWltcG9ydGFudDtcclxufVxyXG50YWJsZS5maXhlZCB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICB9XHJcbiAgdGFibGUgdGgge1xyXG4gICAgICBwYWRkaW5nOiA1cHggMHB4IDE1cHg7XHJcbiAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB9XHJcbiAgdGFibGUgdGhlYWQgdHIge1xyXG4gICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgYmxhY2s7XHJcbiAgfVxyXG4gIHRhYmxlIHRyIHRkIHtcclxuICAgIHBhZGRpbmc6IDVweCAwcHggMTVweDtcclxuICB9XHJcbiAgdGFibGUgdGQ6bnRoLWNoaWxkKDQpIHtcclxuICAgICAgd2lkdGg6IDQwJTtcclxuICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIH1cclxuICB0YWJsZSB0ZDpudGgtY2hpbGQoMykgLCB0ZDpudGgtY2hpbGQoMiksIHRkOm50aC1jaGlsZCgxKXtcclxuICAgIHdpZHRoOiAyMCU7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuIl19 */";
+      __webpack_exports__["default"] = ".text-center {\n  text-align: center;\n}\n\n#imageToPrint {\n  position: relative;\n}\n\nimg {\n  width: 100px;\n  height: 100px;\n}\n\n.content-center {\n  text-align: center;\n  font-size: 14px;\n  margin: 0px;\n  font-weight: 700;\n  line-height: 1.5;\n}\n\n.content-left {\n  text-align: left;\n  font-size: 14px;\n  margin: 0px;\n  font-weight: 700;\n  line-height: 1.5;\n}\n\n.content-right {\n  text-align: right;\n  font-size: 14px;\n  margin: 0px;\n  font-weight: 700;\n  line-height: 1.5;\n}\n\n.title-content-center {\n  text-align: center;\n  font-size: 18px;\n  margin: 0px;\n  font-weight: 700;\n  line-height: 1.5;\n}\n\n.title-content-left {\n  text-align: left;\n  font-size: 18px;\n  margin: 0px;\n  font-weight: 700;\n  line-height: 1.5;\n}\n\n.line-separator {\n  margin: 10px 0px;\n  border: 1px dashed black;\n}\n\n.bill-details {\n  display: inline-block;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.oneby3-width {\n  width: 75%;\n}\n\n.oneby2-width {\n  width: 50%;\n}\n\n.display-flex {\n  display: flex;\n  text-align: left;\n}\n\n.item-label {\n  width: 33.33%;\n  padding: 3px 10px;\n}\n\n.no-wrap-text {\n  white-space: nowrap;\n}\n\n.item-value {\n  width: 33.33%;\n  padding: 3px 10px;\n}\n\n.item-arabic {\n  width: 33.33%;\n  padding: 3px 10px;\n}\n\n.overflow {\n  overflow: auto;\n}\n\n.dummy-img img {\n  width: 55px !important;\n  height: 50px !important;\n}\n\n.m-t-1 {\n  margin-top: 2px;\n}\n\n.letter-space {\n  letter-spacing: 0;\n  word-spacing: normal;\n  /* text-align: center !important; */\n  word-wrap: normal !important;\n}\n\ntable.fixed {\n  width: 100%;\n}\n\ntable th {\n  padding: 5px 0px 15px;\n  text-align: center;\n}\n\ntable thead tr {\n  border-bottom: 1px solid black;\n}\n\ntable tr td {\n  padding: 5px 0px 15px;\n}\n\ntable td:nth-child(4) {\n  width: 40%;\n  text-align: center;\n}\n\ntable td:nth-child(3), td:nth-child(2), td:nth-child(1) {\n  width: 20%;\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3ByaW50LXByZXZpZXcuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtBQUNKOztBQUNBO0VBQ0ksa0JBQUE7QUFFSjs7QUFBQTtFQUNJLFlBQUE7RUFDQSxhQUFBO0FBR0o7O0FBREE7RUFDSSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxXQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtBQUlKOztBQUFBO0VBQ0ksZ0JBQUE7RUFDQSxlQUFBO0VBQ0EsV0FBQTtFQUNBLGdCQUFBO0VBQ0EsZ0JBQUE7QUFHSjs7QUFEQTtFQUNJLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLFdBQUE7RUFDQSxnQkFBQTtFQUNBLGdCQUFBO0FBSUo7O0FBREE7RUFDSSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxXQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtBQUlKOztBQUZBO0VBQ0ksZ0JBQUE7RUFDQSxlQUFBO0VBQ0EsV0FBQTtFQUNBLGdCQUFBO0VBQ0EsZ0JBQUE7QUFLSjs7QUFGQTtFQUNJLGdCQUFBO0VBQ0Esd0JBQUE7QUFLSjs7QUFIQTtFQUNJLHFCQUFBO0FBTUo7O0FBSkE7RUFDSSxXQUFBO0FBT0o7O0FBTEE7RUFDSSxVQUFBO0FBUUo7O0FBTkE7RUFDSSxVQUFBO0FBU0o7O0FBUEE7RUFDSSxhQUFBO0VBQ0EsZ0JBQUE7QUFVSjs7QUFSQTtFQUNJLGFBQUE7RUFDQSxpQkFBQTtBQVdKOztBQVRBO0VBQ0ksbUJBQUE7QUFZSjs7QUFWQTtFQUNJLGFBQUE7RUFDQSxpQkFBQTtBQWFKOztBQVhBO0VBQ0ksYUFBQTtFQUNBLGlCQUFBO0FBY0o7O0FBWkE7RUFDSSxjQUFBO0FBZUo7O0FBWkk7RUFDSSxzQkFBQTtFQUNBLHVCQUFBO0FBZVI7O0FBWkE7RUFDSSxlQUFBO0FBZUo7O0FBYkE7RUFDSSxpQkFBQTtFQUNBLG9CQUFBO0VBQ0EsbUNBQUE7RUFDQSw0QkFBQTtBQWdCSjs7QUFkQTtFQUNJLFdBQUE7QUFpQko7O0FBZkU7RUFDSSxxQkFBQTtFQUNBLGtCQUFBO0FBa0JOOztBQWhCRTtFQUNJLDhCQUFBO0FBbUJOOztBQWpCRTtFQUNFLHFCQUFBO0FBb0JKOztBQWxCRTtFQUNJLFVBQUE7RUFDQSxrQkFBQTtBQXFCTjs7QUFuQkU7RUFDRSxVQUFBO0VBQ0Esa0JBQUE7QUFzQkoiLCJmaWxlIjoicHJpbnQtcHJldmlldy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0LWNlbnRlciB7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuI2ltYWdlVG9QcmludCB7XHJcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbn1cclxuaW1nIHtcclxuICAgIHdpZHRoOiAxMDBweDtcclxuICAgIGhlaWdodDogMTAwcHg7XHJcbn1cclxuLmNvbnRlbnQtY2VudGVyIHtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIGZvbnQtc2l6ZTogMTRweDtcclxuICAgIG1hcmdpbjogMHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICAgIGxpbmUtaGVpZ2h0OiAxLjU7XHJcbn1cclxuXHJcblxyXG4uY29udGVudC1sZWZ0IHtcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICBtYXJnaW46IDBweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgICBsaW5lLWhlaWdodDogMS41O1xyXG59XHJcbi5jb250ZW50LXJpZ2h0IHtcclxuICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG4gICAgbWFyZ2luOiAwcHg7XHJcbiAgICBmb250LXdlaWdodDogNzAwO1xyXG4gICAgbGluZS1oZWlnaHQ6IDEuNTtcclxufVxyXG5cclxuLnRpdGxlLWNvbnRlbnQtY2VudGVyIHtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIGZvbnQtc2l6ZTogMThweDtcclxuICAgIG1hcmdpbjogMHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICAgIGxpbmUtaGVpZ2h0OiAxLjU7XHJcbn1cclxuLnRpdGxlLWNvbnRlbnQtbGVmdCB7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG4gICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgbWFyZ2luOiAwcHg7XHJcbiAgICBmb250LXdlaWdodDogNzAwO1xyXG4gICAgbGluZS1oZWlnaHQ6IDEuNTtcclxufVxyXG5cclxuLmxpbmUtc2VwYXJhdG9yIHtcclxuICAgIG1hcmdpbjogMTBweCAwcHg7XHJcbiAgICBib3JkZXIgOiAxcHggZGFzaGVkIGJsYWNrO1xyXG59XHJcbi5iaWxsLWRldGFpbHMge1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG59XHJcbi5mdWxsLXdpZHRoIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG59XHJcbi5vbmVieTMtd2lkdGgge1xyXG4gICAgd2lkdGg6IDc1JTtcclxufVxyXG4ub25lYnkyLXdpZHRoIHtcclxuICAgIHdpZHRoOiA1MCU7XHJcbn1cclxuLmRpc3BsYXktZmxleCB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG4uaXRlbS1sYWJlbCB7XHJcbiAgICB3aWR0aDogMzMuMzMlO1xyXG4gICAgcGFkZGluZzogM3B4IDEwcHg7XHJcbn1cclxuLm5vLXdyYXAtdGV4dHtcclxuICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbn1cclxuLml0ZW0tdmFsdWUge1xyXG4gICAgd2lkdGg6IDMzLjMzJTtcclxuICAgIHBhZGRpbmc6IDNweCAxMHB4O1xyXG59XHJcbi5pdGVtLWFyYWJpYyB7XHJcbiAgICB3aWR0aDogMzMuMzMlO1xyXG4gICAgcGFkZGluZzogM3B4IDEwcHg7XHJcbn1cclxuLm92ZXJmbG93IHtcclxuICAgIG92ZXJmbG93OiBhdXRvOyBcclxufVxyXG4uZHVtbXktaW1nIHtcclxuICAgIGltZyB7XHJcbiAgICAgICAgd2lkdGg6IDU1cHggIWltcG9ydGFudDtcclxuICAgICAgICBoZWlnaHQ6IDUwcHggIWltcG9ydGFudDtcclxuICAgIH1cclxufVxyXG4ubS10LTEge1xyXG4gICAgbWFyZ2luLXRvcDogMnB4O1xyXG59IFxyXG4ubGV0dGVyLXNwYWNlIHtcclxuICAgIGxldHRlci1zcGFjaW5nOiAwO1xyXG4gICAgd29yZC1zcGFjaW5nOiBub3JtYWw7XHJcbiAgICAvKiB0ZXh0LWFsaWduOiBjZW50ZXIgIWltcG9ydGFudDsgKi9cclxuICAgIHdvcmQtd3JhcDogbm9ybWFsICFpbXBvcnRhbnQ7XHJcbn1cclxudGFibGUuZml4ZWQge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgfVxyXG4gIHRhYmxlIHRoIHtcclxuICAgICAgcGFkZGluZzogNXB4IDBweCAxNXB4O1xyXG4gICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgfVxyXG4gIHRhYmxlIHRoZWFkIHRyIHtcclxuICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIGJsYWNrO1xyXG4gIH1cclxuICB0YWJsZSB0ciB0ZCB7XHJcbiAgICBwYWRkaW5nOiA1cHggMHB4IDE1cHg7XHJcbiAgfVxyXG4gIHRhYmxlIHRkOm50aC1jaGlsZCg0KSB7XHJcbiAgICAgIHdpZHRoOiA0MCU7XHJcbiAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB9XHJcbiAgdGFibGUgdGQ6bnRoLWNoaWxkKDMpICwgdGQ6bnRoLWNoaWxkKDIpLCB0ZDpudGgtY2hpbGQoMSl7XHJcbiAgICB3aWR0aDogMjAlO1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbiJdfQ== */";
       /***/
     },
 
@@ -562,11 +665,11 @@
         }, {
           key: "filterProducts",
           value: function filterProducts(evt) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
               var searchTerm;
-              return regeneratorRuntime.wrap(function _callee$(_context2) {
+              return regeneratorRuntime.wrap(function _callee3$(_context4) {
                 while (1) {
-                  switch (_context2.prev = _context2.next) {
+                  switch (_context4.prev = _context4.next) {
                     case 0:
                       this.product = {
                         id: null,
@@ -584,11 +687,11 @@
                       searchTerm = evt.srcElement.value;
 
                       if (searchTerm) {
-                        _context2.next = 5;
+                        _context4.next = 5;
                         break;
                       }
 
-                      return _context2.abrupt("return");
+                      return _context4.abrupt("return");
 
                     case 5:
                       this.products = this.products.filter(function (currentProduct) {
@@ -599,10 +702,10 @@
 
                     case 6:
                     case "end":
-                      return _context2.stop();
+                      return _context4.stop();
                   }
                 }
-              }, _callee, this);
+              }, _callee3, this);
             }));
           }
         }, {
@@ -899,31 +1002,32 @@
         }, {
           key: "printPreview",
           value: function printPreview() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
               var modal;
-              return regeneratorRuntime.wrap(function _callee2$(_context3) {
+              return regeneratorRuntime.wrap(function _callee4$(_context5) {
                 while (1) {
-                  switch (_context3.prev = _context3.next) {
+                  switch (_context5.prev = _context5.next) {
                     case 0:
-                      _context3.next = 2;
+                      _context5.next = 2;
                       return this.modalController.create({
                         component: _print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_14__["PrintPreviewComponent"],
                         componentProps: {
                           profile: this.profile,
-                          invoice: this.invoice
+                          invoice: this.invoice,
+                          products: this.products
                         }
                       });
 
                     case 2:
-                      modal = _context3.sent;
+                      modal = _context5.sent;
                       modal.present();
 
                     case 4:
                     case "end":
-                      return _context3.stop();
+                      return _context5.stop();
                   }
                 }
-              }, _callee2, this);
+              }, _callee4, this);
             }));
           }
         }, {
@@ -942,13 +1046,13 @@
         }, {
           key: "getImage",
           value: function getImage() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
               var _this8 = this;
 
               var node, img;
-              return regeneratorRuntime.wrap(function _callee3$(_context4) {
+              return regeneratorRuntime.wrap(function _callee5$(_context6) {
                 while (1) {
-                  switch (_context4.prev = _context4.next) {
+                  switch (_context6.prev = _context6.next) {
                     case 0:
                       node = document.getElementById("content");
                       img = new Image();
@@ -978,10 +1082,10 @@
 
                     case 3:
                     case "end":
-                      return _context4.stop();
+                      return _context6.stop();
                   }
                 }
-              }, _callee3);
+              }, _callee5);
             }));
           }
         }, {
@@ -1051,7 +1155,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button menu=\"mainmenu\"> \r\n\r\n      </ion-menu-button>\r\n    </ion-buttons> \r\n   \r\n    <ion-title>New Invoice</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <div>\r\n    <div class=\"row\"></div>\r\n   \r\n    <ion-select style=\"margin-top: 2%;height: 30px;margin-right: 4%;\" (ionChange)=\"populateCustomerProducts()\" [(ngModel)]=\"invoice.customer\" placeholder=\"Select Customer\">\r\n        <ion-select-option *ngFor=\"let cus of customerList\" [value]=\"cus\">{{cus.name}}</ion-select-option>\r\n    </ion-select>\r\n<!--<ion-item>\r\n  <ion-label>Product</ion-label>\r\n  <ionic-selectable style=\"height: 30px;\"\r\n    \r\n    [(ngModel)]=\"product\"\r\n    [items]=\"products\"\r\n    itemValueField=\"name\"\r\n    itemTextField=\"name\"\r\n    [canSearch]=\"true\"\r\n    (onChange)=\"productSelected($event)\"\r\n    [isMultiple]=\"true\"\r\n    \r\n    >\r\n  </ionic-selectable>\r\n</ion-item>  -->\r\n    <div id=\"content\" >\r\n      <table *ngIf=\"showTable\" border=\"none\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;\">\r\n        <tr style=\"border: none; color: white; background-color: lightslategray;\">\r\n          <td style=\"width: 40%;text-align: left;\">\r\n            Item\r\n          </td>\r\n          <td style=\"text-align: left;\">\r\n            Price\r\n          </td>\r\n          <td style=\"text-align: left;\">\r\n            A.Qty\r\n          </td>\r\n          <td style=\"text-align: left;\">\r\n            Qty\r\n          </td>\r\n          \r\n          <td style=\"text-align: left;\">\r\n            Amount\r\n          </td>\r\n        </tr>\r\n        <tr *ngFor= \"let item of products\" style=\"border: none;\">\r\n          <td style=\"text-align: left;\"><ion-input  disabled [(ngModel)]=\"item.nameInArabic\" ></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input disabled (ionChange)=\"calculateInvoiceTotal(item)\" type=\"number\" [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input disabled type=\"number\" [(ngModel)]=\"item.displayBalanceQuantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input (ionChange)=\"calculateInvoiceTotal(item)\" type=\"number\" [(ngModel)]=\"item.quantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice*item.quantity\" ></ion-input></td>\r\n        </tr>\r\n      </table>\r\n    </div>\r\n  \r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-item style=\"width: 100%;\">\r\n        <ion-col size=\"6\">\r\n          <ion-label >Apply VAT</ion-label>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-checkbox color=\"primary\" [(ngModel)]=\"applyVat\" (ionChange)=\"calculateInvoiceTotal()\" ></ion-checkbox>\r\n        </ion-col>\r\n      </ion-item>\r\n      </ion-row>\r\n        \r\n      <ion-row>\r\n    <ion-item style=\"width: 100%;\"> \r\n          <ion-col size=\"6\">\r\n            <ion-label >Total</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\" *ngIf=\"applyVat==true\">\r\n            <ion-label style=\"float: right;\">{{(invoice.total-invoice.tax) | number : '1.2-2'}}</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\" *ngIf=\"applyVat==false\">\r\n            <ion-label style=\"float: right;\">{{invoice.total |    number : '1.2-2'}}</ion-label>\r\n          </ion-col>\r\n        </ion-item>\r\n      </ion-row>  \r\n      <ion-row>\r\n        <ion-item style=\"width: 100%;\">\r\n        <ion-col size=\"6\">\r\n          <ion-label >Tax</ion-label>\r\n        </ion-col>\r\n        <ion-col size=\"6\" *ngIf=\"applyVat==true\">\r\n          <ion-label style=\"float: right;\">{{(invoice.tax | number : '1.2-2')}}</ion-label>\r\n        </ion-col>\r\n        <ion-col size=\"6\" *ngIf=\"applyVat==false\">\r\n          <ion-label style=\"float: right;\">{{(0 | number : '1.2-2')}}</ion-label>\r\n        </ion-col>\r\n      </ion-item>\r\n    </ion-row>  \r\n        \r\n\r\n\r\n\r\n    <ion-row>\r\n      <ion-item style=\"width: 100%;\">\r\n      <ion-col size=\"6\">\r\n        <ion-label >Gross Total(Incl. Tax)               </ion-label>\r\n      </ion-col>\r\n      <ion-col size=\"6\">\r\n        <ion-label style=\"float: right;\">{{invoice.total | number : '1.2-2'}}</ion-label>\r\n      </ion-col>\r\n    </ion-item>\r\n    </ion-row>\r\n\r\n        \r\n        \r\n        <ion-row>\r\n        <ion-item style=\"width: 100%;\"> \r\n          <ion-col size=\"6\">\r\n            <ion-label text-wrap>Balance Amount(Incl. current invoice)</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\">\r\n            <ion-label style=\"float: right;\">{{invoice.balanceAmount | number : '1.2-2'}}</ion-label>\r\n          </ion-col>\r\n        </ion-item>\r\n        </ion-row>\r\n\r\n        <ion-row>\r\n          <ion-col size=\"12\">\r\n            <ion-item style=\"margin-left: 0px; padding-left: 0px;\" >\r\n              <ion-label style=\"margin-left: 0px;\">Amount Paid</ion-label>\r\n              <ion-input class=\"ion-text-right\" type=\"number\" [(ngModel)]=\"invoice.amountPaid\" (ionChange)=\"calculateInvoiceTotal()\"></ion-input>\r\n            </ion-item>\r\n          </ion-col>\r\n        </ion-row>\r\n        \r\n        <!-- <ion-row>\r\n          <ion-col size=\"6\">\r\n            <ion-label color=\"primary\">Invoice Number</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\">\r\n            <ion-label >{{invoice.invoiceNumber}}</ion-label>\r\n          </ion-col>\r\n        </ion-row>   -->\r\n      \r\n    </ion-grid>\r\n    <div style=\"display: none;\">\r\n      <ion-datetime value=\"invoice.invoiceDate\" ></ion-datetime>\r\n    </div>\r\n  </div>\r\n</ion-content>\r\n<ion-footer>\r\n  <ion-row style=\"float:right\">\r\n    <ion-col >\r\n    <ion-button  color=\"primary\" (click)=\"submitBill()\">\r\n      <ion-icon name=\"checkmark\"></ion-icon>\r\n     \r\n      \r\n    </ion-button>\r\n    <ion-button color=\"primary\" (click)=\"printBill()\">\r\n      <ion-icon name=\"print\"></ion-icon>\r\n    </ion-button>\r\n  </ion-col>\r\n  </ion-row>\r\n\r\n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button menu=\"mainmenu\"> \r\n\r\n      </ion-menu-button>\r\n    </ion-buttons> \r\n   \r\n    <ion-title>New Invoice</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <div>\r\n    <div class=\"row\"></div>\r\n   \r\n    <ion-select style=\"margin-top: 2%;height: 30px;margin-right: 4%;\" (ionChange)=\"populateCustomerProducts()\" [(ngModel)]=\"invoice.customer\" placeholder=\"Select Customer\">\r\n        <ion-select-option *ngFor=\"let cus of customerList\" [value]=\"cus\">{{cus.name}}</ion-select-option>\r\n    </ion-select>\r\n<!--<ion-item>\r\n  <ion-label>Product</ion-label>\r\n  <ionic-selectable style=\"height: 30px;\"\r\n    \r\n    [(ngModel)]=\"product\"\r\n    [items]=\"products\"\r\n    itemValueField=\"name\"\r\n    itemTextField=\"name\"\r\n    [canSearch]=\"true\"\r\n    (onChange)=\"productSelected($event)\"\r\n    [isMultiple]=\"true\"\r\n    \r\n    >\r\n  </ionic-selectable>\r\n</ion-item>  -->\r\n    <div id=\"content\" >\r\n      <table *ngIf=\"showTable\" border=\"none\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;\">\r\n        <tr style=\"border: none; color: white; background-color: lightslategray;\">\r\n          <td style=\"width: 40%;text-align: left;\">\r\n            Item\r\n          </td>\r\n          <td style=\"text-align: left;\">\r\n            Price\r\n          </td>\r\n          <td style=\"text-align: left;\">\r\n            A.Qty\r\n          </td>\r\n          <td style=\"text-align: left;\">\r\n            Qty\r\n          </td>\r\n          \r\n          <td style=\"text-align: left;\">\r\n            Amount\r\n          </td>\r\n        </tr>\r\n        <tr *ngFor= \"let item of products\" style=\"border: none;\">\r\n          <td style=\"text-align: left;\"><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input disabled (ionChange)=\"calculateInvoiceTotal(item)\" type=\"number\" [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input disabled type=\"number\" [(ngModel)]=\"item.displayBalanceQuantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input (ionChange)=\"calculateInvoiceTotal(item)\" type=\"number\" [(ngModel)]=\"item.quantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\r\n          <td style=\"text-align: right;\"><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice*item.quantity\" ></ion-input></td>\r\n        </tr>\r\n      </table>\r\n    </div>\r\n  \r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-item style=\"width: 100%;\">\r\n        <ion-col size=\"6\">\r\n          <ion-label >Apply VAT</ion-label>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-checkbox color=\"primary\" [(ngModel)]=\"applyVat\" (ionChange)=\"calculateInvoiceTotal()\" ></ion-checkbox>\r\n        </ion-col>\r\n      </ion-item>\r\n      </ion-row>\r\n        \r\n      <ion-row>\r\n    <ion-item style=\"width: 100%;\"> \r\n          <ion-col size=\"6\">\r\n            <ion-label >Total</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\" *ngIf=\"applyVat==true\">\r\n            <ion-label style=\"float: right;\">{{(invoice.total-invoice.tax) | number : '1.2-2'}}</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\" *ngIf=\"applyVat==false\">\r\n            <ion-label style=\"float: right;\">{{invoice.total |    number : '1.2-2'}}</ion-label>\r\n          </ion-col>\r\n        </ion-item>\r\n      </ion-row>  \r\n      <ion-row>\r\n        <ion-item style=\"width: 100%;\">\r\n        <ion-col size=\"6\">\r\n          <ion-label >Tax</ion-label>\r\n        </ion-col>\r\n        <ion-col size=\"6\" *ngIf=\"applyVat==true\">\r\n          <ion-label style=\"float: right;\">{{(invoice.tax | number : '1.2-2')}}</ion-label>\r\n        </ion-col>\r\n        <ion-col size=\"6\" *ngIf=\"applyVat==false\">\r\n          <ion-label style=\"float: right;\">{{(0 | number : '1.2-2')}}</ion-label>\r\n        </ion-col>\r\n      </ion-item>\r\n    </ion-row>  \r\n        \r\n\r\n\r\n\r\n    <ion-row>\r\n      <ion-item style=\"width: 100%;\">\r\n      <ion-col size=\"6\">\r\n        <ion-label >Gross Total(Incl. Tax)               </ion-label>\r\n      </ion-col>\r\n      <ion-col size=\"6\">\r\n        <ion-label style=\"float: right;\">{{invoice.total | number : '1.2-2'}}</ion-label>\r\n      </ion-col>\r\n    </ion-item>\r\n    </ion-row>\r\n\r\n        \r\n        \r\n        <ion-row>\r\n        <ion-item style=\"width: 100%;\"> \r\n          <ion-col size=\"6\">\r\n            <ion-label text-wrap>Balance Amount(Incl. current invoice)</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\">\r\n            <ion-label style=\"float: right;\">{{invoice.balanceAmount | number : '1.2-2'}}</ion-label>\r\n          </ion-col>\r\n        </ion-item>\r\n        </ion-row>\r\n\r\n        <ion-row>\r\n          <ion-col size=\"12\">\r\n            <ion-item style=\"margin-left: 0px; padding-left: 0px;\" >\r\n              <ion-label style=\"margin-left: 0px;\">Amount Paid</ion-label>\r\n              <ion-input class=\"ion-text-right\" type=\"number\" [(ngModel)]=\"invoice.amountPaid\" (ionChange)=\"calculateInvoiceTotal()\"></ion-input>\r\n            </ion-item>\r\n          </ion-col>\r\n        </ion-row>\r\n        \r\n        <!-- <ion-row>\r\n          <ion-col size=\"6\">\r\n            <ion-label color=\"primary\">Invoice Number</ion-label>\r\n          </ion-col>\r\n          <ion-col size=\"6\">\r\n            <ion-label >{{invoice.invoiceNumber}}</ion-label>\r\n          </ion-col>\r\n        </ion-row>   -->\r\n      \r\n    </ion-grid>\r\n    <div style=\"display: none;\">\r\n      <ion-datetime value=\"invoice.invoiceDate\" ></ion-datetime>\r\n    </div>\r\n  </div>\r\n</ion-content>\r\n<ion-footer>\r\n  <ion-row style=\"float:right\">\r\n    <ion-col >\r\n    <ion-button  color=\"primary\" (click)=\"submitBill()\">\r\n      <ion-icon name=\"checkmark\"></ion-icon>\r\n     \r\n      \r\n    </ion-button>\r\n    <ion-button color=\"primary\" (click)=\"printBill()\">\r\n      <ion-icon name=\"print\"></ion-icon>\r\n    </ion-button>\r\n  </ion-col>\r\n  </ion-row>\r\n\r\n</ion-footer>";
       /***/
     },
 
@@ -11800,7 +11904,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<div id=\"imageToPrint\">  \n  <h3 class=\"text-center\">Print Receipt Preview</h3>\n    <div> \n       <div class=\"text-center dummy-img\" > \n      </div> \n      <div class=\"text-center\" >\n          <h3 class=\"content-center\"> {{profile?.companyName}}</h3>\n      </div>\n      <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            VAT #  :\n          </div>\n          <div text-center class=\"item-value\">\n            {{profile?.vatNumber}} : \n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            رقم الفاتورة    \n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            CR #  :\n          </div>\n          <div text-center class=\"item-value\">\n            {{profile?.crNumber}} : \n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            رقم الفاتورة    \n          </div>\n        </div>\n       \n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            VAT INVOICE :\n          </div>\n          <div text-center class=\"item-value\">\n            {{invoice?.invoiceNumber}} {{datetime}}\n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            التاريخ و الوقت\n          </div>\n        </div>\n\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            Customer :\n          </div>\n          <div text-center class=\"item-value\">\n            {{invoice?.customer.name}} : \n          </div>\n          <div text-right class=\"item-arabic\">\n            <span class=\"letter-space text-left\" style=\"text-align: left;\">العميل</span>\n          </div>\n        </div>\n\n        <div class=\"line-separator\"></div>\n        <table style=\"width:100%\" class=\"fixed\">\n          <thead>\n            <tr>\n              <th>\n                <div>Amount</div>\n                <div class=\"letter-space\">المبلغ</div>\n              </th>\n              <th>\n                <div>Price</div>\n                <div class=\"letter-space\">السعر</div>\n              </th> \n              <th>\n                <div>Qty</div>\n                <div class=\"letter-space\">الكمية</div>\n              </th>\n              <th>\n                <div>Item Name</div>\n                <div class=\"letter-space\">اسم العنصر</div>\n              </th>\n            </tr>\n          </thead>\n          <tr *ngFor=\"let order of invoice.invoiceItems\">\n            <td>{{order.unitPrice * order.quantity}}</td>\n            <td>{{order.unitPrice }}</td>\n            <td>{{order.quantity}}</td>\n            <td>{{order.name}}</td>\n          </tr>\n        </table>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            Qty :\n          </div>\n          <div text-center class=\"item-value\">\n            {{totalQuantity}}\n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            مجموع الفرعي\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            Total Invoice Value(Excl. VAT) :\n          </div>\n          <div text-center class=\"item-value\">\n            {{invoice?.total-invoice?.tax}}\n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            رسوم التوصيل\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            VAT Payable in SAR\n          </div>\n          <div text-center class=\"item-value\">\n            <!-- {{order.total}} --> 45\n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            المجموع الاجلي\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            Gross Amount in SAR :\n          </div>\n          <div text-center class=\"item-value\">\n            <!-- {{order.total}} --> 11235\n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            المجموع الاجلي\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n          Grand Total :\n          </div>\n          <div text-center class=\"item-value\">\n            <!-- {{order.total}} --> 120\n          </div>\n          <div text-right class=\"item-arabic letter-space\">\n            المجموع الاجلي\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div text-center>Thank you for shopping.....</div>\n    </div>\n </div>";
+      __webpack_exports__["default"] = "<div id=\"imageToPrint\" style=\"overflow: scroll;\">  \n    <div> \n       <div class=\"text-center dummy-img\" > \n      </div> \n      <div class=\"text-center\" >\n          <h3 class=\"title-content-center\"> {{profile?.companyName}}</h3>\n      </div>\n      <div class=\"text-center\" >\n        <h3 class=\"title-content-center\"> {{profile?.companyNameInArabic}}</h3>\n    </div>\n    \n    <div  class=\" text-center \">\n      {{profile?.addressLine1}} {{profile?.addressLine1inArabic}}   \n    </div>\n    <div  class=\" text-center \">\n      {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   \n  </div>\n  <div class=\"display-flex full-width\">\n      <div  class=\"item-label no-wrap-text\" style=\"margin-left: 1%;\">\n        VAT # / ضريبة القيمة المضافة  :\n      </div>\n      <div  class=\"item-label \"  style=\"margin-left: 20%;\">\n        {{profile?.vatNumber}}  \n      </div>\n      \n  </div>\n  <div class=\"line-separator\"></div>\n  \n  <div  class=\"text-center\">\n   <h5>VAT INVOICE / فاتوره ضريبية </h5>\n  </div>\n  <div class=\" full-width\">\n    <div class=\"item-label no-wrap-text\">\n    Invoice # / رقم الفاتورة : {{invoice?.invoiceNumber}}\n    </div>\n  </div>\n  <div class=\"display-flex  full-width\">\n    <div class=\"item-label no-wrap-text\">\n    Invoice Date / تاريخ   :\n    \n    </div>\n    <div class=\"item-label no-wrap-text\" style=\"margin-left: 10%;\">{{invoice?.invoiceDate | date : 'dd-MM-yyyy hh:mm'}} </div>\n  </div>\n  <div class=\"line-separator\"></div>\n  \n  <div class=\"display-flex  full-width\">\n    <div class=\"item-lebel no-wrap-text\" style=\"margin-left: 3%;\">\n      <b>Bill To : </b>\n    </div>\n  </div>\n  <div class=\"full-width\">\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.name}} \n    </div>\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.nameInArabic}} \n    </div>\n    \n  </div>\n  <div class=\"full-width\">\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.street}},{{invoice?.customer.city}} \n    </div>\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.streetInArabic}},{{invoice?.customer.cityInArabic }} \n    </div>\n    \n  </div>\n  <div class=\"display-flex  full-width\">\n    <div  class=\"item-label no-wrap-text\" >\n       VAT # / ضريبة القيمة المضافة : \n    </div>\n    <div  class=\"item-label \"  style=\"width: 100%; margin-left: 20%;\">\n      {{invoice?.customer.vatNumber}}\n    </div>\n    \n  </div>\n  <div class=\"line-separator\"></div>\n  <table style=\"width:100%\" class=\"fixed\">\n          <thead>\n            <tr>\n\n              <th style=\"text-align: left; width: 37%; margin-left: 2%;\">\n                <div style=\"margin-left: 3%;\">Item</div>\n                <div class=\"letter-space\" style=\"margin-left: 3%;\">العنصر</div>\n              </th>\n              <th style=\"width:4%\">\n                <div>Qty</div>\n                <div class=\"letter-space\">الكمية</div>\n              </th>\n              <th style=\"width:7%\">\n                <div>Price</div>\n                <div class=\"letter-space\">السعر</div>\n              </th>\n              <th style=\"width:35% ;margin-right: 2%;\">\n                <div style=\"margin-right: 2%;\">Amount</div>\n                <div class=\"letter-space\">المبلغ</div>\n              </th>\n               \n              \n            </tr>\n          </thead>\n          <tr *ngFor=\"let order of orderItems\">\n            <td style=\"text-align: left;margin-left: 3%;\">\n              <div style=\"margin-left: 3%;\">\n                {{order.name}} {{order.nameInArabic}}\n              </div>\n            </td>\n            <td>{{order.quantity}}</td>\n            <td>{{order.unitPrice }}</td>\n            <td >\n              <div style=\"margin-right: 3%;\">\n                {{(order.unitPrice * order.quantity) | number : '1.2-2'}}\n              </div>\n              \n            </td>\n\n            \n           \n          </tr>\n        </table>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label\">\n            Qty : {{totalQuantity}}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"content-right item-label\" style=\"width: 100%;\">\n            Total Invoice Value(Excl. VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n            VAT Payable in SAR ({{profile?.vat}}%): {{invoice?.tax | number : '1.2-2'}}\n          </div>\n          \n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n            Gross Amount in SAR : {{invoice?.total | number : '1.2-2'}}\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n          Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n          Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label title-content-left\" style=\"width: 100%;\">\n          Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width \" >\n        <div style=\"margin-left: 10%;\">\n          <ngx-qrcode  \n  [elementType]=\"elementType\"\n  [errorCorrectionLevel]=\"correctionLevel\"\n  [value]=\"value\"\n  \n  ></ngx-qrcode>\n</div>\n</div>\n    </div>\n </div>";
       /***/
     }
   }]);

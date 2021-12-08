@@ -5,7 +5,8 @@ import html2canvas from 'html2canvas';
 import { DbService } from 'src/app/services/db.service';
 import { PrintService } from 'src/app/services/print.service';
 import { Profile } from 'src/app/services/profile';
-
+import { Buffer } from 'buffer';
+import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 @Component({
   selector: 'app-print-preview',
   templateUrl: './print-preview.component.html',
@@ -18,15 +19,23 @@ export class PrintPreviewComponent implements OnInit {
   @Input() products;
   private datetime  :string;
   private orderItems : any;
+  private totalQuantity : number;
+  elementType = NgxQrcodeElementTypes.URL;
+  correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+  value = "";
   constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,) { }
 
   ngOnInit() {
+    this.value=this.generateQRCodeContent();
     this.datetime=this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
     this.filterUnselectedProducts().then(data=>{
       this.orderItems=data;
-      setTimeout(() => {
-        this.pairTo();
-      },30000);
+      this.getTotalQuantity().then(data=>{
+        setTimeout(() => {
+          this.pairTo();
+        },3000);
+      })
+      
     })
      
   }
@@ -35,11 +44,17 @@ export class PrintPreviewComponent implements OnInit {
     return this.products.filter(a=>a.quantity!=null && a.quantity!=undefined && a.quantity>0);
   }
 
+  async getTotalQuantity(){
+    this.totalQuantity= this.orderItems.reduce((accum,item)=>accum+item.quantity,0);
+  }
+
   pairTo() {
     
     var node = document.getElementById("imageToPrint");
     html2canvas(node, {
       allowTaint: true,
+      scrollY : -window.scrollY,
+      scrollX : -window.scrollX
     }).then(canvas => {
         var imgData = canvas.toDataURL("image/png");
         let encoder = new EscPosEncoder();
@@ -51,13 +66,15 @@ export class PrintPreviewComponent implements OnInit {
           ht = ht + 120;
           result
             .align('left')
-            .image(img,520,ht,'threshold',128).qrcode(this.generateQRCodeContent(),1,4,'h');
+            .image(img,520,ht,'threshold',128).newline().
+            align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline(); ;
           this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           console.log('print called');
           this.modalCtrl.dismiss();
         }
     }).catch(function (error) {
       console.error("oops, something went wrong!", error);
+      alert(error);
       this.modalCtrl.dismiss();
     });
   }
