@@ -78,8 +78,8 @@ export class PrintPreviewComponent implements OnInit {
 
   generateQRCodeContent(){
 
-    var sellerName=this.getTLVForValue("1",'dddd');
-    var vatNumber=this.getTLVForValue("2",'1244');
+    var sellerName=this.getTLVForValue("1",this.profile.companyName);
+    var vatNumber=this.getTLVForValue("2",this.profile.vatNumber);
     var timestamp=this.getTLVForValue("3",""+this.invoice.invoiceDate);
     let amt : number =(this.invoice.total-this.invoice.tax);
     var amount=this.getTLVForValue("4",""+amt);
