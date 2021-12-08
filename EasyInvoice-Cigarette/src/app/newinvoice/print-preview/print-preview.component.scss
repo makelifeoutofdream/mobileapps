@@ -68,14 +68,14 @@ img {
     text-align: left;
 }
 .item-label {
-    width: 33.33%;
+    width: 50%;
     padding: 3px 10px;
 }
 .no-wrap-text{
     white-space: nowrap;
 }
 .item-value {
-    width: 33.33%;
+    width: 50%;
     padding: 3px 10px;
 }
 .item-arabic {
@@ -83,7 +83,7 @@ img {
     padding: 3px 10px;
 }
 .overflow {
-    overflow: visible; 
+    overflow: auto; 
 }
 .dummy-img {
     img {
