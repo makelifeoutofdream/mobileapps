@@ -3,6 +3,8 @@
 }
 #imageToPrint {
     position: relative;
+    font-size: 12px !important;
+    font-weight: bold;
 }
 img {
     width: 100px;
@@ -19,14 +21,14 @@ img {
 
 .content-left {
     text-align: left;
-    font-size: 14px;
+    font-size: 12px;
     margin: 0px;
     font-weight: 700;
     line-height: 1.5;
 }
 .content-right {
     text-align: right;
-    font-size: 14px;
+    font-size: 12px;
     margin: 0px;
     font-weight: 700;
     line-height: 1.5;
@@ -34,14 +36,14 @@ img {
 
 .title-content-center {
     text-align: center;
-    font-size: 18px;
+    font-size: 14px;
     margin: 0px;
     font-weight: 700;
     line-height: 1.5;
 }
 .title-content-left {
     text-align: left;
-    font-size: 18px;
+    font-size: 14px;
     margin: 0px;
     font-weight: 700;
     line-height: 1.5;
@@ -106,6 +108,7 @@ img {
     word-spacing: normal;
     /* text-align: center !important; */
     word-wrap: normal !important;
+    font-weight: bold;
 }
 table.fixed {
     width: 100%;
