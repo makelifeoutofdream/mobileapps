@@ -305,18 +305,7 @@ async printPreview() {
 }
 
 printBill(){
-  
-//   try{
-//   let result=this.getFormatedContent(); 
-//    this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
-  
-//   return this.navCtrl.navigateRoot('invoice');
-//  }catch(reason){
-//     this.tostService.presentToast("Print Failed"+reason)
-//   }
-//this.getImage();
-this.printPreview();
-
+  this.printPreview();
 }
 
 async getImage(): Promise<any>{

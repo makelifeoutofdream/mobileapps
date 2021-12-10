@@ -7,6 +7,7 @@ import { PrintService } from 'src/app/services/print.service';
 import { Profile } from 'src/app/services/profile';
 import { Buffer } from 'buffer';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import * as domtoimage from 'dom-to-image';
 @Component({
   selector: 'app-print-preview',
   templateUrl: './print-preview.component.html',
@@ -27,7 +28,7 @@ export class PrintPreviewComponent implements OnInit {
 
   ngOnInit() {
     this.value=this.generateQRCodeContent();
-    this.datetime=this.invoice.invoiceDate.getDate()+'-'+this.invoice.invoiceDate.getMonth()+'-'+this.invoice.invoiceDate.getFullYear()+' '+this.invoice.invoiceDate.getHours()+':'+this.invoice.invoiceDate.getMinutes()+':'+this.invoice.invoiceDate.getSeconds();
+    this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
     this.filterUnselectedProducts().then(data=>{
       this.orderItems=data;
       this.getTotalQuantity().then(data=>{
@@ -51,20 +52,23 @@ export class PrintPreviewComponent implements OnInit {
   pairTo() {
     
     var node = document.getElementById("imageToPrint");
-    html2canvas(node, {
-    }).then(canvas => {
-        var imgData = canvas.toDataURL("image/png");
+    
+
+    //html2canvas(node, {
+    domtoimage.toPng(node).then(dataUrl => {
+        //var imgData = canvas.toDataURL("image/png");
         let encoder = new EscPosEncoder();
         let result = encoder.initialize();
         let img = new Image();
-        img.src = imgData; 
+        img.src = dataUrl; 
         img.onload  = (e) =>  {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
           result
             .align('left')
-            .image(img,552,ht,'threshold',128).newline().
-            align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline(); ;
+            .image(img,552,ht,'threshold',180).newline().
+            align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline().
+            newline().newline().newline().newline().newline().newline().newline().newline().newline() ;
             this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           console.log('print called');
           this.modalCtrl.dismiss();

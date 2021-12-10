@@ -10,32 +10,32 @@
 <div class="overflow">
   <div id="imageToPrint">  
     <div> 
-      <div class="text-center" >
+      <div class="text-center title" >
           <h3 class="content-center"> {{profile?.companyName}}</h3>
       </div>
-      <div class="text-center" >
+      <div class="text-center title" >
         <h3 class="content-center letter-space"> {{profile?.companyNameInArabic}}</h3>
     </div>
     
-    <div  class="text-center letter-space content-center">
+    <div  class="text-center  letter-space content-center">
       {{profile?.addressLine1}} {{profile?.addressLine1inArabic}}   
     </div>
     <div  class=" text-center letter-space content-center">
       {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   
   </div>
-  <div class="full-width">
-      <div text-left class="item-cus-label letter-space">
+  <div class="full-width ">
+      <div text-left class="item-cus-label letter-space title">
         VAT # / ضريبة القيمة المضافة  :
       </div>
-      <div  text-left class="item-cus-label">
+      <div  text-left class="item-cus-label title">
         {{profile?.vatNumber}}  
       </div>
       
   </div>
   <div class="line-separator"></div>
   
-  <div  class="text-center">
-   <h5 class="font-14">VAT INVOICE / فاتوره ضريبية </h5>
+  <div  class="text-center title">
+   <h5 class="title">VAT INVOICE / فاتوره ضريبية </h5>
   </div>
   <div class="full-width">
     <div class="item-cus-label">
@@ -57,6 +57,7 @@
       <b>Bill To : </b>
     </div>
   </div>
+  <div class="line-separator"></div>
   <div class="full-width">
     <div  class=" full-width" style="margin-left: 3%; word-wrap: break-word;" >
       {{invoice?.customer.name}} 
@@ -89,19 +90,19 @@
           <thead>
             <tr>
   
-              <th style="text-align: left; width: 37%; margin-left: 2%;">
+              <th style="text-align: left; width: 37%; margin-left: 2%;font-weight: normal;">
                 <div style="margin-left: 3%;">Item</div>
                 <div class="letter-space" style="margin-left: 3%;">العنصر</div>
               </th>
-              <th style="width:4%">
+              <th style="width:4% ;font-weight: normal;">
                 <div>Qty</div>
                 <div class="letter-space">الكمية</div>
               </th>
-              <th style="width:7%">
+              <th style="width:7% ;font-weight: normal;">
                 <div>Price</div>
                 <div class="letter-space">السعر</div>
               </th>
-              <th style="width:35% ;margin-right: 2%;">
+              <th style="width:35% ;margin-right: 2%;font-weight: normal;">
                 <div style="margin-right: 2%;">Amount</div>
                 <div class="letter-space">المبلغ</div>
               </th>
@@ -136,7 +137,7 @@
         </div>
         <div class="display-flex full-width">
           <div  class="content-right item-label" style="width: 100%;">
-            Total Invoice Value(Excl. VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}
+            Total Invoice Value(Excl.VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}
           </div>
         </div>
         <div class="display-flex full-width">
@@ -167,7 +168,7 @@
           </div>
         </div>
         <div class="line-separator"></div>
-        <div class="display-flex full-width " >
+        <div style="width:300px;height:300px" >
         <div style="margin-left: 10%;">
           <ngx-qrcode  
   [elementType]="elementType"
@@ -176,6 +177,15 @@
   
   ></ngx-qrcode>
   </div>
+  </div>
+  <div class="title-content-center full-width">
+    Thank you !!!
+  </div>
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <div style="height: 40px;">
+
   </div>
     </div>
   </div>

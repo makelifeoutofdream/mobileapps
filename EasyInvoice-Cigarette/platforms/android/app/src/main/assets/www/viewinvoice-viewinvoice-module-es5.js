@@ -224,9 +224,15 @@
       var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @ionic/angular */
       "TEn/");
+      /* harmony import */
+
+
+      var _newinvoice_print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      /*! ../newinvoice/print-preview/print-preview.component */
+      "NKOA");
 
       var ViewinvoicePage = /*#__PURE__*/function () {
-        function ViewinvoicePage(route, datePipe, printService, dbService, navCtrl) {
+        function ViewinvoicePage(route, datePipe, printService, dbService, navCtrl, modalController) {
           _classCallCheck(this, ViewinvoicePage);
 
           this.route = route;
@@ -234,6 +240,7 @@
           this.printService = printService;
           this.dbService = dbService;
           this.navCtrl = navCtrl;
+          this.modalController = modalController;
         }
 
         _createClass(ViewinvoicePage, [{
@@ -296,8 +303,38 @@
         }, {
           key: "printBill",
           value: function printBill() {
-            var result = this.getFormatedContent();
-            this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, result);
+            this.printPreview();
+          }
+        }, {
+          key: "printPreview",
+          value: function printPreview() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var modal;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.next = 2;
+                      return this.modalController.create({
+                        component: _newinvoice_print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_11__["PrintPreviewComponent"],
+                        componentProps: {
+                          profile: this.profile,
+                          invoice: this.invoice,
+                          products: this.invoice.invoiceItems
+                        }
+                      });
+
+                    case 2:
+                      modal = _context.sent;
+                      modal.present();
+
+                    case 4:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
           }
         }, {
           key: "showReport",
@@ -355,6 +392,8 @@
           type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"]
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["NavController"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["ModalController"]
         }];
       };
 

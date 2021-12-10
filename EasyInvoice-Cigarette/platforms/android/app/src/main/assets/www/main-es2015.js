@@ -537,7 +537,7 @@ const routes = [
     },
     {
         path: 'newinvoice',
-        loadChildren: () => Promise.all(/*! import() | newinvoice-newinvoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~newinvoice-newinvoice-module~report-report-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("common"), __webpack_require__.e("newinvoice-newinvoice-module")]).then(__webpack_require__.bind(null, /*! ./newinvoice/newinvoice.module */ "6VJF")).then(m => m.NewinvoicePageModule)
+        loadChildren: () => Promise.all(/*! import() | newinvoice-newinvoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~newinvoice-newinvoice-module~report-report-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("default~newinvoice-newinvoice-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("common"), __webpack_require__.e("newinvoice-newinvoice-module")]).then(__webpack_require__.bind(null, /*! ./newinvoice/newinvoice.module */ "6VJF")).then(m => m.NewinvoicePageModule)
     },
     {
         path: 'dashboard',
@@ -569,7 +569,7 @@ const routes = [
     },
     {
         path: 'viewinvoice',
-        loadChildren: () => Promise.all(/*! import() | viewinvoice-viewinvoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~newinvoice-newinvoice-module~report-report-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("viewinvoice-viewinvoice-module")]).then(__webpack_require__.bind(null, /*! ./viewinvoice/viewinvoice.module */ "+4lU")).then(m => m.ViewinvoicePageModule)
+        loadChildren: () => Promise.all(/*! import() | viewinvoice-viewinvoice-module */[__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~newinvoice-newinvoice-module~report-report-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("default~newinvoice-newinvoice-module~viewinvoice-viewinvoice-module"), __webpack_require__.e("viewinvoice-viewinvoice-module")]).then(__webpack_require__.bind(null, /*! ./viewinvoice/viewinvoice.module */ "+4lU")).then(m => m.ViewinvoicePageModule)
     },
     {
         path: 'purchase',

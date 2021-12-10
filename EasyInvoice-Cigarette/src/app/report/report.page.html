@@ -62,9 +62,16 @@
   </ion-list>    
 
 </ion-content>
-<ion-content  style="max-height: 5%;" slot="fixed">
-  <div style=" float:right;padding-right: 5%;">
-    <ion-label>Gross Total : {{sum(filterInvoiceList) | number : '1.2'}} </ion-label>
+<ion-content  style="max-height: 10%;margin-top: 2%;" slot="fixed">
+  <div class="display-flex  full-width">
+    <ion-badge style="margin-left: 1%;width: 50%;" color="primary">Total Cost : {{cost | number : '1.2'}}</ion-badge>
+    <ion-badge style="margin-left: 1%;width:44%" color="primary">Total Revenue : {{revenue | number : '1.2'}}</ion-badge>
+    
+  </div>
+  <div class="display-flex  full-width">
+    
+    <ion-badge style="margin-left: 1%;width: 50%;" color="primary">Total Profit : {{(totalProfit) | number : '1.2'}}</ion-badge>
+    <ion-badge style="margin-left: 1%;width: 44% ;" color="primary">Total Collection : {{collection }}</ion-badge>
   </div>
 
 </ion-content>

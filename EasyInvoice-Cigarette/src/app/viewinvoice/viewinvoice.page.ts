@@ -9,7 +9,8 @@ import EscPosEncoder from 'esc-pos-encoder-ionic';
 import {sprintf} from "sprintf-js";
 
 import {formatDate} from '@angular/common';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+import { PrintPreviewComponent } from '../newinvoice/print-preview/print-preview.component';
 @Component({
   selector: 'app-viewinvoice',
   templateUrl: './viewinvoice.page.html',
@@ -19,7 +20,7 @@ export class ViewinvoicePage implements OnInit {
   private profile : Profile;
 
   constructor(private route : ActivatedRoute,private datePipe :DatePipe,public printService : PrintService,
-    private dbService : DbService,public navCtrl:NavController) { }
+    private dbService : DbService,public navCtrl:NavController,public modalController: ModalController) { }
   invoice : Invoice;
   ngOnInit() {
     this.invoice={id:null,invoiceNumber:null,invoiceDate:null,total:null,tax:null,amountPaid:null,balanceAmount:null,customer:  {id:null,code:null,name : "" ,itemList : null,nameInArabic : "",contactPersonName: "",contactPersonNameInArabic:"",
@@ -41,9 +42,23 @@ export class ViewinvoicePage implements OnInit {
     console.log('selected invoice customer'+this.invoice.customer);
   }
   printBill(){
-    let result=this.getFormatedContent();
-   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result);
+    
+    this.printPreview();
+    
   }
+
+  async printPreview() {
+    let modal = await this.modalController.create({
+      component:PrintPreviewComponent,
+      componentProps:  {
+        profile: this.profile,
+        invoice: this.invoice,
+        products : this.invoice.invoiceItems
+      }
+    });
+    modal.present();
+  }
+  
 
   showReport(){
     this.navCtrl.navigateRoot('report');
