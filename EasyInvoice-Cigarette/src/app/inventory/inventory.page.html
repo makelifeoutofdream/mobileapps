@@ -13,18 +13,22 @@
 <ion-content style="background-color: darkblue;">
   <ion-list>
     <ion-list-header>
-      <ion-label>Name</ion-label>
-      <ion-label>Quantity</ion-label>
-      <ion-label>Unit Price</ion-label>
-      <ion-label>Purchase Price</ion-label>
-      <ion-label>Delete</ion-label>
+      
+      <ion-label style="width:50%">Item</ion-label>
+      <ion-label style="width: 20%;">Qty</ion-label>
+      <ion-label style="width: 20%;">U.Price</ion-label>
+      <ion-label style="width: 20%;">P.Price</ion-label>
+      <ion-label style="width: 20%;">Delete</ion-label>
     </ion-list-header>
     <ion-item *ngFor= "let inv of inventories" >
-      <ion-label (click)="editInventory(inv)" >{{inv.name}}</ion-label>
-      <ion-label (click)="editInventory(inv)">{{inv.quantity}}</ion-label>
-      <ion-label (click)="editInventory(inv)">{{inv.unitPrice}}</ion-label>
-      <ion-label (click)="editInventory(inv)">{{inv.purchasePrice}}</ion-label>
-      <ion-button (click)="presentDeleteAlertConfirm(inv)">
+      <div style="width: 40%;">
+        <ion-label style="width: 100%;" (click)="editInventory(inv)" >{{inv.name}}</ion-label>
+      </div>
+      
+      <ion-label  style="width: 30%;" (click)="editInventory(inv)">{{inv.quantity}}</ion-label>
+      <ion-label style="width: 30%;" (click)="editInventory(inv)">{{inv.unitPrice}}</ion-label>
+      <ion-label  style="width: 30%;" (click)="editInventory(inv)">{{inv.purchasePrice}}</ion-label>
+      <ion-button style="width: 10%;" (click)="presentDeleteAlertConfirm(inv)">
         <ion-icon name="trash-bin"></ion-icon>
       </ion-button>
     </ion-item>
@@ -36,9 +40,13 @@
     
       <ion-row style="float:right">
         <ion-col >
+        <ion-button color="primary" (click)="print()">
+            <ion-icon name="print"></ion-icon>
+          </ion-button>
         <ion-button  color="primary" (click)="addNewInventory()">
           <ion-icon name="add-circle"></ion-icon>
         </ion-button>
+        
       </ion-col>
       </ion-row>
         

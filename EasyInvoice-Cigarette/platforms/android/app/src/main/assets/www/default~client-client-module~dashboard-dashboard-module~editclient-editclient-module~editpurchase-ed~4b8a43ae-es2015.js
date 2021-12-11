@@ -986,6 +986,25 @@ let DbService = class DbService {
             }
         });
     }
+    deleteInvoice(invoice) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.invoiceKey);
+                let invoiceList = JSON.parse(value);
+                if (invoiceList == null || invoiceList == undefined) {
+                    invoiceList = [];
+                }
+                var index = invoiceList.findIndex(i => i.id == invoice.id);
+                invoiceList.splice(index, 1);
+                this.storage.set(this.invoiceKey, JSON.stringify(invoiceList));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
 };
 DbService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },

@@ -34,7 +34,7 @@ export class PrintPreviewComponent implements OnInit {
       this.getTotalQuantity().then(data=>{
         setTimeout(() => {
           this.pairTo();
-        },3000);
+        },500);
       })
       
     })

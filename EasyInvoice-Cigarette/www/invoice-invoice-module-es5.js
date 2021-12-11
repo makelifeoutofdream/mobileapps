@@ -81,13 +81,14 @@
       "Gb+d");
 
       var InvoicePage = /*#__PURE__*/function () {
-        function InvoicePage(dbService, toastService, navCtrl, dataService) {
+        function InvoicePage(dbService, toastService, navCtrl, dataService, alertController) {
           _classCallCheck(this, InvoicePage);
 
           this.dbService = dbService;
           this.toastService = toastService;
           this.navCtrl = navCtrl;
           this.dataService = dataService;
+          this.alertController = alertController;
         }
 
         _createClass(InvoicePage, [{
@@ -182,6 +183,8 @@
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"]
         }, {
           type: _data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"]
         }];
       };
 

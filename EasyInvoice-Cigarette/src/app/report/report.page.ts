@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
-import { LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { stat } from 'fs';
 import { start } from 'repl';
 import { filter } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class ReportPage implements OnInit {
   private revenue: number = 0;
   private collection: number = 0;
   constructor(public dbService: DbService, public toastService: ToastserviceService, private printService: PrintService,
-    public navCtrl: NavController, private dataService: DataService,
+    public navCtrl: NavController, private dataService: DataService,public alertController: AlertController,
     public loadingController: LoadingController) { }
 
   ngOnInit() {
@@ -288,4 +288,35 @@ export class ReportPage implements OnInit {
     this.navCtrl.navigateRoot('reporthome');
   }
 
+  deleteInvoice(inv){
+    this.dbService.deleteInvoice(inv).then(data=>{
+      this.toastService.presentToast('Invoice removed successfully');
+      this.getAllInvoices();
+  });
+}
+
+async presentDeleteAlertConfirm(inv : Invoice) {
+  const alert = await this.alertController.create({
+   // cssClass: 'my-custom-class',
+    header: 'Confirm!',
+    message: '<strong>Are you sure to delete this invoice?</strong>!!!',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel');
+        }
+      }, {
+        text: 'Yes',
+        handler: () => {
+          this.deleteInvoice(inv);
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
 }

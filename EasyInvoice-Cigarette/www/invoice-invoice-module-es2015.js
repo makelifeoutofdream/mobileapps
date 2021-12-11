@@ -27,11 +27,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let InvoicePage = class InvoicePage {
-    constructor(dbService, toastService, navCtrl, dataService) {
+    constructor(dbService, toastService, navCtrl, dataService, alertController) {
         this.dbService = dbService;
         this.toastService = toastService;
         this.navCtrl = navCtrl;
         this.dataService = dataService;
+        this.alertController = alertController;
     }
     ngOnInit() {
     }
@@ -70,7 +71,8 @@ InvoicePage.ctorParameters = () => [
     { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
     { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__["ToastserviceService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
-    { type: _data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"] }
+    { type: _data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] }
 ];
 InvoicePage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

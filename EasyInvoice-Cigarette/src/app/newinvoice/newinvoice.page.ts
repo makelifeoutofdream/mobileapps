@@ -47,10 +47,10 @@ export class NewinvoicePage implements OnInit {
     }
 
   ngOnInit() {
-    this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",amountPaid:null,balanceAmount:null,
+    this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",amountPaid:0,balanceAmount:0,
     customer :  {id:null,code:null,name : "" ,itemList : null,nameInArabic : "",contactPersonName: "",contactPersonNameInArabic:"",
     buildingNumber:"",street:"",streetInArabic:"",city:"",cityInArabic:"",district:"",districtInArabic:"",country:"",countryInArabic:"",
-    pobox:"",postalCode:"",phoneNumber:"",mobile:"",email:"",vatNumber:"",crNumber:"",creditLimit:null,balance:null},
+    pobox:"",postalCode:"",phoneNumber:"",mobile:"",email:"",vatNumber:"",crNumber:"",creditLimit:0,balance:0},
     invoiceItems : [],
   total:null,tax:null} 
 }
@@ -98,10 +98,10 @@ resetInvoiceForm(){
   this.dbService.getAllInventories().then(data=>{
     this.inventoryList=data;
   });
-  this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",amountPaid:null,balanceAmount:null,
+  this.invoice={id:null, invoiceNumber : "",invoiceDate: new Date() ,invoiceDateString : "",amountPaid:0,balanceAmount:0,
   customer :  {id:null,code:null,name : "" ,itemList : null,nameInArabic : "",contactPersonName: "",contactPersonNameInArabic:"",
   buildingNumber:"",street:"",streetInArabic:"",city:"",cityInArabic:"",district:"",districtInArabic:"",country:"",countryInArabic:"",
-  pobox:"",postalCode:"",phoneNumber:"",mobile:"",email:"",vatNumber:"",crNumber:"",creditLimit:null,balance:null},
+  pobox:"",postalCode:"",phoneNumber:"",mobile:"",email:"",vatNumber:"",crNumber:"",creditLimit:0,balance:0},
   invoiceItems : [],
 total:null,tax:null} ;
   this.dbService.incrementInvoiceNumber().then(data=>{

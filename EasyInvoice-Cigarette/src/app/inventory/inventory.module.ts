@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { InventoryPageRoutingModule } from './inventory-routing.module';
 
 import { InventoryPage } from './inventory.page';
+import { StockprintComponent } from './stockprint/stockprint.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { InventoryPage } from './inventory.page';
     IonicModule,
     InventoryPageRoutingModule
   ],
-  declarations: [InventoryPage]
+  declarations: [InventoryPage,StockprintComponent],
+  entryComponents: [StockprintComponent]
 })
 export class InventoryPageModule {}

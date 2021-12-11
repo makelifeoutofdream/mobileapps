@@ -534,5 +534,24 @@ async UpdateExpense(expense :Expense) : Promise<any>{
   }
 }
 
+async deleteInvoice(invoice :Invoice) : Promise<any>{
+  try{
+    const value=await this.storage.get(this.invoiceKey);
+    let invoiceList=JSON.parse(value);
+    if(invoiceList==null || invoiceList==undefined){
+      invoiceList=[];
+    }
+    
+    var index = invoiceList.findIndex(i => i.id == invoice.id);
+    invoiceList.splice(index,1);
+    this.storage.set(this.invoiceKey,JSON.stringify(invoiceList) );
+    return true;
+  }catch(reason){
+    console.log(reason);
+    return false;
+  }
+}
+
+
 }
 

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { Customer } from '../services/customer';
 import { DbService } from '../services/db.service';
 import { Inventory } from '../services/inventory';
+import { Profile } from '../services/profile';
 import { ToastserviceService } from '../services/toastservice.service';
+import { StockprintComponent } from './stockprint/stockprint.component';
 
 @Component({
   selector: 'app-inventory',
@@ -13,8 +15,9 @@ import { ToastserviceService } from '../services/toastservice.service';
 })
 export class InventoryPage implements OnInit {
   private inventories : Inventory [];
+  private profile : Profile;
   constructor(public dbService : DbService,public toastService : ToastserviceService,
-    public navCtrl:NavController,public alertController: AlertController) { }
+    public navCtrl:NavController,public alertController: AlertController,public modalController: ModalController) { }
 
   ngOnInit() {
   }
@@ -33,6 +36,9 @@ export class InventoryPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.dbService.getProfile().then(data=>{
+      this.profile=data;
+    });
     this.getAllInventories();
   }
 
@@ -91,5 +97,20 @@ updateInventoryToCustomers(){
   
     await alert.present();
   }
-  
+
+print() {
+  this.printPreview();
+} 
+async printPreview() {
+  let modal = await this.modalController.create({
+    component:StockprintComponent,
+    componentProps:  {
+      profile: this.profile,
+      stockList: this.inventories
+    }
+  });
+  modal.present();
+}
+
+
 }

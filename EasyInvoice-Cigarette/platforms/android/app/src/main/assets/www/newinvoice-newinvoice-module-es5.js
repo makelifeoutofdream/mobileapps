@@ -338,8 +338,8 @@
               invoiceNumber: "",
               invoiceDate: new Date(),
               invoiceDateString: "",
-              amountPaid: null,
-              balanceAmount: null,
+              amountPaid: 0,
+              balanceAmount: 0,
               customer: {
                 id: null,
                 code: null,
@@ -364,8 +364,8 @@
                 email: "",
                 vatNumber: "",
                 crNumber: "",
-                creditLimit: null,
-                balance: null
+                creditLimit: 0,
+                balance: 0
               },
               invoiceItems: [],
               total: null,
@@ -452,8 +452,8 @@
               invoiceNumber: "",
               invoiceDate: new Date(),
               invoiceDateString: "",
-              amountPaid: null,
-              balanceAmount: null,
+              amountPaid: 0,
+              balanceAmount: 0,
               customer: {
                 id: null,
                 code: null,
@@ -478,8 +478,8 @@
                 email: "",
                 vatNumber: "",
                 crNumber: "",
-                creditLimit: null,
-                balance: null
+                creditLimit: 0,
+                balance: 0
               },
               invoiceItems: [],
               total: null,

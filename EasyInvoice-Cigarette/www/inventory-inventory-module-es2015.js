@@ -22,7 +22,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n\n<ion-header>\n  <ion-toolbar>\n    <ion-title>Inventory</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content style=\"background-color: darkblue;\">\n  <ion-list>\n    <ion-list-header>\n      <ion-label>Name</ion-label>\n      <ion-label>Quantity</ion-label>\n      <ion-label>Unit Price</ion-label>\n      <ion-label>Purchase Price</ion-label>\n      <ion-label>Delete</ion-label>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of inventories\" >\n      <ion-label (click)=\"editInventory(inv)\" >{{inv.name}}</ion-label>\n      <ion-label (click)=\"editInventory(inv)\">{{inv.quantity}}</ion-label>\n      <ion-label (click)=\"editInventory(inv)\">{{inv.unitPrice}}</ion-label>\n      <ion-label (click)=\"editInventory(inv)\">{{inv.purchasePrice}}</ion-label>\n      <ion-button (click)=\"presentDeleteAlertConfirm(inv)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("\n\n<ion-header>\n  <ion-toolbar>\n    <ion-title>Inventory</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content style=\"background-color: darkblue;\">\n  <ion-list>\n    <ion-list-header>\n      \n      <ion-label style=\"width:50%\">Item</ion-label>\n      <ion-label style=\"width: 20%;\">Qty</ion-label>\n      <ion-label style=\"width: 20%;\">U.Price</ion-label>\n      <ion-label style=\"width: 20%;\">P.Price</ion-label>\n      <ion-label style=\"width: 20%;\">Delete</ion-label>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of inventories\" >\n      <div style=\"width: 40%;\">\n        <ion-label style=\"width: 100%;\" (click)=\"editInventory(inv)\" >{{inv.name}}</ion-label>\n      </div>\n      \n      <ion-label  style=\"width: 30%;\" (click)=\"editInventory(inv)\">{{inv.quantity}}</ion-label>\n      <ion-label style=\"width: 30%;\" (click)=\"editInventory(inv)\">{{inv.unitPrice}}</ion-label>\n      <ion-label  style=\"width: 30%;\" (click)=\"editInventory(inv)\">{{inv.purchasePrice}}</ion-label>\n      <ion-button style=\"width: 10%;\" (click)=\"presentDeleteAlertConfirm(inv)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button color=\"primary\" (click)=\"print()\">\n            <ion-icon name=\"print\"></ion-icon>\n          </ion-button>\n        <ion-button  color=\"primary\" (click)=\"addNewInventory()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n        \n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>");
+
+/***/ }),
+
+/***/ "RD+q":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/inventory/stockprint/stockprint.component.html ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"overflow\">\n  <div id=\"imageToPrint\">  \n    <ion-list>\n      <ion-list-header>\n        \n        <ion-label style=\"width:50% ;\">Item</ion-label>\n        <ion-label style=\"width: 20%;\">Qty</ion-label>\n        <ion-label style=\"width: 20%;\">U.Price</ion-label>\n        <ion-label style=\"width: 20%;\">P.Price</ion-label>\n        \n      </ion-list-header>\n      <ion-item *ngFor= \"let inv of stockList\" >\n        <div style=\"width: 45%;word-wrap: normal;\">\n          {{inv.name}}\n        </div>\n        <div style=\"width: 20%;\">\n        <ion-label  style=\"width: 100%;\" (click)=\"editInventory(inv)\">{{inv.quantity}}</ion-label>\n      </div>\n        <div style=\"width: 20%;\">\n          <ion-label style=\"width: 100%;\"  (click)=\"editInventory(inv)\">{{inv.unitPrice}}</ion-label>\n        </div>\n        \n        <ion-label  style=\"width: 20%;\" (click)=\"editInventory(inv)\">{{inv.purchasePrice}}</ion-label>\n        \n      </ion-item>\n    </ion-list>    \n    \n  </div>\n</div>\n");
 
 /***/ }),
 
@@ -43,6 +56,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/db.service */ "ajt+");
 /* harmony import */ var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/toastservice.service */ "Gb+d");
+/* harmony import */ var _stockprint_stockprint_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stockprint/stockprint.component */ "lT9S");
+
 
 
 
@@ -51,11 +66,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let InventoryPage = class InventoryPage {
-    constructor(dbService, toastService, navCtrl, alertController) {
+    constructor(dbService, toastService, navCtrl, alertController, modalController) {
         this.dbService = dbService;
         this.toastService = toastService;
         this.navCtrl = navCtrl;
         this.alertController = alertController;
+        this.modalController = modalController;
     }
     ngOnInit() {
     }
@@ -72,6 +88,9 @@ let InventoryPage = class InventoryPage {
         });
     }
     ionViewWillEnter() {
+        this.dbService.getProfile().then(data => {
+            this.profile = data;
+        });
         this.getAllInventories();
     }
     editInventory(inv) {
@@ -125,12 +144,28 @@ let InventoryPage = class InventoryPage {
             yield alert.present();
         });
     }
+    print() {
+        this.printPreview();
+    }
+    printPreview() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            let modal = yield this.modalController.create({
+                component: _stockprint_stockprint_component__WEBPACK_IMPORTED_MODULE_7__["StockprintComponent"],
+                componentProps: {
+                    profile: this.profile,
+                    stockList: this.inventories
+                }
+            });
+            modal.present();
+        });
+    }
 };
 InventoryPage.ctorParameters = () => [
     { type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"] },
     { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
 ];
 InventoryPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -198,6 +233,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _inventory_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inventory-routing.module */ "UYnB");
 /* harmony import */ var _inventory_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./inventory.page */ "T4Df");
+/* harmony import */ var _stockprint_stockprint_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stockprint/stockprint.component */ "lT9S");
+
 
 
 
@@ -215,11 +252,112 @@ InventoryPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
             _inventory_routing_module__WEBPACK_IMPORTED_MODULE_5__["InventoryPageRoutingModule"]
         ],
-        declarations: [_inventory_page__WEBPACK_IMPORTED_MODULE_6__["InventoryPage"]]
+        declarations: [_inventory_page__WEBPACK_IMPORTED_MODULE_6__["InventoryPage"], _stockprint_stockprint_component__WEBPACK_IMPORTED_MODULE_7__["StockprintComponent"]],
+        entryComponents: [_stockprint_stockprint_component__WEBPACK_IMPORTED_MODULE_7__["StockprintComponent"]]
     })
 ], InventoryPageModule);
 
 
+
+/***/ }),
+
+/***/ "lT9S":
+/*!**************************************************************!*\
+  !*** ./src/app/inventory/stockprint/stockprint.component.ts ***!
+  \**************************************************************/
+/*! exports provided: StockprintComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StockprintComponent", function() { return StockprintComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_stockprint_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./stockprint.component.html */ "RD+q");
+/* harmony import */ var _stockprint_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stockprint.component.scss */ "pnSU");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var src_app_services_print_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/print.service */ "Bhbv");
+/* harmony import */ var dom_to_image__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dom-to-image */ "cLAn");
+/* harmony import */ var dom_to_image__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dom_to_image__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! esc-pos-encoder-ionic */ "+4vP");
+/* harmony import */ var esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+
+
+
+
+
+
+
+
+let StockprintComponent = class StockprintComponent {
+    constructor(printService, modalCtrl) {
+        this.printService = printService;
+        this.modalCtrl = modalCtrl;
+    }
+    ngOnInit() {
+        setTimeout(() => {
+            this.pairTo();
+        }, 1000);
+    }
+    pairTo() {
+        console.log("stock" + this.stockList[0].name);
+        var node = document.getElementById("imageToPrint");
+        //html2canvas(node, {
+        dom_to_image__WEBPACK_IMPORTED_MODULE_5__["toPng"](node).then(dataUrl => {
+            //var imgData = canvas.toDataURL("image/png");
+            let encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_6___default.a();
+            let result = encoder.initialize();
+            let img = new Image();
+            img.src = dataUrl;
+            img.onload = (e) => {
+                var ht = Math.ceil(node.offsetHeight / 8) * 8;
+                ht = ht + 120;
+                result
+                    .align('left')
+                    .image(img, 552, ht, 'threshold', 180).newline().
+                    align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline().
+                    newline().newline().newline().newline().newline().newline().newline().newline().newline();
+                this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, result.encode());
+                console.log('print called');
+                this.modalCtrl.dismiss();
+            };
+        }).catch(function (error) {
+            console.error("oops, something went wrong!", error);
+            alert(error);
+            this.modalCtrl.dismiss();
+        });
+    }
+};
+StockprintComponent.ctorParameters = () => [
+    { type: src_app_services_print_service__WEBPACK_IMPORTED_MODULE_4__["PrintService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["ModalController"] }
+];
+StockprintComponent.propDecorators = {
+    profile: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
+    stockList: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+StockprintComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-stockprint',
+        template: _raw_loader_stockprint_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_stockprint_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], StockprintComponent);
+
+
+
+/***/ }),
+
+/***/ "pnSU":
+/*!****************************************************************!*\
+  !*** ./src/app/inventory/stockprint/stockprint.component.scss ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdG9ja3ByaW50LmNvbXBvbmVudC5zY3NzIn0= */");
 
 /***/ })
 

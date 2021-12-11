@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { DataService } from '../data.service';
 import { DbService } from '../services/db.service';
 import { Invoice } from '../services/invoice';
@@ -14,7 +14,7 @@ export class InvoicePage implements OnInit {
 
   invoiceList : Invoice [] ;
   constructor(public dbService : DbService,public toastService : ToastserviceService,
-    public navCtrl:NavController,private dataService : DataService) { }
+    public navCtrl:NavController,private dataService : DataService,public alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -55,6 +55,9 @@ export class InvoicePage implements OnInit {
      
     
   }
+
+ 
+
 
   
 }

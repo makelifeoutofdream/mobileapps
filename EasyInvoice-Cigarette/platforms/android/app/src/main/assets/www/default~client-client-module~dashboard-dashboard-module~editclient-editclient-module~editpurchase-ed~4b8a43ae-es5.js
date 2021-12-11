@@ -2041,6 +2041,48 @@
               }, _callee38, this, [[0, 11]]);
             }));
           }
+        }, {
+          key: "deleteInvoice",
+          value: function deleteInvoice(invoice) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
+              var value, invoiceList, index;
+              return regeneratorRuntime.wrap(function _callee39$(_context39) {
+                while (1) {
+                  switch (_context39.prev = _context39.next) {
+                    case 0:
+                      _context39.prev = 0;
+                      _context39.next = 3;
+                      return this.storage.get(this.invoiceKey);
+
+                    case 3:
+                      value = _context39.sent;
+                      invoiceList = JSON.parse(value);
+
+                      if (invoiceList == null || invoiceList == undefined) {
+                        invoiceList = [];
+                      }
+
+                      index = invoiceList.findIndex(function (i) {
+                        return i.id == invoice.id;
+                      });
+                      invoiceList.splice(index, 1);
+                      this.storage.set(this.invoiceKey, JSON.stringify(invoiceList));
+                      return _context39.abrupt("return", true);
+
+                    case 12:
+                      _context39.prev = 12;
+                      _context39.t0 = _context39["catch"](0);
+                      console.log(_context39.t0);
+                      return _context39.abrupt("return", false);
+
+                    case 16:
+                    case "end":
+                      return _context39.stop();
+                  }
+                }
+              }, _callee39, this, [[0, 12]]);
+            }));
+          }
         }]);
 
         return DbService;
