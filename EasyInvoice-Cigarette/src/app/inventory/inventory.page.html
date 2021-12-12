@@ -14,15 +14,15 @@
   <ion-list>
     <ion-list-header>
       
-      <ion-label style="width:50%">Item</ion-label>
+      <ion-label style="width:30%">Item</ion-label>
       <ion-label style="width: 20%;">Qty</ion-label>
       <ion-label style="width: 20%;">U.Price</ion-label>
       <ion-label style="width: 20%;">P.Price</ion-label>
       <ion-label style="width: 20%;">Delete</ion-label>
     </ion-list-header>
     <ion-item *ngFor= "let inv of inventories" >
-      <div style="width: 40%;">
-        <ion-label style="width: 100%;" (click)="editInventory(inv)" >{{inv.name}}</ion-label>
+      <div style="width: 30%;">
+        <ion-label style="width: 100%;" class="ion-text-wrap" (click)="editInventory(inv)" >{{inv.name}}</ion-label>
       </div>
       
       <ion-label  style="width: 30%;" (click)="editInventory(inv)">{{inv.quantity}}</ion-label>

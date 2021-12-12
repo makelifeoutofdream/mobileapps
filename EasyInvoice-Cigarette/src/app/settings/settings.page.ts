@@ -19,6 +19,7 @@ export class SettingsPage implements OnInit {
   showProfileSegment : boolean=true;
   showTaxSegment : Boolean=false;
   showPrinterSegment : Boolean=false;
+  showBackupSegment : boolean=true;
   private userProfile : Profile=  {id:null , companyName:"",companyNameInArabic:"", 
   addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
   constructor(public navCtrl:NavController,private print:PrintService,private toastService:ToastserviceService,
@@ -46,14 +47,22 @@ export class SettingsPage implements OnInit {
       this.showPrinterSegment=false;
       this.showProfileSegment=true;
       this.showTaxSegment=false;
+      this.showBackupSegment=false;
     }else if(this.type=='tax'){
       this.showPrinterSegment=false;
       this.showProfileSegment=false;
       this.showTaxSegment=true;
+      this.showBackupSegment=false;
     }else if(this.type=='printer'){
       this.showPrinterSegment=true;
       this.showProfileSegment=false;
       this.showTaxSegment=false;
+      this.showBackupSegment=false;
+    }else if(this.type=='backup'){
+      this.showPrinterSegment=false;
+      this.showProfileSegment=false;
+      this.showTaxSegment=false;
+      this.showBackupSegment=true;
     }
     //this.ref.tick();
   }

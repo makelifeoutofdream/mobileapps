@@ -1,0 +1,145 @@
+.text-center {
+    text-align: center;
+}
+#imageToPrint {
+    position: relative;
+    font-size: 16px ;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;    
+    
+}
+img {
+    width: 100px;
+    height: 100px;
+}
+.title{
+    font-size: 18px !important;
+    font-weight: bold;
+}
+.content-center {
+    text-align: center;
+    
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    
+}
+
+
+.content-left {
+    text-align: left;
+    font-size: 16px;
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    
+}
+.content-right {
+    text-align: right;
+    font-size: 16px;
+    margin: 0px;
+   // font-weight: 700;
+    line-height: 1.5;
+    
+}
+
+.title-content-center {
+    text-align: center;
+    font-size: 18px;
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    
+}
+.title-content-left {
+    text-align: left;
+    font-size: 18px;
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    
+}
+
+.line-separator {
+    margin: 10px 0px;
+    border : 1px dashed black;
+}
+.bill-details {
+    display: inline-block;
+}
+.full-width {
+    width: 100%;
+}
+.oneby3-width {
+    width: 75%;
+}
+.oneby2-width {
+    width: 50%;
+}
+.display-flex {
+    display: flex;
+    text-align: left;
+}
+.item-label {
+    width: 50%;
+    padding: 3px 10px;
+}
+.item-cus-label {
+    width: 100%;
+    padding: 3px 10px;
+}
+.font-14 {
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.no-wrap-text{
+    white-space: nowrap;
+}
+.item-value {
+    width: 50%;
+    padding: 3px 10px;
+}
+.item-arabic {
+    width: 33.33%;
+    padding: 3px 10px;
+}
+.overflow {
+    overflow: auto; 
+}
+.dummy-img {
+    img {
+        width: 55px !important;
+        height: 50px !important;
+    }
+}
+.m-t-1 {
+    margin-top: 2px;
+} 
+.letter-space {
+    letter-spacing: 0;
+    word-spacing: normal;
+    /* text-align: center !important; */
+    word-wrap: normal !important;
+    // font-weight: bold;
+    
+}
+table.fixed {
+    width: 100%;
+  }
+  table th {
+      padding: 5px 0px 15px;
+      text-align: center;
+  }
+  table thead tr {
+      border-bottom: 1px solid black;
+  }
+  table tr td {
+    padding: 5px 0px 15px;
+  }
+  table td:nth-child(4) {
+      width: 40%;
+      text-align: center;
+  }
+  table td:nth-child(3) , td:nth-child(2), td:nth-child(1){
+    width: 20%;
+    text-align: center;
+}

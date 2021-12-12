@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import EscPosEncoder from 'esc-pos-encoder-ionic';
 import html2canvas from 'html2canvas';
 import { DbService } from 'src/app/services/db.service';
@@ -24,7 +24,7 @@ export class PrintPreviewComponent implements OnInit {
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
   value = "";
-  constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,) { }
+  constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,public navCtrl:NavController) { }
 
   ngOnInit() {
     this.value=this.generateQRCodeContent();
@@ -34,7 +34,7 @@ export class PrintPreviewComponent implements OnInit {
       this.getTotalQuantity().then(data=>{
         setTimeout(() => {
           this.pairTo();
-        },500);
+        },100);
       })
       
     })
@@ -72,11 +72,13 @@ export class PrintPreviewComponent implements OnInit {
             this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           console.log('print called');
           this.modalCtrl.dismiss();
+          this.navCtrl.navigateRoot('invoice');
         }
     }).catch(function (error) {
       console.error("oops, something went wrong!", error);
       alert(error);
       this.modalCtrl.dismiss();
+      
     });
   }
 

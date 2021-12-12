@@ -11,7 +11,7 @@ import { Inventory } from 'src/app/services/inventory';
 })
 export class StockprintComponent implements OnInit {
   @Input() profile;
-  @Input() stockList
+  @Input() stockList : Inventory
   constructor(private printService  :PrintService,private modalCtrl: ModalController) { }
   
   ngOnInit() {
