@@ -614,7 +614,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | client-client-module */
-          [__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("client-client-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~client-client-module~invoice-invoice-module~report-report-module"), __webpack_require__.e("client-client-module")]).then(__webpack_require__.bind(null,
           /*! ./client/client.module */
           "kk3Z")).then(function (m) {
             return m.ClientPageModule;
@@ -625,7 +625,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | invoice-invoice-module */
-          [__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~invoice-invoice-module~report-report-module"), __webpack_require__.e("invoice-invoice-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~client-client-module~invoice-invoice-module~report-report-module"), __webpack_require__.e("invoice-invoice-module")]).then(__webpack_require__.bind(null,
           /*! ./invoice/invoice.module */
           "hdHI")).then(function (m) {
             return m.InvoicePageModule;
@@ -746,7 +746,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | report-report-module */
-          [__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~inventory-inventory-module~newinvoice-newinvoice-module~report-report-module~viewinvoice-vie~eeb01026"), __webpack_require__.e("default~invoice-invoice-module~report-report-module"), __webpack_require__.e("report-report-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"), __webpack_require__.e("default~inventory-inventory-module~newinvoice-newinvoice-module~report-report-module~viewinvoice-vie~eeb01026"), __webpack_require__.e("default~client-client-module~invoice-invoice-module~report-report-module"), __webpack_require__.e("report-report-module")]).then(__webpack_require__.bind(null,
           /*! ./report/report.module */
           "LVab")).then(function (m) {
             return m.ReportPageModule;

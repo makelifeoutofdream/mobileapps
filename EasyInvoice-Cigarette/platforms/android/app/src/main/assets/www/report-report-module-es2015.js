@@ -587,7 +587,7 @@ let ReportPage = class ReportPage {
                 let itm = it;
                 let invoiceData = { InvoiceNumber: inv.invoiceNumber, InvoiceDate: inv.invoiceDate,
                     Customer: inv.customer.name, Item: itm.name, UnitPrice: itm.unitPrice, Quantity: itm.quantity,
-                    Cost: itm.purchasePrice, TotalCost: itm.purchasePrice * itm.quantity, Tax: inv.tax,
+                    Cost: itm.purchasePrice, TotalCost: itm.purchasePrice * itm.quantity, TotalRevenue: (itm.quantity * itm.unitPrice), Tax: inv.tax,
                     GP: (itm.quantity * itm.unitPrice) - (itm.purchasePrice * itm.quantity), TotalWithVAT: inv.total };
                 invoiceDataList.push(invoiceData);
             }

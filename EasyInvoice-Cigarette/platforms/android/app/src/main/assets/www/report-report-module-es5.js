@@ -968,6 +968,7 @@
                       Quantity: itm.quantity,
                       Cost: itm.purchasePrice,
                       TotalCost: itm.purchasePrice * itm.quantity,
+                      TotalRevenue: itm.quantity * itm.unitPrice,
                       Tax: inv.tax,
                       GP: itm.quantity * itm.unitPrice - itm.purchasePrice * itm.quantity,
                       TotalWithVAT: inv.total

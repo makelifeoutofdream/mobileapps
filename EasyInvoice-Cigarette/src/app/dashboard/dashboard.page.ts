@@ -95,7 +95,7 @@ export class DashboardPage implements OnInit {
           date.setSeconds(1);
           return date.getTime()>=this.startDate.getTime() && date.getTime()<=this.endDate.getTime();
         })
-          }).catch(err=>alert(err));
+          }).catch(err=>console.log(err));
     
   }
   async filterMonthlyInvoices() : Promise<any>{
@@ -113,7 +113,7 @@ export class DashboardPage implements OnInit {
         this.startDate.setHours(0);
         this.startDate.setMinutes(0);
         this.startDate.setSeconds(0);
-        this.filterInvoiceList= res.filter(inv=>{
+        this.filterInvoiceList= res?.filter(inv=>{
           var date=new Date(inv.invoiceDate);
           date.setHours(1);
           date.setMinutes(1);
