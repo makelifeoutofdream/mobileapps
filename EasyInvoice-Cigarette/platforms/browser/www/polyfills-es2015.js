@@ -203,8 +203,8 @@ module.exports = function (it, TAG, STATIC) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice/src/polyfills.ts */"hN/g");
-module.exports = __webpack_require__(/*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice/node_modules/@angular-devkit/build-angular/src/webpack/jit-polyfills.js */"rZy+");
+__webpack_require__(/*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette/src/polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette/node_modules/@angular-devkit/build-angular/src/webpack/jit-polyfills.js */"rZy+");
 
 
 /***/ }),

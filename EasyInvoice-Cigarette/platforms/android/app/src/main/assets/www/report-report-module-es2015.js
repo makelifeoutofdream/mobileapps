@@ -419,8 +419,8 @@ let ReportPage = class ReportPage {
         this.header.push('Inv No');
         this.header.push('Customer');
         this.header.push('Total');
-        this.startDate = null;
-        this.endDate = null;
+        this.startDate = new Date();
+        this.endDate = new Date();
         this.getAllInvoices();
         this.getAllCustomers();
         this.dbService.getProfile().then(data => {
@@ -582,10 +582,13 @@ let ReportPage = class ReportPage {
     }
     download() {
         let invoiceDataList = new Array();
-        for (let inv of this.invoiceList) {
+        for (let inv of this.filterInvoiceList) {
             for (let it of inv.invoiceItems) {
                 let itm = it;
-                let invoiceData = { InvoiceNumber: inv.invoiceNumber, InvoiceDate: inv.invoiceDate, Customer: inv.customer.name, Item: itm.name, UnitPrice: itm.unitPrice, Quantity: itm.quantity, Cost: itm.purchaseUnitPrice, TotalCost: itm.purchasePrice * itm.quantity, Tax: inv.tax, GP: (itm.quantity * itm.unitPrice) - (itm.purchasePrice * itm.quantity), TotalWithVAT: inv.total };
+                let invoiceData = { InvoiceNumber: inv.invoiceNumber, InvoiceDate: inv.invoiceDate,
+                    Customer: inv.customer.name, Item: itm.name, UnitPrice: itm.unitPrice, Quantity: itm.quantity,
+                    Cost: itm.purchasePrice, TotalCost: itm.purchasePrice * itm.quantity, Tax: inv.tax,
+                    GP: (itm.quantity * itm.unitPrice) - (itm.purchasePrice * itm.quantity), TotalWithVAT: inv.total };
                 invoiceDataList.push(invoiceData);
             }
         }

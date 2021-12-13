@@ -2647,7 +2647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding\">\n   \n    <ion-card>\n      <ion-card-header>\n        Expenses\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card>\n      <ion-card-header>\n        Profit\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #lineCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding : min-height:100%\">\n   \n    <ion-card style=\"min-height: 100%;\">\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Revenue Vs GP\n        <div style=\"float: right;\">\n          <ion-label ion-button color=\"secondary\"  (click)=\"download()\">\nExport\n          </ion-label>\n        </div>\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #barCanvas></canvas>\n      </ion-card-content>\n\n      <ion-card-footer>\n        <ion-row>\n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n          </ion-item>\n       \n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label ion-button color=\"secondary\">Apply</ion-label>\n          </ion-item>\n        </ion-row>\n      </ion-card-footer>\n    </ion-card> -->\n  </div>\n</ion-content>\n");
 
 /***/ }),
 
@@ -2666,76 +2666,178 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.page.scss */ "B3xu");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! chart.js */ "m0r1");
+/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/db.service */ "ajt+");
+
 
 
 
 
 
 let DashboardPage = class DashboardPage {
-    constructor() { chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]); }
+    constructor(dbService) {
+        this.dbService = dbService;
+        chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]);
+    }
     ngOnInit() {
-        setTimeout(() => {
-            this.showDashboard();
-        }, 1000);
+        this.inventoryList = [];
+        this.invoiceList = [];
+    }
+    ionViewWillEnter() {
+        if (this.doughnutChart != null && this.doughnutChart != undefined)
+            this.doughnutChart.destroy();
+        if (this.barChart != null && this.barChart != undefined)
+            this.barChart.destroy();
+        this.dbService.getAllInventories().then(data => {
+            this.inventoryList = data;
+            this.getDonutdata().then(resp => {
+                console.log(JSON.stringify(this.donutColors));
+                this.showDashboard();
+            });
+        });
+    }
+    filterInvoices() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.dbService.getAllInvoices().then(data => {
+                let res = data;
+                if ((this.startDate != null && this.startDate != undefined) && (this.endDate == null || this.endDate == undefined)) {
+                    this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
+                    this.startDate.setHours(0);
+                    this.startDate.setMinutes(0);
+                    this.startDate.setSeconds(0);
+                    res.filter(inv => {
+                        var date = new Date(inv.invoiceDate);
+                        date.setHours(1);
+                        date.setMinutes(1);
+                        date.setSeconds(1);
+                        return date.getTime() >= this.startDate.getTime();
+                    });
+                }
+                else if ((this.startDate == null || this.startDate == undefined) && (this.endDate != null && this.endDate != undefined)) {
+                    this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
+                    this.endDate.setHours(23);
+                    this.endDate.setMinutes(23);
+                    this.endDate.setSeconds(23);
+                    res.filter(inv => {
+                        var date = new Date(inv.invoiceDate);
+                        date.setHours(1);
+                        date.setMinutes(1);
+                        date.setSeconds(1);
+                        return date.getTime() <= this.endDate.getTime();
+                    });
+                }
+                else if ((this.startDate != null || this.startDate != undefined) && (this.endDate != null || this.endDate != undefined)) {
+                    this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
+                    this.endDate.setHours(23);
+                    this.endDate.setMinutes(23);
+                    this.endDate.setSeconds(23);
+                    this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
+                    this.startDate.setHours(0);
+                    this.startDate.setMinutes(0);
+                    this.startDate.setSeconds(0);
+                    res.filter(inv => {
+                        var date = new Date(inv.invoiceDate);
+                        date.setHours(1);
+                        date.setMinutes(1);
+                        date.setSeconds(1);
+                        return date.getTime() >= this.startDate.getTime() && date.getTime() <= this.endDate.getTime();
+                    });
+                }
+                else {
+                    return res;
+                }
+            });
+        });
+    }
+    // async getBarData() : Promise<any>{
+    //     this.filterInvoices().then(data=>{
+    //       let invoices : Invoice []=data;
+    //       let revenue = new Array();
+    //       let profit = new Array();
+    //       for(let inv of invoices){
+    //         revenue.push(inv.total);
+    //         for(let itm of inv.invoiceItems){
+    //           itm.;
+    //         }
+    //       }
+    //     })
+    // }
+    getDonutdata() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.donutColors = [];
+            this.donutHoverColors = [];
+            this.donutLabels = this.inventoryList.map(a => a.name);
+            this.donutdata = this.inventoryList.map(a => a.quantity);
+            for (let i of this.inventoryList) {
+                this.donutColors.push(this.random_rgba());
+                this.donutHoverColors.push(this.random_rgba());
+            }
+        });
     }
     showDashboard() {
         console.log('called');
         this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.doughnutCanvas.nativeElement, {
             type: "doughnut",
             data: {
-                labels: ["Advertisement", "Car&Truck", "Office Expenses", "Rent", "Travel", "Others"],
+                labels: this.donutLabels,
                 datasets: [
                     {
-                        label: "# of Votes",
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            "rgba(255, 99, 132, 0.2)",
-                            "rgba(54, 162, 235, 0.2)",
-                            "rgba(255, 206, 86, 0.2)",
-                            "rgba(75, 192, 192, 0.2)",
-                            "rgba(153, 102, 255, 0.2)",
-                            "rgba(255, 159, 64, 0.2)"
-                        ],
-                        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF6384", "#36A2EB", "#FFCE56"]
+                        label: "Quantity",
+                        data: this.donutdata,
+                        backgroundColor: this.donutColors,
+                        // backgroundColor: [
+                        //   "rgba(255, 99, 132, 0.2)",
+                        //   "rgba(54, 162, 235, 0.2)",
+                        //   "rgba(255, 206, 86, 0.2)",
+                        //   "rgba(75, 192, 192, 0.2)",
+                        //   "rgba(153, 102, 255, 0.2)",
+                        //   "rgba(255, 159, 64, 0.2)"
+                        // ],
+                        hoverBackgroundColor: this.donutHoverColors
                     }
                 ]
             }
         });
-        this.lineChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.lineCanvas.nativeElement, {
-            type: "line",
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "Total Profit for 2021",
-                        fill: false,
-                        backgroundColor: "rgba(75,192,192,0.4)",
-                        borderColor: "rgba(75,192,192,1)",
-                        borderCapStyle: "butt",
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: "miter",
-                        pointBorderColor: "rgba(75,192,192,1)",
-                        pointBackgroundColor: "#fff",
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                        pointHoverBorderColor: "rgba(220,220,220,1)",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        spanGaps: false
-                    }
-                ]
-            }
-        });
+        // this.barChart = new Chart(this.barCanvas.nativeElement, {
+        //   type: "bar",
+        //   data: {
+        //     labels: this.barLabels,
+        //     datasets: [
+        //       {
+        //         label: "# of Votes",
+        //         data: [12, 19, 3, 5, 2, 3],
+        //         backgroundColor: [
+        //           "rgba(255, 99, 132, 0.2)",
+        //           "rgba(54, 162, 235, 0.2)",
+        //           "rgba(255, 206, 86, 0.2)",
+        //           "rgba(75, 192, 192, 0.2)",
+        //           "rgba(153, 102, 255, 0.2)",
+        //           "rgba(255, 159, 64, 0.2)"
+        //         ],
+        //         borderColor: [
+        //           "rgba(255,99,132,1)",
+        //           "rgba(54, 162, 235, 1)",
+        //           "rgba(255, 206, 86, 1)",
+        //           "rgba(75, 192, 192, 1)",
+        //           "rgba(153, 102, 255, 1)",
+        //           "rgba(255, 159, 64, 1)"
+        //         ],
+        //         borderWidth: 1
+        //       }
+        //     ]
+        //   }
+        // });
+    }
+    random_rgba() {
+        var o = Math.round, r = Math.random, s = 255;
+        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
     }
 };
-DashboardPage.ctorParameters = () => [];
+DashboardPage.ctorParameters = () => [
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"] }
+];
 DashboardPage.propDecorators = {
     doughnutCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["doughnutCanvas",] }],
-    lineCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["lineCanvas",] }]
+    barCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["barCanvas",] }]
 };
 DashboardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

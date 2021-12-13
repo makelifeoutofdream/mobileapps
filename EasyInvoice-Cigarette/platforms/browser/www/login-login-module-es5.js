@@ -97,9 +97,17 @@
       var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @ionic-native/android-permissions/ngx */
       "WOgW");
+      /* harmony import */
+
+
+      var _ionic_native_sim_ngx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      /*! @ionic-native/sim/ngx */
+      "ObYS");
 
       var LoginPage = /*#__PURE__*/function () {
-        function LoginPage(app, navCtrl, dbServise, formBuilder, tostService, uniqueDeviceID, uid, androidPermissions) {
+        function LoginPage(app, navCtrl, dbServise, formBuilder, tostService, uniqueDeviceID, uid, androidPermissions, sim) {
+          var _this = this;
+
           _classCallCheck(this, LoginPage);
 
           this.app = app;
@@ -109,15 +117,27 @@
           this.uniqueDeviceID = uniqueDeviceID;
           this.uid = uid;
           this.androidPermissions = androidPermissions;
+          this.sim = sim;
           this.userName = "";
           this.password = "";
           this.error = false;
-          this.whiteListedMACs = ['866817033701756'];
+          this.whiteListedMACs = ['919074292305', '0564863010', '0508812145', '919074247482', '0560545887'];
           this.formLogin = new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormGroup"]({
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required])),
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required]))
           });
           this.getPermission();
+          this.sim.requestReadPermission().then(function () {
+            return console.log('Permission granted');
+          }, function () {
+            return console.log('Permission denied');
+          });
+          this.sim.getSimInfo().then(function (info) {
+            console.log('Sim info: ', info), //  alert('sim info'+JSON.stringify(info) );
+            _this.phoneNo = info.phoneNumber;
+          }, function (err) {
+            return console.log('Unable to get sim info: ', err);
+          });
         }
 
         _createClass(LoginPage, [{
@@ -128,11 +148,11 @@
         }, {
           key: "getPermission",
           value: function getPermission() {
-            var _this = this;
+            var _this2 = this;
 
             this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(function (res) {
               if (res.hasPermission) {} else {
-                _this.androidPermissions.requestPermission(_this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(function (res) {
+                _this2.androidPermissions.requestPermission(_this2.androidPermissions.PERMISSION.READ_PHONE_STATE).then(function (res) {
                   alert("Persmission Granted Please Restart App!");
                 })["catch"](function (error) {
                   alert("Error! " + error);
@@ -150,29 +170,30 @@
         }, {
           key: "login",
           value: function login() {
-            var _this2 = this;
+            var _this3 = this;
 
             if (!this.formLogin.valid) {
               return;
             }
 
             this.dbServise.fetchUserByUserNameAndPassword(this.userName, this.password).then(function (data) {
-              if (_this2.whiteListedMACs.includes(_this2.uid.IMEI)) {
-                if (data != null && data != undefined) {
-                  _this2.loginUser = data;
-                  _this2.app.showTabs = true;
+              // if(this.whiteListedMACs.includes(this.phoneNo)){
+              if (data != null && data != undefined) {
+                _this3.loginUser = data;
+                _this3.app.showTabs = true;
 
-                  _this2.navCtrl.navigateRoot('inventory');
-                } else {
-                  _this2.tostService.presentToast("Incorrect username or password");
-                }
+                _this3.navCtrl.navigateRoot('dashboard');
               } else {
-                _this2.tostService.presentToast("MAC Address not configured " + 'IMEI-' + _this2.uid.IMEI + 'ICCID-' + _this2.uid.ICCID + 'IMSI-' + _this2.uid.IMSI + 'MAC-' + _this2.uid.MAC + 'UUID-' + _this2.uid.UUID);
+                _this3.tostService.presentToast("Incorrect username or password");
               }
+              /*}else{
+                this.tostService.presentToast("Configuration Error");
+              }*/
+
             })["catch"](function (err) {
               console.log(err);
 
-              _this2.tostService.presentToast("Incorrect username or password");
+              _this3.tostService.presentToast("Incorrect username or password");
             });
           }
         }, {
@@ -202,6 +223,8 @@
           type: _ionic_native_uid_ngx__WEBPACK_IMPORTED_MODULE_10__["Uid"]
         }, {
           type: _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_11__["AndroidPermissions"]
+        }, {
+          type: _ionic_native_sim_ngx__WEBPACK_IMPORTED_MODULE_12__["Sim"]
         }];
       };
 
@@ -229,7 +252,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>Login</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  \n  <div style=\"margin-top: 50%;\">\n    <form [formGroup]=\"formLogin\">\n    <ion-item lines=\"full\">\n      <ion-label position=\"floating\">Email</ion-label>\n        <ion-input name=\"username\" type=\"text\" [(ngModel)]=\"userName\" formControlName=\"email\" required></ion-input>\n       \n    </ion-item>\n    \n    <ion-item lines=\"full\">\n      <ion-label position=\"floating\">Password</ion-label>\n      <ion-input name=\"password\" type=\"password\" [(ngModel)]=\"password\"   formControlName=\"password\"  required></ion-input>\n    </ion-item>\n  </form>\n\n    <ion-row>\n      <ion-col>\n        <ion-button type=\"submit\" color=\"primary\" (click)=\"login()\" expand=\"block\" >Login</ion-button>\n        \n      </ion-col>\n      \n    </ion-row>\n    <ion-row>\n      <ion-col class=\"ion-text-left\">\n        <a [routerLink]=\"['/forgot-password']\" class=\"small-text\">Forgot Password?</a>\n      </ion-col>\n      <ion-col class=\"ion-text-right\">\n        <a [routerLink]=\"['/register']\" class=\"small-text\">Create Account</a>\n      </ion-col>\n    </ion-row>\n  </div>\n  \n  \n  \n\n</ion-content>  ";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>Login</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  \n  <div style=\"margin-top: 50%;\">\n    <form [formGroup]=\"formLogin\">\n    <ion-item lines=\"full\">\n      <ion-label position=\"floating\">Email</ion-label>\n        <ion-input name=\"username\" type=\"text\" [(ngModel)]=\"userName\" formControlName=\"email\" required></ion-input>\n       \n    </ion-item>\n    \n    <ion-item lines=\"full\">\n      <ion-label position=\"floating\">Password</ion-label>\n      <ion-input name=\"password\" type=\"password\" [(ngModel)]=\"password\"   formControlName=\"password\"  required></ion-input>\n    </ion-item>\n  </form>\n\n    <ion-row>\n      <ion-col>\n        <ion-button type=\"submit\" color=\"primary\" (click)=\"login()\" expand=\"block\" >Login</ion-button>\n        \n      </ion-col>\n      \n    </ion-row>\n    <ion-row>\n      <!-- <ion-col class=\"ion-text-left\">\n        <a [routerLink]=\"['/forgot-password']\" class=\"small-text\">Forgot Password?</a>\n      </ion-col> -->\n      <ion-col class=\"ion-text-right\">\n        <a [routerLink]=\"['/register']\" class=\"small-text\">Create Account</a>\n      </ion-col>\n    </ion-row>\n  </div>\n  \n  \n  \n\n</ion-content>  ";
       /***/
     },
 

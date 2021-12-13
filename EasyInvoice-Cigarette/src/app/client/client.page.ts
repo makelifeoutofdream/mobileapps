@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
+import { DataService } from '../data.service';
 import { Customer } from '../services/customer';
 import { DbService } from '../services/db.service';
 import { Inventory } from '../services/inventory';
@@ -17,7 +18,8 @@ export class ClientPage implements OnInit {
   private customer : Customer;
   private inventoryList : Inventory [];
   constructor(public navCtrl:NavController,public dbService:DbService,
-    public tostService : ToastserviceService,public alertController: AlertController) { }
+    public tostService : ToastserviceService,public alertController: AlertController,
+    private dataService  :DataService) { }
 
   ngOnInit() {
     console.log("init called");
@@ -107,6 +109,24 @@ async presentDeleteAlertConfirm(cus : Customer) {
 
   await alert.present();
 }
+
+download() {
+  let customerDataList = new Array();
+  for (let cus of this.customers) {
+    
+      
+      let cusData = { Name: cus.name, ContactPerson: cus.contactPersonName,Mobile:cus.mobile,Address : cus.street+','+cus.city+','+cus.country,
+      Balance : cus.balance 
+        };
+        customerDataList.push(cusData);
+    
+
+  }
+  this.dataService.exportToExcel(customerDataList, 'customers.xlsx');
+
+
+}
+
 
 }
 

@@ -211,15 +211,22 @@
       /* harmony import */
 
 
-      var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-      /*! ../app.component */
-      "Sy1n");
+      var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ../services/db.service */
+      "ajt+");
+      /* harmony import */
+
+
+      var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ../services/toastservice.service */
+      "Gb+d");
 
       var ExpensePage = /*#__PURE__*/function () {
-        function ExpensePage(app, navCtrl) {
+        function ExpensePage(dbService, toastService, navCtrl) {
           _classCallCheck(this, ExpensePage);
 
-          this.app = app;
+          this.dbService = dbService;
+          this.toastService = toastService;
           this.navCtrl = navCtrl;
         }
 
@@ -227,10 +234,51 @@
           key: "ngOnInit",
           value: function ngOnInit() {}
         }, {
+          key: "ionViewWillEnter",
+          value: function ionViewWillEnter() {
+            this.getAllExpenses();
+          }
+        }, {
+          key: "getAllExpenses",
+          value: function getAllExpenses() {
+            var _this = this;
+
+            this.dbService.getAllExpenses().then(function (data) {
+              _this.expenseList = data;
+            });
+          }
+        }, {
           key: "addNewExpense",
           value: function addNewExpense() {
-            this.app.showTabs = true;
             this.navCtrl.navigateRoot('newexpense');
+          }
+        }, {
+          key: "editExpense",
+          value: function editExpense(id) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var navigationExtras;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      this.expense = this.expenseList.filter(function (a) {
+                        return a.id == id;
+                      })[0];
+                      navigationExtras = {
+                        queryParams: {
+                          expense: this.expense
+                        }
+                      };
+                      console.log("selected expense" + JSON.stringify(this.expense));
+                      this.navCtrl.navigateRoot('newexpense', navigationExtras);
+
+                    case 4:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
           }
         }]);
 
@@ -239,7 +287,9 @@
 
       ExpensePage.ctorParameters = function () {
         return [{
-          type: _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]
+          type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"]
+        }, {
+          type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"]
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"]
         }];
@@ -269,7 +319,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Expense</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-list>\n    <ion-item>\n      <ion-label>1000</ion-label>\n    </ion-item>\n    <ion-item>\n      <ion-label>2500</ion-label>\n    </ion-item>\n    <ion-item>\n      <ion-label>5600</ion-label>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewExpense()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Expense</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  \n  <ion-list>\n    <ion-list-header>\n      <ion-col size=\"4\">Date</ion-col>\n      <ion-col size=\"4\" style=\"text-align: center;\">Category</ion-col>\n      <ion-col style=\"text-align: right;padding-right: 5%;\" size=\"4\">Amount</ion-col>\n    </ion-list-header>\n    <ion-item *ngFor= \"let exp of expenseList\" (click)=\"editExpense(exp.id)\">\n      \n        \n        \n          <ion-col size=\"4\">{{exp.date | date : short}}</ion-col>\n          <ion-col size=\"4\" style=\"text-align: center;\">{{exp.category}}</ion-col>\n          <ion-col style=\"text-align: right;\" size=\"4\">{{exp.amount}}</ion-col>\n       \n     \n    </ion-item>\n  </ion-list>    \n\n</ion-content>\n<ion-footer>\n  \n    \n  <ion-row style=\"float:right\">\n    <ion-col >\n    <ion-button  color=\"primary\" (click)=\"addNewExpense()\">\n      <ion-icon name=\"add-circle\"></ion-icon>\n    </ion-button>\n  </ion-col>\n  </ion-row>\n    \n \n\n\n</ion-footer>";
       /***/
     }
   }]);

@@ -51,26 +51,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "pluginId": "cordova-sqlite-storage",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
-    },
-    {
-        "file": "plugins/cordova-sqlite-storage/node_modules/cordova-sqlite-storage-dependencies/sql-asm-memory-growth.js",
-        "id": "cordova-sqlite-storage.sql",
-        "pluginId": "cordova-sqlite-storage",
-        "runs": true
-    },
-    {
-        "file": "plugins/cordova-sqlite-storage/src/browser/SQLiteProxy.js",
-        "id": "cordova-sqlite-storage.SQLiteProxy",
-        "pluginId": "cordova-sqlite-storage",
-        "runs": true
-    },
-    {
         "file": "plugins/uk.co.workingedge.cordova.plugin.sqliteporter/www/sqlitePorter.js",
         "id": "uk.co.workingedge.cordova.plugin.sqliteporter.sqlitePorter",
         "pluginId": "uk.co.workingedge.cordova.plugin.sqliteporter",
@@ -334,6 +314,26 @@ module.exports = [
         "merges": [
             "window.plugins.sim"
         ]
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "pluginId": "cordova-sqlite-storage",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/node_modules/cordova-sqlite-storage-dependencies/sql-asm-memory-growth.js",
+        "id": "cordova-sqlite-storage.sql",
+        "pluginId": "cordova-sqlite-storage",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/src/browser/SQLiteProxy.js",
+        "id": "cordova-sqlite-storage.SQLiteProxy",
+        "pluginId": "cordova-sqlite-storage",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -345,7 +345,6 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-sqlite-storage": "6.0.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "1.1.1",
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-android-permissions": "1.1.2",
@@ -355,7 +354,8 @@ module.exports.metadata =
     "cordova-plugin-datecs-printer": "0.10.0",
     "cordova-plugin-dreamover-uid": "1.3.0",
     "cordova-plugin-unique-device-id2": "2.0.0",
-    "cordova-plugin-sim": "1.3.3"
+    "cordova-plugin-sim": "1.3.3",
+    "cordova-sqlite-storage": "6.0.0"
 }
 // BOTTOM OF METADATA
 });

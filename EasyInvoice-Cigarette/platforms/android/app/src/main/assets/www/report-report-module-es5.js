@@ -633,8 +633,8 @@
             this.header.push('Inv No');
             this.header.push('Customer');
             this.header.push('Total');
-            this.startDate = null;
-            this.endDate = null;
+            this.startDate = new Date();
+            this.endDate = new Date();
             this.getAllInvoices();
             this.getAllCustomers();
             this.dbService.getProfile().then(function (data) {
@@ -945,7 +945,7 @@
           value: function download() {
             var invoiceDataList = new Array();
 
-            var _iterator2 = _createForOfIteratorHelper(this.invoiceList),
+            var _iterator2 = _createForOfIteratorHelper(this.filterInvoiceList),
                 _step2;
 
             try {
@@ -966,7 +966,7 @@
                       Item: itm.name,
                       UnitPrice: itm.unitPrice,
                       Quantity: itm.quantity,
-                      Cost: itm.purchaseUnitPrice,
+                      Cost: itm.purchasePrice,
                       TotalCost: itm.purchasePrice * itm.quantity,
                       Tax: inv.tax,
                       GP: itm.quantity * itm.unitPrice - itm.purchasePrice * itm.quantity,

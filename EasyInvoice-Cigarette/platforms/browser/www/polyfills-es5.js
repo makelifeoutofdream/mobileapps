@@ -539,7 +539,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice/node_modules/@angular-devkit/build-angular/src/webpack/es5-polyfills.js */
+      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette/node_modules/@angular-devkit/build-angular/src/webpack/es5-polyfills.js */
       "voQr");
 
       __webpack_require__(
@@ -547,15 +547,15 @@
       "R0gw");
 
       __webpack_require__(
-      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice/node_modules/@angular-devkit/build-angular/src/webpack/jit-polyfills.js */
+      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette/node_modules/@angular-devkit/build-angular/src/webpack/jit-polyfills.js */
       "rZy+");
 
       __webpack_require__(
-      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice/node_modules/@angular-devkit/build-angular/src/webpack/es5-jit-polyfills.js */
+      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette/node_modules/@angular-devkit/build-angular/src/webpack/es5-jit-polyfills.js */
       "aYjs");
 
       module.exports = __webpack_require__(
-      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice/src/polyfills.ts */
+      /*! /Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette/src/polyfills.ts */
       "hN/g");
       /***/
     },

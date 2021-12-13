@@ -21,6 +21,26 @@
         <canvas #doughnutCanvas></canvas>
       </ion-card-content>
     </ion-card>
+    <ion-card> 
+      <div [ngClass]="{'red-card' : todayProfit<0,'green-card' : todayProfit>=0  }">
+      <div >
+        Today's Profit
+      </div>
+      <div  >
+        {{todayProfit | number : '1.2'}}
+      </div>
+    </div>
+    </ion-card>
+    <ion-card >
+      <div [ngClass]="{'red-card' : todayProfit<0,'green-card' : todayProfit>=0  }">
+      <div >
+        Monthly Profit
+      </div>
+      <div>
+        {{monthProfit | number : '1.2'}}
+      </div>
+    </div>
+    </ion-card>
 
     <!-- <ion-card>
       <ion-card-header>

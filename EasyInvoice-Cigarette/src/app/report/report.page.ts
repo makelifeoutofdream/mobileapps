@@ -66,8 +66,8 @@ export class ReportPage implements OnInit {
     this.header.push('Inv No');
     this.header.push('Customer');
     this.header.push('Total');
-    this.startDate = null;
-    this.endDate = null;
+    this.startDate = new Date();
+    this.endDate = new Date();
     this.getAllInvoices();
     this.getAllCustomers();
     this.dbService.getProfile().then(data => {
@@ -227,7 +227,7 @@ export class ReportPage implements OnInit {
         let itm : any=it;
         let invoiceData = { InvoiceNumber: inv.invoiceNumber, InvoiceDate: inv.invoiceDate, 
           Customer: inv.customer.name, Item: itm.name, UnitPrice: itm.unitPrice, Quantity: itm.quantity,
-           Cost: itm.purchasePrice, TotalCost: itm.purchasePrice * itm.quantity, Tax: inv.tax, 
+           Cost: itm.purchasePrice, TotalCost: itm.purchasePrice * itm.quantity, TotalRevenue : (itm.quantity * itm.unitPrice),Tax: inv.tax, 
            GP: (itm.quantity * itm.unitPrice) - (itm.purchasePrice * itm.quantity), TotalWithVAT: inv.total };
         invoiceDataList.push(invoiceData);
       }

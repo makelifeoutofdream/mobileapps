@@ -389,12 +389,13 @@
       var dom_to_image__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(dom_to_image__WEBPACK_IMPORTED_MODULE_10__);
 
       var PrintPreviewComponent = /*#__PURE__*/function () {
-        function PrintPreviewComponent(printService, dbService, modalCtrl) {
+        function PrintPreviewComponent(printService, dbService, modalCtrl, navCtrl) {
           _classCallCheck(this, PrintPreviewComponent);
 
           this.printService = printService;
           this.dbService = dbService;
           this.modalCtrl = modalCtrl;
+          this.navCtrl = navCtrl;
           this.elementType = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_9__["NgxQrcodeElementTypes"].URL;
           this.correctionLevel = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_9__["NgxQrcodeErrorCorrectionLevels"].HIGH;
           this.value = "";
@@ -413,7 +414,7 @@
               _this.getTotalQuantity().then(function (data) {
                 setTimeout(function () {
                   _this.pairTo();
-                }, 500);
+                }, 100);
               });
             });
           }
@@ -481,6 +482,8 @@
                 console.log('print called');
 
                 _this2.modalCtrl.dismiss();
+
+                _this2.navCtrl.navigateRoot('invoice');
               };
             })["catch"](function (error) {
               console.error("oops, something went wrong!", error);
@@ -523,6 +526,8 @@
           type: src_app_services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"]
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"]
         }];
       };
 

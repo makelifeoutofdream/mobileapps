@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~5290faf7"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"],{
 
 /***/ "/8ZT":
 /*!***************************************************!*\
@@ -426,21 +426,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DbService", function() { return DbService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var _toastservice_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./toastservice.service */ "Gb+d");
-/* harmony import */ var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage-angular */ "jSNZ");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuid */ "4USb");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _toastservice_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toastservice.service */ "Gb+d");
+/* harmony import */ var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/storage-angular */ "jSNZ");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuid */ "4USb");
+/* harmony import */ var _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic-native/sqlite/ngx */ "9lwF");
 
 
 
 
 
 
+
+
+;
 let DbService = class DbService {
-    constructor(httpClient, toastService, storage) {
+    constructor(httpClient, toastService, storage, sqlite, platform) {
         this.httpClient = httpClient;
         this.toastService = toastService;
         this.storage = storage;
+        this.sqlite = sqlite;
+        this.platform = platform;
         this.usersKey = "users";
         this.customersKey = "customers";
         this.inventoryKey = "inventories";
@@ -460,27 +467,40 @@ let DbService = class DbService {
         this.supplierCodeConstant = "SUP";
         this.invoiceCodeConstant = "INV";
         this.printerKey = "printer";
+        this.expenseKey = "printer";
         this.init();
     }
     init() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const storageVar = yield this.storage.create();
             this.storage = storageVar;
+            this.platform.ready().then(() => {
+                this.sqlite.create({
+                    name: 'data.db',
+                    location: 'default'
+                }).then((db) => {
+                    this.db = db;
+                    this.db.executeSql('creae table user(user_name varchar(100),user_password varchar(100))', []).then(() => console.log('executed script')).catch(err => alert(err));
+                }).catch(err => alert(err));
+            });
         });
     }
     signup(user) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             try {
-                let value = yield this.storage.get(this.usersKey);
-                this.users = JSON.parse(value);
-                if (this.users == undefined || this.users == null) {
-                    this.users = [];
+                let data = [user.email, user.user_password];
+                return this.db.executeSql('INSERT INTO user (user_name, user_password) VALUES (?, ?)', data).then(data => {
+                }).catch(err => alert(err));
+                /*let value=await this.storage.get(this.usersKey)
+                this.users=JSON.parse(value);
+                if(this.users==undefined || this.users==null){
+                  this.users=[];
                 }
-                user.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                user.id=uuidv4();
                 this.users.push(user);
-                const result = yield this.storage.set(this.usersKey, JSON.stringify(this.users));
-                console.log('user signed up successfully' + user);
-                return true;
+                const result =await this.storage.set(this.usersKey,JSON.stringify(this.users));
+                console.log('user signed up successfully'+user);
+                return true;*/
             }
             catch (reason) {
                 console.log(reason);
@@ -492,11 +512,16 @@ let DbService = class DbService {
     fetchUserByUserNameAndPassword(username, password) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             try {
-                const result = yield this.storage.get(this.usersKey);
-                this.users = JSON.parse(result);
-                let fetchedUser = this.users.find(u => u.email == username && u.user_password == password);
-                console.log('retrieved user' + fetchedUser);
-                return fetchedUser;
+                /*const result =await this.storage.get(this.usersKey);
+                this.users=JSON.parse(result);
+                let fetchedUser= this.users.find(u=>u.email==username && u.user_password==password);
+                console.log('retrieved user'+fetchedUser);
+                return fetchedUser;*/
+                return this.db.executeSql('SELECT * FROM user WHERE id = ?', [username]).then(res => {
+                    return {
+                        user_name: res.rows.item(0).id
+                    };
+                });
             }
             catch (reason) {
                 console.log(reason);
@@ -512,7 +537,7 @@ let DbService = class DbService {
                 if (this.customers == null || this.customers == undefined) {
                     this.customers = [];
                 }
-                customer.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                customer.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                 this.customers.push(customer);
                 this.storage.set(this.customersKey, JSON.stringify(this.customers));
                 return true;
@@ -609,7 +634,7 @@ let DbService = class DbService {
                     this.inventories = [];
                 }
                 if (inventory.id == null || inventory.id == undefined) {
-                    inventory.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                    inventory.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                     this.inventories.push(inventory);
                 }
                 else {
@@ -679,7 +704,7 @@ let DbService = class DbService {
                     this.invoices = [];
                 }
                 if (invoice.id == null || invoice.id == undefined) {
-                    invoice.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                    invoice.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                     this.invoices.push(invoice);
                 }
                 else {
@@ -756,7 +781,7 @@ let DbService = class DbService {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             try {
                 if (userProfile.id == null || userProfile.id == undefined) {
-                    userProfile.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                    userProfile.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                 }
                 this.storage.set(this.profileKey, JSON.stringify(userProfile));
                 return userProfile;
@@ -788,7 +813,7 @@ let DbService = class DbService {
                 if (this.suppliers == null || this.suppliers == undefined) {
                     this.suppliers = [];
                 }
-                supplier.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                supplier.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                 this.suppliers.push(supplier);
                 this.storage.set(this.supplierKey, JSON.stringify(this.suppliers));
                 return true;
@@ -836,7 +861,7 @@ let DbService = class DbService {
                 if (purchaseList == null || purchaseList == undefined) {
                     purchaseList = [];
                 }
-                purchase.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                purchase.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                 purchaseList.push(purchase);
                 this.storage.set(this.purchaseKey, JSON.stringify(purchaseList));
                 return true;
@@ -937,11 +962,80 @@ let DbService = class DbService {
             return this.storage.get(this.printerKey);
         });
     }
+    getAllExpenses() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.storage.get(this.expenseKey);
+                let expenseList = JSON.parse(result);
+                return expenseList;
+            }
+            catch (reason) {
+                console.log(reason);
+                this.toastService.presentToast("Failed to load the expenses");
+            }
+        });
+    }
+    createExpense(expense) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.expenseKey);
+                let expenses = JSON.parse(value);
+                if (expenses == null || expenses == undefined) {
+                    expenses = [];
+                }
+                expense.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
+                expenses.push(expense);
+                this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    UpdateExpense(expense) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.expenseKey);
+                let expenses = JSON.parse(value);
+                var index = expenses.findIndex(i => i.id == expense.id);
+                expenses[index] = expense;
+                this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
+    deleteInvoice(invoice) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.storage.get(this.invoiceKey);
+                let invoiceList = JSON.parse(value);
+                if (invoiceList == null || invoiceList == undefined) {
+                    invoiceList = [];
+                }
+                var index = invoiceList.findIndex(i => i.id == invoice.id);
+                invoiceList.splice(index, 1);
+                this.storage.set(this.invoiceKey, JSON.stringify(invoiceList));
+                return true;
+            }
+            catch (reason) {
+                console.log(reason);
+                return false;
+            }
+        });
+    }
 };
 DbService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-    { type: _toastservice_service__WEBPACK_IMPORTED_MODULE_3__["ToastserviceService"] },
-    { type: _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_4__["Storage"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+    { type: _toastservice_service__WEBPACK_IMPORTED_MODULE_4__["ToastserviceService"] },
+    { type: _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_5__["Storage"] },
+    { type: _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_7__["SQLite"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"] }
 ];
 DbService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -1422,4 +1516,4 @@ function v1(options, buf, offset) {
 /***/ })
 
 }]);
-//# sourceMappingURL=default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~5290faf7-es2015.js.map
+//# sourceMappingURL=default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae-es2015.js.map

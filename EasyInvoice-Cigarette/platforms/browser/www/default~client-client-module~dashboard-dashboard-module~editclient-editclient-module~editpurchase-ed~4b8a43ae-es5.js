@@ -11,7 +11,7 @@
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~5290faf7"], {
+  (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae"], {
     /***/
     "/8ZT":
     /*!***************************************************!*\
@@ -711,35 +711,51 @@
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic/angular */
+      "TEn/");
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/common/http */
       "tk/3");
       /* harmony import */
 
 
-      var _toastservice_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _toastservice_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ./toastservice.service */
       "Gb+d");
       /* harmony import */
 
 
-      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic/storage-angular */
       "jSNZ");
       /* harmony import */
 
 
-      var uuid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var uuid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! uuid */
       "4USb");
+      /* harmony import */
+
+
+      var _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! @ionic-native/sqlite/ngx */
+      "9lwF");
+
+      ;
 
       var DbService = /*#__PURE__*/function () {
-        function DbService(httpClient, toastService, storage) {
+        function DbService(httpClient, toastService, storage, sqlite, platform) {
           _classCallCheck(this, DbService);
 
           this.httpClient = httpClient;
           this.toastService = toastService;
           this.storage = storage;
+          this.sqlite = sqlite;
+          this.platform = platform;
           this.usersKey = "users";
           this.customersKey = "customers";
           this.inventoryKey = "inventories";
@@ -759,6 +775,7 @@
           this.supplierCodeConstant = "SUP";
           this.invoiceCodeConstant = "INV";
           this.printerKey = "printer";
+          this.expenseKey = "printer";
           this.init();
         }
 
@@ -766,6 +783,8 @@
           key: "init",
           value: function init() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+              var _this = this;
+
               var storageVar;
               return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
@@ -777,8 +796,24 @@
                     case 2:
                       storageVar = _context2.sent;
                       this.storage = storageVar;
+                      this.platform.ready().then(function () {
+                        _this.sqlite.create({
+                          name: 'data.db',
+                          location: 'default'
+                        }).then(function (db) {
+                          _this.db = db;
 
-                    case 4:
+                          _this.db.executeSql('creae table user(user_name varchar(100),user_password varchar(100))', []).then(function () {
+                            return console.log('executed script');
+                          })["catch"](function (err) {
+                            return alert(err);
+                          });
+                        })["catch"](function (err) {
+                          return alert(err);
+                        });
+                      });
+
+                    case 5:
                     case "end":
                       return _context2.stop();
                   }
@@ -790,82 +825,59 @@
           key: "signup",
           value: function signup(user) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var value, result;
+              var data;
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
                   switch (_context3.prev = _context3.next) {
                     case 0:
                       _context3.prev = 0;
-                      _context3.next = 3;
-                      return this.storage.get(this.usersKey);
+                      data = [user.email, user.user_password];
+                      return _context3.abrupt("return", this.db.executeSql('INSERT INTO user (user_name, user_password) VALUES (?, ?)', data).then(function (data) {})["catch"](function (err) {
+                        return alert(err);
+                      }));
 
-                    case 3:
-                      value = _context3.sent;
-                      this.users = JSON.parse(value);
-
-                      if (this.users == undefined || this.users == null) {
-                        this.users = [];
-                      }
-
-                      user.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
-                      this.users.push(user);
-                      _context3.next = 10;
-                      return this.storage.set(this.usersKey, JSON.stringify(this.users));
-
-                    case 10:
-                      result = _context3.sent;
-                      console.log('user signed up successfully' + user);
-                      return _context3.abrupt("return", true);
-
-                    case 15:
-                      _context3.prev = 15;
+                    case 5:
+                      _context3.prev = 5;
                       _context3.t0 = _context3["catch"](0);
                       console.log(_context3.t0);
                       this.toastService.presentToast("User Registration Failed");
                       return _context3.abrupt("return", false);
 
-                    case 20:
+                    case 10:
                     case "end":
                       return _context3.stop();
                   }
                 }
-              }, _callee3, this, [[0, 15]]);
+              }, _callee3, this, [[0, 5]]);
             }));
           }
         }, {
           key: "fetchUserByUserNameAndPassword",
           value: function fetchUserByUserNameAndPassword(username, password) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-              var result, fetchedUser;
               return regeneratorRuntime.wrap(function _callee4$(_context4) {
                 while (1) {
                   switch (_context4.prev = _context4.next) {
                     case 0:
                       _context4.prev = 0;
-                      _context4.next = 3;
-                      return this.storage.get(this.usersKey);
+                      return _context4.abrupt("return", this.db.executeSql('SELECT * FROM user WHERE id = ?', [username]).then(function (res) {
+                        return {
+                          user_name: res.rows.item(0).id
+                        };
+                      }));
 
-                    case 3:
-                      result = _context4.sent;
-                      this.users = JSON.parse(result);
-                      fetchedUser = this.users.find(function (u) {
-                        return u.email == username && u.user_password == password;
-                      });
-                      console.log('retrieved user' + fetchedUser);
-                      return _context4.abrupt("return", fetchedUser);
-
-                    case 10:
-                      _context4.prev = 10;
+                    case 4:
+                      _context4.prev = 4;
                       _context4.t0 = _context4["catch"](0);
                       console.log(_context4.t0);
                       return _context4.abrupt("return", null);
 
-                    case 14:
+                    case 8:
                     case "end":
                       return _context4.stop();
                   }
                 }
-              }, _callee4, this, [[0, 10]]);
+              }, _callee4, this, [[0, 4]]);
             }));
           }
         }, {
@@ -889,7 +901,7 @@
                         this.customers = [];
                       }
 
-                      customer.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                      customer.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                       this.customers.push(customer);
                       this.storage.set(this.customersKey, JSON.stringify(this.customers));
                       return _context5.abrupt("return", true);
@@ -1110,7 +1122,7 @@
                       }
 
                       if (inventory.id == null || inventory.id == undefined) {
-                        inventory.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                        inventory.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                         this.inventories.push(inventory);
                       } else {
                         index = this.inventories.findIndex(function (i) {
@@ -1264,7 +1276,7 @@
                       }
 
                       if (invoice.id == null || invoice.id == undefined) {
-                        invoice.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                        invoice.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                         this.invoices.push(invoice);
                       } else {
                         index = this.invoices.findIndex(function (i) {
@@ -1475,7 +1487,7 @@
                       _context22.prev = 0;
 
                       if (userProfile.id == null || userProfile.id == undefined) {
-                        userProfile.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                        userProfile.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                       }
 
                       this.storage.set(this.profileKey, JSON.stringify(userProfile));
@@ -1548,7 +1560,7 @@
                         this.suppliers = [];
                       }
 
-                      supplier.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                      supplier.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                       this.suppliers.push(supplier);
                       this.storage.set(this.supplierKey, JSON.stringify(this.suppliers));
                       return _context24.abrupt("return", true);
@@ -1657,7 +1669,7 @@
                         purchaseList = [];
                       }
 
-                      purchase.id = Object(uuid__WEBPACK_IMPORTED_MODULE_5__["v4"])();
+                      purchase.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
                       purchaseList.push(purchase);
                       this.storage.set(this.purchaseKey, JSON.stringify(purchaseList));
                       return _context27.abrupt("return", true);
@@ -1775,7 +1787,7 @@
           key: "updateStock",
           value: function updateStock(purchaseItemList) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee31() {
-              var _this = this;
+              var _this2 = this;
 
               var value, inventories, _iterator, _step, _loop, index;
 
@@ -1798,10 +1810,10 @@
                           index = inventories.findIndex(function (i) {
                             return i.id == pItem.item.id;
                           });
-                          var inventory = _this.inventories[index];
+                          var inventory = _this2.inventories[index];
                           inventory.quantity = inventory.quantity + pItem.deliverQuantity;
 
-                          _this.storage.set(_this.inventoryKey, JSON.stringify(_this.inventories));
+                          _this2.storage.set(_this2.inventoryKey, JSON.stringify(_this2.inventories));
                         };
 
                         for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -1931,6 +1943,157 @@
               }, _callee35, this);
             }));
           }
+        }, {
+          key: "getAllExpenses",
+          value: function getAllExpenses() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
+              var result, expenseList;
+              return regeneratorRuntime.wrap(function _callee36$(_context36) {
+                while (1) {
+                  switch (_context36.prev = _context36.next) {
+                    case 0:
+                      _context36.prev = 0;
+                      _context36.next = 3;
+                      return this.storage.get(this.expenseKey);
+
+                    case 3:
+                      result = _context36.sent;
+                      expenseList = JSON.parse(result);
+                      return _context36.abrupt("return", expenseList);
+
+                    case 8:
+                      _context36.prev = 8;
+                      _context36.t0 = _context36["catch"](0);
+                      console.log(_context36.t0);
+                      this.toastService.presentToast("Failed to load the expenses");
+
+                    case 12:
+                    case "end":
+                      return _context36.stop();
+                  }
+                }
+              }, _callee36, this, [[0, 8]]);
+            }));
+          }
+        }, {
+          key: "createExpense",
+          value: function createExpense(expense) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
+              var value, expenses;
+              return regeneratorRuntime.wrap(function _callee37$(_context37) {
+                while (1) {
+                  switch (_context37.prev = _context37.next) {
+                    case 0:
+                      _context37.prev = 0;
+                      _context37.next = 3;
+                      return this.storage.get(this.expenseKey);
+
+                    case 3:
+                      value = _context37.sent;
+                      expenses = JSON.parse(value);
+
+                      if (expenses == null || expenses == undefined) {
+                        expenses = [];
+                      }
+
+                      expense.id = Object(uuid__WEBPACK_IMPORTED_MODULE_6__["v4"])();
+                      expenses.push(expense);
+                      this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                      return _context37.abrupt("return", true);
+
+                    case 12:
+                      _context37.prev = 12;
+                      _context37.t0 = _context37["catch"](0);
+                      console.log(_context37.t0);
+                      return _context37.abrupt("return", false);
+
+                    case 16:
+                    case "end":
+                      return _context37.stop();
+                  }
+                }
+              }, _callee37, this, [[0, 12]]);
+            }));
+          }
+        }, {
+          key: "UpdateExpense",
+          value: function UpdateExpense(expense) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
+              var value, expenses, index;
+              return regeneratorRuntime.wrap(function _callee38$(_context38) {
+                while (1) {
+                  switch (_context38.prev = _context38.next) {
+                    case 0:
+                      _context38.prev = 0;
+                      _context38.next = 3;
+                      return this.storage.get(this.expenseKey);
+
+                    case 3:
+                      value = _context38.sent;
+                      expenses = JSON.parse(value);
+                      index = expenses.findIndex(function (i) {
+                        return i.id == expense.id;
+                      });
+                      expenses[index] = expense;
+                      this.storage.set(this.expenseKey, JSON.stringify(expenses));
+                      return _context38.abrupt("return", true);
+
+                    case 11:
+                      _context38.prev = 11;
+                      _context38.t0 = _context38["catch"](0);
+                      console.log(_context38.t0);
+                      return _context38.abrupt("return", false);
+
+                    case 15:
+                    case "end":
+                      return _context38.stop();
+                  }
+                }
+              }, _callee38, this, [[0, 11]]);
+            }));
+          }
+        }, {
+          key: "deleteInvoice",
+          value: function deleteInvoice(invoice) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
+              var value, invoiceList, index;
+              return regeneratorRuntime.wrap(function _callee39$(_context39) {
+                while (1) {
+                  switch (_context39.prev = _context39.next) {
+                    case 0:
+                      _context39.prev = 0;
+                      _context39.next = 3;
+                      return this.storage.get(this.invoiceKey);
+
+                    case 3:
+                      value = _context39.sent;
+                      invoiceList = JSON.parse(value);
+
+                      if (invoiceList == null || invoiceList == undefined) {
+                        invoiceList = [];
+                      }
+
+                      index = invoiceList.findIndex(function (i) {
+                        return i.id == invoice.id;
+                      });
+                      invoiceList.splice(index, 1);
+                      this.storage.set(this.invoiceKey, JSON.stringify(invoiceList));
+                      return _context39.abrupt("return", true);
+
+                    case 12:
+                      _context39.prev = 12;
+                      _context39.t0 = _context39["catch"](0);
+                      console.log(_context39.t0);
+                      return _context39.abrupt("return", false);
+
+                    case 16:
+                    case "end":
+                      return _context39.stop();
+                  }
+                }
+              }, _callee39, this, [[0, 12]]);
+            }));
+          }
         }]);
 
         return DbService;
@@ -1938,11 +2101,15 @@
 
       DbService.ctorParameters = function () {
         return [{
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]
         }, {
-          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_3__["ToastserviceService"]
+          type: _toastservice_service__WEBPACK_IMPORTED_MODULE_4__["ToastserviceService"]
         }, {
-          type: _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_4__["Storage"]
+          type: _ionic_storage_angular__WEBPACK_IMPORTED_MODULE_5__["Storage"]
+        }, {
+          type: _ionic_native_sqlite_ngx__WEBPACK_IMPORTED_MODULE_7__["SQLite"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"]
         }];
       };
 
@@ -2461,4 +2628,4 @@
     }
   }]);
 })();
-//# sourceMappingURL=default~client-client-module~editclient-editclient-module~editpurchase-editpurchase-module~editsuppl~5290faf7-es5.js.map
+//# sourceMappingURL=default~client-client-module~dashboard-dashboard-module~editclient-editclient-module~editpurchase-ed~4b8a43ae-es5.js.map

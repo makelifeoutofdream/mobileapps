@@ -279,10 +279,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let PrintPreviewComponent = class PrintPreviewComponent {
-    constructor(printService, dbService, modalCtrl) {
+    constructor(printService, dbService, modalCtrl, navCtrl) {
         this.printService = printService;
         this.dbService = dbService;
         this.modalCtrl = modalCtrl;
+        this.navCtrl = navCtrl;
         this.elementType = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_9__["NgxQrcodeElementTypes"].URL;
         this.correctionLevel = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_9__["NgxQrcodeErrorCorrectionLevels"].HIGH;
         this.value = "";
@@ -295,7 +296,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
             this.getTotalQuantity().then(data => {
                 setTimeout(() => {
                     this.pairTo();
-                }, 500);
+                }, 100);
             });
         });
     }
@@ -329,6 +330,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                 this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, result.encode());
                 console.log('print called');
                 this.modalCtrl.dismiss();
+                this.navCtrl.navigateRoot('invoice');
             };
         }).catch(function (error) {
             console.error("oops, something went wrong!", error);
@@ -359,7 +361,8 @@ let PrintPreviewComponent = class PrintPreviewComponent {
 PrintPreviewComponent.ctorParameters = () => [
     { type: src_app_services_print_service__WEBPACK_IMPORTED_MODULE_7__["PrintService"] },
     { type: src_app_services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] }
 ];
 PrintPreviewComponent.propDecorators = {
     profile: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],

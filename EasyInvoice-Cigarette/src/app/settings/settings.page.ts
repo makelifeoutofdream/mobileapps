@@ -6,6 +6,7 @@ import { PrintService } from '../services/print.service';
 import { Profile } from '../services/profile';
 import { ToastserviceService } from '../services/toastservice.service';
 import {ApplicationRef} from '@angular/core'
+import { File } from '@ionic-native/file/ngx';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -23,7 +24,8 @@ export class SettingsPage implements OnInit {
   private userProfile : Profile=  {id:null , companyName:"",companyNameInArabic:"", 
   addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
   constructor(public navCtrl:NavController,private print:PrintService,private toastService:ToastserviceService,
-    private dbService:DbService,private ref: ApplicationRef,private plt:Platform) { 
+    private dbService:DbService,private ref: ApplicationRef,private plt:Platform,
+    private file: File) { 
     this.type="profile";
     this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
     addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
@@ -134,5 +136,29 @@ export class SettingsPage implements OnInit {
     }
     this.showHideSegment();
   }
-  
+
+  savefile(){
+    try{
+      
+    let backup:Blob;
+    this.dbService.copyData().then(data=>{
+      
+      backup=data;
+      this.file.createDir(this.file.externalDataDirectory, 'backup',true).then(data => {
+      
+        this.file.writeExistingFile(this.file.externalDataDirectory+'backup','easyinvoice.json',backup).then(data=>{
+          alert('Backup created inside'+this.file.dataDirectory+'backup');
+        })
+      }).catch(err =>
+        alert("failed to create "+JSON.stringify(err) ));
+        
+    }
+    )
+    
+    }catch(err){
+      alert(err);
+    }
+    
+    
+  } 
 }

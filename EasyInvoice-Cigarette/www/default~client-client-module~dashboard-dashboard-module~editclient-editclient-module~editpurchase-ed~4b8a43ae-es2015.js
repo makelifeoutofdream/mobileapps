@@ -469,6 +469,16 @@ let DbService = class DbService {
             this.storage = storageVar;
         });
     }
+    copyData() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            let data = [];
+            this.storage.forEach((k, v, index) => {
+                let temp = { key: v, value: this.storage.get(v) };
+                data.push(temp);
+            });
+            return data;
+        });
+    }
     signup(user) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             try {

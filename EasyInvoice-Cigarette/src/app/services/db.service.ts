@@ -15,6 +15,7 @@ import { Supplier } from './supplier';
 import { Purchase } from './purchase';
 import { PurchaseItem } from './PurchaseItem';
 import { Expense } from './expense';
+import { templateJitUrl } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -61,6 +62,16 @@ export class DbService {
     this.storage=storageVar;
   }
   
+  async copyData():Promise<any>{
+    let data : any [] =[];
+    this.storage.forEach((k, v, index) => {
+      let temp : any={key : v,value:this.storage.get(v)};
+      data.push(temp);
+
+    });
+    return data;
+  }
+
   async signup(user : User) : Promise<any> {
     try{
       

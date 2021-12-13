@@ -27,11 +27,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let InvoicePage = class InvoicePage {
-    constructor(dbService, toastService, navCtrl, dataService) {
+    constructor(dbService, toastService, navCtrl, dataService, alertController) {
         this.dbService = dbService;
         this.toastService = toastService;
         this.navCtrl = navCtrl;
         this.dataService = dataService;
+        this.alertController = alertController;
     }
     ngOnInit() {
     }
@@ -41,6 +42,11 @@ let InvoicePage = class InvoicePage {
     getAllInvoices() {
         this.dbService.getAllInvoices().then(data => {
             this.invoiceList = data;
+            const today = new Date();
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            this.invoiceList = this.invoiceList.filter(a => new Date(a.invoiceDate) >= today);
         }).catch(reason => {
             this.toastService.presentToast("Failed to fetch invoices");
             console.log(reason);
@@ -65,7 +71,8 @@ InvoicePage.ctorParameters = () => [
     { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
     { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__["ToastserviceService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
-    { type: _data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"] }
+    { type: _data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] }
 ];
 InvoicePage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -138,7 +145,7 @@ InvoicePageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n  <ion-content>\n    <ion-list>\n      \n      <ion-item *ngFor= \"let inv of invoiceList\">\n        <ion-grid>\n          <ion-row>\n            <ion-col size=\"4\">Invoice Number</ion-col>\n            <ion-col size=\"4\">Customer</ion-col>\n            <ion-col size=\"3\">Total</ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col size=\"4\">{{inv.invoiceNumber}}</ion-col>\n            <ion-col size=\"4\">{{inv.customer.name}}</ion-col>\n            <ion-col size=\"3\">{{inv.total}}</ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n    </ion-list>    \n    \n  </ion-content>\n  <ion-footer>\n    \n      \n        <ion-row style=\"float:right\">\n          <ion-col >\n            <ion-button ion-button  color=\"primary\" (click)=\"download()\">\n              <ion-icon name=\"mail\"></ion-icon>\n            </ion-button>\n          </ion-col>\n          <ion-col >\n            <ion-button ion-button  color=\"primary\" (click)=\"addNewInvoice()\">\n              <ion-icon name=\"add-circle\"></ion-icon>\n            </ion-button>\n          </ion-col>\n        </ion-row>\n          \n      \n    \n    \n  </ion-footer>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n  <ion-content>\n    \n    <ion-list>\n      \n      <ion-list-header>\n        <ion-col size=\"4\">Date</ion-col>\n        <ion-col size=\"4\" style=\"text-align: center;\">Customer</ion-col>\n        <ion-col style=\"text-align: right;padding-right: 5%;\" size=\"4\">Total</ion-col>\n      </ion-list-header>  \n      <ion-item *ngFor= \"let inv of invoiceList\">\n            <ion-col size=\"4\">{{inv.invoiceDate | date : short}}</ion-col>\n            <ion-col size=\"4\" style=\"text-align: center;\">{{inv.customer.name}}</ion-col>\n            <ion-col size=\"4\" style=\"text-align: right;\">{{inv.total}}</ion-col>\n          \n      \n      </ion-item>\n    </ion-list>    \n    \n  </ion-content>\n  <ion-footer>\n    \n      \n        <ion-row style=\"float:right\">\n          <ion-col >\n            <ion-button ion-button  color=\"primary\" (click)=\"download()\">\n              <ion-icon name=\"mail\"></ion-icon>\n            </ion-button>\n          </ion-col>\n          <ion-col >\n            <ion-button ion-button  color=\"primary\" (click)=\"addNewInvoice()\">\n              <ion-icon name=\"add-circle\"></ion-icon>\n            </ion-button>\n          </ion-col>\n        </ion-row>\n          \n      \n    \n    \n  </ion-footer>\n\n");
 
 /***/ }),
 

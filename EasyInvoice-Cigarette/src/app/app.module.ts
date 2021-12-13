@@ -25,6 +25,9 @@ import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Sim } from '@ionic-native/sim/ngx';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+
+
+  
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

@@ -41,14 +41,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-sqlite-storage.SQLitePlugin",
-      "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-      "pluginId": "cordova-sqlite-storage",
-      "clobbers": [
-        "SQLitePlugin"
-      ]
-    },
-    {
       "id": "uk.co.workingedge.cordova.plugin.sqliteporter.sqlitePorter",
       "file": "plugins/uk.co.workingedge.cordova.plugin.sqliteporter/www/sqlitePorter.js",
       "pluginId": "uk.co.workingedge.cordova.plugin.sqliteporter",
@@ -300,6 +292,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "merges": [
         "window.plugins.sim"
       ]
+    },
+    {
+      "id": "cordova-sqlite-storage.SQLitePlugin",
+      "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+      "pluginId": "cordova-sqlite-storage",
+      "clobbers": [
+        "SQLitePlugin"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -309,7 +309,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-sqlite-storage": "6.0.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "1.1.1",
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-android-permissions": "1.1.2",
@@ -319,6 +318,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-datecs-printer": "0.10.0",
     "cordova-plugin-dreamover-uid": "1.3.0",
     "cordova-plugin-unique-device-id2": "2.0.0",
-    "cordova-plugin-sim": "1.3.3"
+    "cordova-plugin-sim": "1.3.3",
+    "cordova-sqlite-storage": "6.0.0"
   };
 });

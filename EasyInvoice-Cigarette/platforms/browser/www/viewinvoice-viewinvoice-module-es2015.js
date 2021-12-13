@@ -67,7 +67,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Invoice Details</ion-title>\n    <ion-buttons slot=\"start\">\n    \n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n       \n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid>\n<ion-row >\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"6\">\n    <ion-label>Customer</ion-label>\n  </ion-col>\n  <ion-col size=\"6\">\n    <ion-label style=\"float: right;\">\n      {{invoice.customer.name}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n\n<ion-row>\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"6\">\n    <ion-label>Invoice Number</ion-label>\n  </ion-col>\n  <ion-col size=\"6\">\n    <ion-label style=\"float: right;\">\n      {{invoice.invoiceNumber}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n\n<ion-row>\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"3\">\n    <ion-label >Date</ion-label>\n  </ion-col>\n  <ion-col size=\"9\">\n    <ion-label style=\"float: right;\">\n      {{invoice.invoiceDateString}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n</ion-grid>\n<table  border=\"none\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;\">\n  <tr style=\"border: none; color: white; background-color: lightslategray;\">\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Quantity\n    </td>\n    <td>\n      Avl.Qty\n    </td>\n    <td>\n      Amount\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" style=\"border: none;\">\n    <td ><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.quantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.displayBalanceQuantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice*item.quantity\" ></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n      <ion-col size=\"6\">\n        <ion-label >Amount</ion-label>\n      </ion-col>\n      <ion-col size=\"6\" >\n        <ion-label style=\"float: right;\">{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n      <ion-col size=\"6\">\n        <ion-label >Balance Amount(Incl. current invoice)</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label style=\"float: right;\">{{invoice.balanceAmount}}</ion-label>\n      </ion-col>\n    </ion-item>\n    </ion-row>\n\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n        <ion-col size=\"6\">\n          <ion-label >Amount Paid</ion-label>\n        </ion-col>\n        <ion-col size=\"6\" >\n          <ion-label style=\"float: right;\">{{invoice.amountPaid}}</ion-label>\n        </ion-col>\n       </ion-item>\n    </ion-row>\n    \n   \n  </ion-grid>\n</ion-content>\n\n<ion-footer>\n  <ion-row style=\"float:right\">\n    <ion-col >\n    \n    <ion-button color=\"primary\" (click)=\"printBill()\">\n      <ion-icon name=\"print\"></ion-icon>\n    </ion-button>\n  </ion-col>\n  </ion-row>\n\n</ion-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n    <ion-buttons slot=\"end\">\n      <ion-back-button defaultHref=\"home\" (click)=\"showReport()\"> </ion-back-button>\n      \n    </ion-buttons>\n    <ion-title>Invoice Details</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n<ion-row >\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"6\">\n    <ion-label>Customer</ion-label>\n  </ion-col>\n  <ion-col size=\"6\">\n    <ion-label style=\"float: right;\">\n      {{invoice.customer.name}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n\n<ion-row>\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"6\">\n    <ion-label>Invoice Number</ion-label>\n  </ion-col>\n  <ion-col size=\"6\">\n    <ion-label style=\"float: right;\">\n      {{invoice.invoiceNumber}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n\n<ion-row>\n  <ion-item style=\"width: 100%;\">\n  <ion-col size=\"3\">\n    <ion-label >Date</ion-label>\n  </ion-col>\n  <ion-col size=\"9\">\n    <ion-label style=\"float: right;\">\n      {{invoice.invoiceDateString}}\n    </ion-label>\n  </ion-col>\n</ion-item>\n</ion-row>\n</ion-grid>\n<table  border=\"none\" style=\"width: 94%;margin-left: 2%;margin-right: 5%;margin-top: 2%; color: black;background-color: aliceblue; text-align: center;\">\n  <tr style=\"border: none; color: white; background-color: lightslategray;\">\n    <td>\n      Item\n    </td>\n    <td>\n      Price\n    </td>\n    <td>\n      Quantity\n    </td>\n    <td>\n      Avl.Qty\n    </td>\n    <td>\n      Amount\n    </td>\n  </tr>\n  <tr *ngFor= \"let item of invoice.invoiceItems\" style=\"border: none;\">\n    <td ><ion-input  disabled [(ngModel)]=\"item.name\" ></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice\" ></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.quantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.displayBalanceQuantity\"  (keypress)=\"numericOnly($event)\"></ion-input></td>\n    <td><ion-input disabled type=\"number\" [(ngModel)]=\"item.unitPrice*item.quantity\" ></ion-input></td>\n  </tr>\n</table>\n\n<ion-grid>\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n      <ion-col size=\"6\">\n        <ion-label >Amount</ion-label>\n      </ion-col>\n      <ion-col size=\"6\" >\n        <ion-label style=\"float: right;\">{{invoice.total}}</ion-label>\n      </ion-col>\n    </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n      <ion-col size=\"6\">\n        <ion-label >Balance Amount(Incl. current invoice)</ion-label>\n      </ion-col>\n      <ion-col size=\"6\">\n        <ion-label style=\"float: right;\">{{invoice.balanceAmount}}</ion-label>\n      </ion-col>\n    </ion-item>\n    </ion-row>\n\n    <ion-row>\n      <ion-item style=\"width: 100%;\">\n        <ion-col size=\"6\">\n          <ion-label >Amount Paid</ion-label>\n        </ion-col>\n        <ion-col size=\"6\" >\n          <ion-label style=\"float: right;\">{{invoice.amountPaid}}</ion-label>\n        </ion-col>\n       </ion-item>\n    </ion-row>\n    \n   \n  </ion-grid>\n</ion-content>\n\n<ion-footer>\n  <ion-row style=\"float:right\">\n    <ion-col >\n    \n    <ion-button color=\"primary\" (click)=\"printBill()\">\n      <ion-icon name=\"print\"></ion-icon>\n    </ion-button>\n  </ion-col>\n  </ion-row>\n\n</ion-footer>");
 
 /***/ }),
 
@@ -93,6 +93,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var sprintf_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! sprintf-js */ "4Z/T");
 /* harmony import */ var sprintf_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(sprintf_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _newinvoice_print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../newinvoice/print-preview/print-preview.component */ "NKOA");
+
+
 
 
 
@@ -104,11 +108,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ViewinvoicePage = class ViewinvoicePage {
-    constructor(route, datePipe, printService, dbService) {
+    constructor(route, datePipe, printService, dbService, navCtrl, modalController) {
         this.route = route;
         this.datePipe = datePipe;
         this.printService = printService;
         this.dbService = dbService;
+        this.navCtrl = navCtrl;
+        this.modalController = modalController;
     }
     ngOnInit() {
         this.invoice = { id: null, invoiceNumber: null, invoiceDate: null, total: null, tax: null, amountPaid: null, balanceAmount: null, customer: { id: null, code: null, name: "", itemList: null, nameInArabic: "", contactPersonName: "", contactPersonNameInArabic: "",
@@ -127,8 +133,23 @@ let ViewinvoicePage = class ViewinvoicePage {
         console.log('selected invoice customer' + this.invoice.customer);
     }
     printBill() {
-        let result = this.getFormatedContent();
-        this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, result);
+        this.printPreview();
+    }
+    printPreview() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            let modal = yield this.modalController.create({
+                component: _newinvoice_print_preview_print_preview_component__WEBPACK_IMPORTED_MODULE_11__["PrintPreviewComponent"],
+                componentProps: {
+                    profile: this.profile,
+                    invoice: this.invoice,
+                    products: this.invoice.invoiceItems
+                }
+            });
+            modal.present();
+        });
+    }
+    showReport() {
+        this.navCtrl.navigateRoot('report');
     }
     getFormatedContent() {
         const encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8___default.a();
@@ -181,7 +202,9 @@ ViewinvoicePage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },
     { type: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"] },
     { type: _services_print_service__WEBPACK_IMPORTED_MODULE_7__["PrintService"] },
-    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] }
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["NavController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["ModalController"] }
 ];
 ViewinvoicePage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({

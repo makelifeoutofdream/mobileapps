@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>New Expense</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n<ion-grid>\n  <ion-row>\n    \n    \n    <ion-col  class=\"ion-text-start ion-margin-top\" style=\"margin-left: 10px;\">\n      <ion-label>Category</ion-label>\n      </ion-col>\n    <ion-col>\n      <ion-item>\n        \n        <ion-select placeholder=\"Select One\">\n          <ion-select-option value=\"Ad\">Advertisement</ion-select-option>\n          <ion-select-option value=\"car\">Car&Truck</ion-select-option>\n        </ion-select>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n<ion-row>\n  <ion-item>\n    <ion-label>Date</ion-label>\n    <ion-datetime displayFormat=\"MM/DD/YYYY\" placeholder=\"Select Date\"></ion-datetime>\n  </ion-item>  \n</ion-row>\n<ion-row>\n  <ion-item>\n    <ion-label position=\"floating\">Add a Merchant</ion-label>\n    <ion-input></ion-input>\n  </ion-item>\n</ion-row>\n<ion-row class=\"ion-text-start\">\n  <ion-item class=\"ion-text-start\">\n    <ion-label position=\"floating\">Add Purchase of Expense</ion-label>\n    <ion-input></ion-input>\n  </ion-item>\n</ion-row>\n<ion-row> \n  <ion-col  class=\"ion-text-start ion-margin-top\" style=\"margin-left: 10px;\">\n  <ion-label>SubTotal</ion-label>\n</ion-col>\n<ion-col class=\"ion-text-end ion-margin-top\">\n    <ion-label>0.00</ion-label>\n</ion-col>\n</ion-row>\n<ion-row>\n  <ion-col  class=\"ion-text-start ion-margin-top\" style=\"margin-left: 10px;\">\n  <ion-label>Grand Total</ion-label>\n  </ion-col>\n  <ion-col class=\"ion-text-right\">\n    <ion-input class=\"ion-text-right\" value=\"0.00\"></ion-input>\n    </ion-col>\n</ion-row>\n<ion-item-divider >  </ion-item-divider>\n\n</ion-grid>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n    <ion-buttons slot=\"end\">\n      <ion-back-button defaultHref=\"home\" (click)=\"showExpense()\"> </ion-back-button>\n      \n    </ion-buttons>\n    <ion-title>{{expense.id!=null && expense.id!=undefined ? 'Edit'  : 'New'}} Expense</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content >\n<ion-row>\n\n<ion-col>\n\n  <ion-item style=\"margin-top: 3%;\">\n    <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"expense.date\" placeholder=\"Date\"></ion-datetime>\n  </ion-item>\n</ion-col>  \n<ion-col>\n  <ion-item>\n    <ion-label position=\"floating\">Category</ion-label>\n    <ion-input [(ngModel)]=\"expense.category\"></ion-input>\n  </ion-item>\n\n</ion-col>\n  \n</ion-row>\n  \n<ion-row>\n  <ion-col>\n    <ion-item>\n      <ion-label position=\"floating\">Amount</ion-label>\n      <ion-input type=\"number\" [(ngModel)]=\"expense.amount\"></ion-input>\n    </ion-item>\n  </ion-col>\n</ion-row>\n<ion-row style=\"float:right\">\n  <ion-col >\n  <ion-button  color=\"primary\" (click)=\"addNewExpense()\">\n    <ion-icon name=\"checkmark\"></ion-icon>\n   \n    \n  </ion-button>\n</ion-col>\n</ion-row>\n\n</ion-content>\n<ion-footer>\n\n</ion-footer>");
 
 /***/ }),
 
@@ -64,16 +64,67 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_newexpense_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./newexpense.page.html */ "HN4I");
 /* harmony import */ var _newexpense_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./newexpense.page.scss */ "ulQJ");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/db.service */ "ajt+");
+/* harmony import */ var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/toastservice.service */ "Gb+d");
+
+
+
+
 
 
 
 
 let NewexpensePage = class NewexpensePage {
-    constructor() { }
+    constructor(dbService, toastService, navCtrl, route) {
+        this.dbService = dbService;
+        this.toastService = toastService;
+        this.navCtrl = navCtrl;
+        this.route = route;
+    }
     ngOnInit() {
+        this.resetExpense();
+    }
+    resetExpense() {
+        this.expense = { id: null, category: null, date: null, amount: null };
+    }
+    ionViewWillEnter() {
+        this.route.queryParams.subscribe(params => {
+            this.expense = params['expense'];
+        });
+        if (this.expense == null || this.expense == undefined) {
+            this.resetExpense();
+        }
+    }
+    showExpense() {
+        this.navCtrl.navigateRoot('expense');
+    }
+    addNewExpense() {
+        if (this.expense.id != null && this.expense.id != undefined) {
+            this.dbService.UpdateExpense(this.expense).then(data => {
+                this.toastService.presentToast('Expense updated successfully');
+                this.navCtrl.navigateRoot('expense');
+            }).catch(err => {
+                this.toastService.presentToast('Failed to update expense' + err);
+            });
+        }
+        else {
+            this.dbService.createExpense(this.expense).then(data => {
+                this.toastService.presentToast("Expense addedd successfully");
+                this.navCtrl.navigateRoot('expense');
+            }).catch(err => {
+                this.toastService.presentToast('Failed to add expense' + err);
+            });
+        }
     }
 };
-NewexpensePage.ctorParameters = () => [];
+NewexpensePage.ctorParameters = () => [
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
+    { type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__["ToastserviceService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] }
+];
 NewexpensePage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
         selector: 'app-newexpense',
