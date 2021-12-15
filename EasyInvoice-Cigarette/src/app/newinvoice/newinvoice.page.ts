@@ -301,6 +301,10 @@ async printPreview() {
       products : this.products
     }
   });
+  modal.onDidDismiss().then(()  => {
+      this.navCtrl.navigateRoot('invoice');
+  });
+ 
   modal.present();
 }
 

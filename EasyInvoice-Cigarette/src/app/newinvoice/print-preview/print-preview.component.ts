@@ -31,14 +31,13 @@ export class PrintPreviewComponent implements OnInit {
     this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
     this.filterUnselectedProducts().then(data=>{
       this.orderItems=data;
-      this.getTotalQuantity().then(data=>{
-        setTimeout(() => {
-          this.pairTo();
-        },100);
-      })
-      
+      this.getTotalQuantity();
     })
      
+  }
+
+  ngAfterViewInit() {
+        this.pairTo();
   }
 
   async filterUnselectedProducts(){
@@ -66,13 +65,23 @@ export class PrintPreviewComponent implements OnInit {
           ht = ht + 120;
           result
             .align('left')
-            .image(img,552,ht,'threshold',180).newline().
-            align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline().
-            newline().newline().newline().newline().newline().newline().newline().newline().newline() ;
-            this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
-          console.log('print called');
-          this.modalCtrl.dismiss();
-          this.navCtrl.navigateRoot('invoice');
+            .image(img,312,ht,'threshold',120);
+          //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+          // console.log('print called');
+          // this.modalCtrl.dismiss();
+          // this.navCtrl.navigateRoot('invoice');
+          this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
+            this.printService.printDataToPrinter(result.encode()).then(() => { 
+               
+                this.printService.disconnectBluetoothPrinter();
+                this.modalCtrl.dismiss();
+               
+            },() => {
+              alert("Printing Failed..");
+            });
+        },(error) => {
+          alert("connecting to printer failed..");
+        })
         }
     }).catch(function (error) {
       console.error("oops, something went wrong!", error);

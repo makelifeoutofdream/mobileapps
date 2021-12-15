@@ -106,4 +106,10 @@ export class PrintService {
         this.btSerial.disconnect()}).catch(reason=>{console.log(reason)})
     },err=>console.log(this.tostService.presentToast("Printer Issue - bluetooth address - "+macAddress+"-err-"+err)));
   }
+
+  
+
+  printDataToPrinter(data){
+    return this.btSerial.write(data);
+  }
 }
