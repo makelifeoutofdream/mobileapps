@@ -93,6 +93,7 @@ export class PrintService {
   }
 
   connectToBluetoothPrinter(macAddress){
+    alert("Printer MacAddress" + macAddress);
     return this.btSerial.connect(macAddress);
   }
 
