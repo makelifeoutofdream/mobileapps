@@ -79,14 +79,15 @@ export class PrintPreviewComponent implements OnInit {
           alert("selected printer :: " + this.profile.selectedPrinter);
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
             this.printService.printDataToPrinter(result.encode()).then(() => { 
-               // this.printService.disconnectBluetoothPrinter();
+                this.printService.disconnectBluetoothPrinter();
                 this.modalCtrl.dismiss();
                
-            },() => {
+            },(err) => {
               alert("Printing Failed..");
+              alert(err);
             });
         },(error) => {
-          alert(error);
+          alert(error +" actual conncetion error");
           alert("connecting to printer failed..");
           this.modalCtrl.dismiss();
         })
