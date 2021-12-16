@@ -26,7 +26,7 @@ export class PrintPreviewComponent implements OnInit {
   value = "";
   printerSizes: any = [{
     name: '58mm',
-    value: 312
+    value: 368
   }, {
     name: '80mm',
     value: 520
