@@ -76,6 +76,7 @@ export class PrintPreviewComponent implements OnInit {
           // console.log('print called');
           // this.modalCtrl.dismiss();
           // this.navCtrl.navigateRoot('invoice');
+          alert("selected printer :: " + this.profile.selectedPrinter);
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
             this.printService.printDataToPrinter(result.encode()).then(() => { 
                // this.printService.disconnectBluetoothPrinter();
@@ -85,6 +86,7 @@ export class PrintPreviewComponent implements OnInit {
               alert("Printing Failed..");
             });
         },(error) => {
+          alert(error);
           alert("connecting to printer failed..");
           this.modalCtrl.dismiss();
         })
