@@ -24,6 +24,14 @@ export class PrintPreviewComponent implements OnInit {
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
   value = "";
+  printerSizes: any = [{
+    name: '58mm',
+    value: 312
+  }, {
+    name: '80mm',
+    value: 520
+  }];
+  paperSize: any = '';
   constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,public navCtrl:NavController) { }
 
   ngOnInit() {
@@ -37,7 +45,7 @@ export class PrintPreviewComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-        this.pairTo();
+       // this.pairTo();
   }
 
   async filterUnselectedProducts(){
@@ -48,11 +56,9 @@ export class PrintPreviewComponent implements OnInit {
     this.totalQuantity= this.orderItems.reduce((accum,item)=>accum+item.quantity,0);
   }
 
-  pairTo() {
+  pairTo(width) {
     
     var node = document.getElementById("imageToPrint");
-    
-
     //html2canvas(node, {
     domtoimage.toPng(node).then(dataUrl => {
         //var imgData = canvas.toDataURL("image/png");
@@ -65,15 +71,14 @@ export class PrintPreviewComponent implements OnInit {
           ht = ht + 120;
           result
             .align('left')
-            .image(img,312,ht,'threshold',120);
+            .image(img,width,ht,'threshold',120);
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           // console.log('print called');
           // this.modalCtrl.dismiss();
           // this.navCtrl.navigateRoot('invoice');
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
             this.printService.printDataToPrinter(result.encode()).then(() => { 
-               
-                this.printService.disconnectBluetoothPrinter();
+               // this.printService.disconnectBluetoothPrinter();
                 this.modalCtrl.dismiss();
                
             },() => {
@@ -81,6 +86,7 @@ export class PrintPreviewComponent implements OnInit {
             });
         },(error) => {
           alert("connecting to printer failed..");
+          this.modalCtrl.dismiss();
         })
         }
     }).catch(function (error) {
@@ -92,7 +98,6 @@ export class PrintPreviewComponent implements OnInit {
   }
 
   generateQRCodeContent(){
-
     var sellerName=this.getTLVForValue("1",this.profile.companyName);
     var vatNumber=this.getTLVForValue("2",this.profile.vatNumber);
     var timestamp=this.getTLVForValue("3",""+this.invoice.invoiceDate);

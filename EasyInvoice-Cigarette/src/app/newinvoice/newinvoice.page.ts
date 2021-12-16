@@ -302,7 +302,7 @@ async printPreview() {
     }
   });
   modal.onDidDismiss().then(()  => {
-      this.navCtrl.navigateRoot('invoice');
+     // this.navCtrl.navigateRoot('invoice');
   });
  
   modal.present();
