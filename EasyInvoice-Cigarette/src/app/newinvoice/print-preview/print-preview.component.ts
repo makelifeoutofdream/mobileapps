@@ -35,22 +35,29 @@ export class PrintPreviewComponent implements OnInit {
   constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,public navCtrl:NavController) { }
 
   ngOnInit() {
-    this.value=this.generateQRCodeContent();
-    this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
-    this.filterUnselectedProducts().then(data=>{
-      this.orderItems=data;
-      this.getTotalQuantity();
-      setTimeout(() => {
-        this.pairTo();
-      },3000);
-    })
-     
-  }
+    this.prepareInvoice();
+}
 
-  ngAfterViewInit() {
-   
-        
-  }
+ngAfterViewInit() {
+this.prepareInvoice().then(data=>{
+ setTimeout(() => {
+   this.pairTo();
+ },100);
+}).catch(err=>{
+ alert('Error whiel preparing preview'+err);
+})
+}
+
+
+async prepareInvoice():Promise<any>{
+this.value=this.generateQRCodeContent();
+this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
+this.filterUnselectedProducts().then(data=>{
+ this.orderItems=data;
+ this.getTotalQuantity();
+})
+
+}
 
   async filterUnselectedProducts(){
     return this.products.filter(a=>a.quantity!=null && a.quantity!=undefined && a.quantity>0);
