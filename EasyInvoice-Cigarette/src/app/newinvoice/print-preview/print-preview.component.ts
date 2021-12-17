@@ -77,7 +77,7 @@ export class PrintPreviewComponent implements OnInit {
           console.log(ht, "Height");
           let finalPrint  = result
             .align('left')
-            .image(img,width,ht,'threshold',180)
+            .image(img,width,ht,'threshold',120)
             .encode();
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           // console.log('print called');
@@ -88,6 +88,8 @@ export class PrintPreviewComponent implements OnInit {
                 this.printService.disconnectBluetoothPrinter();
                 this.modalCtrl.dismiss();
                 this.printService.clearData();
+                this.printService.printDataToPrinter('');
+                finalPrint = null;
                
             },(err) => {
               alert("Printing Failed..");
