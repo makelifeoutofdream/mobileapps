@@ -45,7 +45,10 @@ export class PrintPreviewComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-        this.pairTo();
+    setTimeout(() => {
+      this.pairTo();
+    },3000);
+        
   }
 
   async filterUnselectedProducts(){
