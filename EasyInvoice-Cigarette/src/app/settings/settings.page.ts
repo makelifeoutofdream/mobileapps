@@ -16,19 +16,36 @@ export class SettingsPage implements OnInit {
   user : any={};
   type : string;
   bluetoothList:any=[];
+  isUnitPEnable: any;
+  printerSizes: any = [{
+    name: '58mm',
+    value: 368
+  }, {
+    name: '80mm',
+    value: 520
+  }];
+  paperSize: any;
   
   showProfileSegment : boolean=true;
   showTaxSegment : Boolean=false;
   showPrinterSegment : Boolean=false;
   showBackupSegment : boolean=true;
   private userProfile : Profile=  {id:null , companyName:"",companyNameInArabic:"", 
-  addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
+  addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",
+  crNumber:"",toEmail:"",ccEmail:"",vat:null,
+      selectedPrinter:null,
+      selectedPrinterSize: null,
+      canEnableUnit: false
+    };
   constructor(public navCtrl:NavController,private print:PrintService,private toastService:ToastserviceService,
     private dbService:DbService,private ref: ApplicationRef,private plt:Platform,
     private file: File) { 
     this.type="profile";
     this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
-    addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
+    addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",
+    vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null,
+       selectedPrinterSize: null, canEnableUnit: false
+      };
     this.user.userProfile=this.userProfile;
   }
 
@@ -78,7 +95,7 @@ export class SettingsPage implements OnInit {
       this.user.userProfile=data;
     }  );
     if(this.userProfile==null || this.userProfile==undefined){
-      this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
+      this.userProfile={id:null , companyName:"",companyNameInArabic:"", canEnableUnit: false, selectedPrinterSize: '',
       addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
       this.user.userProfile=this.userProfile;
     }
@@ -102,6 +119,15 @@ export class SettingsPage implements OnInit {
   selectPrinter(macAddress:any){
     this.user.userProfile.selectedPrinter=macAddress;
     
+  }
+
+  setPaperSize(paper) {
+    this.paperSize  = paper;
+    this.user.userProfile.selectedPrinterSize = paper;
+  }
+
+  enableUnitP(event) {
+      this.user.userProfile.canEnableUnit = event.target.checked;
   }
 
   updateProfile(){
@@ -128,11 +154,17 @@ export class SettingsPage implements OnInit {
       this.type="printer";
     }
 
-    this.dbService.getProfile().then(data=>this.userProfile=data);
+    this.dbService.getProfile().then(data=> {
+      this.userProfile=data;
+      this.paperSize = this.userProfile.selectedPrinterSize;
+      this.isUnitPEnable = this.userProfile.canEnableUnit;
+      });
+
     if(this.userProfile==null || this.userProfile==undefined){
-      this.userProfile={id:null , companyName:"",companyNameInArabic:"", 
+      this.userProfile={id:null , companyName:"",companyNameInArabic:"", canEnableUnit: false, selectedPrinterSize: '',
       addressLine1:"",addressLine1InArabic:"",addressLine2:"",addressLine2InArabic:"",vatNumber:"",crNumber:"",toEmail:"",ccEmail:"",vat:null,selectedPrinter:null};
       this.user.userProfile=this.userProfile;
+     
     }
     this.showHideSegment();
   }

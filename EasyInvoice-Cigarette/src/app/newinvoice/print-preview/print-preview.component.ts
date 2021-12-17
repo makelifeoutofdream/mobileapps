@@ -45,7 +45,7 @@ export class PrintPreviewComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-       // this.pairTo();
+        this.pairTo();
   }
 
   async filterUnselectedProducts(){
@@ -56,9 +56,10 @@ export class PrintPreviewComponent implements OnInit {
     this.totalQuantity= this.orderItems.reduce((accum,item)=>accum+item.quantity,0);
   }
 
-  pairTo(width) {
+  pairTo() {
     
     var node = document.getElementById("imageToPrint");
+    var  width = this.profile &&  this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
     //html2canvas(node, {
     domtoimage.toPng(node).then(dataUrl => {
         //var imgData = canvas.toDataURL("image/png");

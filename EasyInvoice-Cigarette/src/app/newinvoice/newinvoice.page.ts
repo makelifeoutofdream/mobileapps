@@ -61,6 +61,7 @@ ionViewWillEnter(){
   this.applyVat=true;
   this.dbService.getProfile().then(data=>{
     this.profile=data;
+    console.log(this.profile.canEnableUnit)
   });
   this.resetInvoiceForm();
 }

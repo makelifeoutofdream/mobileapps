@@ -9,18 +9,22 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-segment color="secondary" (ionChange)="segmentChanged($event)" [(ngModel)]="type"> 
-    <ion-segment-button checked value="profile">
+  <ion-segment color="secondary" (ionChange)="segmentChanged($event)" [(ngModel)]="type" scrollable > 
+    <ion-segment-button checked value="profile" SwipedTabs id="profile">
       <ion-label>Profile</ion-label>
       <ion-icon name="person-circle"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="tax">
+    <ion-segment-button value="tax" id="tax">
       <ion-label>Tax</ion-label>
        <ion-icon name="clipboard"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="printer">
+    <ion-segment-button value="printer" id="printer">
       <ion-label>Printer</ion-label>
       <ion-icon name="print"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="config" id="config">
+      <ion-label>Configuration</ion-label>
+      <ion-icon name="construct-outline"></ion-icon>
     </ion-segment-button>
     <ion-segment-button checked value="backup">
       <ion-label>BackUp</ion-label>
@@ -113,6 +117,25 @@
       </ion-item>
       <ion-item *ngIf="bluetoothList==null || bluetoothList==undefined">
         No Printer Connected..
+      </ion-item>
+      <ion-item class="full-width m-0 printer-dropdown">
+        <ion-label>Printer Size</ion-label>
+        <ion-select [(ngModel)]="paperSize" (ionChange)='setPaperSize(paperSize)' placeholder="Select printer size">
+         <ion-select-option  *ngFor="let size of printerSizes" [value]="size.value"> {{size.name}}</ion-select-option>
+       </ion-select>
+     </ion-item>
+      <ion-row style="float:right">
+        <ion-col >
+        <ion-button  color="primary" (click)="updateProfile()">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
+    </div>
+    <div *ngSwitchCase="'config'">
+      <ion-item class="vat-check" no-lines lines="none">
+        <ion-label> Enable Unit Price</ion-label>
+        <ion-checkbox class="check" slot="start" [(ngModel)]="isUnitPEnable" (ionChange)="enableUnitP($event)" ></ion-checkbox>
       </ion-item>
       <ion-row style="float:right">
         <ion-col >

@@ -12,4 +12,6 @@ export class Profile{
     vatNumber : string ;
     crNumber : string;
     selectedPrinter : any ;
+    selectedPrinterSize : any;
+    canEnableUnit: any;
 }
