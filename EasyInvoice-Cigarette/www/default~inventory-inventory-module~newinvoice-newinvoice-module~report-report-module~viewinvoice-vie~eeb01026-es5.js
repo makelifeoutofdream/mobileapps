@@ -2514,6 +2514,7 @@
         }, {
           key: "connectToBluetoothPrinter",
           value: function connectToBluetoothPrinter(macAddress) {
+            alert("Printer MacAddress" + macAddress);
             return this.btSerial.connect(macAddress);
           }
         }, {

@@ -2318,6 +2318,7 @@ let PrintService = class PrintService {
         return this.btSerial.list();
     }
     connectToBluetoothPrinter(macAddress) {
+        alert("Printer MacAddress" + macAddress);
         return this.btSerial.connect(macAddress);
     }
     disconnectBluetoothPrinter() {
