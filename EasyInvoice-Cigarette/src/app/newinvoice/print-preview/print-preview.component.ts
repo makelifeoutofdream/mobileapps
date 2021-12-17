@@ -91,10 +91,14 @@ this.filterUnselectedProducts().then(data=>{
           // this.modalCtrl.dismiss();
           // this.navCtrl.navigateRoot('invoice');
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
+            this.printService.clearData();
             this.printService.printDataToPrinter(finalPrint).then(() => { 
-                this.printService.disconnectBluetoothPrinter();
-                this.modalCtrl.dismiss();
-                this.printService.clearData();
+                this.printService.disconnectBluetoothPrinter().then(() => {
+                  this.printService.clearData();
+                  this.modalCtrl.dismiss();
+                }, (err) => {
+                  alert('Disconnecting error ::' + err);
+                });
                 this.printService.printDataToPrinter('');
                 finalPrint = null;
                
