@@ -72,7 +72,7 @@ export class PrintPreviewComponent implements OnInit {
           ht = ht + 120;
           result
             .align('left')
-            .image(img,width,ht,'threshold',120);
+            .image(img,width,ht,'threshold',180);
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           // console.log('print called');
           // this.modalCtrl.dismiss();

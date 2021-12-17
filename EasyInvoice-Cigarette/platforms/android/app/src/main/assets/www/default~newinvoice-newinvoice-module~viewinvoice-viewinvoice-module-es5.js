@@ -401,7 +401,7 @@
           this.value = "";
           this.printerSizes = [{
             name: '58mm',
-            value: 312
+            value: 368
           }, {
             name: '80mm',
             value: 520
@@ -483,7 +483,7 @@
               img.onload = function (e) {
                 var ht = Math.ceil(node.offsetHeight / 8) * 8;
                 ht = ht + 120;
-                result.align('left').image(img, width, ht, 'threshold', 120); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+                result.align('left').image(img, width, ht, 'threshold', 180); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
                 // this.navCtrl.navigateRoot('invoice');

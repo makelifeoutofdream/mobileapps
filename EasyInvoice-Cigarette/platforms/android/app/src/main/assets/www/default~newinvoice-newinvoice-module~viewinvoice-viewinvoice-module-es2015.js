@@ -289,7 +289,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
         this.value = "";
         this.printerSizes = [{
                 name: '58mm',
-                value: 312
+                value: 368
             }, {
                 name: '80mm',
                 value: 520
@@ -331,7 +331,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                 ht = ht + 120;
                 result
                     .align('left')
-                    .image(img, width, ht, 'threshold', 120);
+                    .image(img, width, ht, 'threshold', 180);
                 //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
