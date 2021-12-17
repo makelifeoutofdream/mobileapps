@@ -113,4 +113,12 @@ export class PrintService {
   printDataToPrinter(data){
     return this.btSerial.write(data);
   }
+
+  clearData() {
+    this.btSerial.clear();
+  }
+
+  isConnected() {
+    return this.btSerial.isConnected();
+  }
 }

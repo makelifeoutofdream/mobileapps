@@ -40,14 +40,15 @@ export class PrintPreviewComponent implements OnInit {
     this.filterUnselectedProducts().then(data=>{
       this.orderItems=data;
       this.getTotalQuantity();
+      setTimeout(() => {
+        this.pairTo();
+      },3000);
     })
      
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.pairTo();
-    },3000);
+   
         
   }
 
@@ -73,18 +74,20 @@ export class PrintPreviewComponent implements OnInit {
         img.onload  = (e) =>  {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
-          result
+          console.log(ht, "Height");
+          let finalPrint  = result
             .align('left')
-            .image(img,width,ht,'threshold',180);
+            .image(img,width,ht,'threshold',180)
+            .encode();
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           // console.log('print called');
           // this.modalCtrl.dismiss();
           // this.navCtrl.navigateRoot('invoice');
-          alert("selected printer :: " + this.profile.selectedPrinter);
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-            this.printService.printDataToPrinter(result.encode()).then(() => { 
+            this.printService.printDataToPrinter(finalPrint).then(() => { 
                 this.printService.disconnectBluetoothPrinter();
                 this.modalCtrl.dismiss();
+                this.printService.clearData();
                
             },(err) => {
               alert("Printing Failed..");
