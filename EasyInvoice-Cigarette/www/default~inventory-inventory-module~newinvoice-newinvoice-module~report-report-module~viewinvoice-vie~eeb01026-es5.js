@@ -2488,25 +2488,6 @@
             });
           }
         }, {
-          key: "printData",
-          value: function printData(macAddress, data) {
-            window.DatecsPrinter.listBluetoothDevices(function (devices) {
-              window.DatecsPrinter.connect(devices[0].address, function () {
-                printSomeTestText();
-              }, function (error) {
-                alert(JSON.stringify(error));
-              });
-            }, function (error) {
-              alert(JSON.stringify(error));
-            });
-
-            function printSomeTestText() {
-              window.DatecsPrinter.printText("Print Test!", 'ISO-8859-1', function () {
-                alert('success');
-              });
-            }
-          }
-        }, {
           key: "searchBluetoothPrinter",
           value: function searchBluetoothPrinter() {
             return this.btSerial.list();
@@ -2541,6 +2522,16 @@
           key: "printDataToPrinter",
           value: function printDataToPrinter(data) {
             return this.btSerial.write(data);
+          }
+        }, {
+          key: "clearData",
+          value: function clearData() {
+            this.btSerial.clear();
+          }
+        }, {
+          key: "isConnected",
+          value: function isConnected() {
+            return this.btSerial.isConnected();
           }
         }]);
 

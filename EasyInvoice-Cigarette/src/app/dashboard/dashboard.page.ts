@@ -88,7 +88,7 @@ export class DashboardPage implements OnInit {
         this.startDate.setHours(0);
         this.startDate.setMinutes(0);
         this.startDate.setSeconds(0);
-        this.filterInvoiceList= res.filter(inv=>{
+        this.filterInvoiceList= res?.filter(inv=>{
           var date=new Date(inv.invoiceDate);
           date.setHours(1);
           date.setMinutes(1);
@@ -140,12 +140,15 @@ export class DashboardPage implements OnInit {
   async getDonutdata() : Promise<any>{
     this.donutColors=[];
     this.donutHoverColors=[];
-    this.donutLabels=this.inventoryList.map(a=>a.name);
-    this.donutdata=this.inventoryList.map(a=>a.quantity);
-    for(let i of this.inventoryList){
+    this.donutLabels=this.inventoryList?.map(a=>a.name);
+    this.donutdata=this.inventoryList?.map(a=>a.quantity);
+    if(this.inventoryList!=null && this.inventoryList!=undefined){
+      for(let i of this.inventoryList){
         this.donutColors.push(this.random_rgba());
         this.donutHoverColors.push(this.random_rgba());
     }
+    }
+    
   }
   
 

@@ -2728,7 +2728,7 @@ let DashboardPage = class DashboardPage {
                 this.startDate.setHours(0);
                 this.startDate.setMinutes(0);
                 this.startDate.setSeconds(0);
-                this.filterInvoiceList = res.filter(inv => {
+                this.filterInvoiceList = res === null || res === void 0 ? void 0 : res.filter(inv => {
                     var date = new Date(inv.invoiceDate);
                     date.setHours(1);
                     date.setMinutes(1);
@@ -2777,14 +2777,17 @@ let DashboardPage = class DashboardPage {
     //     })
     // }
     getDonutdata() {
+        var _a, _b;
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.donutColors = [];
             this.donutHoverColors = [];
-            this.donutLabels = this.inventoryList.map(a => a.name);
-            this.donutdata = this.inventoryList.map(a => a.quantity);
-            for (let i of this.inventoryList) {
-                this.donutColors.push(this.random_rgba());
-                this.donutHoverColors.push(this.random_rgba());
+            this.donutLabels = (_a = this.inventoryList) === null || _a === void 0 ? void 0 : _a.map(a => a.name);
+            this.donutdata = (_b = this.inventoryList) === null || _b === void 0 ? void 0 : _b.map(a => a.quantity);
+            if (this.inventoryList != null && this.inventoryList != undefined) {
+                for (let i of this.inventoryList) {
+                    this.donutColors.push(this.random_rgba());
+                    this.donutHoverColors.push(this.random_rgba());
+                }
             }
         });
     }

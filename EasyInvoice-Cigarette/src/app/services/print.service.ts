@@ -58,35 +58,8 @@ export class PrintService {
 
  }
 
-  printData(macAddress,data){
+    
   
-    window.DatecsPrinter.listBluetoothDevices(
-      function (devices) {
-        window.DatecsPrinter.connect(devices[0].address, 
-          function() {
-            printSomeTestText();
-          },
-          function(error) {
-            alert(JSON.stringify(error));
-          }
-        );
-      },
-      function (error) {
-        alert(JSON.stringify(error));
-      }
-    );
-    
-    function printSomeTestText() {
-      window.DatecsPrinter.printText("Print Test!", 'ISO-8859-1', 
-        function() {
-          alert('success');
-        }
-      );
-    }
-    
-
-  }
-
   searchBluetoothPrinter(){
    return this.btSerial.list();
    

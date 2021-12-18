@@ -4400,7 +4400,7 @@
 
                         _this2.startDate.setSeconds(0);
 
-                        _this2.filterInvoiceList = res.filter(function (inv) {
+                        _this2.filterInvoiceList = res === null || res === void 0 ? void 0 : res.filter(function (inv) {
                           var date = new Date(inv.invoiceDate);
                           date.setHours(1);
                           date.setMinutes(1);
@@ -4485,6 +4485,8 @@
         }, {
           key: "getDonutdata",
           value: function getDonutdata() {
+            var _a, _b;
+
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
               var _iterator10, _step10, i;
 
@@ -4494,27 +4496,30 @@
                     case 0:
                       this.donutColors = [];
                       this.donutHoverColors = [];
-                      this.donutLabels = this.inventoryList.map(function (a) {
+                      this.donutLabels = (_a = this.inventoryList) === null || _a === void 0 ? void 0 : _a.map(function (a) {
                         return a.name;
                       });
-                      this.donutdata = this.inventoryList.map(function (a) {
+                      this.donutdata = (_b = this.inventoryList) === null || _b === void 0 ? void 0 : _b.map(function (a) {
                         return a.quantity;
                       });
-                      _iterator10 = _createForOfIteratorHelper(this.inventoryList);
 
-                      try {
-                        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-                          i = _step10.value;
-                          this.donutColors.push(this.random_rgba());
-                          this.donutHoverColors.push(this.random_rgba());
+                      if (this.inventoryList != null && this.inventoryList != undefined) {
+                        _iterator10 = _createForOfIteratorHelper(this.inventoryList);
+
+                        try {
+                          for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                            i = _step10.value;
+                            this.donutColors.push(this.random_rgba());
+                            this.donutHoverColors.push(this.random_rgba());
+                          }
+                        } catch (err) {
+                          _iterator10.e(err);
+                        } finally {
+                          _iterator10.f();
                         }
-                      } catch (err) {
-                        _iterator10.e(err);
-                      } finally {
-                        _iterator10.f();
                       }
 
-                    case 6:
+                    case 5:
                     case "end":
                       return _context5.stop();
                   }

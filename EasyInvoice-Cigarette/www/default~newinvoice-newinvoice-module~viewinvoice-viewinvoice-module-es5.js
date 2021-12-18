@@ -401,7 +401,7 @@
           this.value = "";
           this.printerSizes = [{
             name: '58mm',
-            value: 368
+            value: 384
           }, {
             name: '80mm',
             value: 520
@@ -511,17 +511,21 @@
               img.onload = function (e) {
                 var ht = Math.ceil(node.offsetHeight / 8) * 8;
                 ht = ht + 120;
-                result.align('left').image(img, width, ht, 'threshold', 180); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+                console.log(ht, "Height");
+                var finalPrint = result.align('left').image(img, width, ht, 'threshold', 180).encode(); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
                 // this.navCtrl.navigateRoot('invoice');
-                //alert("selected printer :: " + this.profile.selectedPrinter);
 
                 _this3.printService.connectToBluetoothPrinter(_this3.profile.selectedPrinter).subscribe(function (res) {
-                  _this3.printService.printDataToPrinter(result.encode()).then(function () {
-                    _this3.printService.disconnectBluetoothPrinter();
+                  _this3.printService.printDataToPrinter(finalPrint).then(function () {
+                    _this3.printService.printDataToPrinter(_this3.getTestContent()).then(function (data) {
+                      _this3.printService.disconnectBluetoothPrinter();
 
-                    _this3.modalCtrl.dismiss();
+                      _this3.modalCtrl.dismiss();
+
+                      _this3.printService.clearData();
+                    });
                   }, function (err) {
                     alert("Printing Failed..");
                     alert(err);
@@ -538,6 +542,13 @@
               alert(error);
               this.modalCtrl.dismiss();
             });
+          }
+        }, {
+          key: "getTestContent",
+          value: function getTestContent() {
+            var encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_5___default.a();
+            var result = encoder.initialize().line('Hai Test Print ').encode();
+            return result;
           }
         }, {
           key: "generateQRCodeContent",
