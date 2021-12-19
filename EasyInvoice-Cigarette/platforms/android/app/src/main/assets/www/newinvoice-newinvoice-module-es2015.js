@@ -316,11 +316,6 @@ let NewinvoicePage = class NewinvoicePage {
         var buffsArray = [tagBuf, tagValueLenBuf, tagValueBuf];
         return buffer__WEBPACK_IMPORTED_MODULE_13__["Buffer"].concat(buffsArray);
     }
-    getTestContent() {
-        const encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_10___default.a();
-        let result = encoder.initialize().line('Hai Test Print ').encode();
-        return result;
-    }
     getFormatedContent() {
         const encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_10___default.a();
         let result = "";
@@ -390,7 +385,6 @@ let NewinvoicePage = class NewinvoicePage {
     }
     printBill() {
         this.printPreview();
-        //this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,this.getTestContent()) ;
     }
     getImage() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {

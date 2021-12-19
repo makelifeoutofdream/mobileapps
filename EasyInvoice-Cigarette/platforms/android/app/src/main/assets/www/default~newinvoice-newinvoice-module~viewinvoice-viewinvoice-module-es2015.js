@@ -289,7 +289,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
         this.value = "";
         this.printerSizes = [{
                 name: '58mm',
-                value: 384
+                value: 368
             }, {
                 name: '80mm',
                 value: 520
@@ -344,7 +344,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                 console.log(ht, "Height");
                 let finalPrint = result
                     .align('left')
-                    .image(img, width, ht, 'threshold', 180)
+                    .image(img, width, ht, 'threshold', 120)
                     .encode();
                 //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
@@ -352,11 +352,11 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                 // this.navCtrl.navigateRoot('invoice');
                 this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
                     this.printService.printDataToPrinter(finalPrint).then(() => {
-                        this.printService.printDataToPrinter(this.getTestContent()).then(data => {
-                            this.printService.disconnectBluetoothPrinter();
-                            this.modalCtrl.dismiss();
-                            this.printService.clearData();
-                        });
+                        this.printService.disconnectBluetoothPrinter();
+                        this.modalCtrl.dismiss();
+                        this.printService.clearData();
+                        this.printService.printDataToPrinter('');
+                        finalPrint = null;
                     }, (err) => {
                         alert("Printing Failed..");
                         alert(err);
@@ -372,11 +372,6 @@ let PrintPreviewComponent = class PrintPreviewComponent {
             alert(error);
             this.modalCtrl.dismiss();
         });
-    }
-    getTestContent() {
-        const encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_5___default.a();
-        let result = encoder.initialize().line('Hai Test Print ').encode();
-        return result;
     }
     generateQRCodeContent() {
         var sellerName = this.getTLVForValue("1", this.profile.companyName);
