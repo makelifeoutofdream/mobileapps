@@ -7,6 +7,9 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header> -->
+<ion-button color="primary" (click)="pairTo()" [disabled]="!canPrint">
+  <ion-icon name="print"></ion-icon>
+</ion-button>
 <div class="overflow">
    <!-- <ion-item class="full-width m-0 printer-dropdown">
     <ion-label>Printer Size</ion-label>

@@ -18,6 +18,7 @@ export class PrintPreviewComponent implements OnInit {
   @Input() profile;
   @Input() invoice;
   @Input() products;
+  public canPrint = true;
   private datetime  :string;
   private orderItems : any;
   private totalQuantity : number;
@@ -39,13 +40,13 @@ export class PrintPreviewComponent implements OnInit {
 }
 
 ngAfterViewInit() {
-this.prepareInvoice().then(data=>{
- setTimeout(() => {
-   this.pairTo();
- },100);
-}).catch(err=>{
- alert('Error whiel preparing preview'+err);
-})
+// this.prepareInvoice().then(data=>{
+//  setTimeout(() => {
+//    this.pairTo();
+//  },100);
+// }).catch(err=>{
+//  alert('Error whiel preparing preview'+err);
+// })
 }
 
 
@@ -55,6 +56,7 @@ this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.i
 this.filterUnselectedProducts().then(data=>{
  this.orderItems=data;
  this.getTotalQuantity();
+ this.canPrint = true;
 })
 
 }
