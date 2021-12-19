@@ -396,6 +396,7 @@
           this.dbService = dbService;
           this.modalCtrl = modalCtrl;
           this.navCtrl = navCtrl;
+          this.canPrint = true;
           this.elementType = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_9__["NgxQrcodeElementTypes"].URL;
           this.correctionLevel = _techiediaries_ngx_qrcode__WEBPACK_IMPORTED_MODULE_9__["NgxQrcodeErrorCorrectionLevels"].HIGH;
           this.value = "";
@@ -416,22 +417,19 @@
           }
         }, {
           key: "ngAfterViewInit",
-          value: function ngAfterViewInit() {
-            var _this = this;
-
-            this.prepareInvoice().then(function (data) {
-              setTimeout(function () {
-                _this.pairTo();
-              }, 100);
-            })["catch"](function (err) {
-              alert('Error whiel preparing preview' + err);
-            });
+          value: function ngAfterViewInit() {// this.prepareInvoice().then(data=>{
+            //  setTimeout(() => {
+            //    this.pairTo();
+            //  },100);
+            // }).catch(err=>{
+            //  alert('Error whiel preparing preview'+err);
+            // })
           }
         }, {
           key: "prepareInvoice",
           value: function prepareInvoice() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var _this2 = this;
+              var _this = this;
 
               return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
@@ -440,9 +438,11 @@
                       this.value = this.generateQRCodeContent();
                       this.datetime = new Date(this.invoice.invoiceDate).getDate() + '-' + new Date(this.invoice.invoiceDate).getMonth() + '-' + new Date(this.invoice.invoiceDate).getFullYear() + ' ' + new Date(this.invoice.invoiceDate).getHours() + ':' + new Date(this.invoice.invoiceDate).getMinutes() + ':' + new Date(this.invoice.invoiceDate).getSeconds();
                       this.filterUnselectedProducts().then(function (data) {
-                        _this2.orderItems = data;
+                        _this.orderItems = data;
 
-                        _this2.getTotalQuantity();
+                        _this.getTotalQuantity();
+
+                        _this.canPrint = true;
                       });
 
                     case 3:
@@ -496,7 +496,7 @@
         }, {
           key: "pairTo",
           value: function pairTo() {
-            var _this3 = this;
+            var _this2 = this;
 
             var node = document.getElementById("imageToPrint");
             var width = this.profile && this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368; //html2canvas(node, {
@@ -512,18 +512,18 @@
                 var ht = Math.ceil(node.offsetHeight / 8) * 8;
                 ht = ht + 120;
                 console.log(ht, "Height");
-                var finalPrint = result.image(img, width, ht, 'threshold', 180).encode(); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+                var finalPrint = result.image(img, width, ht, 'threshold', 120).encode(); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
                 // this.navCtrl.navigateRoot('invoice');
 
-                _this3.printService.connectToBluetoothPrinter(_this3.profile.selectedPrinter).subscribe(function (res) {
+                _this2.printService.connectToBluetoothPrinter(_this2.profile.selectedPrinter).subscribe(function (res) {
                   //this.printService.clearData();
-                  _this3.printService.printDataToPrinter(finalPrint).then(function () {
-                    _this3.printService.disconnectBluetoothPrinter().then(function () {
-                      _this3.printService.clearData();
+                  _this2.printService.printDataToPrinter(finalPrint).then(function () {
+                    _this2.printService.disconnectBluetoothPrinter().then(function () {
+                      _this2.printService.clearData();
 
-                      _this3.modalCtrl.dismiss();
+                      _this2.modalCtrl.dismiss();
                     }, function (err) {
                       alert('Disconnecting error ::' + err);
                     }); //  this.printService.printDataToPrinter('');
@@ -538,7 +538,7 @@
                   alert(error + " actual conncetion error");
                   alert("connecting to printer failed..");
 
-                  _this3.modalCtrl.dismiss();
+                  _this2.modalCtrl.dismiss();
                 });
               };
             })["catch"](function (error) {
@@ -642,7 +642,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<!-- <ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-button size=\"small\" shape=\"round\" (click)=\"closeModal()\" color=\"medium\">\n        <ion-icon slot=\"start\" name=\"close\"></ion-icon> Close\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header> -->\n<div class=\"overflow\">\n   <!-- <ion-item class=\"full-width m-0 printer-dropdown\">\n    <ion-label>Printer Size</ion-label>\n    <ion-select [(ngModel)]=\"paperSize\" (ionChange)='pairTo(paperSize)' placeholder=\"Select printer size\">\n     <ion-select-option  *ngFor=\"let size of printerSizes\" [value]=\"size.value\"> {{size.name}}</ion-select-option>\n   </ion-select>\n </ion-item> -->\n   <h5 class=\"p-5 text-center\">Print Preview</h5>\n  <div id=\"imageToPrint\">  \n    <div> \n      <div class=\"text-center title\" >\n          <h3 class=\"content-center\"> {{profile?.companyName}}</h3>\n      </div>\n      <div class=\"text-center title\" >\n        <h3 class=\"content-center letter-space\"> {{profile?.companyNameInArabic}}</h3>\n    </div>\n    \n    <div  class=\"text-center  letter-space content-center\">\n      {{profile?.addressLine1}} {{profile?.addressLine1inArabic}}   \n    </div>\n    <div  class=\" text-center letter-space content-center\">\n      {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   \n  </div>\n  <div class=\"full-width \">\n      <div text-left class=\"item-cus-label letter-space title\">\n        VAT # / ضريبة القيمة المضافة  :\n      </div>\n      <div  text-left class=\"item-cus-label title\">\n        {{profile?.vatNumber}}  \n      </div>\n      \n  </div>\n  <div class=\"line-separator\"></div>\n  \n  <div  class=\"text-center title\">\n   <h5 class=\"title\">VAT INVOICE / فاتوره ضريبية </h5>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"item-cus-label\">\n    Invoice # / رقم الفاتورة :\n    </div>\n    <div text-left class=\"item-cus-label\">\n      {{invoice?.invoiceNumber}}\n    </div>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"item-cus-label\">\n    Invoice Date / تاريخ   :</div>\n    <div text-left class=\"item-cus-label\">{{invoice?.invoiceDate | date : 'dd-MM-yyyy hh:mm'}} </div>\n  </div>\n  <div class=\"line-separator\"></div>\n  \n  <div class=\"display-flex  full-width\">\n    <div class=\"item-lebel no-wrap-text\" style=\"margin-left: 3%;\">\n      <b>Bill To : </b>\n    </div>\n  </div>\n  <div class=\"line-separator\"></div>\n  <div class=\"full-width\">\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.name}} \n    </div>\n    <div  class=\" full-width letter-space\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.nameInArabic}} \n    </div>\n    \n  </div>\n  <div class=\"full-width\">\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.street}},{{invoice?.customer.city}} \n    </div>\n    <div  class=\" full-width letter-space\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.streetInArabic}},{{invoice?.customer.cityInArabic }} \n    </div>\n    \n  </div>\n  <div class=\"full-width\">\n    <div  class=\"item-cus-label letter-space\" >\n       VAT # / ضريبة القيمة المضافة : \n    </div>\n    <div  text-right class=\"item-value \">\n      {{invoice?.customer.vatNumber}}\n    </div>\n    \n  </div>\n         <div class=\"line-separator\"></div>\n        <table style=\"width:100%\" class=\"fixed\">\n          <thead>\n            <tr>\n  \n              <th style=\"text-align: left; width: 37%; margin-left: 2%;font-weight: normal;\">\n                <div style=\"margin-left: 3%;\">Item</div>\n                <div class=\"letter-space\" style=\"margin-left: 3%;\">العنصر</div>\n              </th>\n              <th style=\"width:4% ;font-weight: normal;\">\n                <div>Qty</div>\n                <div class=\"letter-space\">الكمية</div>\n              </th>\n              <th style=\"width:7% ;font-weight: normal;\">\n                <div>Price</div>\n                <div class=\"letter-space\">السعر</div>\n              </th>\n              <th style=\"width:35% ;margin-right: 2%;font-weight: normal;\">\n                <div style=\"margin-right: 2%;\">Amount</div>\n                <div class=\"letter-space\">المبلغ</div>\n              </th>\n               \n              \n            </tr>\n          </thead>\n          <tr *ngFor=\"let order of orderItems\">\n            <td style=\"text-align: left;margin-left: 3%;\">\n              <div style=\"margin-left: 3%; \" class=\"letter-space\">\n                {{order.name}} {{order.nameInArabic}}\n              </div>\n            </td>\n            <td>{{order.quantity}}</td>\n            <td>{{order.unitPrice }}</td>\n            <td >\n              <div style=\"margin-right: 3%;\">\n                {{(order.unitPrice * order.quantity) | number : '1.2-2'}}\n              </div>\n              \n            </td>\n  \n            \n           \n          </tr>\n        </table>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\">\n            Qty : {{totalQuantity}}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"content-right item-label\" style=\"width: 100%;\">\n            Total Invoice Value(Excl.VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n            VAT Payable in SAR ({{profile?.vat}}%): {{invoice?.tax | number : '1.2-2'}}\n          </div>\n          \n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n            Gross Amount in SAR : {{invoice?.total | number : '1.2-2'}}\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n          Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n          Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label title content-right\" style=\"width: 100%;\">\n          Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div style=\"width:300px;height:300px\" >\n        <div style=\"margin-left: 10%;\" class=\"text-center full-width\">\n          <ngx-qrcode  \n            [elementType]=\"elementType\"\n            [errorCorrectionLevel]=\"correctionLevel\"\n            [value]=\"value\"></ngx-qrcode>\n        </div>\n      </div>\n      <div class=\"line-separator\"></div>\n      <div text-center class=\"text-center\">Thank you for shopping.....</div>\n    </div>\n  </div>\n</div>\n";
+      __webpack_exports__["default"] = "<!-- <ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-button size=\"small\" shape=\"round\" (click)=\"closeModal()\" color=\"medium\">\n        <ion-icon slot=\"start\" name=\"close\"></ion-icon> Close\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header> -->\n<ion-button color=\"primary\" (click)=\"pairTo()\" [disabled]=\"!canPrint\">\n  <ion-icon name=\"print\"></ion-icon>\n</ion-button>\n<div class=\"overflow\">\n   <!-- <ion-item class=\"full-width m-0 printer-dropdown\">\n    <ion-label>Printer Size</ion-label>\n    <ion-select [(ngModel)]=\"paperSize\" (ionChange)='pairTo(paperSize)' placeholder=\"Select printer size\">\n     <ion-select-option  *ngFor=\"let size of printerSizes\" [value]=\"size.value\"> {{size.name}}</ion-select-option>\n   </ion-select>\n </ion-item> -->\n   <h5 class=\"p-5 text-center\">Print Preview</h5>\n  <div id=\"imageToPrint\">  \n    <div> \n      <div class=\"text-center title\" >\n          <h3 class=\"content-center\"> {{profile?.companyName}}</h3>\n      </div>\n      <div class=\"text-center title\" >\n        <h3 class=\"content-center letter-space\"> {{profile?.companyNameInArabic}}</h3>\n    </div>\n    \n    <div  class=\"text-center  letter-space content-center\">\n      {{profile?.addressLine1}} {{profile?.addressLine1inArabic}}   \n    </div>\n    <div  class=\" text-center letter-space content-center\">\n      {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   \n  </div>\n  <div class=\"full-width \">\n      <div text-left class=\"item-cus-label letter-space title\">\n        VAT # / ضريبة القيمة المضافة  :\n      </div>\n      <div  text-left class=\"item-cus-label title\">\n        {{profile?.vatNumber}}  \n      </div>\n      \n  </div>\n  <div class=\"line-separator\"></div>\n  \n  <div  class=\"text-center title\">\n   <h5 class=\"title\">VAT INVOICE / فاتوره ضريبية </h5>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"item-cus-label\">\n    Invoice # / رقم الفاتورة :\n    </div>\n    <div text-left class=\"item-cus-label\">\n      {{invoice?.invoiceNumber}}\n    </div>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"item-cus-label\">\n    Invoice Date / تاريخ   :</div>\n    <div text-left class=\"item-cus-label\">{{invoice?.invoiceDate | date : 'dd-MM-yyyy hh:mm'}} </div>\n  </div>\n  <div class=\"line-separator\"></div>\n  \n  <div class=\"display-flex  full-width\">\n    <div class=\"item-lebel no-wrap-text\" style=\"margin-left: 3%;\">\n      <b>Bill To : </b>\n    </div>\n  </div>\n  <div class=\"line-separator\"></div>\n  <div class=\"full-width\">\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.name}} \n    </div>\n    <div  class=\" full-width letter-space\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.nameInArabic}} \n    </div>\n    \n  </div>\n  <div class=\"full-width\">\n    <div  class=\" full-width\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.street}},{{invoice?.customer.city}} \n    </div>\n    <div  class=\" full-width letter-space\" style=\"margin-left: 3%; word-wrap: break-word;\" >\n      {{invoice?.customer.streetInArabic}},{{invoice?.customer.cityInArabic }} \n    </div>\n    \n  </div>\n  <div class=\"full-width\">\n    <div  class=\"item-cus-label letter-space\" >\n       VAT # / ضريبة القيمة المضافة : \n    </div>\n    <div  text-right class=\"item-value \">\n      {{invoice?.customer.vatNumber}}\n    </div>\n    \n  </div>\n         <div class=\"line-separator\"></div>\n        <table style=\"width:100%\" class=\"fixed\">\n          <thead>\n            <tr>\n  \n              <th style=\"text-align: left; width: 37%; margin-left: 2%;font-weight: normal;\">\n                <div style=\"margin-left: 3%;\">Item</div>\n                <div class=\"letter-space\" style=\"margin-left: 3%;\">العنصر</div>\n              </th>\n              <th style=\"width:4% ;font-weight: normal;\">\n                <div>Qty</div>\n                <div class=\"letter-space\">الكمية</div>\n              </th>\n              <th style=\"width:7% ;font-weight: normal;\">\n                <div>Price</div>\n                <div class=\"letter-space\">السعر</div>\n              </th>\n              <th style=\"width:35% ;margin-right: 2%;font-weight: normal;\">\n                <div style=\"margin-right: 2%;\">Amount</div>\n                <div class=\"letter-space\">المبلغ</div>\n              </th>\n               \n              \n            </tr>\n          </thead>\n          <tr *ngFor=\"let order of orderItems\">\n            <td style=\"text-align: left;margin-left: 3%;\">\n              <div style=\"margin-left: 3%; \" class=\"letter-space\">\n                {{order.name}} {{order.nameInArabic}}\n              </div>\n            </td>\n            <td>{{order.quantity}}</td>\n            <td>{{order.unitPrice }}</td>\n            <td >\n              <div style=\"margin-right: 3%;\">\n                {{(order.unitPrice * order.quantity) | number : '1.2-2'}}\n              </div>\n              \n            </td>\n  \n            \n           \n          </tr>\n        </table>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\">\n            Qty : {{totalQuantity}}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"content-right item-label\" style=\"width: 100%;\">\n            Total Invoice Value(Excl.VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n            VAT Payable in SAR ({{profile?.vat}}%): {{invoice?.tax | number : '1.2-2'}}\n          </div>\n          \n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n            Gross Amount in SAR : {{invoice?.total | number : '1.2-2'}}\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n          Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label content-right\" style=\"width: 100%;\">\n          Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"display-flex full-width\">\n          <div  class=\"item-label title content-right\" style=\"width: 100%;\">\n          Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}\n          </div>\n        </div>\n        <div class=\"line-separator\"></div>\n        <div style=\"width:300px;height:300px\" >\n        <div style=\"margin-left: 10%;\" class=\"text-center full-width\">\n          <ngx-qrcode  \n            [elementType]=\"elementType\"\n            [errorCorrectionLevel]=\"correctionLevel\"\n            [value]=\"value\"></ngx-qrcode>\n        </div>\n      </div>\n      <div class=\"line-separator\"></div>\n      <div text-center class=\"text-center\">Thank you for shopping.....</div>\n    </div>\n  </div>\n</div>\n";
       /***/
     }
   }]);

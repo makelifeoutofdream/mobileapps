@@ -155,7 +155,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzZXR0aW5ncy5wYWdlLnNjc3MifQ== */";
+      __webpack_exports__["default"] = ".vat-check .check {\n  margin: 0;\n  margin-right: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NldHRpbmdzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDSTtFQUNJLFNBQUE7RUFDQSxrQkFBQTtBQUFSIiwiZmlsZSI6InNldHRpbmdzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi52YXQtY2hlY2sge1xuICAgIC5jaGVjayB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xuICAgIH1cbn0iXX0= */";
       /***/
     },
 
@@ -302,6 +302,16 @@
           value: function printDataToPrinter(data) {
             return this.btSerial.write(data);
           }
+        }, {
+          key: "clearData",
+          value: function clearData() {
+            this.btSerial.clear();
+          }
+        }, {
+          key: "isConnected",
+          value: function isConnected() {
+            return this.btSerial.isConnected();
+          }
         }]);
 
         return PrintService;
@@ -408,6 +418,13 @@
           this.file = file;
           this.user = {};
           this.bluetoothList = [];
+          this.printerSizes = [{
+            name: '58mm',
+            value: 368
+          }, {
+            name: '80mm',
+            value: 520
+          }];
           this.showProfileSegment = true;
           this.showTaxSegment = false;
           this.showPrinterSegment = false;
@@ -425,7 +442,9 @@
             toEmail: "",
             ccEmail: "",
             vat: null,
-            selectedPrinter: null
+            selectedPrinter: null,
+            selectedPrinterSize: null,
+            canEnableUnit: false
           };
           this.type = "profile";
           this.userProfile = {
@@ -441,7 +460,9 @@
             toEmail: "",
             ccEmail: "",
             vat: null,
-            selectedPrinter: null
+            selectedPrinter: null,
+            selectedPrinterSize: null,
+            canEnableUnit: false
           };
           this.user.userProfile = this.userProfile;
         }
@@ -499,6 +520,8 @@
                 id: null,
                 companyName: "",
                 companyNameInArabic: "",
+                canEnableUnit: false,
+                selectedPrinterSize: '',
                 addressLine1: "",
                 addressLine1InArabic: "",
                 addressLine2: "",
@@ -535,6 +558,17 @@
             this.user.userProfile.selectedPrinter = macAddress;
           }
         }, {
+          key: "setPaperSize",
+          value: function setPaperSize(paper) {
+            this.paperSize = paper;
+            this.user.userProfile.selectedPrinterSize = paper;
+          }
+        }, {
+          key: "enableUnitP",
+          value: function enableUnitP(event) {
+            this.user.userProfile.canEnableUnit = event.target.checked;
+          }
+        }, {
           key: "updateProfile",
           value: function updateProfile() {
             var _this4 = this;
@@ -566,7 +600,9 @@
             }
 
             this.dbService.getProfile().then(function (data) {
-              return _this5.userProfile = data;
+              _this5.userProfile = data;
+              _this5.paperSize = _this5.userProfile.selectedPrinterSize;
+              _this5.isUnitPEnable = _this5.userProfile.canEnableUnit;
             });
 
             if (this.userProfile == null || this.userProfile == undefined) {
@@ -574,6 +610,8 @@
                 id: null,
                 companyName: "",
                 companyNameInArabic: "",
+                canEnableUnit: false,
+                selectedPrinterSize: '',
                 addressLine1: "",
                 addressLine1InArabic: "",
                 addressLine2: "",
@@ -659,7 +697,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Settings</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-segment color=\"secondary\" (ionChange)=\"segmentChanged($event)\" [(ngModel)]=\"type\"> \n    <ion-segment-button checked value=\"profile\">\n      <ion-label>Profile</ion-label>\n      <ion-icon name=\"person-circle\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"tax\">\n      <ion-label>Tax</ion-label>\n       <ion-icon name=\"clipboard\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"printer\">\n      <ion-label>Printer</ion-label>\n      <ion-icon name=\"print\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button checked value=\"backup\">\n      <ion-label>BackUp</ion-label>\n      <ion-icon name=\"server\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n\n\n  <div [ngSwitch]=\"type\">\n    <div *ngSwitchCase=\"'profile'\"> \n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Company Name\" [(ngModel)]=\"user.userProfile.companyName\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"اسم الشركة\" [(ngModel)]=\"user.userProfile.companyNameInArabic\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Address Line1\" [(ngModel)]=\"user.userProfile.addressLine1\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"العنوان السطر 1\" [(ngModel)]=\"user.userProfile.addressLine1inArabic\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"addressLine2\" [(ngModel)]=\"user.userProfile.addressLine2\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"سطر العنوان 2\" [(ngModel)]=\"user.userProfile.addressLine2InArabic\"></ion-textarea>\n            </ion-item>\n            \n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Email to send\" [(ngModel)]=\"user.userProfile.toEmail\"></ion-textarea>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"CC Emails\" [(ngModel)]=\"user.userProfile.ccEmail\"></ion-textarea>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n      \n    </div>\n    <div *ngSwitchCase=\"'tax'\"> \n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-input type=\"number\" placeholder=\"Vat(%)\" [(ngModel)]=\"user.userProfile.vat\"></ion-input>\n          </ion-item>\n          <ion-item style=\"width: 100%\"> \n            <ion-textarea  placeholder=\"VAT Number\" [(ngModel)]=\"user.userProfile.vatNumber\"></ion-textarea>\n          </ion-item>\n          <ion-item style=\"width: 100%\"> \n            <ion-textarea  placeholder=\"CR Number\" [(ngModel)]=\"user.userProfile.crNumber\"></ion-textarea>\n          </ion-item>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n      \n    </div>\n    <div *ngSwitchCase=\"'printer'\">\n      <ion-list>\n        <ion-item *ngFor=\"let item of bluetoothList\" (click)=\"selectPrinter(item.address)\">\n          {{item.name}} {{item.address}}\n        </ion-item>\n      </ion-list>\n      <ion-item *ngIf=\"bluetoothList!=null && bluetoothList!=undefined\">\n        Selected Printer: {{user.userProfile.selectedPrinter}} \n      </ion-item>\n      <ion-item *ngIf=\"bluetoothList==null || bluetoothList==undefined\">\n        No Printer Connected..\n      </ion-item>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n    </div>\n    <div *ngSwitchCase=\"'backup'\">\n     \n        <div style=\"margin-top: 22%;\"> \n          <ion-button expand=\"block\" (click)=\"savefile()\">\n            BackUp To Local Storage\n          </ion-button>\n        </div>\n     \n      \n    </div>\n  </div>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Settings</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-segment color=\"secondary\" (ionChange)=\"segmentChanged($event)\" [(ngModel)]=\"type\" scrollable > \n    <ion-segment-button checked value=\"profile\" SwipedTabs id=\"profile\">\n      <ion-label>Profile</ion-label>\n      <ion-icon name=\"person-circle\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"tax\" id=\"tax\">\n      <ion-label>Tax</ion-label>\n       <ion-icon name=\"clipboard\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"printer\" id=\"printer\">\n      <ion-label>Printer</ion-label>\n      <ion-icon name=\"print\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"config\" id=\"config\">\n      <ion-label>Configuration</ion-label>\n      <ion-icon name=\"construct-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button checked value=\"backup\">\n      <ion-label>BackUp</ion-label>\n      <ion-icon name=\"server\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n\n\n  <div [ngSwitch]=\"type\">\n    <div *ngSwitchCase=\"'profile'\"> \n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Company Name\" [(ngModel)]=\"user.userProfile.companyName\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"اسم الشركة\" [(ngModel)]=\"user.userProfile.companyNameInArabic\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Address Line1\" [(ngModel)]=\"user.userProfile.addressLine1\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"العنوان السطر 1\" [(ngModel)]=\"user.userProfile.addressLine1inArabic\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"addressLine2\" [(ngModel)]=\"user.userProfile.addressLine2\"></ion-textarea>\n            </ion-item>\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"سطر العنوان 2\" [(ngModel)]=\"user.userProfile.addressLine2InArabic\"></ion-textarea>\n            </ion-item>\n            \n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"Email to send\" [(ngModel)]=\"user.userProfile.toEmail\"></ion-textarea>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-textarea  placeholder=\"CC Emails\" [(ngModel)]=\"user.userProfile.ccEmail\"></ion-textarea>\n          </ion-item>\n        \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n      \n    </div>\n    <div *ngSwitchCase=\"'tax'\"> \n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-item style=\"width: 100%\"> \n              <ion-input type=\"number\" placeholder=\"Vat(%)\" [(ngModel)]=\"user.userProfile.vat\"></ion-input>\n          </ion-item>\n          <ion-item style=\"width: 100%\"> \n            <ion-textarea  placeholder=\"VAT Number\" [(ngModel)]=\"user.userProfile.vatNumber\"></ion-textarea>\n          </ion-item>\n          <ion-item style=\"width: 100%\"> \n            <ion-textarea  placeholder=\"CR Number\" [(ngModel)]=\"user.userProfile.crNumber\"></ion-textarea>\n          </ion-item>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n      \n    </div>\n    <div *ngSwitchCase=\"'printer'\">\n      <ion-list>\n        <ion-item *ngFor=\"let item of bluetoothList\" (click)=\"selectPrinter(item.address)\">\n          {{item.name}} {{item.address}}\n        </ion-item>\n      </ion-list>\n      <ion-item *ngIf=\"bluetoothList!=null && bluetoothList!=undefined\">\n        Selected Printer: {{user.userProfile.selectedPrinter}} \n      </ion-item>\n      <ion-item *ngIf=\"bluetoothList==null || bluetoothList==undefined\">\n        No Printer Connected..\n      </ion-item>\n      <ion-item class=\"full-width m-0 printer-dropdown\">\n        <ion-label>Printer Size</ion-label>\n        <ion-select [(ngModel)]=\"paperSize\" (ionChange)='setPaperSize(paperSize)' placeholder=\"Select printer size\">\n         <ion-select-option  *ngFor=\"let size of printerSizes\" [value]=\"size.value\"> {{size.name}}</ion-select-option>\n       </ion-select>\n     </ion-item>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n    </div>\n    <div *ngSwitchCase=\"'config'\">\n      <ion-item class=\"vat-check\" no-lines lines=\"none\">\n        <ion-label> Enable Unit Price</ion-label>\n        <ion-checkbox class=\"check\" slot=\"start\" [(ngModel)]=\"isUnitPEnable\" (ionChange)=\"enableUnitP($event)\" ></ion-checkbox>\n      </ion-item>\n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"updateProfile()\">\n          <ion-icon name=\"checkmark\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n    </div>\n    <div *ngSwitchCase=\"'backup'\">\n     \n        <div style=\"margin-top: 22%;\"> \n          <ion-button expand=\"block\" (click)=\"savefile()\">\n            BackUp To Local Storage\n          </ion-button>\n        </div>\n     \n      \n    </div>\n  </div>\n</ion-content>\n";
       /***/
     }
   }]);

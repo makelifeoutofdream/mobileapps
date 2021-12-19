@@ -2334,6 +2334,12 @@ let PrintService = class PrintService {
     printDataToPrinter(data) {
         return this.btSerial.write(data);
     }
+    clearData() {
+        this.btSerial.clear();
+    }
+    isConnected() {
+        return this.btSerial.isConnected();
+    }
 };
 PrintService.ctorParameters = () => [
     { type: _ionic_native_bluetooth_serial_ngx__WEBPACK_IMPORTED_MODULE_2__["BluetoothSerial"] },
