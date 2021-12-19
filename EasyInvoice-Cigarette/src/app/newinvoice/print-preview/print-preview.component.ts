@@ -75,27 +75,41 @@ this.filterUnselectedProducts().then(data=>{
     domtoimage.toPng(node).then(dataUrl => {
         //var imgData = canvas.toDataURL("image/png");
         let encoder = new EscPosEncoder();
-        let result;
+        let result = encoder.initialize();
         let img = new Image();
         img.src = dataUrl; 
         img.onload  = (e) =>  {
-          this.base64ToFile(dataUrl).then((res) => {
-            //console.log(res['Uint8Array']);
-            this.printData(res);
-          });
-         // console.log(result);
-          // var ht = Math.ceil(node.offsetHeight / 8) * 8;
-          // ht = ht + 120;
-          // console.log(ht, "Height");
-          // let finalPrint  = result
-          //   .align('left')
-          //   .image(img,width,ht,'threshold',120)
-          //   .encode();
+          var ht = Math.ceil(node.offsetHeight / 8) * 8;
+          ht = ht + 120;
+          console.log(ht, "Height");
+          let finalPrint  = result
+            .image(img,width,ht,'threshold',120)
+            .encode();
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           // console.log('print called');
           // this.modalCtrl.dismiss();
           // this.navCtrl.navigateRoot('invoice');
-         
+          this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
+            //this.printService.clearData();
+            this.printService.printDataToPrinter(finalPrint).then(() => { 
+                this.printService.disconnectBluetoothPrinter().then(() => {
+                  this.printService.clearData();
+                  this.modalCtrl.dismiss();
+                }, (err) => {
+                  alert('Disconnecting error ::' + err);
+                });
+              //  this.printService.printDataToPrinter('');
+                finalPrint = null;
+               
+            },(err) => {
+              alert("Printing Failed..");
+              alert(err);
+            });
+        },(error) => {
+          alert(error +" actual conncetion error");
+          alert("connecting to printer failed..");
+          this.modalCtrl.dismiss();
+        })
         }
     }).catch(function (error) {
       console.error("oops, something went wrong!", error);
@@ -103,30 +117,6 @@ this.filterUnselectedProducts().then(data=>{
       this.modalCtrl.dismiss();
       
     });
-  }
-
-  printData(data) {
-    this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-      this.printService.clearData();
-      this.printService.printDataToPrinter(data).then(() => { 
-          this.printService.disconnectBluetoothPrinter().then(() => {
-            this.printService.clearData();
-            this.modalCtrl.dismiss();
-          }, (err) => {
-            alert('Disconnecting error ::' + err);
-          });
-         // this.printService.printDataToPrinter('');
-          //finalPrint = null;
-         
-      },(err) => {
-        alert("Printing Failed..");
-        alert(err);
-      });
-  },(error) => {
-    alert(error +" actual conncetion error");
-    alert("connecting to printer failed..");
-    this.modalCtrl.dismiss();
-    })
   }
 
   generateQRCodeContent(){
@@ -149,15 +139,6 @@ this.filterUnselectedProducts().then(data=>{
     var buffsArray=[tagBuf,tagValueLenBuf,tagValueBuf];
     return Buffer.concat(buffsArray);
   }
-
- base64ToFile(dataURL) {
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    return (fetch(dataURL)
-        .then(function (result) {
-            return result.arrayBuffer();
-        }));
-}
   
 
   
