@@ -511,17 +511,27 @@
               img.onload = function (e) {
                 var ht = Math.ceil(node.offsetHeight / 8) * 8;
                 ht = ht + 120;
-                result.align('left').image(img, width, ht, 'threshold', 180); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+                console.log(ht, "Height");
+                var finalPrint = result.align('left').image(img, width, ht, 'threshold', 120).encode(); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
                 // this.navCtrl.navigateRoot('invoice');
-                //alert("selected printer :: " + this.profile.selectedPrinter);
 
                 _this3.printService.connectToBluetoothPrinter(_this3.profile.selectedPrinter).subscribe(function (res) {
-                  _this3.printService.printDataToPrinter(result.encode()).then(function () {
-                    _this3.printService.disconnectBluetoothPrinter();
+                  _this3.printService.clearData();
 
-                    _this3.modalCtrl.dismiss();
+                  _this3.printService.printDataToPrinter(finalPrint).then(function () {
+                    _this3.printService.disconnectBluetoothPrinter().then(function () {
+                      _this3.printService.clearData();
+
+                      _this3.modalCtrl.dismiss();
+                    }, function (err) {
+                      alert('Disconnecting error ::' + err);
+                    });
+
+                    _this3.printService.printDataToPrinter('');
+
+                    finalPrint = null;
                   }, function (err) {
                     alert("Printing Failed..");
                     alert(err);
