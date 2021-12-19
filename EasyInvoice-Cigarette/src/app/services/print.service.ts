@@ -58,6 +58,15 @@ export class PrintService {
 
  }
 
+
+ printImage(image, width, height) {
+  window.DatecsPrinter.printImage(
+    image, //base64
+    width, 
+    height, 
+    1)
+ }
+
   printData(macAddress,data){
   
     window.DatecsPrinter.listBluetoothDevices(

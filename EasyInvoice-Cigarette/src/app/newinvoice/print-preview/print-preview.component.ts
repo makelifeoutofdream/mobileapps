@@ -83,30 +83,33 @@ this.filterUnselectedProducts().then(data=>{
         img.onload  = (e) =>  {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
-          console.log(ht, "Height");
-          let finalPrint  = result
-            .image(img,width,ht,'threshold',120)
-            .encode();
+          // console.log(ht, "Height");
+          // let finalPrint  = result
+          //   .image(img,width,ht,'threshold',120)
+          //   .encode();
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
           // console.log('print called');
           // this.modalCtrl.dismiss();
           // this.navCtrl.navigateRoot('invoice');
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
             //this.printService.clearData();
-            this.printService.printDataToPrinter(finalPrint).then(() => { 
-                this.printService.disconnectBluetoothPrinter().then(() => {
-                  this.printService.clearData();
-                  this.modalCtrl.dismiss();
-                }, (err) => {
-                  alert('Disconnecting error ::' + err);
-                });
-              //  this.printService.printDataToPrinter('');
-                finalPrint = null;
+            // this.printService.printDataToPrinter(finalPrint).then(() => { 
+            //     this.printService.disconnectBluetoothPrinter().then(() => {
+            //       this.printService.clearData();
+            //       this.modalCtrl.dismiss();
+            //     }, (err) => {
+            //       alert('Disconnecting error ::' + err);
+            //     });
+            //   //  this.printService.printDataToPrinter('');
+            //     finalPrint = null;
                
-            },(err) => {
-              alert("Printing Failed..");
-              alert(err);
-            });
+            // },(err) => {
+            //   alert("Printing Failed..");
+            //   alert(err);
+            // });
+            this.printService.printImage(img,width,ht);
+            this.modalCtrl.dismiss();
+            this.printService.disconnectBluetoothPrinter();
         },(error) => {
           alert(error +" actual conncetion error");
           alert("connecting to printer failed..");
