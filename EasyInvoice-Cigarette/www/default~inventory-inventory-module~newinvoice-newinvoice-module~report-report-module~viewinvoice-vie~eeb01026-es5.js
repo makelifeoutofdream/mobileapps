@@ -2542,6 +2542,16 @@
           value: function printDataToPrinter(data) {
             return this.btSerial.write(data);
           }
+        }, {
+          key: "clearData",
+          value: function clearData() {
+            this.btSerial.clear();
+          }
+        }, {
+          key: "isConnected",
+          value: function isConnected() {
+            return this.btSerial.isConnected();
+          }
         }]);
 
         return PrintService;
