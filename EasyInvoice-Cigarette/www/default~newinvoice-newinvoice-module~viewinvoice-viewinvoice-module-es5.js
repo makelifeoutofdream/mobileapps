@@ -510,30 +510,35 @@
 
               img.onload = function (e) {
                 var ht = Math.ceil(node.offsetHeight / 8) * 8;
-                ht = ht + 120;
-                console.log(ht, "Height");
-                var finalPrint = result.image(img, width, ht, 'threshold', 120).encode(); //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+                ht = ht + 120; // console.log(ht, "Height");
+                // let finalPrint  = result
+                //   .image(img,width,ht,'threshold',120)
+                //   .encode();
+                //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
                 // this.navCtrl.navigateRoot('invoice');
 
                 _this2.printService.connectToBluetoothPrinter(_this2.profile.selectedPrinter).subscribe(function (res) {
                   //this.printService.clearData();
-                  _this2.printService.printDataToPrinter(finalPrint).then(function () {
-                    _this2.printService.disconnectBluetoothPrinter().then(function () {
-                      _this2.printService.clearData();
+                  // this.printService.printDataToPrinter(finalPrint).then(() => { 
+                  //     this.printService.disconnectBluetoothPrinter().then(() => {
+                  //       this.printService.clearData();
+                  //       this.modalCtrl.dismiss();
+                  //     }, (err) => {
+                  //       alert('Disconnecting error ::' + err);
+                  //     });
+                  //   //  this.printService.printDataToPrinter('');
+                  //     finalPrint = null;
+                  // },(err) => {
+                  //   alert("Printing Failed..");
+                  //   alert(err);
+                  // });
+                  _this2.printService.printImage(img, width, ht);
 
-                      _this2.modalCtrl.dismiss();
-                    }, function (err) {
-                      alert('Disconnecting error ::' + err);
-                    }); //  this.printService.printDataToPrinter('');
+                  _this2.modalCtrl.dismiss();
 
-
-                    finalPrint = null;
-                  }, function (err) {
-                    alert("Printing Failed..");
-                    alert(err);
-                  });
+                  _this2.printService.disconnectBluetoothPrinter();
                 }, function (error) {
                   alert(error + " actual conncetion error");
                   alert("connecting to printer failed..");
