@@ -686,13 +686,6 @@
             return buffer__WEBPACK_IMPORTED_MODULE_13__["Buffer"].concat(buffsArray);
           }
         }, {
-          key: "getTestContent",
-          value: function getTestContent() {
-            var encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_10___default.a();
-            var result = encoder.initialize().line('Hai Test Print ').encode();
-            return result;
-          }
-        }, {
           key: "getFormatedContent",
           value: function getFormatedContent() {
             var encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_10___default.a();
@@ -768,7 +761,7 @@
         }, {
           key: "printBill",
           value: function printBill() {
-            this.printPreview(); //this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,this.getTestContent()) ;
+            this.printPreview();
           }
         }, {
           key: "getImage",
