@@ -343,15 +343,14 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                 ht = ht + 120;
                 console.log(ht, "Height");
                 let finalPrint = result
-                    .align('left')
-                    .image(img, width, ht, 'threshold', 120)
+                    .image(img, width, ht, 'threshold', 180)
                     .encode();
                 //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
                 // console.log('print called');
                 // this.modalCtrl.dismiss();
                 // this.navCtrl.navigateRoot('invoice');
                 this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-                    this.printService.clearData();
+                    //this.printService.clearData();
                     this.printService.printDataToPrinter(finalPrint).then(() => {
                         this.printService.disconnectBluetoothPrinter().then(() => {
                             this.printService.clearData();
@@ -359,7 +358,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                         }, (err) => {
                             alert('Disconnecting error ::' + err);
                         });
-                        this.printService.printDataToPrinter('');
+                        //  this.printService.printDataToPrinter('');
                         finalPrint = null;
                     }, (err) => {
                         alert("Printing Failed..");

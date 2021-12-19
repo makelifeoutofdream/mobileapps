@@ -1,17 +1,47 @@
 {
-  "name": "cordova-plugin-btprinter",
-  "version": "0.0.1-dev",
-  "description": "A cordova plugin for bluetooth printer for android platform.",
+  "_from": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+  "_id": "cordova-plugin-btprinter@0.0.1-dev",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-btprinter",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+    "rawSpec": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+    "saveSpec": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+    "fetchSpec": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git#d2c922b7ddbc624b7aa70c2ca917cb9d692257f3",
+  "_spec": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+  "_where": "/Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette",
+  "author": {
+    "name": "Cesar E. Balzer"
+  },
+  "bugs": {
+    "url": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter/issues"
+  },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-btprinter",
     "platforms": [
       "android"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git"
-  },
+  "deprecated": false,
+  "description": "A cordova plugin for bluetooth printer for android platform.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "homepage": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter#readme",
   "keywords": [
     "cordova",
     "bluetooth",
@@ -25,16 +55,11 @@
     "ecosystem:cordova",
     "cordova-android"
   ],
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=3.0.0"
-    }
-  ],
-  "author": "Cesar E. Balzer",
   "license": "Apache 2.0",
-  "bugs": {
-    "url": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter/issues"
+  "name": "cordova-plugin-btprinter",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git"
   },
-  "homepage": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter#readme"
+  "version": "0.0.1-dev"
 }
