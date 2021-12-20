@@ -35,17 +35,17 @@ export class PrintPreviewComponent implements OnInit {
   constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,public navCtrl:NavController) { }
 
   ngOnInit() {
-    this.prepareInvoice();
+    //this.prepareInvoice();
 }
 
 ngAfterViewInit() {
-this.prepareInvoice().then(data=>{
- setTimeout(() => {
-   this.pairTo();
- },100);
-}).catch(err=>{
- alert('Error whiel preparing preview'+err);
-})
+    this.prepareInvoice().then(data=>{
+        setTimeout(() => {
+          this.pairTo();
+        },3000);
+    }).catch((err) => {
+       alert('Error whiel preparing preview'+err);
+    })
 }
 
 
@@ -79,6 +79,7 @@ this.filterUnselectedProducts().then(data=>{
         logging: false,
       }).then(canvas => {
         var imgData = canvas.toDataURL("image/png");
+        console.log(imgData);
         let encoder = new EscPosEncoder();
         let result = encoder.initialize();
         let img = new Image();
@@ -89,10 +90,10 @@ this.filterUnselectedProducts().then(data=>{
           let finalPrint  = result
             .align('left')
             .image(img,width,ht,'threshold',120)
-            .raw([0x1d,0x56,0x00])
-            .encode();
+            .cut('partial')
+            .encode()
+            console.log(finalPrint);
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-            this.printService.clearData();
             this.printService.printDataToPrinter(finalPrint).then(() => { 
                 this.printService.disconnectBluetoothPrinter();
                 this.modalCtrl.dismiss();
@@ -109,7 +110,7 @@ this.filterUnselectedProducts().then(data=>{
     }).catch(function (error) {
       console.error("oops, something went wrong!", error);
       alert(error);
-      this.modalCtrl.dismiss();
+   //   this.modalCtrl.dismiss();
       
     });
   }

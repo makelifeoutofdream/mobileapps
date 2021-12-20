@@ -70,10 +70,13 @@ img {
     display: inline-block;
 }
 .full-width {
-    width: 100%;
+    width: 100% !important;
 }
 .printer-dropdown {
     width: 100% !important;
+}
+.p-b-5 {
+    padding-bottom: 5px;
 }
 .oneby3-width {
     width: 75%;
@@ -148,4 +151,38 @@ table.fixed {
   table td:nth-child(3) , td:nth-child(2), td:nth-child(1){
     width: 20%;
     text-align: center;
+}
+.m-r-3p {
+    margin-right: 3%;
+}
+.m-r-2p {
+    margin-right: 2%;
+}
+.m-l-3p {
+    margin-left: 3%;
+}
+.custom-th {
+    width:35% ;
+    margin-right: 2%;
+    font-weight: normal;
+}
+.w-7 {
+    width:7% ;
+    font-weight: normal;
+}
+.w-4 {
+    width:4% ;
+    font-weight: normal;
+}
+.custom-item-th {
+    text-align: left !important;
+     width: 37%; 
+     margin-left: 2%;
+     font-weight: normal;
+}
+.word-break {
+     word-wrap: break-word;
+}
+.text-left {
+    text-align: left;
 }
