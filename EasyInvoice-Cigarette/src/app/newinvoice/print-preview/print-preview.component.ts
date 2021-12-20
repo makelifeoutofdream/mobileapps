@@ -18,7 +18,6 @@ export class PrintPreviewComponent implements OnInit {
   @Input() profile;
   @Input() invoice;
   @Input() products;
-  public canPrint = true;
   private datetime  :string;
   private orderItems : any;
   private totalQuantity : number;
@@ -40,13 +39,13 @@ export class PrintPreviewComponent implements OnInit {
 }
 
 ngAfterViewInit() {
-// this.prepareInvoice().then(data=>{
-//  setTimeout(() => {
-//    this.pairTo();
-//  },100);
-// }).catch(err=>{
-//  alert('Error whiel preparing preview'+err);
-// })
+this.prepareInvoice().then(data=>{
+ setTimeout(() => {
+   this.pairTo();
+ },100);
+}).catch(err=>{
+ alert('Error whiel preparing preview'+err);
+})
 }
 
 
@@ -56,7 +55,6 @@ this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.i
 this.filterUnselectedProducts().then(data=>{
  this.orderItems=data;
  this.getTotalQuantity();
- this.canPrint = true;
 })
 
 }
@@ -74,42 +72,34 @@ this.filterUnselectedProducts().then(data=>{
     var node = document.getElementById("imageToPrint");
     var  width = this.profile &&  this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
     //html2canvas(node, {
-    domtoimage.toPng(node).then(dataUrl => {
-        //var imgData = canvas.toDataURL("image/png");
+      var element = document.getElementById('imageToPrint');
+      html2canvas(element, {
+        allowTaint: true,
+        useCORS: true,
+        logging: false,
+      }).then(canvas => {
+        var imgData = canvas.toDataURL("image/png");
         let encoder = new EscPosEncoder();
         let result = encoder.initialize();
         let img = new Image();
-        img.src = dataUrl; 
+        img.src = imgData; 
         img.onload  = (e) =>  {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
-          // console.log(ht, "Height");
-          // let finalPrint  = result
-          //   .image(img,width,ht,'threshold',120)
-          //   .encode();
-          //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
-          // console.log('print called');
-          // this.modalCtrl.dismiss();
-          // this.navCtrl.navigateRoot('invoice');
+          let finalPrint  = result
+            .align('left')
+            .image(img,width,ht,'threshold',120)
+            .raw([0x1d,0x56,0x00])
+            .encode();
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-            //this.printService.clearData();
-            // this.printService.printDataToPrinter(finalPrint).then(() => { 
-            //     this.printService.disconnectBluetoothPrinter().then(() => {
-            //       this.printService.clearData();
-            //       this.modalCtrl.dismiss();
-            //     }, (err) => {
-            //       alert('Disconnecting error ::' + err);
-            //     });
-            //   //  this.printService.printDataToPrinter('');
-            //     finalPrint = null;
-               
-            // },(err) => {
-            //   alert("Printing Failed..");
-            //   alert(err);
-            // });
-            this.printService.printImage(img,width,ht);
-            this.modalCtrl.dismiss();
-            this.printService.disconnectBluetoothPrinter();
+            this.printService.clearData();
+            this.printService.printDataToPrinter(finalPrint).then(() => { 
+                this.printService.disconnectBluetoothPrinter();
+                this.modalCtrl.dismiss();
+            },(err) => {
+              alert("Printing Failed..");
+              alert(err);
+            });
         },(error) => {
           alert(error +" actual conncetion error");
           alert("connecting to printer failed..");
