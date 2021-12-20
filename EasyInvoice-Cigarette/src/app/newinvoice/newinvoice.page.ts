@@ -348,6 +348,8 @@ showInvoice(){
   this.navCtrl.navigateForward("invoice");
 }
 
+
+
 getDateFormated(todayDate) : string{
   return (todayDate.getFullYear() + '-' + ((todayDate.getMonth() + 1)) + '-' + todayDate.getDate() );
 }
