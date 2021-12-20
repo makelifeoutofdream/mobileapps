@@ -2488,6 +2488,12 @@
             });
           }
         }, {
+          key: "printImage",
+          value: function printImage(image, width, height) {
+            window.DatecsPrinter.printImage(image, //base64
+            width, height, 1);
+          }
+        }, {
           key: "printData",
           value: function printData(macAddress, data) {
             window.DatecsPrinter.listBluetoothDevices(function (devices) {
@@ -2541,6 +2547,16 @@
           key: "printDataToPrinter",
           value: function printDataToPrinter(data) {
             return this.btSerial.write(data);
+          }
+        }, {
+          key: "clearData",
+          value: function clearData() {
+            this.btSerial.clear();
+          }
+        }, {
+          key: "isConnected",
+          value: function isConnected() {
+            return this.btSerial.isConnected();
           }
         }]);
 

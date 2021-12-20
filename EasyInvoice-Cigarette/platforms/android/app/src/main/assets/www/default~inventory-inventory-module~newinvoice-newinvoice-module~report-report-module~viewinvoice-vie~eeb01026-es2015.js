@@ -2298,6 +2298,10 @@ let PrintService = class PrintService {
             });
         });
     }
+    printImage(image, width, height) {
+        window.DatecsPrinter.printImage(image, //base64
+        width, height, 1);
+    }
     printData(macAddress, data) {
         window.DatecsPrinter.listBluetoothDevices(function (devices) {
             window.DatecsPrinter.connect(devices[0].address, function () {
@@ -2333,6 +2337,12 @@ let PrintService = class PrintService {
     }
     printDataToPrinter(data) {
         return this.btSerial.write(data);
+    }
+    clearData() {
+        this.btSerial.clear();
+    }
+    isConnected() {
+        return this.btSerial.isConnected();
     }
 };
 PrintService.ctorParameters = () => [
