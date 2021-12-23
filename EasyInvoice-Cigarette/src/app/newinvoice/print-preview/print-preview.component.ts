@@ -39,6 +39,10 @@ export class PrintPreviewComponent implements OnInit {
     this.prepareInvoice();
 }
 
+ngOnDestroy() {
+    document.getElementById('imageToPrint').innerHTML = '';
+}
+
 ngAfterViewInit() {
 // this.prepareInvoice().then(data=>{
 //  setTimeout(() => {
@@ -51,14 +55,16 @@ ngAfterViewInit() {
 
 
 async prepareInvoice():Promise<any>{
-this.value=this.generateQRCodeContent();
-this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
-this.filterUnselectedProducts().then(data=>{
- this.orderItems=data;
- this.getTotalQuantity();
- this.canPrint = true;
-})
-
+    //this.value=this.generateQRCodeContent();
+    this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
+    this.filterUnselectedProducts().then(data=>{
+        this.orderItems=data;
+        this.getTotalQuantity();
+        this.canPrint = true;
+          setTimeout(() => {
+            this.pairTo();
+          }, 2000);
+    });
 }
 
   async filterUnselectedProducts(){
@@ -85,6 +91,7 @@ this.filterUnselectedProducts().then(data=>{
           ht = ht + 120;
           console.log(ht, "Height");
           let finalPrint  = result
+             .codepage('windows-1252')
             .image(img,width,ht,'threshold',120)
             .encode();
           //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
@@ -95,14 +102,10 @@ this.filterUnselectedProducts().then(data=>{
             //this.printService.clearData();
             this.printService.printDataToPrinter(finalPrint).then(() => { 
                 this.printService.disconnectBluetoothPrinter().then(() => {
-                  this.printService.clearData();
                   this.modalCtrl.dismiss();
                 }, (err) => {
                   alert('Disconnecting error ::' + err);
-                });
-              //  this.printService.printDataToPrinter('');
-                finalPrint = null;
-               
+                }); 
             },(err) => {
               alert("Printing Failed..");
               alert(err);
