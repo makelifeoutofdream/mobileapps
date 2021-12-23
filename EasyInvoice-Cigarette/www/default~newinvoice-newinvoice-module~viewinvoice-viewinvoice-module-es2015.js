@@ -292,7 +292,7 @@ let PrintPreviewComponent = class PrintPreviewComponent {
                 value: 368
             }, {
                 name: '80mm',
-                value: 520
+                value: 552
             }];
         this.paperSize = '';
     }
