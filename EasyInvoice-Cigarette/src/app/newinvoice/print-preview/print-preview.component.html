@@ -1,22 +1,16 @@
-<!-- <ion-header>
+<ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button size="small" shape="round" (click)="closeModal()" color="medium">
-        <ion-icon slot="start" name="close"></ion-icon> Close
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" (click)="pairTo()"  >
+        <ion-icon slot="start" name="print" class="color-white"></ion-icon> 
+      </ion-button>
+      <ion-button size="small" shape="round" (click)="closeModal()">
+        <ion-icon slot="start" name="close" class="color-white"></ion-icon> 
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header> -->
-<!-- <ion-button color="primary" (click)="pairTo()" [disabled]="!canPrint">
-  <ion-icon name="print"></ion-icon>
-</ion-button> -->
+</ion-header>
 <div class="overflow">
-   <!-- <ion-item class="full-width m-0 printer-dropdown">
-    <ion-label>Printer Size</ion-label>
-    <ion-select [(ngModel)]="paperSize" (ionChange)='pairTo(paperSize)' placeholder="Select printer size">
-     <ion-select-option  *ngFor="let size of printerSizes" [value]="size.value"> {{size.name}}</ion-select-option>
-   </ion-select>
- </ion-item> -->
    <h5 class="p-5 text-center">Print Preview</h5>
   <div id="imageToPrint">  
     <div> 
@@ -175,12 +169,12 @@
         </div>
         <div class="line-separator"></div>
         <div>
-        <div  class="text-center full-width">
+        <!-- <div  class="text-center full-width">
           <ngx-qrcode  
             [elementType]="elementType"
             [errorCorrectionLevel]="correctionLevel"
             [value]="value"></ngx-qrcode>
-        </div>
+        </div> -->
       </div>
       <div class="line-separator"></div>
       <div text-center class="text-center p-b-5">Thank you for shopping.....</div>

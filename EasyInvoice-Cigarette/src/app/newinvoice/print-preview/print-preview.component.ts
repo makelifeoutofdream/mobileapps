@@ -17,7 +17,8 @@ export class PrintPreviewComponent implements OnInit {
 
   @Input() profile;
   @Input() invoice;
-  @Input() products;
+  @Input() products  = [];
+  public canPrint = true;
   private datetime  :string;
   private orderItems : any;
   private totalQuantity : number;
@@ -35,85 +36,125 @@ export class PrintPreviewComponent implements OnInit {
   constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,public navCtrl:NavController) { }
 
   ngOnInit() {
-    //this.prepareInvoice();
+    this.prepareInvoice();
+}
+
+ngOnDestroy() {
+   // document.getElementById('imageToPrint').innerHTML = '';
 }
 
 ngAfterViewInit() {
-    this.prepareInvoice().then(data=>{
-        setTimeout(() => {
-          this.pairTo();
-        },3000);
-    }).catch((err) => {
-       alert('Error whiel preparing preview'+err);
-    })
+// this.prepareInvoice().then(data=>{
+//  setTimeout(() => {
+//    this.pairTo();
+//  },100);
+// }).catch(err=>{
+//  alert('Error whiel preparing preview'+err);
+// })
+}
+
+closeModal() {
+  this.modalCtrl.dismiss();
 }
 
 
-async prepareInvoice():Promise<any>{
-this.value=this.generateQRCodeContent();
-this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
-this.filterUnselectedProducts().then(data=>{
- this.orderItems=data;
- this.getTotalQuantity();
-})
-
+ prepareInvoice() {
+    //this.value=this.generateQRCodeContent();
+    this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
+    this.filterUnselectedProducts().then(data=>{
+        this.orderItems = data;
+        this.getTotalQuantity();
+    });
 }
 
   async filterUnselectedProducts(){
     return this.products.filter(a=>a.quantity!=null && a.quantity!=undefined && a.quantity>0);
   }
 
-  async getTotalQuantity(){
+  getTotalQuantity(){
     this.totalQuantity= this.orderItems.reduce((accum,item)=>accum+item.quantity,0);
   }
 
-  pairTo() {
+  // pairTo() {
     
-    var node = document.getElementById("imageToPrint");
-    var  width = this.profile &&  this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
-    //html2canvas(node, {
-      var element = document.getElementById('imageToPrint');
-      html2canvas(element, {
-        allowTaint: true,
-        useCORS: true,
-        logging: false,
-      }).then(canvas => {
-        var imgData = canvas.toDataURL("image/png");
-        console.log(imgData);
-        let encoder = new EscPosEncoder();
-        let result = encoder.initialize();
-        let img = new Image();
-        img.src = imgData; 
+  //   var node = document.getElementById("imageToPrint");
+  //   var  width = this.profile &&  this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
+  //   html2canvas(node, {
+  //   // domtoimage.toPng(node).then(dataUrl => {
+  //       //var imgData = canvas.toDataURL("image/png");
+  //       let encoder = new EscPosEncoder();
+  //       let result = encoder.initialize();
+  //       let img = new Image();
+  //       img.src = dataUrl; 
+  //       img.onload  = (e) =>  {
+  //         var ht = Math.ceil(node.offsetHeight / 8) * 8;
+  //         ht = ht + 120;
+  //         console.log(ht, "Height");
+  //         let finalPrint  = result
+  //            .codepage('windows-1252')
+  //           .image(img,width,ht,'threshold',120)
+  //           .encode();
+  //         //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
+  //         // console.log('print called');
+  //         // this.modalCtrl.dismiss();
+  //         // this.navCtrl.navigateRoot('invoice');
+  //         this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
+  //           //this.printService.clearData();
+  //           this.printService.printDataToPrinter(finalPrint).then(() => { 
+  //               this.printService.disconnectBluetoothPrinter().then(() => {
+  //                 this.modalCtrl.dismiss();
+  //               }, (err) => {
+  //                 alert('Disconnecting error ::' + err);
+  //               }); 
+  //           },(err) => {
+  //             alert("Printing Failed..");
+  //             alert(err);
+  //           });
+  //       },(error) => {
+  //         alert(error +" actual conncetion error");
+  //         alert("connecting to printer failed..");
+  //         this.modalCtrl.dismiss();
+  //       })
+  //       }
+  //   }).catch(function (error) {
+  //     console.error("oops, something went wrong!", error);
+  //     alert(error);
+  //     this.modalCtrl.dismiss();
+      
+  //   });
+  // }
+
+  pairTo() {
+     var element = document.getElementById('imageToPrint');
+     html2canvas(element, {
+       allowTaint: true,
+       useCORS: true,
+       logging: false,
+     }).then(canvas => {
+       var imgData = canvas.toDataURL("image/png");
+       let encoder = new EscPosEncoder();
+       let result = encoder.initialize();
+       let img = new Image();
+       img.src = imgData; 
         img.onload  = (e) =>  {
-          var ht = Math.ceil(node.offsetHeight / 8) * 8;
-          ht = ht + 120;
-          let finalPrint  = result
-            .align('left')
-            .image(img,width,ht,'threshold',120)
-            .cut('partial')
-            .encode()
-            console.log(finalPrint);
-          this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-            this.printService.printDataToPrinter(finalPrint).then(() => { 
+         var ht = Math.ceil(element.offsetHeight / 8) * 8;
+         ht = ht + 120;
+         result
+           .align('left')
+           .image(img,520,ht,'threshold',128);
+           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
+            this.printService.printDataToPrinter(result.encode()).then(() => { 
                 this.printService.disconnectBluetoothPrinter();
-                this.modalCtrl.dismiss();
-            },(err) => {
+            },() => {
               alert("Printing Failed..");
-              alert(err);
             });
         },(error) => {
-          alert(error +" actual conncetion error");
           alert("connecting to printer failed..");
-          this.modalCtrl.dismiss();
         })
-        }
-    }).catch(function (error) {
-      console.error("oops, something went wrong!", error);
-      alert(error);
-   //   this.modalCtrl.dismiss();
-      
-    });
-  }
+       }
+     });
+    }
+   
 
   generateQRCodeContent(){
     var sellerName=this.getTLVForValue("1",this.profile.companyName);
