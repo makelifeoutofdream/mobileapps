@@ -248,12 +248,6 @@
             });
           }
         }, {
-          key: "printImage",
-          value: function printImage(image, width, height) {
-            window.DatecsPrinter.printImage(image, //base64
-            width, height, 1);
-          }
-        }, {
           key: "printData",
           value: function printData(macAddress, data) {
             window.DatecsPrinter.listBluetoothDevices(function (devices) {
