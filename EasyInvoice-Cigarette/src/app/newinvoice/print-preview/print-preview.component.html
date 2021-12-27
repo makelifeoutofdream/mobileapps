@@ -7,6 +7,9 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header> -->
+<!-- <ion-button color="primary" (click)="pairTo()" [disabled]="!canPrint">
+  <ion-icon name="print"></ion-icon>
+</ion-button> -->
 <div class="overflow">
    <!-- <ion-item class="full-width m-0 printer-dropdown">
     <ion-label>Printer Size</ion-label>
@@ -27,10 +30,10 @@
     <div  class="text-center  letter-space content-center">
       {{profile?.addressLine1}} {{profile?.addressLine1inArabic}}   
     </div>
-    <div  class=" text-center letter-space content-center">
+    <div  class="text-center letter-space content-center">
       {{profile?.addressLine2}} {{profile?.addressLine2InArabic}}   
   </div>
-  <div class="full-width ">
+  <div class="full-width">
       <div text-left class="item-cus-label letter-space title">
         VAT # / ضريبة القيمة المضافة  :
       </div>
@@ -60,25 +63,25 @@
   <div class="line-separator"></div>
   
   <div class="display-flex  full-width">
-    <div class="item-lebel no-wrap-text" style="margin-left: 3%;">
+    <div class="item-lebel no-wrap-text m-l-3p">
       <b>Bill To : </b>
     </div>
   </div>
   <div class="line-separator"></div>
   <div class="full-width">
-    <div  class=" full-width" style="margin-left: 3%; word-wrap: break-word;" >
+    <div  class="full-width word-break m-l-3p">
       {{invoice?.customer.name}} 
     </div>
-    <div  class=" full-width letter-space" style="margin-left: 3%; word-wrap: break-word;" >
+    <div  class="full-width letter-space word-break m-l-3p">
       {{invoice?.customer.nameInArabic}} 
     </div>
     
   </div>
   <div class="full-width">
-    <div  class=" full-width" style="margin-left: 3%; word-wrap: break-word;" >
+    <div  class="full-width word-break m-l-3p" >
       {{invoice?.customer.street}},{{invoice?.customer.city}} 
     </div>
-    <div  class=" full-width letter-space" style="margin-left: 3%; word-wrap: break-word;" >
+    <div  class="full-width letter-space word-break m-l-3p"  >
       {{invoice?.customer.streetInArabic}},{{invoice?.customer.cityInArabic }} 
     </div>
     
@@ -87,30 +90,30 @@
     <div  class="item-cus-label letter-space" >
        VAT # / ضريبة القيمة المضافة : 
     </div>
-    <div  text-right class="item-value ">
+    <div  text-right class="item-value">
       {{invoice?.customer.vatNumber}}
     </div>
     
   </div>
          <div class="line-separator"></div>
-        <table style="width:100%" class="fixed">
+        <table  class="fixed full-width">
           <thead>
             <tr>
   
-              <th style="text-align: left; width: 37%; margin-left: 2%;font-weight: normal;">
-                <div style="margin-left: 3%;">Item</div>
-                <div class="letter-space" style="margin-left: 3%;">العنصر</div>
+              <th class="custom-item-th">
+                <div class="m-l-3p">Item</div>
+                <div class="letter-space m-l-3p">العنصر</div>
               </th>
-              <th style="width:4% ;font-weight: normal;">
+              <th class="w-4">
                 <div>Qty</div>
                 <div class="letter-space">الكمية</div>
               </th>
-              <th style="width:7% ;font-weight: normal;">
+              <th class="w-7">
                 <div>Price</div>
                 <div class="letter-space">السعر</div>
               </th>
-              <th style="width:35% ;margin-right: 2%;font-weight: normal;">
-                <div style="margin-right: 2%;">Amount</div>
+              <th class="custom-th">
+                <div class="m-r-2p">Amount</div>
                 <div class="letter-space">المبلغ</div>
               </th>
                
@@ -118,22 +121,18 @@
             </tr>
           </thead>
           <tr *ngFor="let order of orderItems">
-            <td style="text-align: left;margin-left: 3%;">
-              <div style="margin-left: 3%; " class="letter-space">
+            <td class="m-l-3p text-left">
+              <div  class="letter-space m-l-3p">
                 {{order.name}} {{order.nameInArabic}}
               </div>
             </td>
             <td>{{order.quantity}}</td>
             <td>{{order.unitPrice }}</td>
             <td >
-              <div style="margin-right: 3%;">
+              <div class="m-r-3p">
                 {{(order.unitPrice * order.quantity) | number : '1.2-2'}}
               </div>
-              
             </td>
-  
-            
-           
           </tr>
         </table>
         <div class="line-separator"></div>
@@ -143,53 +142,57 @@
           </div>
         </div>
         <div class="display-flex full-width">
-          <div  class="content-right item-label" style="width: 100%;">
+          <div  class="content-right item-label full-width">
             Total Invoice Value(Excl.VAT) : {{(invoice?.total-invoice?.tax) | number : '1.2-2'}}
           </div>
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label content-right" style="width: 100%;">
+          <div  class="item-label content-right full-width">
             VAT Payable in SAR ({{profile?.vat}}%): {{invoice?.tax | number : '1.2-2'}}
           </div>
           
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label content-right" style="width: 100%;">
+          <div  class="item-label content-right full-width">
             Gross Amount in SAR : {{invoice?.total | number : '1.2-2'}}
           </div>
         </div>
         <div class="line-separator"></div>
         <div class="display-flex full-width">
-          <div  class="item-label content-right" style="width: 100%;">
+          <div  class="item-label content-right full-width">
           Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}
           </div>
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label content-right" style="width: 100%;">
+          <div  class="item-label content-right full-width">
           Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}
           </div>
         </div>
         <div class="display-flex full-width">
-          <div  class="item-label title content-right" style="width: 100%;">
+          <div  class="item-label title content-right full-width">
           Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}
           </div>
         </div>
         <div class="line-separator"></div>
-        <div style="width:300px;height:300px" >
-        <div style="margin-left: 10%;" class="text-center full-width">
+        <div>
+        <!-- <div  class="text-center full-width">
           <ngx-qrcode  
             [elementType]="elementType"
             [errorCorrectionLevel]="correctionLevel"
             [value]="value"></ngx-qrcode>
-        </div>
+        </div> -->
       </div>
       <div class="line-separator"></div>
+<<<<<<< HEAD
       <div text-center class="text-center">Thanks!!!</div>
       <p></p>
       <p></p>
       <div style="height: 40px;">
 
       </div>
+=======
+      <div text-center class="text-center p-b-5">Thank you for shopping.....</div>
+>>>>>>> 1601ef8ec210367f41c70c11f82c2ca9044c84a5
     </div>
   </div>
 </div>
