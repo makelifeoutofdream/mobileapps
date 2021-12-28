@@ -26,6 +26,7 @@ export class InvoicePage implements OnInit {
 
   getAllInvoices(){
     this.dbService.getAllInvoices().then(data=>{
+      console.log(data);
       this.invoiceList=data ;
       const today = new Date();
       today.setHours(0);

@@ -54,6 +54,7 @@
     "@techiediaries/ngx-qrcode": "^9.1.0",
     "@types/papaparse": "^5.2.6",
     "chart.js": "^3.4.1",
+    "cordova-android": "8.1.0",
     "cordova-res": "^0.15.3",
     "cordova-sqlite-storage": "^6.0.0",
     "dom-to-image": "^2.6.0",
@@ -89,7 +90,6 @@
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
-    "cordova-android": "^8.1.0",
     "cordova-browser": "^6.0.0",
     "cordova-plugin-android-permissions": "^1.1.2",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
@@ -146,8 +146,8 @@
       "cordova-plugin-sim": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }

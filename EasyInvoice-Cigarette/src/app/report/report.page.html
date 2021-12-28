@@ -38,44 +38,58 @@
       </ion-button>
     </ion-col>
   </ion-row>
-  <ion-row style="float:right">
-    
-  </ion-row>
-  <ion-item-divider></ion-item-divider>
-  
-  <ion-list>
-    <ion-list-header>
-      <ion-col size="3">Date</ion-col>
-      <ion-col size="3" style="text-align: center;">Customer</ion-col>
-      <ion-col style="text-align: right;padding-right: 5%;" size="4">Total</ion-col>
-      <ion-col size="2">Delete</ion-col>
-    </ion-list-header>
-    <ion-item *ngFor= "let inv of filterInvoiceList" >
-      
-        
-        
+  <div class="line-separator"></div>
+  <div class="full-width" id="imageToPrint">
+    <h5 class="text-center page-heading">Report Summary</h5>
+    <div class="display-flex  full-width">
+        <div  class="summary-label">
+          Total Cost :
+        </div>
+        <div text-right class="item-value letter-space">
+          {{cost | number : '1.2'}}
+        </div>
+    </div>
+    <div class="display-flex  full-width">
+        <div  class="summary-label">
+          Total Revenue :
+        </div>
+        <div text-right class="item-value letter-space">
+          {{revenue | number : '1.2'}} 
+        </div>
+    </div>
+    <div class="display-flex  full-width">
+      <div  class="summary-label">
+        Total Profit :
+      </div>
+      <div text-right class="item-value letter-space">
+        {{totalProfit | number : '1.2'}}
+      </div>
+    </div>
+    <div class="display-flex  full-width">
+      <div  class="summary-label">
+        Total Collection :
+      </div>
+      <div text-right class="item-value letter-space">
+        {{collection }}
+      </div>
+    </div>
+    <div class="line-separator"></div>
+    <ion-list class="m-b-10">
+      <ion-list-header class="list-header">
+        <ion-col size="3">Date</ion-col>
+        <ion-col size="3" class="text-center">Customer</ion-col>
+        <ion-col class="cust-col" size="4">Total</ion-col>
+        <ion-col size="2" *ngIf="isNotPrint" >Delete</ion-col>
+      </ion-list-header>
+        <ion-row *ngFor= "let inv of filterInvoiceList" class="list-row">
           <ion-col size="3" (click)="viewInvoice(inv)">{{inv.invoiceDate | date : short}}</ion-col>
-          <ion-col size="3" style="text-align: center;" (click)="viewInvoice(inv)">{{inv.customer.name}}</ion-col>
-          <ion-col style="text-align: right;" size="4" (click)="viewInvoice(inv)">{{inv.total}}</ion-col>
-          <ion-col size="2"  style="float: right;" >
-          <ion-button style="margin-left: 3%;"  (click)="presentDeleteAlertConfirm(inv)">
-            <ion-icon style="text-align: right;" name="trash-bin"></ion-icon>
-          </ion-button>
-        </ion-col>
-    </ion-item>
-  </ion-list>    
-
-</ion-content>
-<ion-content  style="max-height: 10%;margin-top: 2%;" slot="fixed">
-  <div class="display-flex  full-width">
-    <ion-badge style="margin-left: 1%;width: 50%;" color="primary">Total Cost : {{cost | number : '1.2'}}</ion-badge>
-    <ion-badge style="margin-left: 1%;width:44%" color="primary">Total Revenue : {{revenue | number : '1.2'}}</ion-badge>
-    
-  </div>
-  <div class="display-flex  full-width">
-    
-    <ion-badge style="margin-left: 1%;width: 50%;" color="primary">Total Profit : {{(totalProfit) | number : '1.2'}}</ion-badge>
-    <ion-badge style="margin-left: 1%;width: 44% ;" color="primary">Total Collection : {{collection }}</ion-badge>
+          <ion-col size="3" class="text-center" (click)="viewInvoice(inv)">{{inv.customer.name}}</ion-col>
+          <ion-col class="text-right" size="4" (click)="viewInvoice(inv)">{{inv.total}}</ion-col>
+          <ion-col size="2" >
+              <ion-icon  name="trash" (click)="presentDeleteAlertConfirm(inv)" *ngIf="isNotPrint" class="action-remove"></ion-icon>
+          </ion-col>
+        </ion-row>
+    </ion-list>    
   </div>
 
 </ion-content>

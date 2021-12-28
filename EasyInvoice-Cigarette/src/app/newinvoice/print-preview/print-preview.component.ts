@@ -30,7 +30,7 @@ export class PrintPreviewComponent implements OnInit {
     value: 368
   }, {
     name: '80mm',
-    value: 520
+    value: 552
   }];
   paperSize: any = '';
   constructor(public printService : PrintService, public dbService:DbService,private modalCtrl: ModalController,public navCtrl:NavController) { }
@@ -39,9 +39,6 @@ export class PrintPreviewComponent implements OnInit {
     this.prepareInvoice();
 }
 
-ngOnDestroy() {
-    document.getElementById('imageToPrint').innerHTML = '';
-}
 
 ngAfterViewInit() {
 // this.prepareInvoice().then(data=>{
@@ -55,10 +52,11 @@ ngAfterViewInit() {
 
 
 async prepareInvoice():Promise<any>{
-    //this.value=this.generateQRCodeContent();
+  console.log(this.invoice , this.products);
+    this.value=this.generateQRCodeContent();
     this.datetime=new Date( this.invoice.invoiceDate).getDate()+'-'+ new Date(this.invoice.invoiceDate).getMonth()+'-'+ new Date(this.invoice.invoiceDate).getFullYear()+' '+new Date(this.invoice.invoiceDate).getHours()+':'+new Date(this.invoice.invoiceDate).getMinutes()+':'+new Date(this.invoice.invoiceDate).getSeconds();
     this.filterUnselectedProducts().then(data=>{
-        this.orderItems=data;
+        this.orderItems = data;
         this.getTotalQuantity();
         this.canPrint = true;
           setTimeout(() => {
@@ -89,52 +87,29 @@ async prepareInvoice():Promise<any>{
         img.onload  = (e) =>  {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
-          console.log(ht, "Height");
           let finalPrint  = result
-<<<<<<< HEAD
-            .align('left')
-            .image(img,width,ht,'threshold',180).initialize()
-=======
-             .codepage('windows-1252')
             .image(img,width,ht,'threshold',120)
->>>>>>> 1601ef8ec210367f41c70c11f82c2ca9044c84a5
             .encode();
-          //   this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
-          // console.log('print called');
-          // this.modalCtrl.dismiss();
-          // this.navCtrl.navigateRoot('invoice');
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
-            //this.printService.clearData();
             this.printService.printDataToPrinter(finalPrint).then(() => { 
-<<<<<<< HEAD
-                this.printService.disconnectBluetoothPrinter();
-                this.modalCtrl.dismiss();
-                this.printService.clearData();
-                
-                finalPrint = null;
-               
-=======
                 this.printService.disconnectBluetoothPrinter().then(() => {
                   this.modalCtrl.dismiss();
                 }, (err) => {
                   alert('Disconnecting error ::' + err);
+                  this.modalCtrl.dismiss();
                 }); 
->>>>>>> 1601ef8ec210367f41c70c11f82c2ca9044c84a5
             },(err) => {
               alert("Printing Failed..");
-              alert(err);
+              this.modalCtrl.dismiss();
             });
         },(error) => {
-          alert(error +" actual conncetion error");
           alert("connecting to printer failed..");
           this.modalCtrl.dismiss();
         })
         }
     }).catch(function (error) {
       console.error("oops, something went wrong!", error);
-      alert(error);
       this.modalCtrl.dismiss();
-      
     });
   }
 

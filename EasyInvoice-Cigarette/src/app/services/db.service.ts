@@ -25,7 +25,9 @@ export class DbService {
   private customersKey="customers";
   private inventoryKey="inventories";
   private invoiceKey="invoices";
+  private creditKey = "credits";
   private invoiceNumberKey="invoiceNumber";
+  private creditNumKey = "creditNumber";
   private profileKey="profile";
   private customerCodeKey="customerCode";
   private supplierCodeKey="supplierCode";
@@ -34,6 +36,8 @@ export class DbService {
   private purchaseCodeKey="purchaseCode";
   private inventoryCodeKey="inventoryCode";
   private invoices : Invoice[] ;
+  private credits: any;
+  private InvoiceSummary: any;
   private inventory : Inventory;
   private inventories : Inventory[];
   private customer : Customer;
@@ -42,6 +46,7 @@ export class DbService {
   private user : User;
   private  users:User[]
   public codeConstant="SA-RY-";
+  public creditCode ="CRE";
   public inventoyCodeConstant="STO";
   public purchaseCodeConstant="PUR";
   public customerCodeConstant="CUS";
@@ -253,6 +258,19 @@ export class DbService {
     }
   }
 
+  async getInvoiceByID(invoiceNumber):Promise<any>{
+    try{
+      const result =await this.storage.get(this.invoiceKey);
+        this.InvoiceSummary = JSON.parse(result).filter((res) => {
+          return  res.invoiceNumber == invoiceNumber;
+        });
+        return this.InvoiceSummary && this.InvoiceSummary.length > 0 ? this.InvoiceSummary[0] : null;
+    }catch(reason){
+      console.log(reason);
+      this.toastService.presentToast("Failed to load the invoices");   
+    }
+  }
+
   async createOrUpdateInvoice(invoice :Invoice) : Promise<any>{
     try{
       const value=await this.storage.get(this.invoiceKey);
@@ -267,9 +285,19 @@ export class DbService {
         var index = this.invoices.findIndex(i => i.id == invoice.id);
         this.invoices[index]=invoice;
       }
-      
-      
       this.storage.set(this.invoiceKey,JSON.stringify(this.invoices) );
+      return true;
+    }catch(reason){
+      console.log(reason);
+      return false;
+    }
+  }
+
+  async createCredit(credit) : Promise<any>{
+    try{
+        credit.id=uuidv4();
+        this.credits.push(credit);
+      this.storage.set(this.creditKey,JSON.stringify(this.credits) );
       return true;
     }catch(reason){
       console.log(reason);
@@ -288,6 +316,20 @@ export class DbService {
     return invoiceNumber;
     
   }
+
+  async incrementCreditNumber():Promise<any>{
+    let creditNumber : number; 
+    creditNumber =await this.storage.get(this.creditNumKey);
+    if(creditNumber ==null || creditNumber==undefined){
+      creditNumber = 0;
+    }
+    creditNumber = creditNumber + 1;
+    await this.storage.set(this.creditNumKey, creditNumber);
+    return creditNumber;
+    
+  }
+
+
 
   async getCustomerCode():Promise<any>{
     let customerCode : number; 

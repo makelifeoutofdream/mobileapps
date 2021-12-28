@@ -16,6 +16,8 @@ import { sprintf } from "sprintf-js";
 import { PrintService } from '../services/print.service';
 import { InvoiceItem } from '../services/invoiceitem';
 import { promise } from 'protractor';
+import * as domtoimage from 'dom-to-image';
+
 @Component({
   selector: 'app-report',
   templateUrl: './report.page.html',
@@ -34,6 +36,7 @@ export class ReportPage implements OnInit {
   private cost: number = 0;
   private revenue: number = 0;
   private collection: number = 0;
+  isNotPrint: any = true;
   constructor(public dbService: DbService, public toastService: ToastserviceService, private printService: PrintService,
     public navCtrl: NavController, private dataService: DataService,public alertController: AlertController,
     public loadingController: LoadingController) { }
@@ -125,7 +128,6 @@ export class ReportPage implements OnInit {
     } else {
       this.filterInvoiceList = this.invoiceList;
     }
-
     return this.filterInvoiceList;
   }
   async filterInvoices(): Promise<any> {
@@ -279,12 +281,41 @@ export class ReportPage implements OnInit {
   }
 
   printBill() {
-    try {
-      this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, this.getFormatedContent());
-
-    } catch (reason) {
-      this.toastService.presentToast("Print Failed" + reason)
-    }
+    this.isNotPrint = false;
+    var node = document.getElementById("imageToPrint");
+    var  width = this.profile &&  this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
+    domtoimage.toPng(node).then(dataUrl => {
+        let encoder = new EscPosEncoder();
+        let result = encoder.initialize();
+        let img = new Image();
+        img.src = dataUrl; 
+        img.onload  = (e) =>  {
+          var ht = Math.ceil(node.offsetHeight / 8) * 8;
+          ht = ht + 120;
+          let finalPrint  = result
+            .image(img,width,ht,'threshold',120)
+            .encode();
+          this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
+            this.printService.printDataToPrinter(finalPrint).then(() => { 
+                this.printService.disconnectBluetoothPrinter().then(() => {
+                  this.isNotPrint = true;
+                }, (err) => {
+                  alert('Disconnecting error ::' + err);
+                  this.isNotPrint = true;
+                }); 
+            },(err) => {
+              alert("Printing Failed..");
+              this.isNotPrint = true;
+            });
+        },(error) => {
+          alert("connecting to printer failed..");
+          this.isNotPrint = true;
+         })
+        }
+    }).catch(function (error) {
+      console.error("oops, something went wrong!", error);
+      this.modalCtrl.dismiss();
+    });
 
   }
   showReportsHome() {

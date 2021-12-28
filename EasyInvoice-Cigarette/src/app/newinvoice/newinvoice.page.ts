@@ -61,7 +61,6 @@ ionViewWillEnter(){
   this.applyVat=true;
   this.dbService.getProfile().then(data=>{
     this.profile=data;
-    console.log(this.profile.canEnableUnit)
   });
   this.resetInvoiceForm();
 }
@@ -331,7 +330,7 @@ html2canvas(node, {
     ht = ht + 120;
     result
       .align('left')
-      .image(img,520,ht,'threshold',128);
+      .image(img,552,ht,'threshold',128);
     this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());
     console.log('print called');
 }

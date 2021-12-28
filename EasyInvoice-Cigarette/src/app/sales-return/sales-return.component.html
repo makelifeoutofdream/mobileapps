@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainmenu"> 
+      </ion-menu-button>
+    </ion-buttons> 
+    <ion-title>Returns</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="sales-returns">
+    <ion-item class="full-width display-flex">
+      <ion-label position="floating" class="c-color">Invoice #</ion-label>
+      <ion-input [formControl]="invoiceNo"></ion-input>
+      <ion-icon name="search" slot="end" class="font-16" (click)="getInvoiceByID()"></ion-icon>
+    </ion-item>
+    <div class="line-separator"></div>
+    <div *ngIf="invoiceSummary">
+      <div class="invoice-summary">
+        <div class="display-flex full-width m-t-5">
+              <div  class="summary-label">
+                Customer Name:
+              </div>
+              <div text-center class="item-value">
+                <span class="m-r-5">{{ invoiceSummary?.customer?.contactPersonName}}</span>
+                <span>{{ invoiceSummary?.customer?.contactPersonNameInArabic}}</span>
+              </div>
+        </div>
+        <div class="display-flex full-width m-t-5">
+            <div  class="summary-label">
+              Amount Paid:
+            </div>
+            <div  class="item-value">
+              {{ invoiceSummary?.amountPaid | number : '1.2-2'}}
+            </div>
+        </div>
+        <div class="display-flex full-width m-t-5">
+            <div  class="summary-label">
+              Balance Amount:
+            </div>
+            <div  class="item-value">
+              {{ invoiceSummary?.balanceAmount | number : '1.2-2'}}
+            </div>
+        </div>
+        <div class="display-flex full-width m-t-5">
+            <div  class="summary-label">
+              Total Amount:
+            </div>
+            <div text-right class="item-value letter-space">
+              {{ invoiceSummary?.total}}
+            </div>
+        </div>
+      </div>
+      <div class="line-separator"></div>
+        <div class="invoice-items-list">
+          <ion-list>
+            <ion-item *ngFor="let item of invoiceSummary?.invoiceItems; let i=index" class="full-width">
+                <ion-label>
+                    <p class="order-id">Name #{{item.name}}</p>
+                    <p class="dev-date">
+                      <span>Purchase Price: </span>
+                      <span class="dev-date">{{item.purchasePrice}}</span>
+                    </p>
+                    <p class="dev-date">
+                      <span>Unit Price: </span>
+                      <span class="dev-date">{{item.unitPrice}}</span>
+                    </p>
+                    <p class="dev-date">
+                      <span>Quantity: </span>
+                      <span class="dev-date">{{item.quantity}}</span>
+                    </p>
+                </ion-label>
+                <ion-checkbox slot="start" [(ngModel)]="checked[i]"></ion-checkbox>
+                <ion-item slot="end" class="w-40">
+                  <ion-label position="floating" class="c-color">to return</ion-label>
+                  <ion-input type="number" [(ngModel)]="item.quantity" [disabled]="!checked[i]" (ionChange)="calculateBalAmount(item)"></ion-input>
+                </ion-item>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+</ion-content>
+<ion-footer>
+  <ion-row text-right class="text-right">
+    <ion-col > 
+      <ion-button color="primary" (click)="printBill()">
+        <ion-icon name="print"></ion-icon>
+      </ion-button>
+      <ion-button   (click)="submitBill()" class="button-success">
+        <ion-icon name="checkmark"></ion-icon>  
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

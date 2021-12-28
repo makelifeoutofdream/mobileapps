@@ -102,6 +102,10 @@ const routes: Routes = [
   {
     path: 'newexpense',
     loadChildren: () => import('./newexpense/newexpense.module').then( m => m.NewexpensePageModule)
+  },
+  {
+    path:'salesreturns',
+    loadChildren: () => import('./sales-return/sales-return.module').then( m => m.SalesReturnModule)
   }
 ];
 
