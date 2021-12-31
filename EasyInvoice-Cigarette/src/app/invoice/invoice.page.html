@@ -9,22 +9,24 @@
   </ion-toolbar>
 </ion-header>
   <ion-content>
-    
+    <h5 class="text-center page-heading">Invoices</h5>
     <ion-list>
-      
-      <ion-list-header>
+      <ion-list-header class="list-header">
         <ion-col size="4">Date</ion-col>
-        <ion-col size="4" style="text-align: center;">Customer</ion-col>
-        <ion-col style="text-align: right;padding-right: 5%;" size="4">Total</ion-col>
+        <ion-col size="4" class="text-center">Customer</ion-col>
+        <ion-col  size="4" class="text-right">Total</ion-col>
+        <!-- <ion-col size="2"></ion-col> -->
       </ion-list-header>  
-      <ion-item *ngFor= "let inv of invoiceList">
-            <ion-col size="4">{{inv.invoiceDate | date : short}}</ion-col>
-            <ion-col size="4" style="text-align: center;">{{inv.customer.name}}</ion-col>
-            <ion-col size="4" style="text-align: right;">{{inv.total}}</ion-col>
-          
-      
-      </ion-item>
-    </ion-list>    
+      <ion-row *ngFor= "let inv of invoiceList" class="list-row">
+            <ion-col size="4">{{inv.invoiceDate | date : 'dd/MM/yyyy' }}</ion-col>
+            <ion-col size="4" class="text-center">{{inv.customer.name}}</ion-col>
+            <ion-col size="4" class="text-right">{{inv.total}}</ion-col>
+            <!-- <ion-col size="2" >
+              <ion-icon  name="create-outline"  class="action-edit" (click)="editInvoice(inv)"></ion-icon>
+          </ion-col> -->
+      </ion-row>
+    </ion-list>   
+    <div class="line-separator"></div> 
     
   </ion-content>
   <ion-footer>

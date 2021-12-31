@@ -93,9 +93,9 @@
         </thead>
         <tr *ngFor= "let item of products">
           <td>{{item.name}}</td>
-          <td><ion-input [disabled]="!profile.canEnableUnit" (ionChange)="calculateInvoiceTotal(item)" type="number" [(ngModel)]="item.unitPrice" ></ion-input></td>
+          <td><ion-input [disabled]="!profile.canEnableUnit && isSubmitted" (ionChange)="calculateInvoiceTotal(item)" type="number" [(ngModel)]="item.unitPrice" ></ion-input></td>
           <td><ion-input disabled type="number" [(ngModel)]="item.displayBalanceQuantity"  (keypress)="numericOnly($event)"></ion-input></td>
-          <td><ion-input (ionChange)="calculateInvoiceTotal(item)" type="number" [(ngModel)]="item.quantity"  (keypress)="numericOnly($event)"></ion-input></td>
+          <td><ion-input [disabled]="isSubmitted" (ionChange)="calculateInvoiceTotal(item)" type="number" [(ngModel)]="item.quantity"  (keypress)="numericOnly($event)"></ion-input></td>
           <td><ion-input disabled type="number" [(ngModel)]="item.unitPrice*item.quantity" ></ion-input></td>
         </tr>
       </table>
@@ -262,7 +262,7 @@
 <ion-footer>
   <ion-row style="float:right">
     <ion-col >
-    <ion-button  color="primary" (click)="submitBill()">
+    <ion-button  color="primary" (click)="doSubmitBill()" [disabled]="isSubmitted">
       <ion-icon name="checkmark"></ion-icon>
      
       
