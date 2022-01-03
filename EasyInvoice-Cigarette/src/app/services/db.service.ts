@@ -36,7 +36,7 @@ export class DbService {
   private purchaseCodeKey="purchaseCode";
   private inventoryCodeKey="inventoryCode";
   private invoices : Invoice[] ;
-  private credits: any;
+  public credits: any [] = [];
   private InvoiceSummary: any;
   private inventory : Inventory;
   private inventories : Inventory[];

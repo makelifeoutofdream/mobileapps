@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { PrintPreviewComponent } from '../newinvoice/print-preview/print-preview.component';
 import { Customer } from '../services/customer';
 import { DbService } from '../services/db.service';
@@ -19,10 +19,10 @@ export class SalesReturnComponent implements OnInit {
    checked: any[] =  [];
    customerList: Customer[];
    profile: Profile;
-
+   isSubmitted: any = false;
 
   constructor(private dbService: DbService, public tostService:ToastserviceService, public navCtrl:NavController,
-    public modalController: ModalController) { }
+    public modalController: ModalController, public alertController: AlertController) { }
 
   ngOnInit() {
     this.dbService.getAllCustomers().then((data) => this.customerList = data);
@@ -32,15 +32,18 @@ export class SalesReturnComponent implements OnInit {
   }
 
   getInvoiceByID() {
+    this.isSubmitted = false;
       this.dbService.getInvoiceByID(this.invoiceNo.value).then((invoice) => {
           this.invoiceSummary = invoice;
-          this.dbService.incrementCreditNumber().then(data=>{
-            if(data == null || data == undefined){
-              data = 1;
-            }
-            this.invoiceSummary.invoiceNumber = this.dbService.codeConstant + this.dbService.creditCode + data;
-            this.invoiceSummary.invoiceDate = new Date();
-          });
+          if (invoice) {
+            this.dbService.incrementCreditNumber().then(data=>{
+              if(data == null || data == undefined){
+                data = 1;
+              }
+              this.invoiceSummary.invoiceNumber = this.dbService.codeConstant + this.dbService.creditCode + data;
+              this.invoiceSummary.invoiceDate = new Date();
+            });
+          }
       }).catch((error)  => {
           alert("Invoice not found!!");
       });
@@ -49,6 +52,31 @@ export class SalesReturnComponent implements OnInit {
   calculateBalAmount(item) {
     item.balanceAmount +=  (item.quantity * item.purchasePrice);
   }
+
+  async doSubmitBill() {
+    const alert = await this.alertController.create({
+      cssClass: 'confirm-dialog',
+      header: 'Submit Returns',
+      message: 'Returns cannot be modified once submitted. Do you wish to return?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            alert.dismiss();
+          }
+        }, {
+          text: 'Submit',
+          handler: () => {
+            this.submitBill();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
 
 
   submitBill() {
@@ -63,6 +91,8 @@ export class SalesReturnComponent implements OnInit {
           this.invoiceSummary.customer.balance=this.invoiceSummary.balanceAmount;
           this.dbService.UpdateCustomer(this.invoiceSummary.customer);
           this.tostService.presentToast("Bill submitted successfully");
+          this.isSubmitted = true;
+          this.checked =  [];
           
         })
       });

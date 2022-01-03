@@ -70,7 +70,7 @@
                       <span class="dev-date">{{item.quantity}}</span>
                     </p>
                 </ion-label>
-                <ion-checkbox slot="start" [(ngModel)]="checked[i]"></ion-checkbox>
+                <ion-checkbox slot="start" [(ngModel)]="checked[i]" [disabled]="isSubmitted" ></ion-checkbox>
                 <ion-item slot="end" class="w-40">
                   <ion-label position="floating" class="c-color">to return</ion-label>
                   <ion-input type="number" [(ngModel)]="item.quantity" [disabled]="!checked[i]" (ionChange)="calculateBalAmount(item)"></ion-input>
@@ -87,7 +87,7 @@
       <ion-button color="primary" (click)="printBill()">
         <ion-icon name="print"></ion-icon>
       </ion-button>
-      <ion-button   (click)="submitBill()" class="button-success">
+      <ion-button   (click)="doSubmitBill()" [disabled]="!invoiceSummary || isSubmitted" class="button-success">
         <ion-icon name="checkmark"></ion-icon>  
       </ion-button>
     </ion-col>
