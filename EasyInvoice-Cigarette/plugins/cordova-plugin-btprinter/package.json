@@ -1,5 +1,5 @@
 {
-  "_from": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+  "_from": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
   "_id": "cordova-plugin-btprinter@0.0.1-dev",
   "_inBundle": false,
   "_integrity": "",
@@ -7,18 +7,18 @@
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
-    "rawSpec": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
-    "saveSpec": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
-    "fetchSpec": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+    "raw": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
+    "rawSpec": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
+    "saveSpec": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
+    "fetchSpec": null,
     "gitCommittish": null
   },
   "_requiredBy": [
     "#DEV:/",
     "#USER"
   ],
-  "_resolved": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git#d2c922b7ddbc624b7aa70c2ca917cb9d692257f3",
-  "_spec": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git",
+  "_resolved": "github:CesarBalzer/Cordova-Plugin-BTPrinter#d2c922b7ddbc624b7aa70c2ca917cb9d692257f3",
+  "_spec": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
   "_where": "/Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette",
   "author": {
     "name": "Cesar E. Balzer"

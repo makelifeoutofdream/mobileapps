@@ -1,27 +1,19 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
       "pluginId": "cordova-plugin-device",
       "clobbers": [
         "device"
-      ]
-    },
-    {
-      "id": "cordova-plugin-ionic-keyboard.keyboard",
-      "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
-      "pluginId": "cordova-plugin-ionic-keyboard",
-      "clobbers": [
-        "window.Keyboard"
-      ]
-    },
-    {
-      "id": "cordova-plugin-ionic-webview.IonicWebView",
-      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-      "pluginId": "cordova-plugin-ionic-webview",
-      "clobbers": [
-        "Ionic.WebView"
       ]
     },
     {
@@ -33,11 +25,27 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-statusbar.statusbar",
-      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-      "pluginId": "cordova-plugin-statusbar",
+      "id": "cordova-plugin-ionic-webview.IonicWebView",
+      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
+      "pluginId": "cordova-plugin-ionic-webview",
       "clobbers": [
-        "window.StatusBar"
+        "Ionic.WebView"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic-keyboard.keyboard",
+      "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
+      "pluginId": "cordova-plugin-ionic-keyboard",
+      "clobbers": [
+        "window.Keyboard"
+      ]
+    },
+    {
+      "id": "cordova-sqlite-storage.SQLitePlugin",
+      "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+      "pluginId": "cordova-sqlite-storage",
+      "clobbers": [
+        "SQLitePlugin"
       ]
     },
     {
@@ -262,22 +270,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-dreamover-uid.uid",
-      "file": "plugins/cordova-plugin-dreamover-uid/www/uid.js",
-      "pluginId": "cordova-plugin-dreamover-uid",
-      "clobbers": [
-        "cordova.plugins.uid"
-      ]
-    },
-    {
-      "id": "cordova-plugin-unique-device-id2.UniqueDeviceID",
-      "file": "plugins/cordova-plugin-unique-device-id2/www/uniqueid.js",
-      "pluginId": "cordova-plugin-unique-device-id2",
-      "merges": [
-        "window.plugins.uniqueDeviceID"
-      ]
-    },
-    {
       "id": "cordova-plugin-sim.Sim",
       "file": "plugins/cordova-plugin-sim/www/sim.js",
       "pluginId": "cordova-plugin-sim",
@@ -292,23 +284,16 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "merges": [
         "window.plugins.sim"
       ]
-    },
-    {
-      "id": "cordova-sqlite-storage.SQLitePlugin",
-      "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-      "pluginId": "cordova-sqlite-storage",
-      "clobbers": [
-        "SQLitePlugin"
-      ]
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-ionic-keyboard": "2.2.0",
+    "cordova-plugin-whitelist": "1.3.5",
+    "cordova-plugin-statusbar": "2.4.3",
+    "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-splashscreen": "5.0.4",
     "cordova-plugin-ionic-webview": "4.2.1",
-    "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-statusbar": "2.4.2",
-    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-ionic-keyboard": "2.2.0",
+    "cordova-sqlite-storage": "6.0.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "1.1.1",
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-android-permissions": "1.1.2",
@@ -316,9 +301,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-btprinter": "0.1.0-dev",
     "cordova-plugin-datecs-printer": "0.10.0",
-    "cordova-plugin-dreamover-uid": "1.3.0",
-    "cordova-plugin-unique-device-id2": "2.0.0",
-    "cordova-plugin-sim": "1.3.3",
-    "cordova-sqlite-storage": "6.0.0"
+    "cordova-plugin-sim": "1.3.3"
   };
 });

@@ -7,23 +7,26 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "cordova-plugin-ionic-keyboard": {
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
     "cordova-plugin-ionic-webview": {
       "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "cordova-plugin-splashscreen": {
+    "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-whitelist": {
+    "cordova-sqlite-storage": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
     "uk.co.workingedge.cordova.plugin.sqliteporter": {
@@ -48,16 +51,7 @@
     "cordova-plugin-datecs-printer": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "cordova-plugin-dreamover-uid": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-unique-device-id2": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
     "cordova-plugin-sim": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-sqlite-storage": {
       "PACKAGE_NAME": "io.ionic.starter"
     }
   },

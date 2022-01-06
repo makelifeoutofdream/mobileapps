@@ -64,24 +64,31 @@
       /* harmony import */
 
 
-      var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _data_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ../data.service */
+      "R7Hv");
+      /* harmony import */
+
+
+      var _services_db_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ../services/db.service */
       "ajt+");
       /* harmony import */
 
 
-      var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ../services/toastservice.service */
       "Gb+d");
 
       var ClientPage = /*#__PURE__*/function () {
-        function ClientPage(navCtrl, dbService, tostService, alertController) {
+        function ClientPage(navCtrl, dbService, tostService, alertController, dataService) {
           _classCallCheck(this, ClientPage);
 
           this.navCtrl = navCtrl;
           this.dbService = dbService;
           this.tostService = tostService;
           this.alertController = alertController;
+          this.dataService = dataService;
         }
 
         _createClass(ClientPage, [{
@@ -306,6 +313,34 @@
               }, _callee5, this);
             }));
           }
+        }, {
+          key: "download",
+          value: function download() {
+            var customerDataList = new Array();
+
+            var _iterator2 = _createForOfIteratorHelper(this.customers),
+                _step2;
+
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var cus = _step2.value;
+                var cusData = {
+                  Name: cus.name,
+                  ContactPerson: cus.contactPersonName,
+                  Mobile: cus.mobile,
+                  Address: cus.street + ',' + cus.city + ',' + cus.country,
+                  Balance: cus.balance
+                };
+                customerDataList.push(cusData);
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+
+            this.dataService.exportToExcel(customerDataList, 'customers.xlsx');
+          }
         }]);
 
         return ClientPage;
@@ -315,11 +350,13 @@
         return [{
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"]
         }, {
-          type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"]
+          type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"]
         }, {
-          type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_6__["ToastserviceService"]
+          type: _services_toastservice_service__WEBPACK_IMPORTED_MODULE_7__["ToastserviceService"]
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"]
+        }, {
+          type: _data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"]
         }];
       };
 
@@ -347,7 +384,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n      <ion-button (click)=\"presentDeleteAlertConfirm(cus)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Customer</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor= \"let cus of customers\">\n      <ion-label>{{cus.name}}</ion-label>\n      <ion-button color=\"secondary\" (click)=\"editCustomer(cus.name)\">Edit</ion-button>\n      <ion-button (click)=\"presentDeleteAlertConfirm(cus)\">\n        <ion-icon name=\"trash-bin\"></ion-icon>\n      </ion-button>\n    </ion-item>\n  </ion-list>    \n  \n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float:right\">\n        <ion-col style=\"float: right;\">\n          <ion-button ion-button  color=\"primary\" (click)=\"download()\">\n            <ion-icon name=\"mail\"></ion-icon>\n          </ion-button>\n        </ion-col>\n        <ion-col >\n        <ion-button  color=\"primary\" (click)=\"addNewClient()\">\n          <ion-icon name=\"add-circle\"></ion-icon>\n        </ion-button>\n      </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
       /***/
     },
 

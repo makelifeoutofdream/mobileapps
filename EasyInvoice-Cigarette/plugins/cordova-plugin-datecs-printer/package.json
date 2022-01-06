@@ -1,17 +1,47 @@
 {
-  "name": "cordova-plugin-datecs-printer",
-  "version": "0.10.0",
-  "description": "Cordova Datecs Printer Plugin",
+  "_from": "github:giorgiofellipe/cordova-plugin-datecs-printer",
+  "_id": "cordova-plugin-datecs-printer@0.10.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-datecs-printer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "github:giorgiofellipe/cordova-plugin-datecs-printer",
+    "rawSpec": "github:giorgiofellipe/cordova-plugin-datecs-printer",
+    "saveSpec": "github:giorgiofellipe/cordova-plugin-datecs-printer",
+    "fetchSpec": null,
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "github:giorgiofellipe/cordova-plugin-datecs-printer#843412936a9ccb3cf24c5e312b7043dfc9438bfb",
+  "_spec": "github:giorgiofellipe/cordova-plugin-datecs-printer",
+  "_where": "/Users/ajayas/Documents/GitHub/mobileapps/EasyInvoice-Cigarette",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/giorgiofellipe/cordova-plugin-datecs-printer/issues"
+  },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-datecs-printer",
     "platforms": [
       "android"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/giorgiofellipe/cordova-plugin-datecs-printer"
-  },
+  "deprecated": false,
+  "description": "Cordova Datecs Printer Plugin",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "homepage": "https://github.com/giorgiofellipe/cordova-plugin-datecs-printer#readme",
   "keywords": [
     "cordova",
     "ecosystem:cordova",
@@ -20,12 +50,11 @@
     "printer",
     "bluetooth"
   ],
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=3.4.0"
-    }
-  ],
-  "author": "Apache Software Foundation",
-  "license": "Apache 2.0"
+  "license": "Apache 2.0",
+  "name": "cordova-plugin-datecs-printer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giorgiofellipe/cordova-plugin-datecs-printer.git"
+  },
+  "version": "0.10.0"
 }

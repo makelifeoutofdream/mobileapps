@@ -22,6 +22,7 @@ export class StockprintComponent implements OnInit {
   }
 
   pairTo() {
+    var  width = this.profile &&  this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
     console.log("stock"+this.stockList[0].name)
     var node = document.getElementById("imageToPrint");
     
@@ -38,7 +39,7 @@ export class StockprintComponent implements OnInit {
           ht = ht + 120;
           result
             .align('left')
-            .image(img,552,ht,'threshold',180).newline().
+            .image(img,width,ht,'threshold',180).newline().
             align('center').raw([0x1B, 0x21, 0x20]).line('Thank You!!!').newline().newline().newline().
             newline().newline().newline().newline().newline().newline().newline().newline().newline() ;
             this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter,result.encode());

@@ -23,290 +23,6 @@
 
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["report-report-module"], {
     /***/
-    "4Z/T":
-    /*!************************************************!*\
-      !*** ./node_modules/sprintf-js/src/sprintf.js ***!
-      \************************************************/
-
-    /*! no static exports found */
-
-    /***/
-    function ZT(module, exports, __webpack_require__) {
-      var __WEBPACK_AMD_DEFINE_RESULT__;
-      /* global window, exports, define */
-
-
-      !function () {
-        'use strict';
-
-        var re = {
-          not_string: /[^s]/,
-          not_bool: /[^t]/,
-          not_type: /[^T]/,
-          not_primitive: /[^v]/,
-          number: /[diefg]/,
-          numeric_arg: /[bcdiefguxX]/,
-          json: /[j]/,
-          not_json: /[^j]/,
-          text: /^[^\x25]+/,
-          modulo: /^\x25{2}/,
-          placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
-          key: /^([a-z_][a-z_\d]*)/i,
-          key_access: /^\.([a-z_][a-z_\d]*)/i,
-          index_access: /^\[(\d+)\]/,
-          sign: /^[+-]/
-        };
-
-        function sprintf(key) {
-          // `arguments` is not an array, but should be fine for this call
-          return sprintf_format(sprintf_parse(key), arguments);
-        }
-
-        function vsprintf(fmt, argv) {
-          return sprintf.apply(null, [fmt].concat(argv || []));
-        }
-
-        function sprintf_format(parse_tree, argv) {
-          var cursor = 1,
-              tree_length = parse_tree.length,
-              arg,
-              output = '',
-              i,
-              k,
-              ph,
-              pad,
-              pad_character,
-              pad_length,
-              is_positive,
-              sign;
-
-          for (i = 0; i < tree_length; i++) {
-            if (typeof parse_tree[i] === 'string') {
-              output += parse_tree[i];
-            } else if (typeof parse_tree[i] === 'object') {
-              ph = parse_tree[i]; // convenience purposes only
-
-              if (ph.keys) {
-                // keyword argument
-                arg = argv[cursor];
-
-                for (k = 0; k < ph.keys.length; k++) {
-                  if (arg == undefined) {
-                    throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
-                  }
-
-                  arg = arg[ph.keys[k]];
-                }
-              } else if (ph.param_no) {
-                // positional argument (explicit)
-                arg = argv[ph.param_no];
-              } else {
-                // positional argument (implicit)
-                arg = argv[cursor++];
-              }
-
-              if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
-                arg = arg();
-              }
-
-              if (re.numeric_arg.test(ph.type) && typeof arg !== 'number' && isNaN(arg)) {
-                throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg));
-              }
-
-              if (re.number.test(ph.type)) {
-                is_positive = arg >= 0;
-              }
-
-              switch (ph.type) {
-                case 'b':
-                  arg = parseInt(arg, 10).toString(2);
-                  break;
-
-                case 'c':
-                  arg = String.fromCharCode(parseInt(arg, 10));
-                  break;
-
-                case 'd':
-                case 'i':
-                  arg = parseInt(arg, 10);
-                  break;
-
-                case 'j':
-                  arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0);
-                  break;
-
-                case 'e':
-                  arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential();
-                  break;
-
-                case 'f':
-                  arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg);
-                  break;
-
-                case 'g':
-                  arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg);
-                  break;
-
-                case 'o':
-                  arg = (parseInt(arg, 10) >>> 0).toString(8);
-                  break;
-
-                case 's':
-                  arg = String(arg);
-                  arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                  break;
-
-                case 't':
-                  arg = String(!!arg);
-                  arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                  break;
-
-                case 'T':
-                  arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
-                  arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                  break;
-
-                case 'u':
-                  arg = parseInt(arg, 10) >>> 0;
-                  break;
-
-                case 'v':
-                  arg = arg.valueOf();
-                  arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                  break;
-
-                case 'x':
-                  arg = (parseInt(arg, 10) >>> 0).toString(16);
-                  break;
-
-                case 'X':
-                  arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase();
-                  break;
-              }
-
-              if (re.json.test(ph.type)) {
-                output += arg;
-              } else {
-                if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
-                  sign = is_positive ? '+' : '-';
-                  arg = arg.toString().replace(re.sign, '');
-                } else {
-                  sign = '';
-                }
-
-                pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' ';
-                pad_length = ph.width - (sign + arg).length;
-                pad = ph.width ? pad_length > 0 ? pad_character.repeat(pad_length) : '' : '';
-                output += ph.align ? sign + arg + pad : pad_character === '0' ? sign + pad + arg : pad + sign + arg;
-              }
-            }
-          }
-
-          return output;
-        }
-
-        var sprintf_cache = Object.create(null);
-
-        function sprintf_parse(fmt) {
-          if (sprintf_cache[fmt]) {
-            return sprintf_cache[fmt];
-          }
-
-          var _fmt = fmt,
-              match,
-              parse_tree = [],
-              arg_names = 0;
-
-          while (_fmt) {
-            if ((match = re.text.exec(_fmt)) !== null) {
-              parse_tree.push(match[0]);
-            } else if ((match = re.modulo.exec(_fmt)) !== null) {
-              parse_tree.push('%');
-            } else if ((match = re.placeholder.exec(_fmt)) !== null) {
-              if (match[2]) {
-                arg_names |= 1;
-                var field_list = [],
-                    replacement_field = match[2],
-                    field_match = [];
-
-                if ((field_match = re.key.exec(replacement_field)) !== null) {
-                  field_list.push(field_match[1]);
-
-                  while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
-                    if ((field_match = re.key_access.exec(replacement_field)) !== null) {
-                      field_list.push(field_match[1]);
-                    } else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
-                      field_list.push(field_match[1]);
-                    } else {
-                      throw new SyntaxError('[sprintf] failed to parse named argument key');
-                    }
-                  }
-                } else {
-                  throw new SyntaxError('[sprintf] failed to parse named argument key');
-                }
-
-                match[2] = field_list;
-              } else {
-                arg_names |= 2;
-              }
-
-              if (arg_names === 3) {
-                throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported');
-              }
-
-              parse_tree.push({
-                placeholder: match[0],
-                param_no: match[1],
-                keys: match[2],
-                sign: match[3],
-                pad_char: match[4],
-                align: match[5],
-                width: match[6],
-                precision: match[7],
-                type: match[8]
-              });
-            } else {
-              throw new SyntaxError('[sprintf] unexpected placeholder');
-            }
-
-            _fmt = _fmt.substring(match[0].length);
-          }
-
-          return sprintf_cache[fmt] = parse_tree;
-        }
-        /**
-         * export to either browser or node.js
-         */
-
-        /* eslint-disable quote-props */
-
-
-        if (true) {
-          exports['sprintf'] = sprintf;
-          exports['vsprintf'] = vsprintf;
-        }
-
-        if (typeof window !== 'undefined') {
-          window['sprintf'] = sprintf;
-          window['vsprintf'] = vsprintf;
-
-          if (true) {
-            !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-              return {
-                'sprintf': sprintf,
-                'vsprintf': vsprintf
-              };
-            }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-          }
-        }
-        /* eslint-enable quote-props */
-
-      }(); // eslint-disable-line
-
-      /***/
-    },
-
-    /***/
     "LVab":
     /*!*****************************************!*\
       !*** ./src/app/report/report.module.ts ***!
@@ -374,7 +90,8 @@
 
       ReportPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _report_routing_module__WEBPACK_IMPORTED_MODULE_5__["ReportPageRoutingModule"]],
-        declarations: [_report_page__WEBPACK_IMPORTED_MODULE_6__["ReportPage"]]
+        declarations: [_report_page__WEBPACK_IMPORTED_MODULE_6__["ReportPage"]],
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["CUSTOM_ELEMENTS_SCHEMA"]]
       })], ReportPageModule);
       /***/
     },
@@ -455,7 +172,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXBvcnQucGFnZS5zY3NzIn0= */";
+      __webpack_exports__["default"] = "#imageToPrint {\n  position: relative;\n  font-size: 16px;\n  font-family: Verdana, Geneva, Tahoma, sans-serif !important;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.text-right {\n  text-align: right;\n}\n\n.cust-col {\n  text-align: right;\n  padding-right: 5%;\n}\n\n.bu-1 {\n  margin-left: 1%;\n  width: 50%;\n}\n\n.bu-2 {\n  margin-left: 1%;\n  width: 44%;\n}\n\n.list-header {\n  background: #39d3ea;\n  color: #fff;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 9999;\n}\n\n.action-remove {\n  color: #ee4e50;\n  background: none;\n}\n\n.list-row {\n  text-align: center;\n  align-items: center;\n  justify-content: center;\n  display: flex;\n}\n\n.list-row:nth-child(even) {\n  background: #f2f2f2;\n  color: #adadad;\n}\n\n.m-tb-10 {\n  margin-top: 10px;\n  margin-bottom: 10px;\n}\n\n.summary-label {\n  width: 50%;\n  padding: 3px 10px;\n  text-align: start;\n  font-weight: 600;\n  color: #837f7f;\n}\n\n.item-value {\n  width: 50%;\n  padding: 3px 10px;\n  text-align: start;\n  color: #484444;\n  font-weight: bold;\n}\n\n.line-separator {\n  margin: 10px 0px;\n  border: 1px solid #adadad;\n}\n\n.page-heading {\n  color: #484444;\n}\n\n.display-flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-b-10 {\n  margin-bottom: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3JlcG9ydC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtFQUNBLGVBQUE7RUFDQSwyREFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFDQTtFQUNJLGlCQUFBO0FBRUo7O0FBQUE7RUFDSSxpQkFBQTtFQUNBLGlCQUFBO0FBR0o7O0FBREE7RUFDSSxlQUFBO0VBQ0EsVUFBQTtBQUlKOztBQUZBO0VBQ0ksZUFBQTtFQUNBLFVBQUE7QUFLSjs7QUFIQTtFQUNJLG1CQUFBO0VBQ0EsV0FBQTtFQUNBLHdCQUFBO0VBQUEsZ0JBQUE7RUFDQSxNQUFBO0VBQ0EsT0FBQTtFQUNBLFFBQUE7RUFDQSxhQUFBO0FBTUo7O0FBSkE7RUFDSSxjQUFBO0VBQ0EsZ0JBQUE7QUFPSjs7QUFMQTtFQUNJLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLGFBQUE7QUFRSjs7QUFOQTtFQUNJLG1CQUFBO0VBQ0EsY0FBQTtBQVNKOztBQVBBO0VBQ0ksZ0JBQUE7RUFDQSxtQkFBQTtBQVVKOztBQVJBO0VBQ0ksVUFBQTtFQUNBLGlCQUFBO0VBQ0EsaUJBQUE7RUFDQSxnQkFBQTtFQUNBLGNBQUE7QUFXSjs7QUFUQTtFQUNJLFVBQUE7RUFDQSxpQkFBQTtFQUNBLGlCQUFBO0VBQ0EsY0FBQTtFQUNBLGlCQUFBO0FBWUo7O0FBVEE7RUFDSSxnQkFBQTtFQUNBLHlCQUFBO0FBWUo7O0FBVkE7RUFDSSxjQUFBO0FBYUo7O0FBWEE7RUFDSSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtBQWNKOztBQVpBO0VBQ0ksbUJBQUE7QUFlSiIsImZpbGUiOiJyZXBvcnQucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI2ltYWdlVG9QcmludCB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIGZvbnQtc2l6ZTogMTZweCA7XG4gICAgZm9udC1mYW1pbHk6IFZlcmRhbmEsIEdlbmV2YSwgVGFob21hLCBzYW5zLXNlcmlmICFpbXBvcnRhbnQ7ICAgIFxuICAgIFxufVxuLnRleHQtY2VudGVyIHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG4udGV4dC1yaWdodCB7XG4gICAgdGV4dC1hbGlnbjogcmlnaHQ7XG59XG4uY3VzdC1jb2wge1xuICAgIHRleHQtYWxpZ246IHJpZ2h0O1xuICAgIHBhZGRpbmctcmlnaHQ6IDUlO1xufVxuLmJ1LTEge1xuICAgIG1hcmdpbi1sZWZ0OiAxJTtcbiAgICB3aWR0aDogNTAlO1xufVxuLmJ1LTIge1xuICAgIG1hcmdpbi1sZWZ0OiAxJTtcbiAgICB3aWR0aDo0NCU7XG59XG4ubGlzdC1oZWFkZXIge1xuICAgIGJhY2tncm91bmQ6ICMzOWQzZWE7XG4gICAgY29sb3I6ICNmZmY7XG4gICAgcG9zaXRpb246IHN0aWNreTtcbiAgICB0b3A6IDA7XG4gICAgbGVmdDogMDtcbiAgICByaWdodDogMDtcbiAgICB6LWluZGV4OiA5OTk5O1xufVxuLmFjdGlvbi1yZW1vdmUge1xuICAgIGNvbG9yOiAjZWU0ZTUwO1xuICAgIGJhY2tncm91bmQ6IG5vbmU7XG59XG4ubGlzdC1yb3cge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgIGRpc3BsYXk6IGZsZXg7XG59XG4ubGlzdC1yb3c6bnRoLWNoaWxkKGV2ZW4pIHtcbiAgICBiYWNrZ3JvdW5kOiAgI2YyZjJmMjtcbiAgICBjb2xvcjogI2FkYWRhZDtcbn1cbi5tLXRiLTEwIHtcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xuICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG59XG4uc3VtbWFyeS1sYWJlbCB7XG4gICAgd2lkdGg6IDUwJTtcbiAgICBwYWRkaW5nOiAzcHggMTBweDtcbiAgICB0ZXh0LWFsaWduOiBzdGFydDtcbiAgICBmb250LXdlaWdodDogNjAwO1xuICAgIGNvbG9yOiAjODM3ZjdmO1xufVxuLml0ZW0tdmFsdWUge1xuICAgIHdpZHRoOiA1MCU7XG4gICAgcGFkZGluZzogM3B4IDEwcHg7XG4gICAgdGV4dC1hbGlnbjogc3RhcnQ7XG4gICAgY29sb3I6ICM0ODQ0NDQ7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG5cbi5saW5lLXNlcGFyYXRvciB7XG4gICAgbWFyZ2luOiAxMHB4IDBweDtcbiAgICBib3JkZXIgOiAxcHggc29saWQgI2FkYWRhZDtcbn1cbi5wYWdlLWhlYWRpbmcge1xuICAgIGNvbG9yOiAjNDg0NDQ0O1xufVxuLmRpc3BsYXktZmxleCB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGp1c3RpZnktY29udGVudDogIGNlbnRlcjtcbn1cbi5tLWItMTAge1xuICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG59Il19 */";
       /***/
     },
 
@@ -475,7 +192,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Report</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-row>\n    <ion-item style=\"width: 95%;\" >\n      <ion-col size=\"12\">\n      <ion-select style=\"margin-top: 2%;height: 30px;margin-right: 4%; width: 95%;  max-width: 95% !important;\"  [(ngModel)]=\"selectedCustomer\" placeholder=\"Customer\">\n      <ion-select-option [value]=null>All</ion-select-option>\n        <ion-select-option style=\"width: 95%;\" *ngFor=\"let cus of customerList\" [value]=\"cus\">{{cus.name}}</ion-select-option>\n      </ion-select>\n    </ion-col>\n    </ion-item>\n  </ion-row>\n  <ion-row>\n    \n    <ion-col size=\"4\" >\n      <ion-item>\n        <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n      </ion-item>\n    </ion-col>\n\n    <ion-col size=\"4\">\n      <ion-item>\n        <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n      </ion-item>\n    </ion-col>\n    <ion-col  size=\"4\" style=\"text-align: right;\">\n      <ion-button style=\"padding-right: 5%;float: right;\" (click)=\"filterInvoices()\">\n        <ion-icon name=\"search-outline\"></ion-icon>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row style=\"float:right\">\n    \n  </ion-row>\n  <ion-item-divider></ion-item-divider>\n  \n  <ion-list>\n    <ion-list-header>\n      <ion-col size=\"3\">Date</ion-col>\n      <ion-col size=\"3\" style=\"text-align: center;\">Customer</ion-col>\n      <ion-col style=\"text-align: right;padding-right: 5%;\" size=\"4\">Total</ion-col>\n      <ion-col size=\"2\">Delete</ion-col>\n    </ion-list-header>\n    <ion-item *ngFor= \"let inv of filterInvoiceList\" >\n      \n        \n        \n          <ion-col size=\"3\" (click)=\"viewInvoice(inv)\">{{inv.invoiceDate | date : short}}</ion-col>\n          <ion-col size=\"3\" style=\"text-align: center;\" (click)=\"viewInvoice(inv)\">{{inv.customer.name}}</ion-col>\n          <ion-col style=\"text-align: right;\" size=\"4\" (click)=\"viewInvoice(inv)\">{{inv.total}}</ion-col>\n          <ion-col size=\"2\"  style=\"float: right;\" >\n          <ion-button style=\"margin-left: 3%;\"  (click)=\"presentDeleteAlertConfirm(inv)\">\n            <ion-icon style=\"text-align: right;\" name=\"trash-bin\"></ion-icon>\n          </ion-button>\n        </ion-col>\n    </ion-item>\n  </ion-list>    \n\n</ion-content>\n<ion-content  style=\"max-height: 10%;margin-top: 2%;\" slot=\"fixed\">\n  <div class=\"display-flex  full-width\">\n    <ion-badge style=\"margin-left: 1%;width: 50%;\" color=\"primary\">Total Cost : {{cost | number : '1.2'}}</ion-badge>\n    <ion-badge style=\"margin-left: 1%;width:44%\" color=\"primary\">Total Revenue : {{revenue | number : '1.2'}}</ion-badge>\n    \n  </div>\n  <div class=\"display-flex  full-width\">\n    \n    <ion-badge style=\"margin-left: 1%;width: 50%;\" color=\"primary\">Total Profit : {{(totalProfit) | number : '1.2'}}</ion-badge>\n    <ion-badge style=\"margin-left: 1%;width: 44% ;\" color=\"primary\">Total Collection : {{collection }}</ion-badge>\n  </div>\n\n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float: right;\">\n        <ion-col style=\"float: right;\">\n          <ion-button ion-button  color=\"primary\" (click)=\"download()\">\n            <ion-icon name=\"mail\"></ion-icon>\n          </ion-button>\n        </ion-col>\n        <ion-col>\n          <ion-button color=\"primary\" (click)=\"printBill()\">\n            <ion-icon name=\"print\"></ion-icon>\n          </ion-button>\n        </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Report</ion-title>\n    <ion-buttons slot=\"start\">\n        <ion-menu-button menu=\"mainmenu\"> \n\n        </ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-row>\n    <ion-item style=\"width: 95%;\" >\n      <ion-col size=\"12\">\n      <ion-select style=\"margin-top: 2%;height: 30px;margin-right: 4%; width: 95%;  max-width: 95% !important;\"  [(ngModel)]=\"selectedCustomer\" placeholder=\"Customer\">\n      <ion-select-option [value]=null>All</ion-select-option>\n        <ion-select-option style=\"width: 95%;\" *ngFor=\"let cus of customerList\" [value]=\"cus\">{{cus.name}}</ion-select-option>\n      </ion-select>\n    </ion-col>\n    </ion-item>\n  </ion-row>\n  <ion-row>\n    \n    <ion-col size=\"4\" >\n      <ion-item>\n        <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n      </ion-item>\n    </ion-col>\n\n    <ion-col size=\"4\">\n      <ion-item>\n        <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n      </ion-item>\n    </ion-col>\n    <ion-col  size=\"4\" style=\"text-align: right;\">\n      <ion-button style=\"padding-right: 5%;float: right;\" (click)=\"filterInvoices()\">\n        <ion-icon name=\"search-outline\"></ion-icon>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n  <div class=\"line-separator\"></div>\n  <div class=\"full-width\" id=\"imageToPrint\">\n    <h5 class=\"text-center page-heading\">Report Summary</h5>\n    <div class=\"display-flex  full-width\">\n        <div  class=\"summary-label\">\n          Total Cost :\n        </div>\n        <div text-right class=\"item-value letter-space\">\n          {{cost | number : '1.2'}}\n        </div>\n    </div>\n    <div class=\"display-flex  full-width\">\n        <div  class=\"summary-label\">\n          Total Revenue :\n        </div>\n        <div text-right class=\"item-value letter-space\">\n          {{revenue | number : '1.2'}} \n        </div>\n    </div>\n    <div class=\"display-flex  full-width\">\n      <div  class=\"summary-label\">\n        Total Profit :\n      </div>\n      <div text-right class=\"item-value letter-space\">\n        {{totalProfit | number : '1.2'}}\n      </div>\n    </div>\n    <div class=\"display-flex  full-width\">\n      <div  class=\"summary-label\">\n        Total Collection :\n      </div>\n      <div text-right class=\"item-value letter-space\">\n        {{collection }}\n      </div>\n    </div>\n    <div class=\"line-separator\"></div>\n    <ion-list class=\"m-b-10\">\n      <ion-list-header class=\"list-header\">\n        <ion-col size=\"3\">Date</ion-col>\n        <ion-col size=\"3\" class=\"text-center\">Customer</ion-col>\n        <ion-col class=\"cust-col\" size=\"4\">Total</ion-col>\n        <ion-col size=\"2\" *ngIf=\"isNotPrint\" >Delete</ion-col>\n      </ion-list-header>\n        <ion-row *ngFor= \"let inv of filterInvoiceList\" class=\"list-row\">\n          <ion-col size=\"3\" (click)=\"viewInvoice(inv)\">{{inv.invoiceDate | date : short}}</ion-col>\n          <ion-col size=\"3\" class=\"text-center\" (click)=\"viewInvoice(inv)\">{{inv.customer.name}}</ion-col>\n          <ion-col class=\"text-right\" size=\"4\" (click)=\"viewInvoice(inv)\">{{inv.total}}</ion-col>\n          <ion-col size=\"2\" >\n              <ion-icon  name=\"trash\" (click)=\"presentDeleteAlertConfirm(inv)\" *ngIf=\"isNotPrint\" class=\"action-remove\"></ion-icon>\n          </ion-col>\n        </ion-row>\n    </ion-list>    \n  </div>\n\n</ion-content>\n<ion-footer>\n  \n    \n      <ion-row style=\"float: right;\">\n        <ion-col style=\"float: right;\">\n          <ion-button ion-button  color=\"primary\" (click)=\"download()\">\n            <ion-icon name=\"mail\"></ion-icon>\n          </ion-button>\n        </ion-col>\n        <ion-col>\n          <ion-button color=\"primary\" (click)=\"printBill()\">\n            <ion-icon name=\"print\"></ion-icon>\n          </ion-button>\n        </ion-col>\n      </ion-row>\n        \n    \n  \n  \n</ion-footer>";
       /***/
     },
 
@@ -572,6 +289,16 @@
       var _services_print_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! ../services/print.service */
       "Bhbv");
+      /* harmony import */
+
+
+      var dom_to_image__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      /*! dom-to-image */
+      "cLAn");
+      /* harmony import */
+
+
+      var dom_to_image__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(dom_to_image__WEBPACK_IMPORTED_MODULE_11__);
 
       var ReportPage = /*#__PURE__*/function () {
         function ReportPage(dbService, toastService, printService, navCtrl, dataService, alertController, loadingController) {
@@ -588,6 +315,7 @@
           this.cost = 0;
           this.revenue = 0;
           this.collection = 0;
+          this.isNotPrint = true;
         }
 
         _createClass(ReportPage, [{
@@ -633,8 +361,8 @@
             this.header.push('Inv No');
             this.header.push('Customer');
             this.header.push('Total');
-            this.startDate = null;
-            this.endDate = null;
+            this.startDate = new Date();
+            this.endDate = new Date();
             this.getAllInvoices();
             this.getAllCustomers();
             this.dbService.getProfile().then(function (data) {
@@ -968,6 +696,7 @@
                       Quantity: itm.quantity,
                       Cost: itm.purchasePrice,
                       TotalCost: itm.purchasePrice * itm.quantity,
+                      TotalRevenue: itm.quantity * itm.unitPrice,
                       Tax: inv.tax,
                       GP: itm.quantity * itm.unitPrice - itm.purchasePrice * itm.quantity,
                       TotalWithVAT: inv.total
@@ -1024,11 +753,43 @@
         }, {
           key: "printBill",
           value: function printBill() {
-            try {
-              this.printService.sendToBluetoothPrinter(this.profile.selectedPrinter, this.getFormatedContent());
-            } catch (reason) {
-              this.toastService.presentToast("Print Failed" + reason);
-            }
+            var _this8 = this;
+
+            this.isNotPrint = false;
+            var node = document.getElementById("imageToPrint");
+            var width = this.profile && this.profile.selectedPrinterSize ? this.profile.selectedPrinterSize : 368;
+            dom_to_image__WEBPACK_IMPORTED_MODULE_11__["toPng"](node).then(function (dataUrl) {
+              var encoder = new esc_pos_encoder_ionic__WEBPACK_IMPORTED_MODULE_8___default.a();
+              var result = encoder.initialize();
+              var img = new Image();
+              img.src = dataUrl;
+
+              img.onload = function (e) {
+                var ht = Math.ceil(node.offsetHeight / 8) * 8;
+                ht = ht + 120;
+                var finalPrint = result.image(img, width, ht, 'threshold', 120).encode();
+
+                _this8.printService.connectToBluetoothPrinter(_this8.profile.selectedPrinter).subscribe(function (res) {
+                  _this8.printService.printDataToPrinter(finalPrint).then(function () {
+                    _this8.printService.disconnectBluetoothPrinter().then(function () {
+                      _this8.isNotPrint = true;
+                    }, function (err) {
+                      alert('Disconnecting error ::' + err);
+                      _this8.isNotPrint = true;
+                    });
+                  }, function (err) {
+                    alert("Printing Failed..");
+                    _this8.isNotPrint = true;
+                  });
+                }, function (error) {
+                  alert("connecting to printer failed..");
+                  _this8.isNotPrint = true;
+                });
+              };
+            })["catch"](function (error) {
+              console.error("oops, something went wrong!", error);
+              this.modalCtrl.dismiss();
+            });
           }
         }, {
           key: "showReportsHome",
@@ -1038,19 +799,19 @@
         }, {
           key: "deleteInvoice",
           value: function deleteInvoice(inv) {
-            var _this8 = this;
+            var _this9 = this;
 
             this.dbService.deleteInvoice(inv).then(function (data) {
-              _this8.toastService.presentToast('Invoice removed successfully');
+              _this9.toastService.presentToast('Invoice removed successfully');
 
-              _this8.getAllInvoices();
+              _this9.getAllInvoices();
             });
           }
         }, {
           key: "presentDeleteAlertConfirm",
           value: function presentDeleteAlertConfirm(inv) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
-              var _this9 = this;
+              var _this10 = this;
 
               var alert;
               return regeneratorRuntime.wrap(function _callee8$(_context8) {
@@ -1072,7 +833,7 @@
                         }, {
                           text: 'Yes',
                           handler: function handler() {
-                            _this9.deleteInvoice(inv);
+                            _this10.deleteInvoice(inv);
                           }
                         }]
                       });

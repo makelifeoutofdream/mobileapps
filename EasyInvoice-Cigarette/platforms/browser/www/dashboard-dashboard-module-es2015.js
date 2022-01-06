@@ -2634,7 +2634,7 @@ function styleChanged(style, prevStyle) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJkYXNoYm9hcmQucGFnZS5zY3NzIn0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".green-card {\n  background-color: #d4eed4;\n  font-weight: bold;\n  color: black;\n  font-size: large;\n  text-align: center;\n  height: 80px;\n}\n\n.red-card {\n  background-color: #f56a6a;\n  font-weight: bold;\n  color: black;\n  font-size: large;\n  text-align: center;\n  height: 80px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2Rhc2hib2FyZC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx5QkFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxZQUFBO0FBQ0o7O0FBR0E7RUFDSSx5QkFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxZQUFBO0FBQUoiLCJmaWxlIjoiZGFzaGJvYXJkLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5ncmVlbi1jYXJke1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYigyMTIsIDIzOCwgMjEyKTtcbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgZm9udC1zaXplOiBsYXJnZTtcbiAgICB0ZXh0LWFsaWduOmNlbnRlcjtcbiAgICBoZWlnaHQ6IDgwcHg7XG4gICAgXG59XG5cbi5yZWQtY2FyZHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ1LCAxMDYsIDEwNik7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIGZvbnQtc2l6ZTogbGFyZ2U7XG4gICAgdGV4dC1hbGlnbjpjZW50ZXI7XG4gICAgaGVpZ2h0OiA4MHB4O1xufVxuIl19 */");
 
 /***/ }),
 
@@ -2647,7 +2647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding : min-height:100%\">\n   \n    <ion-card style=\"min-height: 100%;\">\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Revenue Vs GP\n        <div style=\"float: right;\">\n          <ion-label ion-button color=\"secondary\"  (click)=\"download()\">\nExport\n          </ion-label>\n        </div>\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #barCanvas></canvas>\n      </ion-card-content>\n\n      <ion-card-footer>\n        <ion-row>\n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n          </ion-item>\n       \n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label ion-button color=\"secondary\">Apply</ion-label>\n          </ion-item>\n        </ion-row>\n      </ion-card-footer>\n    </ion-card> -->\n  </div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding : min-height:100%\">\n   \n    <ion-card style=\"min-height: 100%;\">\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n    <ion-card> \n      <div [ngClass]=\"{'red-card' : todayProfit<0,'green-card' : todayProfit>=0  }\">\n      <div >\n        Today's Profit\n      </div>\n      <div  >\n        {{todayProfit | number : '1.2'}}\n      </div>\n    </div>\n    </ion-card>\n    <ion-card >\n      <div [ngClass]=\"{'red-card' : todayProfit<0,'green-card' : todayProfit>=0  }\">\n      <div >\n        Monthly Profit\n      </div>\n      <div>\n        {{monthProfit | number : '1.2'}}\n      </div>\n    </div>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Revenue Vs GP\n        <div style=\"float: right;\">\n          <ion-label ion-button color=\"secondary\"  (click)=\"download()\">\nExport\n          </ion-label>\n        </div>\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #barCanvas></canvas>\n      </ion-card-content>\n\n      <ion-card-footer>\n        <ion-row>\n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n          </ion-item>\n       \n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label ion-button color=\"secondary\">Apply</ion-label>\n          </ion-item>\n        </ion-row>\n      </ion-card-footer>\n    </ion-card> -->\n  </div>\n</ion-content>\n");
 
 /***/ }),
 
@@ -2665,8 +2665,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_dashboard_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./dashboard.page.html */ "KR73");
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.page.scss */ "B3xu");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! chart.js */ "m0r1");
-/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/db.service */ "ajt+");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! chart.js */ "m0r1");
+/* harmony import */ var _services_db_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/db.service */ "ajt+");
+
 
 
 
@@ -2674,77 +2676,90 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let DashboardPage = class DashboardPage {
-    constructor(dbService) {
+    constructor(dbService, loadingController) {
         this.dbService = dbService;
-        chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]);
+        this.loadingController = loadingController;
+        chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_5__["registerables"]);
     }
     ngOnInit() {
         this.inventoryList = [];
         this.invoiceList = [];
     }
-    ionViewWillEnter() {
-        if (this.doughnutChart != null && this.doughnutChart != undefined)
-            this.doughnutChart.destroy();
-        if (this.barChart != null && this.barChart != undefined)
-            this.barChart.destroy();
-        this.dbService.getAllInventories().then(data => {
-            this.inventoryList = data;
-            this.getDonutdata().then(resp => {
-                console.log(JSON.stringify(this.donutColors));
-                this.showDashboard();
+    loadDashboard() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const loading = yield this.loadingController.create({
+                cssClass: 'my-custom-class',
+                message: 'Please wait...',
+                duration: 300000,
+            });
+            yield loading.present();
+            if (this.doughnutChart != null && this.doughnutChart != undefined)
+                this.doughnutChart.destroy();
+            if (this.barChart != null && this.barChart != undefined)
+                this.barChart.destroy();
+            this.dbService.getAllInventories().then(data => {
+                this.inventoryList = data;
+                this.getDonutdata().then(resp => {
+                    console.log(JSON.stringify(this.donutColors));
+                    this.showDashboard().then(data => {
+                        this.applyFilter().then(data => {
+                            loading.dismiss();
+                        });
+                    });
+                });
             });
         });
     }
-    filterInvoices() {
+    ionViewWillEnter() {
+        this.getAllInvoices();
+        this.loadDashboard();
+    }
+    filterTodayInvoices() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.dbService.getAllInvoices().then(data => {
-                let res = data;
-                if ((this.startDate != null && this.startDate != undefined) && (this.endDate == null || this.endDate == undefined)) {
-                    this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
-                    this.startDate.setHours(0);
-                    this.startDate.setMinutes(0);
-                    this.startDate.setSeconds(0);
-                    res.filter(inv => {
-                        var date = new Date(inv.invoiceDate);
-                        date.setHours(1);
-                        date.setMinutes(1);
-                        date.setSeconds(1);
-                        return date.getTime() >= this.startDate.getTime();
-                    });
-                }
-                else if ((this.startDate == null || this.startDate == undefined) && (this.endDate != null && this.endDate != undefined)) {
-                    this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
-                    this.endDate.setHours(23);
-                    this.endDate.setMinutes(23);
-                    this.endDate.setSeconds(23);
-                    res.filter(inv => {
-                        var date = new Date(inv.invoiceDate);
-                        date.setHours(1);
-                        date.setMinutes(1);
-                        date.setSeconds(1);
-                        return date.getTime() <= this.endDate.getTime();
-                    });
-                }
-                else if ((this.startDate != null || this.startDate != undefined) && (this.endDate != null || this.endDate != undefined)) {
-                    this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
-                    this.endDate.setHours(23);
-                    this.endDate.setMinutes(23);
-                    this.endDate.setSeconds(23);
-                    this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
-                    this.startDate.setHours(0);
-                    this.startDate.setMinutes(0);
-                    this.startDate.setSeconds(0);
-                    res.filter(inv => {
-                        var date = new Date(inv.invoiceDate);
-                        date.setHours(1);
-                        date.setMinutes(1);
-                        date.setSeconds(1);
-                        return date.getTime() >= this.startDate.getTime() && date.getTime() <= this.endDate.getTime();
-                    });
-                }
-                else {
-                    return res;
-                }
+            this.getAllInvoices().then(data => {
+                let res = this.invoiceList;
+                this.startDate = new Date();
+                this.endDate = new Date();
+                this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
+                this.endDate.setHours(23);
+                this.endDate.setMinutes(23);
+                this.endDate.setSeconds(23);
+                this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
+                this.startDate.setHours(0);
+                this.startDate.setMinutes(0);
+                this.startDate.setSeconds(0);
+                this.filterInvoiceList = res === null || res === void 0 ? void 0 : res.filter(inv => {
+                    var date = new Date(inv.invoiceDate);
+                    date.setHours(1);
+                    date.setMinutes(1);
+                    date.setSeconds(1);
+                    return date.getTime() >= this.startDate.getTime() && date.getTime() <= this.endDate.getTime();
+                });
+            }).catch(err => console.log(err));
+        });
+    }
+    filterMonthlyInvoices() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.getAllInvoices().then(data => {
+                let res = this.invoiceList;
+                this.startDate = new Date();
+                this.startDate.setDate(this.startDate.getDate() - 30);
+                this.endDate = new Date();
+                this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
+                this.endDate.setHours(23);
+                this.endDate.setMinutes(23);
+                this.endDate.setSeconds(23);
+                this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
+                this.startDate.setHours(0);
+                this.startDate.setMinutes(0);
+                this.startDate.setSeconds(0);
+                this.filterInvoiceList = res === null || res === void 0 ? void 0 : res.filter(inv => {
+                    var date = new Date(inv.invoiceDate);
+                    date.setHours(1);
+                    date.setMinutes(1);
+                    date.setSeconds(1);
+                    return date.getTime() >= this.startDate.getTime() && date.getTime() <= this.endDate.getTime();
+                });
             });
         });
     }
@@ -2762,78 +2777,138 @@ let DashboardPage = class DashboardPage {
     //     })
     // }
     getDonutdata() {
+        var _a, _b;
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.donutColors = [];
             this.donutHoverColors = [];
-            this.donutLabels = this.inventoryList.map(a => a.name);
-            this.donutdata = this.inventoryList.map(a => a.quantity);
-            for (let i of this.inventoryList) {
-                this.donutColors.push(this.random_rgba());
-                this.donutHoverColors.push(this.random_rgba());
+            this.donutLabels = (_a = this.inventoryList) === null || _a === void 0 ? void 0 : _a.map(a => a.name);
+            this.donutdata = (_b = this.inventoryList) === null || _b === void 0 ? void 0 : _b.map(a => a.quantity);
+            if (this.inventoryList != null && this.inventoryList != undefined) {
+                for (let i of this.inventoryList) {
+                    this.donutColors.push(this.random_rgba());
+                    this.donutHoverColors.push(this.random_rgba());
+                }
             }
         });
     }
     showDashboard() {
-        console.log('called');
-        this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.doughnutCanvas.nativeElement, {
-            type: "doughnut",
-            data: {
-                labels: this.donutLabels,
-                datasets: [
-                    {
-                        label: "Quantity",
-                        data: this.donutdata,
-                        backgroundColor: this.donutColors,
-                        // backgroundColor: [
-                        //   "rgba(255, 99, 132, 0.2)",
-                        //   "rgba(54, 162, 235, 0.2)",
-                        //   "rgba(255, 206, 86, 0.2)",
-                        //   "rgba(75, 192, 192, 0.2)",
-                        //   "rgba(153, 102, 255, 0.2)",
-                        //   "rgba(255, 159, 64, 0.2)"
-                        // ],
-                        hoverBackgroundColor: this.donutHoverColors
-                    }
-                ]
-            }
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            console.log('called');
+            this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.doughnutCanvas.nativeElement, {
+                type: "doughnut",
+                data: {
+                    labels: this.donutLabels,
+                    datasets: [
+                        {
+                            label: "Quantity",
+                            data: this.donutdata,
+                            backgroundColor: this.donutColors,
+                            // backgroundColor: [
+                            //   "rgba(255, 99, 132, 0.2)",
+                            //   "rgba(54, 162, 235, 0.2)",
+                            //   "rgba(255, 206, 86, 0.2)",
+                            //   "rgba(75, 192, 192, 0.2)",
+                            //   "rgba(153, 102, 255, 0.2)",
+                            //   "rgba(255, 159, 64, 0.2)"
+                            // ],
+                            hoverBackgroundColor: this.donutHoverColors
+                        }
+                    ]
+                }
+            });
+            // this.barChart = new Chart(this.barCanvas.nativeElement, {
+            //   type: "bar",
+            //   data: {
+            //     labels: this.barLabels,
+            //     datasets: [
+            //       {
+            //         label: "# of Votes",
+            //         data: [12, 19, 3, 5, 2, 3],
+            //         backgroundColor: [
+            //           "rgba(255, 99, 132, 0.2)",
+            //           "rgba(54, 162, 235, 0.2)",
+            //           "rgba(255, 206, 86, 0.2)",
+            //           "rgba(75, 192, 192, 0.2)",
+            //           "rgba(153, 102, 255, 0.2)",
+            //           "rgba(255, 159, 64, 0.2)"
+            //         ],
+            //         borderColor: [
+            //           "rgba(255,99,132,1)",
+            //           "rgba(54, 162, 235, 1)",
+            //           "rgba(255, 206, 86, 1)",
+            //           "rgba(75, 192, 192, 1)",
+            //           "rgba(153, 102, 255, 1)",
+            //           "rgba(255, 159, 64, 1)"
+            //         ],
+            //         borderWidth: 1
+            //       }
+            //     ]
+            //   }
+            // });
         });
-        // this.barChart = new Chart(this.barCanvas.nativeElement, {
-        //   type: "bar",
-        //   data: {
-        //     labels: this.barLabels,
-        //     datasets: [
-        //       {
-        //         label: "# of Votes",
-        //         data: [12, 19, 3, 5, 2, 3],
-        //         backgroundColor: [
-        //           "rgba(255, 99, 132, 0.2)",
-        //           "rgba(54, 162, 235, 0.2)",
-        //           "rgba(255, 206, 86, 0.2)",
-        //           "rgba(75, 192, 192, 0.2)",
-        //           "rgba(153, 102, 255, 0.2)",
-        //           "rgba(255, 159, 64, 0.2)"
-        //         ],
-        //         borderColor: [
-        //           "rgba(255,99,132,1)",
-        //           "rgba(54, 162, 235, 1)",
-        //           "rgba(255, 206, 86, 1)",
-        //           "rgba(75, 192, 192, 1)",
-        //           "rgba(153, 102, 255, 1)",
-        //           "rgba(255, 159, 64, 1)"
-        //         ],
-        //         borderWidth: 1
-        //       }
-        //     ]
-        //   }
-        // });
     }
     random_rgba() {
         var o = Math.round, r = Math.random, s = 255;
         return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
     }
+    getAllInvoices() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.dbService.getAllInvoices().then(data => {
+                this.invoiceList = data;
+                return this.invoiceList;
+            }).catch(reason => {
+                console.log(reason);
+            });
+        });
+    }
+    applyFilter() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.filterTodayInvoices().then(data => {
+                this.totalCost().then(data => {
+                    this.todayCost = data;
+                    this.totalRevenue().then(data => {
+                        this.todayRevenue = data;
+                        this.todayProfit = this.todayRevenue - this.todayCost;
+                        this.filterMonthlyInvoices().then(data => {
+                            this.totalCost().then(data => {
+                                this.monthCost = data;
+                                this.totalRevenue().then(data => {
+                                    this.monthRevenue = data;
+                                    this.monthProfit = this.monthRevenue - this.monthCost;
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+    totalCost() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.filterInvoiceList != null && this.filterInvoiceList != undefined && this.filterInvoiceList.length) {
+                let invoiceItemList = this.filterInvoiceList.reduce((arr, elem) => arr.concat(elem.invoiceItems), []);
+                return invoiceItemList.map(itm => {
+                    if (itm.quantity != null && itm.quantity != undefined && itm.purchasePrice != null && itm.purchasePrice != undefined)
+                        return (itm.quantity * itm.purchasePrice);
+                }).reduce((acc, nxt) => acc + nxt);
+            }
+        });
+    }
+    totalRevenue() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.filterInvoiceList != null && this.filterInvoiceList != undefined && this.filterInvoiceList.length) {
+                let invoiceItemList = this.filterInvoiceList.reduce((arr, elem) => arr.concat(elem.invoiceItems), []);
+                return invoiceItemList.map(itm => {
+                    if (itm.quantity != null && itm.quantity != undefined && itm.unitPrice != null && itm.unitPrice != undefined)
+                        return (itm.quantity * itm.unitPrice);
+                }).reduce((acc, nxt) => acc + nxt);
+            }
+        });
+    }
 };
 DashboardPage.ctorParameters = () => [
-    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"] }
+    { type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["LoadingController"] }
 ];
 DashboardPage.propDecorators = {
     doughnutCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["doughnutCanvas",] }],

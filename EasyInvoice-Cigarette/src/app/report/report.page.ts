@@ -293,7 +293,7 @@ export class ReportPage implements OnInit {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
           let finalPrint  = result
-            .image(img,width,ht,'threshold',120)
+            .image(img,width,ht,'threshold',180)
             .encode();
           this.printService.connectToBluetoothPrinter(this.profile.selectedPrinter).subscribe((res) => {
             this.printService.printDataToPrinter(finalPrint).then(() => { 

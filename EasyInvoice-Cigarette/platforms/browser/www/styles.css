@@ -1255,3 +1255,7 @@ sub {
 .ion-align-items-baseline {
   align-items: baseline !important;
 }
+ion-toolbar {
+  --background: #3880ff;
+  color: #fff;
+}

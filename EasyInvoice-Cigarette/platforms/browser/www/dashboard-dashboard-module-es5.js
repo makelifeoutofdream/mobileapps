@@ -4212,7 +4212,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJkYXNoYm9hcmQucGFnZS5zY3NzIn0= */";
+      __webpack_exports__["default"] = ".green-card {\n  background-color: #d4eed4;\n  font-weight: bold;\n  color: black;\n  font-size: large;\n  text-align: center;\n  height: 80px;\n}\n\n.red-card {\n  background-color: #f56a6a;\n  font-weight: bold;\n  color: black;\n  font-size: large;\n  text-align: center;\n  height: 80px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2Rhc2hib2FyZC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSx5QkFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxZQUFBO0FBQ0o7O0FBR0E7RUFDSSx5QkFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxZQUFBO0FBQUoiLCJmaWxlIjoiZGFzaGJvYXJkLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5ncmVlbi1jYXJke1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYigyMTIsIDIzOCwgMjEyKTtcbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgZm9udC1zaXplOiBsYXJnZTtcbiAgICB0ZXh0LWFsaWduOmNlbnRlcjtcbiAgICBoZWlnaHQ6IDgwcHg7XG4gICAgXG59XG5cbi5yZWQtY2FyZHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ1LCAxMDYsIDEwNik7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIGZvbnQtc2l6ZTogbGFyZ2U7XG4gICAgdGV4dC1hbGlnbjpjZW50ZXI7XG4gICAgaGVpZ2h0OiA4MHB4O1xufVxuIl19 */";
       /***/
     },
 
@@ -4232,7 +4232,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding : min-height:100%\">\n   \n    <ion-card style=\"min-height: 100%;\">\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Revenue Vs GP\n        <div style=\"float: right;\">\n          <ion-label ion-button color=\"secondary\"  (click)=\"download()\">\nExport\n          </ion-label>\n        </div>\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #barCanvas></canvas>\n      </ion-card-content>\n\n      <ion-card-footer>\n        <ion-row>\n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n          </ion-item>\n       \n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label ion-button color=\"secondary\">Apply</ion-label>\n          </ion-item>\n        </ion-row>\n      </ion-card-footer>\n    </ion-card> -->\n  </div>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"mainmenu\"> \n\n      </ion-menu-button>\n    </ion-buttons> \n   \n    <ion-title>Dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"ion-padding : min-height:100%\">\n   \n    <ion-card style=\"min-height: 100%;\">\n      <ion-card-header>\n        Inventory \n      </ion-card-header>\n      <ion-card-content>\n        <canvas #doughnutCanvas></canvas>\n      </ion-card-content>\n    </ion-card>\n    <ion-card> \n      <div [ngClass]=\"{'red-card' : todayProfit<0,'green-card' : todayProfit>=0  }\">\n      <div >\n        Today's Profit\n      </div>\n      <div  >\n        {{todayProfit | number : '1.2'}}\n      </div>\n    </div>\n    </ion-card>\n    <ion-card >\n      <div [ngClass]=\"{'red-card' : todayProfit<0,'green-card' : todayProfit>=0  }\">\n      <div >\n        Monthly Profit\n      </div>\n      <div>\n        {{monthProfit | number : '1.2'}}\n      </div>\n    </div>\n    </ion-card>\n\n    <!-- <ion-card>\n      <ion-card-header>\n        Revenue Vs GP\n        <div style=\"float: right;\">\n          <ion-label ion-button color=\"secondary\"  (click)=\"download()\">\nExport\n          </ion-label>\n        </div>\n      </ion-card-header>\n      <ion-card-content>\n        <canvas #barCanvas></canvas>\n      </ion-card-content>\n\n      <ion-card-footer>\n        <ion-row>\n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"startDate\" placeholder=\"Start Date\"></ion-datetime>\n          </ion-item>\n       \n          <ion-item>\n            <ion-datetime displayFormat=\"MMM DD YYYY\" [(ngModel)]=\"endDate\" placeholder=\"End Date\"></ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label ion-button color=\"secondary\">Apply</ion-label>\n          </ion-item>\n        </ion-row>\n      </ion-card-footer>\n    </ion-card> -->\n  </div>\n</ion-content>\n";
       /***/
     },
 
@@ -4282,25 +4282,32 @@
       /* harmony import */
 
 
-      var chart_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @ionic/angular */
+      "TEn/");
+      /* harmony import */
+
+
+      var chart_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! chart.js */
       "m0r1");
       /* harmony import */
 
 
-      var _services_db_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _services_db_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ../services/db.service */
       "ajt+");
 
       var DashboardPage = /*#__PURE__*/function () {
-        function DashboardPage(dbService) {
+        function DashboardPage(dbService, loadingController) {
           var _chart_js__WEBPACK_IM;
 
           _classCallCheck(this, DashboardPage);
 
           this.dbService = dbService;
+          this.loadingController = loadingController;
 
-          (_chart_js__WEBPACK_IM = chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"]).register.apply(_chart_js__WEBPACK_IM, _toConsumableArray(chart_js__WEBPACK_IMPORTED_MODULE_4__["registerables"]));
+          (_chart_js__WEBPACK_IM = chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"]).register.apply(_chart_js__WEBPACK_IM, _toConsumableArray(chart_js__WEBPACK_IMPORTED_MODULE_5__["registerables"]));
         }
 
         _createClass(DashboardPage, [{
@@ -4310,102 +4317,156 @@
             this.invoiceList = [];
           }
         }, {
-          key: "ionViewWillEnter",
-          value: function ionViewWillEnter() {
-            var _this = this;
-
-            if (this.doughnutChart != null && this.doughnutChart != undefined) this.doughnutChart.destroy();
-            if (this.barChart != null && this.barChart != undefined) this.barChart.destroy();
-            this.dbService.getAllInventories().then(function (data) {
-              _this.inventoryList = data;
-
-              _this.getDonutdata().then(function (resp) {
-                console.log(JSON.stringify(_this.donutColors));
-
-                _this.showDashboard();
-              });
-            });
-          }
-        }, {
-          key: "filterInvoices",
-          value: function filterInvoices() {
+          key: "loadDashboard",
+          value: function loadDashboard() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var _this2 = this;
+              var _this = this;
 
+              var loading;
               return regeneratorRuntime.wrap(function _callee$(_context2) {
                 while (1) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
-                      this.dbService.getAllInvoices().then(function (data) {
-                        var res = data;
-
-                        if (_this2.startDate != null && _this2.startDate != undefined && (_this2.endDate == null || _this2.endDate == undefined)) {
-                          _this2.startDate = new Date(_this2.startDate.getFullYear(), _this2.startDate.getMonth(), _this2.startDate.getDate());
-
-                          _this2.startDate.setHours(0);
-
-                          _this2.startDate.setMinutes(0);
-
-                          _this2.startDate.setSeconds(0);
-
-                          res.filter(function (inv) {
-                            var date = new Date(inv.invoiceDate);
-                            date.setHours(1);
-                            date.setMinutes(1);
-                            date.setSeconds(1);
-                            return date.getTime() >= _this2.startDate.getTime();
-                          });
-                        } else if ((_this2.startDate == null || _this2.startDate == undefined) && _this2.endDate != null && _this2.endDate != undefined) {
-                          _this2.endDate = new Date(_this2.endDate.getFullYear(), _this2.endDate.getMonth(), _this2.endDate.getDate());
-
-                          _this2.endDate.setHours(23);
-
-                          _this2.endDate.setMinutes(23);
-
-                          _this2.endDate.setSeconds(23);
-
-                          res.filter(function (inv) {
-                            var date = new Date(inv.invoiceDate);
-                            date.setHours(1);
-                            date.setMinutes(1);
-                            date.setSeconds(1);
-                            return date.getTime() <= _this2.endDate.getTime();
-                          });
-                        } else if ((_this2.startDate != null || _this2.startDate != undefined) && (_this2.endDate != null || _this2.endDate != undefined)) {
-                          _this2.endDate = new Date(_this2.endDate.getFullYear(), _this2.endDate.getMonth(), _this2.endDate.getDate());
-
-                          _this2.endDate.setHours(23);
-
-                          _this2.endDate.setMinutes(23);
-
-                          _this2.endDate.setSeconds(23);
-
-                          _this2.startDate = new Date(_this2.startDate.getFullYear(), _this2.startDate.getMonth(), _this2.startDate.getDate());
-
-                          _this2.startDate.setHours(0);
-
-                          _this2.startDate.setMinutes(0);
-
-                          _this2.startDate.setSeconds(0);
-
-                          res.filter(function (inv) {
-                            var date = new Date(inv.invoiceDate);
-                            date.setHours(1);
-                            date.setMinutes(1);
-                            date.setSeconds(1);
-                            return date.getTime() >= _this2.startDate.getTime() && date.getTime() <= _this2.endDate.getTime();
-                          });
-                        } else {
-                          return res;
-                        }
+                      _context2.next = 2;
+                      return this.loadingController.create({
+                        cssClass: 'my-custom-class',
+                        message: 'Please wait...',
+                        duration: 300000
                       });
 
-                    case 1:
+                    case 2:
+                      loading = _context2.sent;
+                      _context2.next = 5;
+                      return loading.present();
+
+                    case 5:
+                      if (this.doughnutChart != null && this.doughnutChart != undefined) this.doughnutChart.destroy();
+                      if (this.barChart != null && this.barChart != undefined) this.barChart.destroy();
+                      this.dbService.getAllInventories().then(function (data) {
+                        _this.inventoryList = data;
+
+                        _this.getDonutdata().then(function (resp) {
+                          console.log(JSON.stringify(_this.donutColors));
+
+                          _this.showDashboard().then(function (data) {
+                            _this.applyFilter().then(function (data) {
+                              loading.dismiss();
+                            });
+                          });
+                        });
+                      });
+
+                    case 8:
                     case "end":
                       return _context2.stop();
                   }
                 }
               }, _callee, this);
+            }));
+          }
+        }, {
+          key: "ionViewWillEnter",
+          value: function ionViewWillEnter() {
+            this.getAllInvoices();
+            this.loadDashboard();
+          }
+        }, {
+          key: "filterTodayInvoices",
+          value: function filterTodayInvoices() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+              var _this2 = this;
+
+              return regeneratorRuntime.wrap(function _callee2$(_context3) {
+                while (1) {
+                  switch (_context3.prev = _context3.next) {
+                    case 0:
+                      this.getAllInvoices().then(function (data) {
+                        var res = _this2.invoiceList;
+                        _this2.startDate = new Date();
+                        _this2.endDate = new Date();
+                        _this2.endDate = new Date(_this2.endDate.getFullYear(), _this2.endDate.getMonth(), _this2.endDate.getDate());
+
+                        _this2.endDate.setHours(23);
+
+                        _this2.endDate.setMinutes(23);
+
+                        _this2.endDate.setSeconds(23);
+
+                        _this2.startDate = new Date(_this2.startDate.getFullYear(), _this2.startDate.getMonth(), _this2.startDate.getDate());
+
+                        _this2.startDate.setHours(0);
+
+                        _this2.startDate.setMinutes(0);
+
+                        _this2.startDate.setSeconds(0);
+
+                        _this2.filterInvoiceList = res === null || res === void 0 ? void 0 : res.filter(function (inv) {
+                          var date = new Date(inv.invoiceDate);
+                          date.setHours(1);
+                          date.setMinutes(1);
+                          date.setSeconds(1);
+                          return date.getTime() >= _this2.startDate.getTime() && date.getTime() <= _this2.endDate.getTime();
+                        });
+                      })["catch"](function (err) {
+                        return console.log(err);
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context3.stop();
+                  }
+                }
+              }, _callee2, this);
+            }));
+          }
+        }, {
+          key: "filterMonthlyInvoices",
+          value: function filterMonthlyInvoices() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+              var _this3 = this;
+
+              return regeneratorRuntime.wrap(function _callee3$(_context4) {
+                while (1) {
+                  switch (_context4.prev = _context4.next) {
+                    case 0:
+                      this.getAllInvoices().then(function (data) {
+                        var res = _this3.invoiceList;
+                        _this3.startDate = new Date();
+
+                        _this3.startDate.setDate(_this3.startDate.getDate() - 30);
+
+                        _this3.endDate = new Date();
+                        _this3.endDate = new Date(_this3.endDate.getFullYear(), _this3.endDate.getMonth(), _this3.endDate.getDate());
+
+                        _this3.endDate.setHours(23);
+
+                        _this3.endDate.setMinutes(23);
+
+                        _this3.endDate.setSeconds(23);
+
+                        _this3.startDate = new Date(_this3.startDate.getFullYear(), _this3.startDate.getMonth(), _this3.startDate.getDate());
+
+                        _this3.startDate.setHours(0);
+
+                        _this3.startDate.setMinutes(0);
+
+                        _this3.startDate.setSeconds(0);
+
+                        _this3.filterInvoiceList = res === null || res === void 0 ? void 0 : res.filter(function (inv) {
+                          var date = new Date(inv.invoiceDate);
+                          date.setHours(1);
+                          date.setMinutes(1);
+                          date.setSeconds(1);
+                          return date.getTime() >= _this3.startDate.getTime() && date.getTime() <= _this3.endDate.getTime();
+                        });
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context4.stop();
+                  }
+                }
+              }, _callee3, this);
             }));
           } // async getBarData() : Promise<any>{
           //     this.filterInvoices().then(data=>{
@@ -4424,95 +4485,113 @@
         }, {
           key: "getDonutdata",
           value: function getDonutdata() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var _a, _b;
+
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
               var _iterator10, _step10, i;
 
-              return regeneratorRuntime.wrap(function _callee2$(_context3) {
+              return regeneratorRuntime.wrap(function _callee4$(_context5) {
                 while (1) {
-                  switch (_context3.prev = _context3.next) {
+                  switch (_context5.prev = _context5.next) {
                     case 0:
                       this.donutColors = [];
                       this.donutHoverColors = [];
-                      this.donutLabels = this.inventoryList.map(function (a) {
+                      this.donutLabels = (_a = this.inventoryList) === null || _a === void 0 ? void 0 : _a.map(function (a) {
                         return a.name;
                       });
-                      this.donutdata = this.inventoryList.map(function (a) {
+                      this.donutdata = (_b = this.inventoryList) === null || _b === void 0 ? void 0 : _b.map(function (a) {
                         return a.quantity;
                       });
-                      _iterator10 = _createForOfIteratorHelper(this.inventoryList);
 
-                      try {
-                        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-                          i = _step10.value;
-                          this.donutColors.push(this.random_rgba());
-                          this.donutHoverColors.push(this.random_rgba());
+                      if (this.inventoryList != null && this.inventoryList != undefined) {
+                        _iterator10 = _createForOfIteratorHelper(this.inventoryList);
+
+                        try {
+                          for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                            i = _step10.value;
+                            this.donutColors.push(this.random_rgba());
+                            this.donutHoverColors.push(this.random_rgba());
+                          }
+                        } catch (err) {
+                          _iterator10.e(err);
+                        } finally {
+                          _iterator10.f();
                         }
-                      } catch (err) {
-                        _iterator10.e(err);
-                      } finally {
-                        _iterator10.f();
                       }
 
-                    case 6:
+                    case 5:
                     case "end":
-                      return _context3.stop();
+                      return _context5.stop();
                   }
                 }
-              }, _callee2, this);
+              }, _callee4, this);
             }));
           }
         }, {
           key: "showDashboard",
           value: function showDashboard() {
-            console.log('called');
-            this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_4__["Chart"](this.doughnutCanvas.nativeElement, {
-              type: "doughnut",
-              data: {
-                labels: this.donutLabels,
-                datasets: [{
-                  label: "Quantity",
-                  data: this.donutdata,
-                  backgroundColor: this.donutColors,
-                  // backgroundColor: [
-                  //   "rgba(255, 99, 132, 0.2)",
-                  //   "rgba(54, 162, 235, 0.2)",
-                  //   "rgba(255, 206, 86, 0.2)",
-                  //   "rgba(75, 192, 192, 0.2)",
-                  //   "rgba(153, 102, 255, 0.2)",
-                  //   "rgba(255, 159, 64, 0.2)"
-                  // ],
-                  hoverBackgroundColor: this.donutHoverColors
-                }]
-              }
-            }); // this.barChart = new Chart(this.barCanvas.nativeElement, {
-            //   type: "bar",
-            //   data: {
-            //     labels: this.barLabels,
-            //     datasets: [
-            //       {
-            //         label: "# of Votes",
-            //         data: [12, 19, 3, 5, 2, 3],
-            //         backgroundColor: [
-            //           "rgba(255, 99, 132, 0.2)",
-            //           "rgba(54, 162, 235, 0.2)",
-            //           "rgba(255, 206, 86, 0.2)",
-            //           "rgba(75, 192, 192, 0.2)",
-            //           "rgba(153, 102, 255, 0.2)",
-            //           "rgba(255, 159, 64, 0.2)"
-            //         ],
-            //         borderColor: [
-            //           "rgba(255,99,132,1)",
-            //           "rgba(54, 162, 235, 1)",
-            //           "rgba(255, 206, 86, 1)",
-            //           "rgba(75, 192, 192, 1)",
-            //           "rgba(153, 102, 255, 1)",
-            //           "rgba(255, 159, 64, 1)"
-            //         ],
-            //         borderWidth: 1
-            //       }
-            //     ]
-            //   }
-            // });
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+              return regeneratorRuntime.wrap(function _callee5$(_context6) {
+                while (1) {
+                  switch (_context6.prev = _context6.next) {
+                    case 0:
+                      console.log('called');
+                      this.doughnutChart = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.doughnutCanvas.nativeElement, {
+                        type: "doughnut",
+                        data: {
+                          labels: this.donutLabels,
+                          datasets: [{
+                            label: "Quantity",
+                            data: this.donutdata,
+                            backgroundColor: this.donutColors,
+                            // backgroundColor: [
+                            //   "rgba(255, 99, 132, 0.2)",
+                            //   "rgba(54, 162, 235, 0.2)",
+                            //   "rgba(255, 206, 86, 0.2)",
+                            //   "rgba(75, 192, 192, 0.2)",
+                            //   "rgba(153, 102, 255, 0.2)",
+                            //   "rgba(255, 159, 64, 0.2)"
+                            // ],
+                            hoverBackgroundColor: this.donutHoverColors
+                          }]
+                        }
+                      }); // this.barChart = new Chart(this.barCanvas.nativeElement, {
+                      //   type: "bar",
+                      //   data: {
+                      //     labels: this.barLabels,
+                      //     datasets: [
+                      //       {
+                      //         label: "# of Votes",
+                      //         data: [12, 19, 3, 5, 2, 3],
+                      //         backgroundColor: [
+                      //           "rgba(255, 99, 132, 0.2)",
+                      //           "rgba(54, 162, 235, 0.2)",
+                      //           "rgba(255, 206, 86, 0.2)",
+                      //           "rgba(75, 192, 192, 0.2)",
+                      //           "rgba(153, 102, 255, 0.2)",
+                      //           "rgba(255, 159, 64, 0.2)"
+                      //         ],
+                      //         borderColor: [
+                      //           "rgba(255,99,132,1)",
+                      //           "rgba(54, 162, 235, 1)",
+                      //           "rgba(255, 206, 86, 1)",
+                      //           "rgba(75, 192, 192, 1)",
+                      //           "rgba(153, 102, 255, 1)",
+                      //           "rgba(255, 159, 64, 1)"
+                      //         ],
+                      //         borderWidth: 1
+                      //       }
+                      //     ]
+                      //   }
+                      // });
+
+                    case 2:
+                    case "end":
+                      return _context6.stop();
+                  }
+                }
+              }, _callee5, this);
+            }));
           }
         }, {
           key: "random_rgba",
@@ -4522,6 +4601,133 @@
                 s = 255;
             return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
           }
+        }, {
+          key: "getAllInvoices",
+          value: function getAllInvoices() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+              var _this4 = this;
+
+              return regeneratorRuntime.wrap(function _callee6$(_context7) {
+                while (1) {
+                  switch (_context7.prev = _context7.next) {
+                    case 0:
+                      this.dbService.getAllInvoices().then(function (data) {
+                        _this4.invoiceList = data;
+                        return _this4.invoiceList;
+                      })["catch"](function (reason) {
+                        console.log(reason);
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context7.stop();
+                  }
+                }
+              }, _callee6, this);
+            }));
+          }
+        }, {
+          key: "applyFilter",
+          value: function applyFilter() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+              var _this5 = this;
+
+              return regeneratorRuntime.wrap(function _callee7$(_context8) {
+                while (1) {
+                  switch (_context8.prev = _context8.next) {
+                    case 0:
+                      this.filterTodayInvoices().then(function (data) {
+                        _this5.totalCost().then(function (data) {
+                          _this5.todayCost = data;
+
+                          _this5.totalRevenue().then(function (data) {
+                            _this5.todayRevenue = data;
+                            _this5.todayProfit = _this5.todayRevenue - _this5.todayCost;
+
+                            _this5.filterMonthlyInvoices().then(function (data) {
+                              _this5.totalCost().then(function (data) {
+                                _this5.monthCost = data;
+
+                                _this5.totalRevenue().then(function (data) {
+                                  _this5.monthRevenue = data;
+                                  _this5.monthProfit = _this5.monthRevenue - _this5.monthCost;
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context8.stop();
+                  }
+                }
+              }, _callee7, this);
+            }));
+          }
+        }, {
+          key: "totalCost",
+          value: function totalCost() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+              var invoiceItemList;
+              return regeneratorRuntime.wrap(function _callee8$(_context9) {
+                while (1) {
+                  switch (_context9.prev = _context9.next) {
+                    case 0:
+                      if (!(this.filterInvoiceList != null && this.filterInvoiceList != undefined && this.filterInvoiceList.length)) {
+                        _context9.next = 3;
+                        break;
+                      }
+
+                      invoiceItemList = this.filterInvoiceList.reduce(function (arr, elem) {
+                        return arr.concat(elem.invoiceItems);
+                      }, []);
+                      return _context9.abrupt("return", invoiceItemList.map(function (itm) {
+                        if (itm.quantity != null && itm.quantity != undefined && itm.purchasePrice != null && itm.purchasePrice != undefined) return itm.quantity * itm.purchasePrice;
+                      }).reduce(function (acc, nxt) {
+                        return acc + nxt;
+                      }));
+
+                    case 3:
+                    case "end":
+                      return _context9.stop();
+                  }
+                }
+              }, _callee8, this);
+            }));
+          }
+        }, {
+          key: "totalRevenue",
+          value: function totalRevenue() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+              var invoiceItemList;
+              return regeneratorRuntime.wrap(function _callee9$(_context10) {
+                while (1) {
+                  switch (_context10.prev = _context10.next) {
+                    case 0:
+                      if (!(this.filterInvoiceList != null && this.filterInvoiceList != undefined && this.filterInvoiceList.length)) {
+                        _context10.next = 3;
+                        break;
+                      }
+
+                      invoiceItemList = this.filterInvoiceList.reduce(function (arr, elem) {
+                        return arr.concat(elem.invoiceItems);
+                      }, []);
+                      return _context10.abrupt("return", invoiceItemList.map(function (itm) {
+                        if (itm.quantity != null && itm.quantity != undefined && itm.unitPrice != null && itm.unitPrice != undefined) return itm.quantity * itm.unitPrice;
+                      }).reduce(function (acc, nxt) {
+                        return acc + nxt;
+                      }));
+
+                    case 3:
+                    case "end":
+                      return _context10.stop();
+                  }
+                }
+              }, _callee9, this);
+            }));
+          }
         }]);
 
         return DashboardPage;
@@ -4529,7 +4735,9 @@
 
       DashboardPage.ctorParameters = function () {
         return [{
-          type: _services_db_service__WEBPACK_IMPORTED_MODULE_5__["DbService"]
+          type: _services_db_service__WEBPACK_IMPORTED_MODULE_6__["DbService"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["LoadingController"]
         }];
       };
 
@@ -5014,7 +5222,7 @@
         }, {
           key: "_refresh",
           value: function _refresh() {
-            var _this3 = this;
+            var _this6 = this;
 
             if (this._request) {
               return;
@@ -5022,19 +5230,19 @@
 
             this._running = true;
             this._request = _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["r"].call(window, function () {
-              _this3._update();
+              _this6._update();
 
-              _this3._request = null;
+              _this6._request = null;
 
-              if (_this3._running) {
-                _this3._refresh();
+              if (_this6._running) {
+                _this6._refresh();
               }
             });
           }
         }, {
           key: "_update",
           value: function _update() {
-            var _this4 = this;
+            var _this7 = this;
 
             var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
             var remaining = 0;
@@ -5068,13 +5276,13 @@
               if (draw) {
                 chart.draw();
 
-                _this4._notify(chart, anims, date, 'progress');
+                _this7._notify(chart, anims, date, 'progress');
               }
 
               if (!items.length) {
                 anims.running = false;
 
-                _this4._notify(chart, anims, date, 'complete');
+                _this7._notify(chart, anims, date, 'complete');
 
                 anims.initial = false;
               }
@@ -6320,7 +6528,7 @@
         }, {
           key: "_resolveElementOptions",
           value: function _resolveElementOptions(elementType) {
-            var _this5 = this;
+            var _this8 = this;
 
             var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'default';
             var index = arguments.length > 2 ? arguments[2] : undefined;
@@ -6341,7 +6549,7 @@
             var names = Object.keys(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["d"].elements[elementType]);
 
             var context = function context() {
-              return _this5.getContext(index, active);
+              return _this8.getContext(index, active);
             };
 
             var values = config.resolveNamedOptions(scopes, names, context, prefixes);
@@ -6546,10 +6754,10 @@
             if (this._parsing) {
               this._syncList.push(args);
             } else {
-              var _args4 = _slicedToArray(args, 3),
-                  method = _args4[0],
-                  arg1 = _args4[1],
-                  arg2 = _args4[2];
+              var _args11 = _slicedToArray(args, 3),
+                  method = _args11[0],
+                  arg1 = _args11[1],
+                  arg2 = _args11[2];
 
               this[method](arg1, arg2);
             }
@@ -7425,17 +7633,17 @@
         var _super3 = _createSuper(DoughnutController);
 
         function DoughnutController(chart, datasetIndex) {
-          var _this6;
+          var _this9;
 
           _classCallCheck(this, DoughnutController);
 
-          _this6 = _super3.call(this, chart, datasetIndex);
-          _this6.enableOptionSharing = true;
-          _this6.innerRadius = undefined;
-          _this6.outerRadius = undefined;
-          _this6.offsetX = undefined;
-          _this6.offsetY = undefined;
-          return _this6;
+          _this9 = _super3.call(this, chart, datasetIndex);
+          _this9.enableOptionSharing = true;
+          _this9.innerRadius = undefined;
+          _this9.outerRadius = undefined;
+          _this9.offsetX = undefined;
+          _this9.offsetY = undefined;
+          return _this9;
         }
 
         _createClass(DoughnutController, [{
@@ -8021,14 +8229,14 @@
         var _super5 = _createSuper(PolarAreaController);
 
         function PolarAreaController(chart, datasetIndex) {
-          var _this7;
+          var _this10;
 
           _classCallCheck(this, PolarAreaController);
 
-          _this7 = _super5.call(this, chart, datasetIndex);
-          _this7.innerRadius = undefined;
-          _this7.outerRadius = undefined;
-          return _this7;
+          _this10 = _super5.call(this, chart, datasetIndex);
+          _this10.innerRadius = undefined;
+          _this10.outerRadius = undefined;
+          return _this10;
         }
 
         _createClass(PolarAreaController, [{
@@ -8121,13 +8329,13 @@
         }, {
           key: "countVisibleElements",
           value: function countVisibleElements() {
-            var _this8 = this;
+            var _this11 = this;
 
             var dataset = this.getDataset();
             var meta = this._cachedMeta;
             var count = 0;
             meta.data.forEach(function (element, index) {
-              if (!isNaN(dataset.data[index]) && _this8.chart.getDataVisibility(index)) {
+              if (!isNaN(dataset.data[index]) && _this11.chart.getDataVisibility(index)) {
                 count++;
               }
             });
@@ -9597,7 +9805,7 @@
         }, {
           key: "getProps",
           value: function getProps(props, _final) {
-            var _this9 = this;
+            var _this12 = this;
 
             var anims = this.$animations;
 
@@ -9607,7 +9815,7 @@
 
             var ret = {};
             props.forEach(function (prop) {
-              ret[prop] = anims[prop] && anims[prop].active() ? anims[prop]._to : _this9[prop];
+              ret[prop] = anims[prop] && anims[prop].active() ? anims[prop]._to : _this12[prop];
             });
             return ret;
           }
@@ -10064,59 +10272,59 @@
         var _super11 = _createSuper(Scale);
 
         function Scale(cfg) {
-          var _this10;
+          var _this13;
 
           _classCallCheck(this, Scale);
 
-          _this10 = _super11.call(this);
-          _this10.id = cfg.id;
-          _this10.type = cfg.type;
-          _this10.options = undefined;
-          _this10.ctx = cfg.ctx;
-          _this10.chart = cfg.chart;
-          _this10.top = undefined;
-          _this10.bottom = undefined;
-          _this10.left = undefined;
-          _this10.right = undefined;
-          _this10.width = undefined;
-          _this10.height = undefined;
-          _this10._margins = {
+          _this13 = _super11.call(this);
+          _this13.id = cfg.id;
+          _this13.type = cfg.type;
+          _this13.options = undefined;
+          _this13.ctx = cfg.ctx;
+          _this13.chart = cfg.chart;
+          _this13.top = undefined;
+          _this13.bottom = undefined;
+          _this13.left = undefined;
+          _this13.right = undefined;
+          _this13.width = undefined;
+          _this13.height = undefined;
+          _this13._margins = {
             left: 0,
             right: 0,
             top: 0,
             bottom: 0
           };
-          _this10.maxWidth = undefined;
-          _this10.maxHeight = undefined;
-          _this10.paddingTop = undefined;
-          _this10.paddingBottom = undefined;
-          _this10.paddingLeft = undefined;
-          _this10.paddingRight = undefined;
-          _this10.axis = undefined;
-          _this10.labelRotation = undefined;
-          _this10.min = undefined;
-          _this10.max = undefined;
-          _this10._range = undefined;
-          _this10.ticks = [];
-          _this10._gridLineItems = null;
-          _this10._labelItems = null;
-          _this10._labelSizes = null;
-          _this10._length = 0;
-          _this10._maxLength = 0;
-          _this10._longestTextCache = {};
-          _this10._startPixel = undefined;
-          _this10._endPixel = undefined;
-          _this10._reversePixels = false;
-          _this10._userMax = undefined;
-          _this10._userMin = undefined;
-          _this10._suggestedMax = undefined;
-          _this10._suggestedMin = undefined;
-          _this10._ticksLength = 0;
-          _this10._borderValue = 0;
-          _this10._cache = {};
-          _this10._dataLimitsCached = false;
-          _this10.$context = undefined;
-          return _this10;
+          _this13.maxWidth = undefined;
+          _this13.maxHeight = undefined;
+          _this13.paddingTop = undefined;
+          _this13.paddingBottom = undefined;
+          _this13.paddingLeft = undefined;
+          _this13.paddingRight = undefined;
+          _this13.axis = undefined;
+          _this13.labelRotation = undefined;
+          _this13.min = undefined;
+          _this13.max = undefined;
+          _this13._range = undefined;
+          _this13.ticks = [];
+          _this13._gridLineItems = null;
+          _this13._labelItems = null;
+          _this13._labelSizes = null;
+          _this13._length = 0;
+          _this13._maxLength = 0;
+          _this13._longestTextCache = {};
+          _this13._startPixel = undefined;
+          _this13._endPixel = undefined;
+          _this13._reversePixels = false;
+          _this13._userMax = undefined;
+          _this13._userMin = undefined;
+          _this13._suggestedMax = undefined;
+          _this13._suggestedMin = undefined;
+          _this13._ticksLength = 0;
+          _this13._borderValue = 0;
+          _this13._cache = {};
+          _this13._dataLimitsCached = false;
+          _this13.$context = undefined;
+          return _this13;
         }
 
         _createClass(Scale, [{
@@ -11421,7 +11629,7 @@
         }, {
           key: "_layers",
           value: function _layers() {
-            var _this11 = this;
+            var _this14 = this;
 
             var opts = this.options;
             var tz = opts.ticks && opts.ticks.z || 0;
@@ -11431,7 +11639,7 @@
               return [{
                 z: tz,
                 draw: function draw(chartArea) {
-                  _this11.draw(chartArea);
+                  _this14.draw(chartArea);
                 }
               }];
             }
@@ -11439,21 +11647,21 @@
             return [{
               z: gz,
               draw: function draw(chartArea) {
-                _this11.drawBackground();
+                _this14.drawBackground();
 
-                _this11.drawGrid(chartArea);
+                _this14.drawGrid(chartArea);
 
-                _this11.drawTitle();
+                _this14.drawTitle();
               }
             }, {
               z: gz + 1,
               draw: function draw() {
-                _this11.drawBorder();
+                _this14.drawBorder();
               }
             }, {
               z: tz,
               draw: function draw(chartArea) {
-                _this11.drawLabels(chartArea);
+                _this14.drawLabels(chartArea);
               }
             }];
           }
@@ -11723,18 +11931,18 @@
         }, {
           key: "_each",
           value: function _each(method, args, typedRegistry) {
-            var _this12 = this;
+            var _this15 = this;
 
             _toConsumableArray(args).forEach(function (arg) {
-              var reg = typedRegistry || _this12._getRegistryForType(arg);
+              var reg = typedRegistry || _this15._getRegistryForType(arg);
 
-              if (typedRegistry || reg.isForType(arg) || reg === _this12.plugins && arg.id) {
-                _this12._exec(method, reg, arg);
+              if (typedRegistry || reg.isForType(arg) || reg === _this15.plugins && arg.id) {
+                _this15._exec(method, reg, arg);
               } else {
                 Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(arg, function (item) {
-                  var itemReg = typedRegistry || _this12._getRegistryForType(item);
+                  var itemReg = typedRegistry || _this15._getRegistryForType(item);
 
-                  _this12._exec(method, itemReg, item);
+                  _this15._exec(method, itemReg, item);
                 });
               }
             });
@@ -12403,7 +12611,7 @@
 
       var Chart = /*#__PURE__*/function () {
         function Chart(item, userConfig) {
-          var _this13 = this;
+          var _this16 = this;
 
           _classCallCheck(this, Chart);
 
@@ -12448,7 +12656,7 @@
           this._animationsDisabled = undefined;
           this.$context = undefined;
           this._doResize = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["aa"])(function (mode) {
-            return _this13.update(mode);
+            return _this16.update(mode);
           }, options.resizeDelay || 0);
           instances[this.id] = this;
 
@@ -12582,7 +12790,7 @@
         }, {
           key: "buildOrUpdateScales",
           value: function buildOrUpdateScales() {
-            var _this14 = this;
+            var _this17 = this;
 
             var options = this.options;
             var scaleOpts = options.scales;
@@ -12627,8 +12835,8 @@
                 scale = new scaleClass({
                   id: id,
                   type: scaleType,
-                  ctx: _this14.ctx,
-                  chart: _this14
+                  ctx: _this17.ctx,
+                  chart: _this17
                 });
                 scales[scale.id] = scale;
               }
@@ -12641,8 +12849,8 @@
               }
             });
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(scales, function (scale) {
-              layouts.configure(_this14, scale, scale.options);
-              layouts.addBox(_this14, scale);
+              layouts.configure(_this17, scale, scale.options);
+              layouts.addBox(_this17, scale);
             });
           }
         }, {
@@ -12668,7 +12876,7 @@
         }, {
           key: "_removeUnreferencedMetasets",
           value: function _removeUnreferencedMetasets() {
-            var _this15 = this;
+            var _this18 = this;
 
             var metasets = this._metasets,
                 datasets = this.data.datasets;
@@ -12681,7 +12889,7 @@
               if (datasets.filter(function (x) {
                 return x === meta._dataset;
               }).length === 0) {
-                _this15._destroyDatasetMeta(index);
+                _this18._destroyDatasetMeta(index);
               }
             });
           }
@@ -12736,10 +12944,10 @@
         }, {
           key: "_resetElements",
           value: function _resetElements() {
-            var _this16 = this;
+            var _this19 = this;
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.data.datasets, function (dataset, datasetIndex) {
-              _this16.getDatasetMeta(datasetIndex).controller.reset();
+              _this19.getDatasetMeta(datasetIndex).controller.reset();
             }, this);
           }
         }, {
@@ -12752,13 +12960,13 @@
         }, {
           key: "update",
           value: function update(mode) {
-            var _this17 = this;
+            var _this20 = this;
 
             var config = this.config;
             config.update();
             var options = this._options = config.createResolver(config.chartOptionScopes(), this.getContext());
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.scales, function (scale) {
-              layouts.removeBox(_this17, scale);
+              layouts.removeBox(_this20, scale);
             });
             var animsDisabled = this._animationsDisabled = !options.animation;
             this.ensureScalesHaveIDs();
@@ -12820,7 +13028,7 @@
         }, {
           key: "_updateLayout",
           value: function _updateLayout(minPadding) {
-            var _this18 = this;
+            var _this21 = this;
 
             if (this.notifyPlugins('beforeLayout', {
               cancelable: true
@@ -12833,7 +13041,7 @@
             var noArea = area.width <= 0 || area.height <= 0;
             this._layers = [];
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.boxes, function (box) {
-              var _this18$_layers;
+              var _this21$_layers;
 
               if (noArea && box.position === 'chartArea') {
                 return;
@@ -12843,7 +13051,7 @@
                 box.configure();
               }
 
-              (_this18$_layers = _this18._layers).push.apply(_this18$_layers, _toConsumableArray(box._layers()));
+              (_this21$_layers = _this21._layers).push.apply(_this21$_layers, _toConsumableArray(box._layers()));
             }, this);
 
             this._layers.forEach(function (item, index) {
@@ -13203,13 +13411,13 @@
         }, {
           key: "bindUserEvents",
           value: function bindUserEvents() {
-            var _this19 = this;
+            var _this22 = this;
 
             var listeners = this._listeners;
             var platform = this.platform;
 
             var _add = function _add(type, listener) {
-              platform.addEventListener(_this19, type, listener);
+              platform.addEventListener(_this22, type, listener);
               listeners[type] = listener;
             };
 
@@ -13217,7 +13425,7 @@
               e.offsetX = x;
               e.offsetY = y;
 
-              _this19._eventHandler(e);
+              _this22._eventHandler(e);
             };
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this.options.events, function (type) {
@@ -13227,7 +13435,7 @@
         }, {
           key: "bindResponsiveEvents",
           value: function bindResponsiveEvents() {
-            var _this20 = this;
+            var _this23 = this;
 
             if (!this._responsiveListeners) {
               this._responsiveListeners = {};
@@ -13237,20 +13445,20 @@
             var platform = this.platform;
 
             var _add = function _add(type, listener) {
-              platform.addEventListener(_this20, type, listener);
+              platform.addEventListener(_this23, type, listener);
               listeners[type] = listener;
             };
 
             var _remove = function _remove(type, listener) {
               if (listeners[type]) {
-                platform.removeEventListener(_this20, type, listener);
+                platform.removeEventListener(_this23, type, listener);
                 delete listeners[type];
               }
             };
 
             var listener = function listener(width, height) {
-              if (_this20.canvas) {
-                _this20.resize(width, height);
+              if (_this23.canvas) {
+                _this23.resize(width, height);
               }
             };
 
@@ -13259,9 +13467,9 @@
             var attached = function attached() {
               _remove('attach', attached);
 
-              _this20.attached = true;
+              _this23.attached = true;
 
-              _this20.resize();
+              _this23.resize();
 
               _add('resize', listener);
 
@@ -13269,13 +13477,13 @@
             };
 
             detached = function detached() {
-              _this20.attached = false;
+              _this23.attached = false;
 
               _remove('resize', listener);
 
-              _this20._stop();
+              _this23._stop();
 
-              _this20._resize(0, 0);
+              _this23._resize(0, 0);
 
               _add('attach', attached);
             };
@@ -13289,14 +13497,14 @@
         }, {
           key: "unbindEvents",
           value: function unbindEvents() {
-            var _this21 = this;
+            var _this24 = this;
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this._listeners, function (listener, type) {
-              _this21.platform.removeEventListener(_this21, type, listener);
+              _this24.platform.removeEventListener(_this24, type, listener);
             });
             this._listeners = {};
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(this._responsiveListeners, function (listener, type) {
-              _this21.platform.removeEventListener(_this21, type, listener);
+              _this24.platform.removeEventListener(_this24, type, listener);
             });
             this._responsiveListeners = undefined;
           }
@@ -13328,14 +13536,14 @@
         }, {
           key: "setActiveElements",
           value: function setActiveElements(activeElements) {
-            var _this22 = this;
+            var _this25 = this;
 
             var lastActive = this._active || [];
             var active = activeElements.map(function (_ref3) {
               var datasetIndex = _ref3.datasetIndex,
                   index = _ref3.index;
 
-              var meta = _this22.getDatasetMeta(datasetIndex);
+              var meta = _this25.getDatasetMeta(datasetIndex);
 
               if (!meta) {
                 throw new Error('No dataset found at index ' + datasetIndex);
@@ -13387,7 +13595,7 @@
         }, {
           key: "_eventHandler",
           value: function _eventHandler(e, replay) {
-            var _this23 = this;
+            var _this26 = this;
 
             var args = {
               event: e,
@@ -13396,7 +13604,7 @@
             };
 
             var eventFilter = function eventFilter(plugin) {
-              return (plugin.options.events || _this23.options.events).includes(e["native"].type);
+              return (plugin.options.events || _this26.options.events).includes(e["native"].type);
             };
 
             if (this.notifyPlugins('beforeEvent', args, eventFilter) === false) {
@@ -13721,25 +13929,25 @@
         var _super12 = _createSuper(ArcElement);
 
         function ArcElement(cfg) {
-          var _this24;
+          var _this27;
 
           _classCallCheck(this, ArcElement);
 
-          _this24 = _super12.call(this);
-          _this24.options = undefined;
-          _this24.circumference = undefined;
-          _this24.startAngle = undefined;
-          _this24.endAngle = undefined;
-          _this24.innerRadius = undefined;
-          _this24.outerRadius = undefined;
-          _this24.pixelMargin = 0;
-          _this24.fullCircles = 0;
+          _this27 = _super12.call(this);
+          _this27.options = undefined;
+          _this27.circumference = undefined;
+          _this27.startAngle = undefined;
+          _this27.endAngle = undefined;
+          _this27.innerRadius = undefined;
+          _this27.outerRadius = undefined;
+          _this27.pixelMargin = 0;
+          _this27.fullCircles = 0;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this24), cfg);
+            Object.assign(_assertThisInitialized(_this27), cfg);
           }
 
-          return _this24;
+          return _this27;
         }
 
         _createClass(ArcElement, [{
@@ -14080,28 +14288,28 @@
         var _super13 = _createSuper(LineElement);
 
         function LineElement(cfg) {
-          var _this25;
+          var _this28;
 
           _classCallCheck(this, LineElement);
 
-          _this25 = _super13.call(this);
-          _this25.animated = true;
-          _this25.options = undefined;
-          _this25._chart = undefined;
-          _this25._loop = undefined;
-          _this25._fullLoop = undefined;
-          _this25._path = undefined;
-          _this25._points = undefined;
-          _this25._segments = undefined;
-          _this25._decimated = false;
-          _this25._pointsUpdated = false;
-          _this25._datasetIndex = undefined;
+          _this28 = _super13.call(this);
+          _this28.animated = true;
+          _this28.options = undefined;
+          _this28._chart = undefined;
+          _this28._loop = undefined;
+          _this28._fullLoop = undefined;
+          _this28._path = undefined;
+          _this28._points = undefined;
+          _this28._segments = undefined;
+          _this28._decimated = false;
+          _this28._pointsUpdated = false;
+          _this28._datasetIndex = undefined;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this25), cfg);
+            Object.assign(_assertThisInitialized(_this28), cfg);
           }
 
-          return _this25;
+          return _this28;
         }
 
         _createClass(LineElement, [{
@@ -14291,21 +14499,21 @@
         var _super14 = _createSuper(PointElement);
 
         function PointElement(cfg) {
-          var _this26;
+          var _this29;
 
           _classCallCheck(this, PointElement);
 
-          _this26 = _super14.call(this);
-          _this26.options = undefined;
-          _this26.parsed = undefined;
-          _this26.skip = undefined;
-          _this26.stop = undefined;
+          _this29 = _super14.call(this);
+          _this29.options = undefined;
+          _this29.parsed = undefined;
+          _this29.skip = undefined;
+          _this29.stop = undefined;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this26), cfg);
+            Object.assign(_assertThisInitialized(_this29), cfg);
           }
 
-          return _this26;
+          return _this29;
         }
 
         _createClass(PointElement, [{
@@ -14521,23 +14729,23 @@
         var _super15 = _createSuper(BarElement);
 
         function BarElement(cfg) {
-          var _this27;
+          var _this30;
 
           _classCallCheck(this, BarElement);
 
-          _this27 = _super15.call(this);
-          _this27.options = undefined;
-          _this27.horizontal = undefined;
-          _this27.base = undefined;
-          _this27.width = undefined;
-          _this27.height = undefined;
-          _this27.inflateAmount = undefined;
+          _this30 = _super15.call(this);
+          _this30.options = undefined;
+          _this30.horizontal = undefined;
+          _this30.base = undefined;
+          _this30.width = undefined;
+          _this30.height = undefined;
+          _this30.inflateAmount = undefined;
 
           if (cfg) {
-            Object.assign(_assertThisInitialized(_this27), cfg);
+            Object.assign(_assertThisInitialized(_this30), cfg);
           }
 
-          return _this27;
+          return _this30;
         }
 
         _createClass(BarElement, [{
@@ -15654,34 +15862,34 @@
         var _super16 = _createSuper(Legend);
 
         function Legend(config) {
-          var _this28;
+          var _this31;
 
           _classCallCheck(this, Legend);
 
-          _this28 = _super16.call(this);
-          _this28._added = false;
-          _this28.legendHitBoxes = [];
-          _this28._hoveredItem = null;
-          _this28.doughnutMode = false;
-          _this28.chart = config.chart;
-          _this28.options = config.options;
-          _this28.ctx = config.ctx;
-          _this28.legendItems = undefined;
-          _this28.columnSizes = undefined;
-          _this28.lineWidths = undefined;
-          _this28.maxHeight = undefined;
-          _this28.maxWidth = undefined;
-          _this28.top = undefined;
-          _this28.bottom = undefined;
-          _this28.left = undefined;
-          _this28.right = undefined;
-          _this28.height = undefined;
-          _this28.width = undefined;
-          _this28._margins = undefined;
-          _this28.position = undefined;
-          _this28.weight = undefined;
-          _this28.fullSize = undefined;
-          return _this28;
+          _this31 = _super16.call(this);
+          _this31._added = false;
+          _this31.legendHitBoxes = [];
+          _this31._hoveredItem = null;
+          _this31.doughnutMode = false;
+          _this31.chart = config.chart;
+          _this31.options = config.options;
+          _this31.ctx = config.ctx;
+          _this31.legendItems = undefined;
+          _this31.columnSizes = undefined;
+          _this31.lineWidths = undefined;
+          _this31.maxHeight = undefined;
+          _this31.maxWidth = undefined;
+          _this31.top = undefined;
+          _this31.bottom = undefined;
+          _this31.left = undefined;
+          _this31.right = undefined;
+          _this31.height = undefined;
+          _this31.width = undefined;
+          _this31._margins = undefined;
+          _this31.position = undefined;
+          _this31.weight = undefined;
+          _this31.fullSize = undefined;
+          return _this31;
         }
 
         _createClass(Legend, [{
@@ -15710,20 +15918,20 @@
         }, {
           key: "buildLabels",
           value: function buildLabels() {
-            var _this29 = this;
+            var _this32 = this;
 
             var labelOpts = this.options.labels || {};
             var legendItems = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["N"])(labelOpts.generateLabels, [this.chart], this) || [];
 
             if (labelOpts.filter) {
               legendItems = legendItems.filter(function (item) {
-                return labelOpts.filter(item, _this29.chart.data);
+                return labelOpts.filter(item, _this32.chart.data);
               });
             }
 
             if (labelOpts.sort) {
               legendItems = legendItems.sort(function (a, b) {
-                return labelOpts.sort(a, b, _this29.chart.data);
+                return labelOpts.sort(a, b, _this32.chart.data);
               });
             }
 
@@ -15937,7 +16145,7 @@
         }, {
           key: "_draw",
           value: function _draw() {
-            var _this30 = this;
+            var _this33 = this;
 
             var opts = this.options,
                 columnSizes = this.columnSizes,
@@ -16054,23 +16262,23 @@
               var width = boxWidth + halfFontSize + textWidth;
               var x = cursor.x;
               var y = cursor.y;
-              rtlHelper.setWidth(_this30.width);
+              rtlHelper.setWidth(_this33.width);
 
               if (isHorizontal) {
-                if (i > 0 && x + width + padding > _this30.right) {
+                if (i > 0 && x + width + padding > _this33.right) {
                   y = cursor.y += lineHeight;
                   cursor.line++;
-                  x = cursor.x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this30.left + padding, _this30.right - lineWidths[cursor.line]);
+                  x = cursor.x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this33.left + padding, _this33.right - lineWidths[cursor.line]);
                 }
-              } else if (i > 0 && y + lineHeight > _this30.bottom) {
+              } else if (i > 0 && y + lineHeight > _this33.bottom) {
                 x = cursor.x = x + columnSizes[cursor.line].width + padding;
                 cursor.line++;
-                y = cursor.y = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this30.top + titleHeight + padding, _this30.bottom - columnSizes[cursor.line].height);
+                y = cursor.y = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["$"])(align, _this33.top + titleHeight + padding, _this33.bottom - columnSizes[cursor.line].height);
               }
 
               var realX = rtlHelper.x(x);
               drawLegendBox(realX, y, legendItem);
-              x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["ax"])(textAlign, x + boxWidth + halfFontSize, isHorizontal ? x + width : _this30.right, opts.rtl);
+              x = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["ax"])(textAlign, x + boxWidth + halfFontSize, isHorizontal ? x + width : _this33.right, opts.rtl);
               fillText(rtlHelper.x(x), y, legendItem);
 
               if (isHorizontal) {
@@ -16308,25 +16516,25 @@
         var _super17 = _createSuper(Title);
 
         function Title(config) {
-          var _this31;
+          var _this34;
 
           _classCallCheck(this, Title);
 
-          _this31 = _super17.call(this);
-          _this31.chart = config.chart;
-          _this31.options = config.options;
-          _this31.ctx = config.ctx;
-          _this31._padding = undefined;
-          _this31.top = undefined;
-          _this31.bottom = undefined;
-          _this31.left = undefined;
-          _this31.right = undefined;
-          _this31.width = undefined;
-          _this31.height = undefined;
-          _this31.position = undefined;
-          _this31.weight = undefined;
-          _this31.fullSize = undefined;
-          return _this31;
+          _this34 = _super17.call(this);
+          _this34.chart = config.chart;
+          _this34.options = config.options;
+          _this34.ctx = config.ctx;
+          _this34._padding = undefined;
+          _this34.top = undefined;
+          _this34.bottom = undefined;
+          _this34.left = undefined;
+          _this34.right = undefined;
+          _this34.width = undefined;
+          _this34.height = undefined;
+          _this34.position = undefined;
+          _this34.weight = undefined;
+          _this34.fullSize = undefined;
+          return _this34;
         }
 
         _createClass(Title, [{
@@ -16839,39 +17047,39 @@
         var _super18 = _createSuper(Tooltip);
 
         function Tooltip(config) {
-          var _this32;
+          var _this35;
 
           _classCallCheck(this, Tooltip);
 
-          _this32 = _super18.call(this);
-          _this32.opacity = 0;
-          _this32._active = [];
-          _this32._chart = config._chart;
-          _this32._eventPosition = undefined;
-          _this32._size = undefined;
-          _this32._cachedAnimations = undefined;
-          _this32._tooltipItems = [];
-          _this32.$animations = undefined;
-          _this32.$context = undefined;
-          _this32.options = config.options;
-          _this32.dataPoints = undefined;
-          _this32.title = undefined;
-          _this32.beforeBody = undefined;
-          _this32.body = undefined;
-          _this32.afterBody = undefined;
-          _this32.footer = undefined;
-          _this32.xAlign = undefined;
-          _this32.yAlign = undefined;
-          _this32.x = undefined;
-          _this32.y = undefined;
-          _this32.height = undefined;
-          _this32.width = undefined;
-          _this32.caretX = undefined;
-          _this32.caretY = undefined;
-          _this32.labelColors = undefined;
-          _this32.labelPointStyles = undefined;
-          _this32.labelTextColors = undefined;
-          return _this32;
+          _this35 = _super18.call(this);
+          _this35.opacity = 0;
+          _this35._active = [];
+          _this35._chart = config._chart;
+          _this35._eventPosition = undefined;
+          _this35._size = undefined;
+          _this35._cachedAnimations = undefined;
+          _this35._tooltipItems = [];
+          _this35.$animations = undefined;
+          _this35.$context = undefined;
+          _this35.options = config.options;
+          _this35.dataPoints = undefined;
+          _this35.title = undefined;
+          _this35.beforeBody = undefined;
+          _this35.body = undefined;
+          _this35.afterBody = undefined;
+          _this35.footer = undefined;
+          _this35.xAlign = undefined;
+          _this35.yAlign = undefined;
+          _this35.x = undefined;
+          _this35.y = undefined;
+          _this35.height = undefined;
+          _this35.width = undefined;
+          _this35.caretX = undefined;
+          _this35.caretY = undefined;
+          _this35.labelColors = undefined;
+          _this35.labelPointStyles = undefined;
+          _this35.labelTextColors = undefined;
+          return _this35;
         }
 
         _createClass(Tooltip, [{
@@ -16927,7 +17135,7 @@
         }, {
           key: "getBody",
           value: function getBody(tooltipItems, options) {
-            var _this33 = this;
+            var _this36 = this;
 
             var callbacks = options.callbacks;
             var bodyItems = [];
@@ -16938,9 +17146,9 @@
                 after: []
               };
               var scoped = overrideCallbacks(callbacks, context);
-              pushOrConcat(bodyItem.before, splitNewlines(scoped.beforeLabel.call(_this33, context)));
-              pushOrConcat(bodyItem.lines, scoped.label.call(_this33, context));
-              pushOrConcat(bodyItem.after, splitNewlines(scoped.afterLabel.call(_this33, context)));
+              pushOrConcat(bodyItem.before, splitNewlines(scoped.beforeLabel.call(_this36, context)));
+              pushOrConcat(bodyItem.lines, scoped.label.call(_this36, context));
+              pushOrConcat(bodyItem.after, splitNewlines(scoped.afterLabel.call(_this36, context)));
               bodyItems.push(bodyItem);
             });
             return bodyItems;
@@ -16966,7 +17174,7 @@
         }, {
           key: "_createItems",
           value: function _createItems(options) {
-            var _this34 = this;
+            var _this37 = this;
 
             var active = this._active;
             var data = this._chart.data;
@@ -16994,9 +17202,9 @@
 
             Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["C"])(tooltipItems, function (context) {
               var scoped = overrideCallbacks(options.callbacks, context);
-              labelColors.push(scoped.labelColor.call(_this34, context));
-              labelPointStyles.push(scoped.labelPointStyle.call(_this34, context));
-              labelTextColors.push(scoped.labelTextColor.call(_this34, context));
+              labelColors.push(scoped.labelColor.call(_this37, context));
+              labelPointStyles.push(scoped.labelPointStyle.call(_this37, context));
+              labelTextColors.push(scoped.labelTextColor.call(_this37, context));
             });
             this.labelColors = labelColors;
             this.labelPointStyles = labelPointStyles;
@@ -17447,14 +17655,14 @@
         }, {
           key: "setActiveElements",
           value: function setActiveElements(activeElements, eventPosition) {
-            var _this35 = this;
+            var _this38 = this;
 
             var lastActive = this._active;
             var active = activeElements.map(function (_ref10) {
               var datasetIndex = _ref10.datasetIndex,
                   index = _ref10.index;
 
-              var meta = _this35._chart.getDatasetMeta(datasetIndex);
+              var meta = _this38._chart.getDatasetMeta(datasetIndex);
 
               if (!meta) {
                 throw new Error('Cannot find a dataset at index ' + datasetIndex);
@@ -17753,14 +17961,14 @@
         var _super19 = _createSuper(CategoryScale);
 
         function CategoryScale(cfg) {
-          var _this36;
+          var _this39;
 
           _classCallCheck(this, CategoryScale);
 
-          _this36 = _super19.call(this, cfg);
-          _this36._startValue = undefined;
-          _this36._valueRange = 0;
-          return _this36;
+          _this39 = _super19.call(this, cfg);
+          _this39._startValue = undefined;
+          _this39._valueRange = 0;
+          return _this39;
         }
 
         _createClass(CategoryScale, [{
@@ -18012,17 +18220,17 @@
         var _super20 = _createSuper(LinearScaleBase);
 
         function LinearScaleBase(cfg) {
-          var _this37;
+          var _this40;
 
           _classCallCheck(this, LinearScaleBase);
 
-          _this37 = _super20.call(this, cfg);
-          _this37.start = undefined;
-          _this37.end = undefined;
-          _this37._startValue = undefined;
-          _this37._endValue = undefined;
-          _this37._valueRange = 0;
-          return _this37;
+          _this40 = _super20.call(this, cfg);
+          _this40.start = undefined;
+          _this40.end = undefined;
+          _this40._startValue = undefined;
+          _this40._endValue = undefined;
+          _this40._valueRange = 0;
+          return _this40;
         }
 
         _createClass(LinearScaleBase, [{
@@ -18284,16 +18492,16 @@
         var _super22 = _createSuper(LogarithmicScale);
 
         function LogarithmicScale(cfg) {
-          var _this38;
+          var _this41;
 
           _classCallCheck(this, LogarithmicScale);
 
-          _this38 = _super22.call(this, cfg);
-          _this38.start = undefined;
-          _this38.end = undefined;
-          _this38._startValue = undefined;
-          _this38._valueRange = 0;
-          return _this38;
+          _this41 = _super22.call(this, cfg);
+          _this41.start = undefined;
+          _this41.end = undefined;
+          _this41._startValue = undefined;
+          _this41._valueRange = 0;
+          return _this41;
         }
 
         _createClass(LogarithmicScale, [{
@@ -18679,17 +18887,17 @@
         var _super23 = _createSuper(RadialLinearScale);
 
         function RadialLinearScale(cfg) {
-          var _this39;
+          var _this42;
 
           _classCallCheck(this, RadialLinearScale);
 
-          _this39 = _super23.call(this, cfg);
-          _this39.xCenter = undefined;
-          _this39.yCenter = undefined;
-          _this39.drawingArea = undefined;
-          _this39._pointLabels = [];
-          _this39._pointLabelItems = [];
-          return _this39;
+          _this42 = _super23.call(this, cfg);
+          _this42.xCenter = undefined;
+          _this42.yCenter = undefined;
+          _this42.drawingArea = undefined;
+          _this42._pointLabels = [];
+          _this42._pointLabelItems = [];
+          return _this42;
         }
 
         _createClass(RadialLinearScale, [{
@@ -18721,11 +18929,11 @@
         }, {
           key: "generateTickLabels",
           value: function generateTickLabels(ticks) {
-            var _this40 = this;
+            var _this43 = this;
 
             LinearScaleBase.prototype.generateTickLabels.call(this, ticks);
             this._pointLabels = this.getLabels().map(function (value, index) {
-              var label = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["N"])(_this40.options.pointLabels.callback, [value, index], _this40);
+              var label = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["N"])(_this43.options.pointLabels.callback, [value, index], _this43);
               return label || label === 0 ? label : '';
             });
           }
@@ -18863,7 +19071,7 @@
         }, {
           key: "drawGrid",
           value: function drawGrid() {
-            var _this41 = this;
+            var _this44 = this;
 
             var ctx = this.ctx;
             var opts = this.options;
@@ -18879,9 +19087,9 @@
             if (grid.display) {
               this.ticks.forEach(function (tick, index) {
                 if (index !== 0) {
-                  offset = _this41.getDistanceFromCenterForValue(tick.value);
-                  var optsAtIndex = grid.setContext(_this41.getContext(index - 1));
-                  drawRadiusLine(_this41, optsAtIndex, offset, labelCount);
+                  offset = _this44.getDistanceFromCenterForValue(tick.value);
+                  var optsAtIndex = grid.setContext(_this44.getContext(index - 1));
+                  drawRadiusLine(_this44, optsAtIndex, offset, labelCount);
                 }
               });
             }
@@ -18919,7 +19127,7 @@
         }, {
           key: "drawLabels",
           value: function drawLabels() {
-            var _this42 = this;
+            var _this45 = this;
 
             var ctx = this.ctx;
             var opts = this.options;
@@ -18941,9 +19149,9 @@
                 return;
               }
 
-              var optsAtIndex = tickOpts.setContext(_this42.getContext(index));
+              var optsAtIndex = tickOpts.setContext(_this45.getContext(index));
               var tickFont = Object(_chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__["Y"])(optsAtIndex.font);
-              offset = _this42.getDistanceFromCenterForValue(_this42.ticks[index].value);
+              offset = _this45.getDistanceFromCenterForValue(_this45.ticks[index].value);
 
               if (optsAtIndex.showLabelBackdrop) {
                 ctx.font = tickFont.string;
@@ -19181,22 +19389,22 @@
         var _super24 = _createSuper(TimeScale);
 
         function TimeScale(props) {
-          var _this43;
+          var _this46;
 
           _classCallCheck(this, TimeScale);
 
-          _this43 = _super24.call(this, props);
-          _this43._cache = {
+          _this46 = _super24.call(this, props);
+          _this46._cache = {
             data: [],
             labels: [],
             all: []
           };
-          _this43._unit = 'day';
-          _this43._majorUnit = undefined;
-          _this43._offsets = {};
-          _this43._normalized = false;
-          _this43._parseOpts = undefined;
-          return _this43;
+          _this46._unit = 'day';
+          _this46._majorUnit = undefined;
+          _this46._offsets = {};
+          _this46._normalized = false;
+          _this46._parseOpts = undefined;
+          return _this46;
         }
 
         _createClass(TimeScale, [{
@@ -19593,15 +19801,15 @@
         var _super25 = _createSuper(TimeSeriesScale);
 
         function TimeSeriesScale(props) {
-          var _this44;
+          var _this47;
 
           _classCallCheck(this, TimeSeriesScale);
 
-          _this44 = _super25.call(this, props);
-          _this44._table = [];
-          _this44._minPos = undefined;
-          _this44._tableRange = undefined;
-          return _this44;
+          _this47 = _super25.call(this, props);
+          _this47._table = [];
+          _this47._minPos = undefined;
+          _this47._tableRange = undefined;
+          return _this47;
         }
 
         _createClass(TimeSeriesScale, [{
