@@ -114,12 +114,12 @@ async prepareInvoice():Promise<any>{
   }
 
   generateQRCodeContent(){
-    var sellerName=this.getTLVForValue("1",this.profile.companyName);
-    var vatNumber=this.getTLVForValue("2",this.profile.vatNumber);
-    var timestamp=this.getTLVForValue("3",""+this.invoice.invoiceDate);
+    var sellerName=this.getTLVForValue("1", (this.profile && this.profile.companyName ? this.profile.companyName: ''));
+    var vatNumber=this.getTLVForValue("2", (this.profile && this.profile.vatNumber ? this.profile.vatNumber : ''));
+    var timestamp=this.getTLVForValue("3", this.invoice && this.invoice.invoiceDate ? ""+this.invoice.invoiceDate : '');
     let amt : number =(this.invoice.total-this.invoice.tax);
     var amount=this.getTLVForValue("4",""+amt);
-    var vatAmount=this.getTLVForValue("5",""+this.invoice.tax);
+    var vatAmount=this.getTLVForValue("5", this.invoice && this.invoice.tax ? ""+this.invoice.tax : '');
     var tagsBufArray=[sellerName,vatNumber,timestamp,amount,vatAmount];
     var qrCodeBuf=Buffer.concat(tagsBufArray);
     var qrCodeBase64=qrCodeBuf.toString('base64');

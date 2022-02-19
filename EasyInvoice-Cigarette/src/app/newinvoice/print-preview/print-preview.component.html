@@ -70,19 +70,19 @@
   <div class="line-separator"></div>
   <div class="full-width">
     <div  class="full-width word-break m-l-3p">
-      {{invoice?.customer.name}} 
+      {{invoice?.customer?.name}} 
     </div>
     <div  class="full-width letter-space word-break m-l-3p">
-      {{invoice?.customer.nameInArabic}} 
+      {{invoice?.customer?.nameInArabic}} 
     </div>
     
   </div>
   <div class="full-width">
     <div  class="full-width word-break m-l-3p" >
-      {{invoice?.customer.street}},{{invoice?.customer.city}} 
+      {{invoice?.customer?.street}},{{invoice?.customer?.city}} 
     </div>
     <div  class="full-width letter-space word-break m-l-3p"  >
-      {{invoice?.customer.streetInArabic}},{{invoice?.customer.cityInArabic }} 
+      {{invoice?.customer?.streetInArabic}},{{invoice?.customer?.cityInArabic }} 
     </div>
     
   </div>
@@ -91,7 +91,7 @@
        VAT # / ضريبة القيمة المضافة : 
     </div>
     <div  text-right class="item-value">
-      {{invoice?.customer.vatNumber}}
+      {{invoice?.customer?.vatNumber}}
     </div>
     
   </div>
@@ -160,17 +160,17 @@
         <div class="line-separator"></div>
         <div class="display-flex full-width">
           <div  class="item-label content-right full-width">
-          Previous Balance : {{(this.invoice.balanceAmount+this.invoice.amountPaid) | number : '1.2-2' }}
+          Previous Balance : {{(invoice?.balanceAmount + invoice?.amountPaid) | number : '1.2-2' }}
           </div>
         </div>
         <div class="display-flex full-width">
           <div  class="item-label content-right full-width">
-          Paid Amount : {{this.invoice.amountPaid | number : '1.2-2' }}
+          Paid Amount : {{invoice?.amountPaid | number : '1.2-2' }}
           </div>
         </div>
         <div class="display-flex full-width">
           <div  class="item-label title content-right full-width">
-          Balance Amount : {{this.invoice.balanceAmount | number : '1.2-2' }}
+          Balance Amount : {{invoice?.balanceAmount | number : '1.2-2' }}
           </div>
         </div>
         <div class="line-separator"></div>
