@@ -23,6 +23,9 @@ export class SettingsPage implements OnInit {
   }, {
     name: '80mm',
     value: 552
+  }, {
+    name: 'a4',
+    value: 3504
   }];
   paperSize: any;
   

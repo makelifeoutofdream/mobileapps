@@ -87,6 +87,9 @@ async prepareInvoice():Promise<any>{
         img.onload  = (e) =>  {
           var ht = Math.ceil(node.offsetHeight / 8) * 8;
           ht = ht + 120;
+          if(this.profile &&  this.profile.selectedPrinterSize  == '3504') {
+            ht = 2480;
+          }
           let finalPrint  = result
             .image(img,width,ht,'threshold',180)
             .encode();
